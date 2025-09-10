@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/components/group_card.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
 import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/widgets/filter_sheet.dart';
 
 class HomeScreenBody extends StatefulWidget {
@@ -115,77 +116,80 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: ConstrainedBox(
-        constraints: BoxConstraints(
-          minWidth: 300,
-          maxWidth: 600,
-          minHeight: 400,
-          maxHeight: 800,
-        ),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-              child: Row(
-                spacing: 10,
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: widget.searchControler,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.search),
-                        hintText: 'Buscar grupo',
+      body: SafeArea(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: 300,
+            maxWidth: 600,
+            minHeight: 400,
+            maxHeight: 800,
+          ),
+          child: Column(
+            children: [
+              MyHomeAppBar(),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                child: Row(
+                  spacing: 10,
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: widget.searchControler,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.search),
+                          hintText: 'Buscar grupo',
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    child: IconButton(
-                      onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(20),
+                    SizedBox(
+                      child: IconButton(
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(20),
+                              ),
                             ),
-                          ),
-                          builder: (context) {
-                            return const FilterSheet();
+                            builder: (context) {
+                              return const FilterSheet();
+                            },
+                          );
+                        },
+                        icon: Icon(Icons.filter_alt, size: 30),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: CustomScrollView(
+                  slivers: [
+                    SliverList.builder(
+                      itemBuilder: (BuildContext context, int index) {
+                        final item = filteredGroups[index];
+                        return InkWell(
+                          onTap: () {
+                            print('Deu bom: Card selecionado $index');
                           },
+                          child: GroupCard(
+                            slideController: slideController,
+                            index: index,
+                            groupName: item['groupName'],
+                            groupImage: item['groupImage'],
+                            groupDate: item['groupDate'],
+                            groupPrice: item['groupPrice'],
+                          ),
                         );
                       },
-                      icon: Icon(Icons.filter_alt, size: 30),
+                      itemCount: filteredGroups.length,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              child: CustomScrollView(
-                slivers: [
-                  SliverList.builder(
-                    itemBuilder: (BuildContext context, int index) {
-                      final item = filteredGroups[index];
-                      return InkWell(
-                        onTap: () {
-                          print('Deu bom: Card selecionado $index');
-                        },
-                        child: GroupCard(
-                          slideController: slideController,
-                          index: index,
-                          groupName: item['groupName'],
-                          groupImage: item['groupImage'],
-                          groupDate: item['groupDate'],
-                          groupPrice: item['groupPrice'],
-                        ),
-                      );
-                    },
-                    itemCount: filteredGroups.length,
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

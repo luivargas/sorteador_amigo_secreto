@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class MyNavbar extends StatelessWidget {
@@ -17,7 +16,6 @@ class MyNavbar extends StatelessWidget {
       return path.startsWith(currentLocation);
     });
     return Scaffold(
-      appBar: MyHomeAppBar(),
       body: child,
       bottomNavigationBar: NavigationBar(
         indicatorColor: Colors.white,

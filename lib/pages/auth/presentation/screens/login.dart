@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_login_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
+import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class LoginPage extends StatefulWidget {
@@ -59,96 +60,99 @@ class _LoginPage extends State<LoginPage> {
       key: formKey,
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: 300,
-            maxWidth: 600,
-            minHeight: 400,
-            maxHeight: 800,
-          ),
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 16.0, left: 16, top: 20),
-              child: Column(
-                spacing: 20,
-                children: [
-                  Row(
-                    children: [
-                      Text('Fazer Login', style: myTheme.textTheme.titleSmall),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 10,
-                    children: [
-                      Text('E-mail'),
-                      TextFormField(
-                        forceErrorText: forceErrorText,
-                        controller: emailController,
-                        validator: validator,
-                        decoration: InputDecoration(
-                          hintText: 'Digite seu e-mail',
-                          prefixIcon: const Icon(Icons.email),
+        body: SafeArea(
+          bottom: false,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: 300,
+              maxWidth: 600,
+              minHeight: 400,
+              maxHeight: 800,
+            ),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 16.0, left: 16, top: 20),
+                child: Column(
+                  spacing: 20,
+                  children: [
+                    Row(
+                      children: [
+                        Text('Fazer Login', style: myTheme.textTheme.titleSmall),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 10,
+                      children: [
+                        Text('E-mail'),
+                        TextFormField(
+                          forceErrorText: forceErrorText,
+                          controller: emailController,
+                          validator: validator,
+                          decoration: InputDecoration(
+                            hintText: 'Digite seu e-mail',
+                            prefixIcon: const Icon(Icons.email),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 10,
-                    children: [
-                      Text('Senha'),
-                      TextFormField(
-                        forceErrorText: forceErrorText,
-                        validator: validator,
-                        obscureText: showPassword,
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                          hintText: 'Digite sua senha',
-                          prefixIcon: const Icon(Icons.password),
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                showPassword = !showPassword;
-                              });
-                            },
-                            icon: Icon(
-                              showPassword
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 10,
+                      children: [
+                        Text('Senha'),
+                        TextFormField(
+                          forceErrorText: forceErrorText,
+                          validator: validator,
+                          obscureText: showPassword,
+                          controller: passwordController,
+                          decoration: InputDecoration(
+                            hintText: 'Digite sua senha',
+                            prefixIcon: const Icon(Icons.password),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  showPassword = !showPassword;
+                                });
+                              },
+                              icon: Icon(
+                                showPassword
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-
-                  TextButton(
-                    onPressed: () {
-                      context.push('/login_form');
-                    },
-
-                    child: Text('Criar conta'),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            _onSubmit();
-                          },
-                          child: Text("Entrar"),
+                      ],
+                    ),
+          
+                    TextButton(
+                      onPressed: () {
+                        context.push('/login_form');
+                      },
+          
+                      child: Text('Criar conta'),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              _onSubmit();
+                            },
+                            child: Text("Entrar"),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      context.push('/forgot_password');
-                    },
-                    child: Text('Esqueci minha senha'),
-                  ),
-                ],
+                      ],
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        context.push('/forgot_password');
+                      },
+                      child: Text('Esqueci minha senha'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
