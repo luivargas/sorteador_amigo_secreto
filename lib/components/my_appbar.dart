@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_button.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
-import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
@@ -12,8 +11,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return AppBar(backgroundColor: myTheme.canvasColor);
+    return AppBar(backgroundColor: Theme.of(context).canvasColor,);
   }
 }
 
@@ -27,6 +25,7 @@ class MyHomeAppBar extends StatelessWidget {
     );
     final actions = IconButton(
       onPressed: () => showModalBottomSheet<void>(
+        backgroundColor: Theme.of(context).canvasColor,
         context: context,
         builder: (context) => GroupButton(),
       ),

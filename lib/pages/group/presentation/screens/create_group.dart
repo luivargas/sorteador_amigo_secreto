@@ -13,6 +13,7 @@ class _CreateGroup extends State<CreateGroup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).canvasColor,
       appBar: MyAppBar(),
       body: ConstrainedBox(
         constraints: BoxConstraints(

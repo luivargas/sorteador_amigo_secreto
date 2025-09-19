@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/components/group_card.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
 import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/widgets/filter_sheet.dart';
+import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class HomeScreenBody extends StatefulWidget {
   final TextEditingController searchControler;
@@ -112,81 +114,108 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
     super.dispose();
   }
 
+  final RefreshController _refreshController = RefreshController(
+    initialRefresh: false,
+  );
+
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    filteredGroups.add(
+      (filteredGroups.length + 1).toString() as Map<String, String>,
+    );
+    if (mounted) {
+      setState(() {});
+    }
+    _refreshController.loadComplete();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).canvasColor,
       body: SafeArea(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: 300,
-            maxWidth: 600,
-            minHeight: 400,
-            maxHeight: 800,
-          ),
-          child: Column(
-            children: [
-              MyHomeAppBar(),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                child: Row(
-                  spacing: 10,
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: widget.searchControler,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search),
-                          hintText: 'Buscar grupo',
+        bottom: false,
+        child: SmartRefresher(
+        enablePullDown: true,
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(child: MyHomeAppBar()),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                  child: Row(
+                    spacing: 10,
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: widget.searchControler,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: MyColors.sorteadorOrange,
+                            ),
+                            hintText: 'Buscar grupo',
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      child: IconButton(
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(20),
+                      SizedBox(
+                        child: IconButton(
+                          onPressed: () {
+                            showModalBottomSheet(
+                              backgroundColor: Theme.of(context).canvasColor,
+                              context: context,
+                              isScrollControlled: true,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(20),
+                                ),
                               ),
-                            ),
-                            builder: (context) {
-                              return const FilterSheet();
-                            },
-                          );
-                        },
-                        icon: Icon(Icons.filter_alt, size: 30),
+                              builder: (context) {
+                                return const FilterSheet();
+                              },
+                            );
+                          },
+                          icon: Icon(
+                            Icons.filter_alt,
+                            size: 30,
+                            color: MyColors.sorteadorOrange,
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-              Expanded(
-                child: CustomScrollView(
-                  slivers: [
-                    SliverList.builder(
-                      itemBuilder: (BuildContext context, int index) {
-                        final item = filteredGroups[index];
-                        return InkWell(
-                          onTap: () {
-                            print('Deu bom: Card selecionado $index');
-                          },
-                          child: GroupCard(
-                            slideController: slideController,
-                            index: index,
-                            groupName: item['groupName'],
-                            groupImage: item['groupImage'],
-                            groupDate: item['groupDate'],
-                            groupPrice: item['groupPrice'],
-                          ),
-                        );
-                      },
-                      itemCount: filteredGroups.length,
+              SliverList.builder(
+                itemBuilder: (BuildContext context, int index) {
+                  final item = filteredGroups[index];
+                  return InkWell(
+                    onTap: () {
+                      print('Deu bom: Card selecionado $index');
+                    },
+                    child: GroupCard(
+                      slideController: slideController,
+                      index: index,
+                      groupName: item['groupName'],
+                      groupImage: item['groupImage'],
+                      groupDate: item['groupDate'],
+                      groupPrice: item['groupPrice'],
                     ),
-                  ],
-                ),
+                  );
+                },
+                itemCount: filteredGroups.length,
               ),
             ],
           ),

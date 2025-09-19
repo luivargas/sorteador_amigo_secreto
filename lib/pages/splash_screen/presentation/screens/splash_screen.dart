@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_state.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.sorteadorOrange,
+      backgroundColor: Theme.of(context).canvasColor,
       body: BlocProvider.value(
         value: getIt<AuthCubit>()..call(),
         child: SafeArea(
@@ -27,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen>
               spacing: 20,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset("./assets/logos/icons/Logo_8.png", scale: 20),
+                Image.asset("./assets/logos/full/Logo_3.png", scale: 15),
                 BlocListener<AuthCubit, AuthState>(
                   listener: (context, state) {
                     if (state.isLoading == false || state.isLogged != null) {

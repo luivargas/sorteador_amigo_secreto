@@ -20,6 +20,25 @@ class GroupCard extends StatelessWidget {
     required this.groupPrice,
   });
 
+  Text main() {
+    String text = groupName!.trim();
+    String secondLetter = "";
+
+    int voidIndex = text.indexOf(' ');
+    String firstIndex = text.substring(0, 1).toUpperCase();
+    if (voidIndex != -1 && voidIndex < text.length - 1) {
+      secondLetter = text.substring(voidIndex + 1, voidIndex + 2).toUpperCase();
+      return Text(
+        "$firstIndex$secondLetter",
+        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 35),
+      );
+    }
+    return Text(
+      firstIndex,
+      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 35),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -85,16 +104,28 @@ class GroupCard extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 border: BoxBorder.fromLTRB(
-                  top: BorderSide(color: MyColors.sorteadorGrey),
+                  top: BorderSide(color: Colors.grey.shade300),
                 ),
               ),
               child: Padding(
                 padding: const EdgeInsets.only(top: 16.0, bottom: 16),
                 child: Row(
+                  spacing: 10,
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset('$groupImage', height: 70, width: 70),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: MyColors.buttonGradient,
+                          borderRadius: BorderRadius.circular(90),
+                        ),
+                        width: 70,
+                        height: 70,
+                        child: Center(child: main()),
+                      ),
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

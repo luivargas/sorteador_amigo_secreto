@@ -3,13 +3,15 @@ import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 ThemeData myTheme = ThemeData(
   useMaterial3: true,
-  primaryColor: MyColors.sorteadorOrange,
+  primaryColor: MyColors.sorteadorBackground,
   appBarTheme: AppBarTheme(
     backgroundColor: MyColors.sorteadorOrange,
     titleSpacing: 100,
   ),
-  canvasColor: MyColors.sorteadorOrange,
+  canvasColor: MyColors.sorteadorBackground,
   inputDecorationTheme: InputDecorationTheme(
+    iconColor: MyColors.sorteadorRoxo,
+    prefixIconColor: MyColors.sorteadorRoxo,
     labelStyle: TextStyle(color: MyColors.sorteadorOrange),
     border: OutlineInputBorder(
       borderSide: BorderSide(color: MyColors.sorteadorGrey),
@@ -24,7 +26,6 @@ ThemeData myTheme = ThemeData(
       borderRadius: BorderRadius.circular(15),
     ),
   ),
-  //fontFamily:
   textTheme: TextTheme(
     titleSmall: TextStyle(
       fontSize: 20,
@@ -67,12 +68,6 @@ ThemeData myTheme = ThemeData(
   ),
   navigationBarTheme: NavigationBarThemeData(
     backgroundColor: MyColors.sorteadorOrange,
-    // iconTheme: WidgetStateProperty<IconThemeData?>.fromMap(
-    //   <WidgetStatesConstraint, IconThemeData?>{
-    //     WidgetState.any: IconThemeData(color: Colors.white),
-    //     WidgetState.selected: IconThemeData(color: MyColors.sorteadorGrey),
-    //   },
-    // ),
     labelTextStyle: WidgetStateProperty<TextStyle?>.fromMap(
       <WidgetStatesConstraint, TextStyle?>{
         WidgetState.any: TextStyle(

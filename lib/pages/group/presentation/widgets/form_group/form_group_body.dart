@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/form_group/submit_group_form_button.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/form_group/group_ai_button.dart';
+import 'package:sorteador_amigo_secreto/components/my_button.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/form_group/group_form_field.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
@@ -35,11 +34,11 @@ class _FormGroupBody extends State<FormGroupBody> {
     return Form(
       key: _formKey,
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).canvasColor,
         body: SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).canvasColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
@@ -61,8 +60,7 @@ class _FormGroupBody extends State<FormGroupBody> {
                     maxPriceController: maxPriceController,
                     addressController: addressController,
                   ),
-                  GroupAiButton(),
-                  SubmitGroupFormButton(),
+                  MyButton(onTap: (){}, title: "Criar grupo", icon: Icons.create),
                 ],
               ),
             ),
