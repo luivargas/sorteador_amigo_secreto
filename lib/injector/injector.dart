@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/di/auth_injector.dart';
+import 'package:sorteador_amigo_secreto/pages/group/di/group_injector.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -7,7 +8,8 @@ class Injector {
   Injector() {
     initializeInjectors();
   }
-  initializeInjectors() {
+  void initializeInjectors() {
     authInjectors();
+    groupInjectors();
   }
 }

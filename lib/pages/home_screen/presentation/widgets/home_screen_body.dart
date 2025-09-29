@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-import 'package:sorteador_amigo_secreto/components/group_card.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
+
+import 'package:sorteador_amigo_secreto/components/group_card.dart';
 import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
+import 'package:sorteador_amigo_secreto/pages/group/data/model/isar_group_model.dart';
+import 'package:sorteador_amigo_secreto/pages/group/data/service/group_service.dart';
 import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/widgets/filter_sheet.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class HomeScreenBody extends StatefulWidget {
   final TextEditingController searchControler;
-
   const HomeScreenBody({super.key, required this.searchControler});
 
   @override
@@ -17,125 +19,40 @@ class HomeScreenBody extends StatefulWidget {
 
 class _HomeScreenBodyState extends State<HomeScreenBody>
     with SingleTickerProviderStateMixin {
-  late final slideController = SlidableController(this);
+  late final SlidableController slideController = SlidableController(this);
+  final RefreshController _refreshController = RefreshController();
 
-  final List<Map<String, String>> allGroups = [
-    {
-      "groupName": "Grupo Labrador",
-      "groupImage": "./assets/logos/icons/Logo_9.png",
-      "groupDate": "14/02/2025",
-      "groupPrice": "180,00",
-    },
-    {
-      "groupName": "Grupo Siamês",
-      "groupImage": "./assets/logos/icons/Logo_8.png",
-      "groupDate": "02/03/2025",
-      "groupPrice": "95,00",
-    },
-    {
-      "groupName": "Grupo Pug",
-      "groupImage": "./assets/logos/icons/Logo_10.png",
-      "groupDate": "27/01/2025",
-      "groupPrice": "220,00",
-    },
-    {
-      "groupName": "Grupo Persa",
-      "groupImage": "./assets/logos/icons/Logo_9.png",
-      "groupDate": "18/04/2025",
-      "groupPrice": "150,00",
-    },
-    {
-      "groupName": "Grupo Golden Retriever",
-      "groupImage": "./assets/logos/icons/Logo_10.png",
-      "groupDate": "09/05/2025",
-      "groupPrice": "300,00",
-    },
-    {
-      "groupName": "Grupo Bulldog Francês",
-      "groupImage": "./assets/logos/icons/Logo_8.png",
-      "groupDate": "15/06/2025",
-      "groupPrice": "210,00",
-    },
-    {
-      "groupName": "Grupo Maine Coon",
-      "groupImage": "./assets/logos/icons/Logo_9.png",
-      "groupDate": "01/07/2025",
-      "groupPrice": "135,00",
-    },
-    {
-      "groupName": "Grupo Shih Tzu",
-      "groupImage": "./assets/logos/icons/Logo_9.png",
-      "groupDate": "23/08/2025",
-      "groupPrice": "280,00",
-    },
-    {
-      "groupName": "Grupo Ragdoll",
-      "groupImage": "./assets/logos/icons/Logo_10.png",
-      "groupDate": "30/09/2025",
-      "groupPrice": "170,00",
-    },
-    {
-      "groupName": "Grupo Border Collie",
-      "groupImage": "./assets/logos/icons/Logo_9.png",
-      "groupDate": "19/10/2025",
-      "groupPrice": "60,00",
-    },
-  ];
-
-  late List<Map<String, String>> filteredGroups;
-
-  void applyFilter([String? value]) {
-    final queryRaw = value ?? widget.searchControler.text;
-    final query = queryRaw.toLowerCase().trim();
-
-    setState(() {
-      if (query.isEmpty) {
-        filteredGroups = List.from(allGroups);
-      } else {
-        filteredGroups = allGroups.where((e) {
-          final name = (e['groupName'] ?? '').toLowerCase();
-          return name.contains(query);
-        }).toList();
-      }
-    });
-  }
+  // Tornar mutável para poder recarregar no pull-to-refresh
+  late Future<List<IsarGroupModel>> _futureGroups;
 
   @override
   void initState() {
     super.initState();
-    filteredGroups = List.from(allGroups);
-    widget.searchControler.addListener(applyFilter);
+    _futureGroups = GroupService().getAllGroups();
+    widget.searchControler.addListener(_onSearchChanged);
+  }
+
+  void _onSearchChanged() {
+    setState(() {});
+  }
+
+  void _reload() {
+    setState(() {
+      _futureGroups = GroupService().getAllGroups();
+    });
+  }
+
+  Future<void> _onRefresh() async {
+    _reload();
+    _refreshController.refreshCompleted();
   }
 
   @override
   void dispose() {
-    widget.searchControler.removeListener(applyFilter);
+    widget.searchControler.removeListener(_onSearchChanged);
     slideController.dispose();
+    _refreshController.dispose();
     super.dispose();
-  }
-
-  final RefreshController _refreshController = RefreshController(
-    initialRefresh: false,
-  );
-
-  void _onRefresh() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use refreshFailed()
-    _refreshController.refreshCompleted();
-  }
-
-  void _onLoading() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-    filteredGroups.add(
-      (filteredGroups.length + 1).toString() as Map<String, String>,
-    );
-    if (mounted) {
-      setState(() {});
-    }
-    _refreshController.loadComplete();
   }
 
   @override
@@ -143,79 +60,99 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       body: SafeArea(
-        bottom: false,
         child: SmartRefresher(
-        enablePullDown: true,
-        controller: _refreshController,
-        onRefresh: _onRefresh,
-        onLoading: _onLoading,
-        child: CustomScrollView(
+          enablePullDown: true,
+          controller: _refreshController,
+          onRefresh: _onRefresh,
+          child: CustomScrollView(
             slivers: [
-              SliverToBoxAdapter(child: MyHomeAppBar()),
+              const SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  child: MyHomeAppBar(),
+                ),
+              ),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                   child: Row(
-                    spacing: 10,
                     children: [
                       Expanded(
                         child: TextField(
                           controller: widget.searchControler,
                           decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: MyColors.sorteadorOrange,
-                            ),
+                            prefixIcon: Icon(Icons.search, color: MyColors.sorteadorOrange),
                             hintText: 'Buscar grupo',
                           ),
                         ),
                       ),
-                      SizedBox(
-                        child: IconButton(
-                          onPressed: () {
-                            showModalBottomSheet(
-                              backgroundColor: Theme.of(context).canvasColor,
-                              context: context,
-                              isScrollControlled: true,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(20),
-                                ),
-                              ),
-                              builder: (context) {
-                                return const FilterSheet();
-                              },
-                            );
-                          },
-                          icon: Icon(
-                            Icons.filter_alt,
-                            size: 30,
-                            color: MyColors.sorteadorOrange,
-                          ),
-                        ),
+                      IconButton(
+                        onPressed: () {
+                          showModalBottomSheet(
+                            backgroundColor: Theme.of(context).canvasColor,
+                            context: context,
+                            isScrollControlled: true,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                            ),
+                            builder: (context) => const FilterSheet(),
+                          );
+                        },
+                        icon: Icon(Icons.filter_alt, size: 30, color: MyColors.sorteadorOrange),
                       ),
                     ],
                   ),
                 ),
               ),
-              SliverList.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  final item = filteredGroups[index];
-                  return InkWell(
-                    onTap: () {
-                      print('Deu bom: Card selecionado $index');
-                    },
-                    child: GroupCard(
-                      slideController: slideController,
-                      index: index,
-                      groupName: item['groupName'],
-                      groupImage: item['groupImage'],
-                      groupDate: item['groupDate'],
-                      groupPrice: item['groupPrice'],
-                    ),
-                  );
-                },
-                itemCount: filteredGroups.length,
+              SliverToBoxAdapter(
+                child: FutureBuilder<List<IsarGroupModel>>(
+                  future: _futureGroups,
+                  builder: (context, snap) {
+                    if (snap.connectionState == ConnectionState.waiting) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 40),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    }
+                    if (snap.hasError) {
+                      return Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Text('Erro ao carregar grupos: ${snap.error}'),
+                      );
+                    }
+                    final data = snap.data ?? const <IsarGroupModel>[];
+                    final q = widget.searchControler.text.trim().toLowerCase();
+                    final filtered = q.isEmpty
+                        ? data
+                        : data.where((g) => (g.name).toLowerCase().contains(q)).toList();
+
+                    if (filtered.isEmpty) {
+                      return const Padding(
+                        padding: EdgeInsets.all(24),
+                        child: Center(child: Text('Nenhum grupo encontrado')),
+                      );
+                    }
+
+                    return ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: filtered.length,
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16,0),
+                      separatorBuilder: (_, _) => const SizedBox(height: 10),
+                      itemBuilder: (context, index) {
+                        final g = filtered[index];
+                        return InkWell(
+                          onTap: () => debugPrint('Card selecionado $index (id: ${g.id})'),
+                          child: GroupCard(
+                            slideController: slideController,
+                            index: index,
+                            groupName: g.name,
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             ],
           ),

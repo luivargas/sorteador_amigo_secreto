@@ -12,12 +12,12 @@ class GroupCard extends StatelessWidget {
 
   const GroupCard({
     super.key,
-    required this.groupName,
+     this.groupName,
     this.groupImage,
     required this.index,
     required this.slideController,
-    required this.groupDate,
-    required this.groupPrice,
+     this.groupDate,
+     this.groupPrice,
   });
 
   Text main() {
@@ -30,12 +30,20 @@ class GroupCard extends StatelessWidget {
       secondLetter = text.substring(voidIndex + 1, voidIndex + 2).toUpperCase();
       return Text(
         "$firstIndex$secondLetter",
-        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 35),
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+          fontSize: 35,
+        ),
       );
     }
     return Text(
       firstIndex,
-      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 35),
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+        fontSize: 35,
+      ),
     );
   }
 
@@ -65,14 +73,14 @@ class GroupCard extends StatelessWidget {
                   backgroundColor: const Color(0xFFFE4A49),
                   foregroundColor: Colors.white,
                   icon: Icons.delete,
-                  label: 'Delete',
+                  label: 'Excluir',
                 ),
                 SlidableAction(
                   onPressed: doNothing,
                   backgroundColor: const Color(0xFF21B7CA),
                   foregroundColor: Colors.white,
                   icon: Icons.share,
-                  label: 'Share',
+                  label: 'Compartilhar',
                 ),
               ],
             ),
@@ -87,14 +95,7 @@ class GroupCard extends StatelessWidget {
                   backgroundColor: const Color(0xFF7BC043),
                   foregroundColor: Colors.white,
                   icon: Icons.archive,
-                  label: 'Archive',
-                ),
-                SlidableAction(
-                  onPressed: (_) => slideController.close(),
-                  backgroundColor: const Color(0xFF0392CF),
-                  foregroundColor: Colors.white,
-                  icon: Icons.save,
-                  label: 'Save',
+                  label: 'Arquivar',
                 ),
               ],
             ),
@@ -133,8 +134,8 @@ class GroupCard extends StatelessWidget {
                           groupName!,
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(groupDate!),
-                        Text(groupPrice!),
+                        // Text(groupDate!),
+                        // Text(groupPrice!),
                       ],
                     ),
                   ],

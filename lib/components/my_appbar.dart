@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_button.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
+import 'package:sorteador_amigo_secreto/util/contants.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
@@ -21,7 +22,7 @@ class MyHomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final title = SizedBox(
-      child: Image.asset('./assets/logos/full/Logo_3.png', scale: 15,),
+      child: Image.asset(logo, scale: 5,),
     );
     final actions = IconButton(
       onPressed: () => showModalBottomSheet<void>(

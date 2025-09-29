@@ -1,39 +1,15 @@
-import 'dart:ffi';
+import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/participant_entity.dart';
 
 class CreateGroupEntity {
-  final String adminName;
-  final String adminEmail;
-  final String adminPhone;
-  final String groupName;
-  final String eventLocation;
-  final Float minGiftValue;
-  final Float maxGiftValue;
-  final String eventDate;
-  final String eventTime;
-  final String groupDescription;
+  final String name;
+  final ParticipantEntity admin;
 
-  CreateGroupEntity({
-    required this.adminName,
-    required this.adminEmail,
-    required this.adminPhone,
-    required this.groupName,
-    required this.eventLocation,
-    required this.minGiftValue,
-    required this.maxGiftValue,
-    required this.eventDate,
-    required this.eventTime,
-    required this.groupDescription,
-  });
+  CreateGroupEntity({required this.name, required this.admin});
 
   Map<String, dynamic> toJson() {
     return {
-      "group_name": groupName,
-      "event_location": eventLocation,
-      "min_gift_value": minGiftValue,
-      "max_gift_value": maxGiftValue,
-      "eventDate": eventDate,
-      "eventTime": eventTime,
-      "group_description": groupDescription,
+      "name": name,
+      "admin": {"name": admin.name, "email": admin.email},
     };
   }
 }

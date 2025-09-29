@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
+import 'package:sorteador_amigo_secreto/pages/group/data/service/group_service.dart';
 import 'package:sorteador_amigo_secreto/routes/routes.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GroupService().db;
   Injector();
   runApp(const MyApp());
 }
@@ -19,8 +22,9 @@ class MyApp extends StatelessWidget {
     return ResponsiveApp(
       builder: (context) {
         return RefreshConfiguration(
-          headerBuilder: () =>
-              WaterDropHeader(waterDropColor: MyColors.sorteadorOrange,), // Configure the default header indicator. If you have the same header indicator for each page, you need to set this
+          headerBuilder: () => WaterDropHeader(
+            waterDropColor: MyColors.sorteadorOrange,
+          ), // Configure the default header indicator. If you have the same header indicator for each page, you need to set this
           footerBuilder: () =>
               ClassicFooter(), // Configure default bottom indicator
           headerTriggerDistance:

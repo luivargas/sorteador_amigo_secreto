@@ -35,45 +35,43 @@ class _EnterGroup extends State<EnterGroup> {
         backgroundColor: Theme.of(context).canvasColor,
         appBar: MyAppBar(),
         body: SingleChildScrollView(
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
                 ),
-                child: Column(
-                  children: [
-                    Row(
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Entrar no grupo',
+                        style: myTheme.textTheme.titleSmall,
+                      ),
+                    ],
+                  ),
+                  EnterGroupBody(
+                    codeFieldController: codeFieldController,
+                    validator: validator,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: Row(
                       children: [
-                        Text(
-                          'Entrar no grupo',
-                          style: myTheme.textTheme.titleSmall,
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: Text('Entrar no grupo'),
+                          ),
                         ),
                       ],
                     ),
-                    EnterGroupBody(
-                      codeFieldController: codeFieldController,
-                      validator: validator,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              child: Text('Entrar no grupo'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

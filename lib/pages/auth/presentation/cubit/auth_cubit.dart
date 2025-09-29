@@ -3,6 +3,10 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_forgot_password_entity.dart';
+import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_login_entity.dart';
+import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_logout_entity.dart';
+import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_register_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/domain/usecases/auth_usecases.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_state.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/error_api.dart';
@@ -41,7 +45,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> register(entity) async {
+  Future<void> register(AuthRegisterEntity entity) async {
     emit(state.copyWith(isLoading: true, error: null));
     try {
       await authUsecases.register(entity);
@@ -56,7 +60,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> login(entity) async {
+  Future<void> login(AuthLoginEntity entity) async {
     if (isClosed) return;
     safeEmit(state.copyWith(isLoading: true, error: null));
     try {
@@ -74,7 +78,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> logout(entity) async {
+  Future<void> logout(AuthLogoutEntity entity) async {
     emit(state.copyWith(isLoading: true, error: null));
     try {
       await authUsecases.logout(entity);
@@ -86,7 +90,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> forgotPassword(entity) async {
+  Future<void> forgotPassword(AuthForgotPasswordEntity entity) async {
     emit(state.copyWith(isLoading: true, error: null, resetPassword: false));
     try {
       await authUsecases.forgotPassword(entity);

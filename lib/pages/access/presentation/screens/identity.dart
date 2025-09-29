@@ -33,7 +33,6 @@ class _Identify extends State<Identify> {
                 border: OutlineInputBorder(),
               ),
             ),
-            
             MyButton(onTap: () {}, title: "Enviar", icon: Icons.send),
           ],
         ),

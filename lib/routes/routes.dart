@@ -10,6 +10,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/create_
 import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/view_group.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/enter_group/enter_group.dart';
 import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/screens/home_screen.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/teste.dart';
 import 'package:sorteador_amigo_secreto/pages/splash_screen/presentation/screens/splash_screen.dart';
 import 'package:sorteador_amigo_secreto/pages/user/presentation/screens/user_screen.dart';
 
@@ -64,5 +65,11 @@ final routes = GoRouter(
       path: '/identify',
       builder: (BuildContext context, GoRouterState state) => Identify(),
     ),
+        GoRoute(
+      path: '/test',
+      builder: (BuildContext context, GoRouterState state) => SimpleAdvancedForm(),
+    ),
+
+    
   ],
 );

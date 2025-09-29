@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class MyButton extends StatelessWidget {
-  final dynamic onTap;
+  final VoidCallback onTap;
   final String title;
   final Text? subTitle;
   final IconData icon;
@@ -43,7 +42,10 @@ class MyButton extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    ?subTitle,
+                    if (subTitle != null) ...[
+                      const SizedBox(height: 4),
+                      subTitle!,
+                    ],
                   ],
                 ),
               ),
