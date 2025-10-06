@@ -1,4 +1,4 @@
-import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 
 class ShowGroupModel {
   final String code;
@@ -18,7 +18,7 @@ class ShowGroupModel {
   final String? whatsappEnabledAt;
   final String? status;
   final String? token;
-  final List<ParticipantModel>? participants;
+  final List<ShowParticipantModel>? participants;
 
   ShowGroupModel({
     this.drawDate,
@@ -42,9 +42,9 @@ class ShowGroupModel {
   });
 
   factory ShowGroupModel.fromJson(Map<String, dynamic> json) {
-    List<ParticipantModel> parseParticipants(List<dynamic> raw) {
+    List<ShowParticipantModel> parseParticipants(List<dynamic> raw) {
       return raw
-          .map((e) => ParticipantModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => ShowParticipantModel.fromJson(e as Map<String, dynamic>))
           .toList();
     }
 

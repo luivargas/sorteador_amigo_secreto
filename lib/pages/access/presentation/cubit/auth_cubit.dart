@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/domain/usecases/auth_usecases.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_state.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/error_api.dart';
+import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/status_auth_api.dart';
 
 extension CubitExt<T> on Cubit<T> {
   void safeEmit(T state) {

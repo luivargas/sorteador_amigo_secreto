@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/database/group_db.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/model/create_group_model.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/model/group_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/update_group_model.dart';
-import 'package:sorteador_amigo_secreto/pages/group/domain/entities/create_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/update_group_entity.dart';
-import 'package:sorteador_amigo_secreto/pages/group/domain/repository/group_repository.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/data/model/create_participant_model.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/domain/repository/participant_repository.dart';
 import 'package:sorteador_amigo_secreto/util/contants.dart';
 
 /// Exceção tipada para métodos que retornam DADOS (ex.: show) e precisam falhar "forte".
@@ -33,7 +33,7 @@ extension ResponseX on Response {
   bool get is2xx => (statusCode ?? 0) >= 200 && (statusCode ?? 0) < 300;
 }
 
-class GroupDatasource extends GroupRepository {
+class ParticipantDatasource extends ParticipantRepository {
   final dio = Dio(BaseOptions(headers: {'X-Tenant': xtenant}));
 
   // ----------------- Helpers privados (DRY) -----------------
@@ -42,21 +42,26 @@ class GroupDatasource extends GroupRepository {
     if (data is Map && data['errors'] is Map) {
       final Map fe = data['errors'] as Map;
       return fe.map((k, v) {
-        final first = (v is List && v.isNotEmpty) ? v.first.toString() : v.toString();
+        final first = (v is List && v.isNotEmpty)
+            ? v.first.toString()
+            : v.toString();
         return MapEntry(k.toString(), first);
       }).cast<String, String>();
     }
     return null;
   }
 
-  GroupModel _failureFromDio(DioException e, {OperationStage stage = OperationStage.api}) {
+  ParticipantModel _failureFromDio(
+    DioException e, {
+    OperationStage stage = OperationStage.api,
+  }) {
     final sc = e.response?.statusCode;
     final data = e.response?.data;
     final msg = (data is Map && data['message'] != null)
         ? data['message'].toString()
         : (e.message ?? 'Erro na requisição');
 
-    return GroupModel.failure(
+    return ParticipantModel.failure(
       statusCode: sc,
       stage: stage,
       message: msg,
@@ -82,12 +87,20 @@ class GroupDatasource extends GroupRepository {
   // ----------------- Implementações -----------------
 
   @override
-  Future<GroupModel> create(CreateGroupEntity entity) async {
+  Future<ParticipantModel> create(
+    CreateParticipantEntity entity,
+    int id,
+  ) async {
+    final adminId = GroupDB().getAdminIdById(id);
     try {
-      final resp = await dio.post(stageGroupApiUrl, data: entity.toJson());
+      final resp = await dio.post(
+        '$stageParticipantApiUrl/$adminId',
+        data: entity.toJson(),
+        options: Options(headers: {'Authorization': bearerToken}),
+      );
 
       if (!resp.is2xx) {
-        return GroupModel.failure(
+        return ParticipantModel.failure(
           statusCode: resp.statusCode,
           stage: OperationStage.api,
           message: resp.statusMessage ?? 'Falha na API',
@@ -95,18 +108,9 @@ class GroupDatasource extends GroupRepository {
         );
       }
 
-      final created = CreateGroupModel.fromJson(resp.data);
+      final created = CreateParticipantModel.fromJson(resp.data);
 
-      try {
-        await GroupDB().createGroup(created);
-      } catch (dbErr) {
-        return GroupModel.failure(
-          stage: OperationStage.db,
-          message: 'Falha ao salvar no banco local: $dbErr',
-        );
-      }
-
-      return GroupModel.success(
+      return ParticipantModel.success(
         statusCode: resp.statusCode,
         stage: OperationStage.both,
         message: resp.statusMessage ?? 'Grupo criado com sucesso',
@@ -114,7 +118,7 @@ class GroupDatasource extends GroupRepository {
     } on DioException catch (e) {
       return _failureFromDio(e);
     } catch (e) {
-      return GroupModel.failure(
+      return ParticipantModel.failure(
         stage: OperationStage.unknown,
         message: 'Erro inesperado: $e',
       );
@@ -122,16 +126,18 @@ class GroupDatasource extends GroupRepository {
   }
 
   @override
-  Future<GroupModel> delete(int id) async {
+  Future<ParticipantModel> delete(int id) async {
     final token = GroupDB().getAdminIdById(id);
     try {
       final resp = await dio.delete(
         stageGroupApiUrl,
-        options: Options(headers: {'Authorization': bearerToken, 'Access-Key': token}),
+        options: Options(
+          headers: {'Authorization': bearerToken, 'Access-Key': token},
+        ),
       );
 
       if (!resp.is2xx) {
-        return GroupModel.failure(
+        return ParticipantModel.failure(
           statusCode: resp.statusCode,
           stage: OperationStage.api,
           message: resp.statusMessage ?? 'Falha na API',
@@ -142,13 +148,13 @@ class GroupDatasource extends GroupRepository {
       try {
         await GroupDB().delete(id);
       } catch (dbErr) {
-        return GroupModel.failure(
+        return ParticipantModel.failure(
           stage: OperationStage.db,
           message: 'Falha ao remover no banco local: $dbErr',
         );
       }
 
-      return GroupModel.success(
+      return ParticipantModel.success(
         statusCode: resp.statusCode,
         stage: OperationStage.both,
         message: resp.statusMessage ?? 'Grupo excluído com sucesso',
@@ -156,7 +162,7 @@ class GroupDatasource extends GroupRepository {
     } on DioException catch (e) {
       return _failureFromDio(e);
     } catch (e) {
-      return GroupModel.failure(
+      return ParticipantModel.failure(
         stage: OperationStage.unknown,
         message: 'Erro inesperado: $e',
       );
@@ -164,12 +170,14 @@ class GroupDatasource extends GroupRepository {
   }
 
   @override
-  Future<ShowGroupModel> show(int id) async {
+  Future<ParticipantModel> show(int id) async {
     final token = GroupDB().getAccesKeyById(id);
     try {
       final resp = await dio.get(
         stageGroupApiUrl,
-        options: Options(headers: {'Authorization': bearerToken, 'Access-Key': token}),
+        options: Options(
+          headers: {'Authorization': bearerToken, 'Access-Key': token},
+        ),
       );
 
       if (!resp.is2xx) {
@@ -182,7 +190,10 @@ class GroupDatasource extends GroupRepository {
       }
 
       if (resp.data is! Map<String, dynamic>) {
-        throw Apifailure('Formato de resposta inválido', statusCode: resp.statusCode);
+        throw Apifailure(
+          'Formato de resposta inválido',
+          statusCode: resp.statusCode,
+        );
       }
 
       final model = ShowGroupModel.fromJson(resp.data as Map<String, dynamic>);
@@ -191,7 +202,10 @@ class GroupDatasource extends GroupRepository {
       final hasId = (model.code.toString().isNotEmpty);
       final hasName = (model.name.toString().isNotEmpty);
       if (!hasId || !hasName) {
-        throw Apifailure('Dados do grupo incompletos', statusCode: resp.statusCode);
+        throw Apifailure(
+          'Dados do grupo incompletos',
+          statusCode: resp.statusCode,
+        );
       }
 
       return model;
@@ -207,49 +221,10 @@ class GroupDatasource extends GroupRepository {
     final resp = await dio.post(
       '$stageGroupApiUrl/$code/raffle',
       data: entity.toJson(),
-      options:  Options(headers: {'Authorization': bearerToken, 'Access-Key': acessKey}),
+      options: Options(
+        headers: {'Authorization': bearerToken, 'Access-Key': acessKey},
+      ),
     );
     return UpdateGroupModel.fromJson(resp.data);
-  }
-
-  @override
-  Future<CreateGroupModel> archive(CreateGroupEntity entity) async {
-    final resp = await dio.post(
-      '$stageGroupApiUrl/${entity}/archive',
-      data: entity.toJson(),
-      options: Options(),
-    );
-    return CreateGroupModel.fromJson(resp.data);
-  }
-
-  @override
-  Future<CreateGroupModel> unArchive(CreateGroupEntity entity) async {
-    final resp = await dio.post(
-      '$stageGroupApiUrl/${entity}/unarchive',
-      data: entity.toJson(),
-      options:  Options(),
-    );
-    return CreateGroupModel.fromJson(resp.data);
-  }
-
-  @override
-  Future<String?> raffle(int id) async {
-    final acessKey = GroupDB().getAccesKeyById(id);
-    final code = GroupDB().getCodeById(id);
-    final resp = await dio.post(
-      '$stageGroupApiUrl/$code/raffle',
-      options:  Options(headers: {'Authorization': bearerToken, 'Access-Key': acessKey}),
-    );
-    return resp.statusMessage;
-  }
-
-  @override
-  Future<CreateGroupModel> redraw(CreateGroupEntity entity) async {
-    final resp = await dio.post(
-      '$stageGroupApiUrl/${entity}/redraw',
-      data: entity.toJson(),
-      options:  Options(),
-    );
-    return CreateGroupModel.fromJson(resp.data);
   }
 }

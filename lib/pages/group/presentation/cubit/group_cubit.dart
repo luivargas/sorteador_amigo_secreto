@@ -1,7 +1,5 @@
 import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/error_api.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/create_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/usecases/group_usecases.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
@@ -23,14 +21,41 @@ class GroupCubit extends Cubit<GroupState> {
     if (isClosed) return;
     safeEmit(state.copyWith(isLoading: true, error: null));
     try {
-      await groupUsecases.create(entity);
-      emit(state.copyWith(isLoading: false, created: true));
-
-    } on DioException catch (e) {
-      final message = statusFallback(e.response?.statusCode);
-      emit(state.copyWith(isLoading: false, error: message));
+      final result = await groupUsecases.create(entity);
+      // fazer um ternario com retorno do result.
+      result.ok
+          ? emit(state.copyWith(isLoading: false, created: true))
+          : emit(
+              state.copyWith(
+                isLoading: false,
+                error: result.message,
+                created: false,
+              ),
+            );
     } on HttpException catch (_) {
-      emit(state.copyWith(isLoading: false, error: 'Falha de conexão.'));
+      emit(state.copyWith(isLoading: false, error: 'Falha de conexão! Verifique sua internet e tente novamente'));
+    } catch (e) {
+      emit(state.copyWith(error: e.toString(), isLoading: false));
+    }
+  }
+
+    Future<void> delete(int id) async {
+    if (isClosed) return;
+    safeEmit(state.copyWith(isLoading: true, error: null));
+    try {
+      final result = await groupUsecases.delete(id);
+      // fazer um ternario com retorno do result.
+      result.ok
+          ? emit(state.copyWith(isLoading: false, deleted: true))
+          : emit(
+              state.copyWith(
+                isLoading: false,
+                error: result.message,
+                deleted: false,
+              ),
+            );
+    } on HttpException catch (_) {
+      emit(state.copyWith(isLoading: false, error: 'Falha de conexão! Verifique sua internet e tente novamente'));
     } catch (e) {
       emit(state.copyWith(error: e.toString(), isLoading: false));
     }

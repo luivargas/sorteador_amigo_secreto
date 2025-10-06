@@ -12,30 +12,26 @@
 library;
 
 enum OperationStage {
-  api, // falha/sucesso na camada de rede/servidor
-  db, // falha/sucesso na persistência local
-  both, // sucesso total (api + db)
+  api,     // falha/sucesso na camada de rede/servidor
+  db,      // falha/sucesso na persistência local
+  both,    // sucesso total (api + db)
   unknown, // não foi possível determinar a etapa
 }
 
-class ParticipantModel {
+class GroupModel {
   /// true = operação concluída com sucesso
   final bool ok;
-
   /// Código HTTP quando houver (operações de rede).
   final int? statusCode;
-
   /// Mensagem humana para feedback (sucesso/erro).
   final String message;
-
   /// Etapa da operação (API, DB, BOTH, UNKNOWN).
   final OperationStage stage;
-
   /// Erros de validação por campo (quando API retornar validação, ex.: 422/400).
   /// Ex.: {"name": "Nome é obrigatório", "email": "Formato inválido"}
   final Map<String, String>? fieldErrors;
 
-  const ParticipantModel._({
+  const GroupModel._({
     required this.ok,
     required this.message,
     required this.stage,
@@ -44,12 +40,12 @@ class ParticipantModel {
   });
 
   /// Sucesso (por padrão, considera sucesso “both” — API + DB).
-  factory ParticipantModel.success({
+  factory GroupModel.success({
     int? statusCode,
     OperationStage stage = OperationStage.both,
     String message = 'OK',
   }) {
-    return ParticipantModel._(
+    return GroupModel._(
       ok: true,
       statusCode: statusCode,
       message: message,
@@ -59,13 +55,13 @@ class ParticipantModel {
   }
 
   /// Falha (permite informar etapa e erros de campo).
-  factory ParticipantModel.failure({
+  factory GroupModel.failure({
     int? statusCode,
     OperationStage stage = OperationStage.unknown,
     required String message,
     Map<String, String>? fieldErrors,
   }) {
-    return ParticipantModel._(
+    return GroupModel._(
       ok: false,
       statusCode: statusCode,
       message: message,
@@ -95,14 +91,14 @@ class ParticipantModel {
 
   // ========== COPIES / MERGE ==========
 
-  ParticipantModel copyWith({
+  GroupModel copyWith({
     bool? ok,
     int? statusCode,
     String? message,
     OperationStage? stage,
     Map<String, String>? fieldErrors,
   }) {
-    return ParticipantModel._(
+    return GroupModel._(
       ok: ok ?? this.ok,
       statusCode: statusCode ?? this.statusCode,
       message: message ?? this.message,
@@ -112,7 +108,7 @@ class ParticipantModel {
   }
 
   /// Mescla erros de campo (útil para combinar validação local + servidor).
-  ParticipantModel mergeFieldErrors(Map<String, String> newErrors) {
+  GroupModel mergeFieldErrors(Map<String, String> newErrors) {
     final merged = <String, String>{};
     if (fieldErrors != null) merged.addAll(fieldErrors!);
     merged.addAll(newErrors);
@@ -123,7 +119,7 @@ class ParticipantModel {
 
   @override
   String toString() {
-    return 'ParticipantModel(ok=$ok, statusCode=$statusCode, stage=$stage, '
+    return 'GroupModel(ok=$ok, statusCode=$statusCode, stage=$stage, '
         'message="$message", fieldErrors=$fieldErrors)';
   }
 
@@ -138,7 +134,7 @@ class ParticipantModel {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ParticipantModel &&
+    return other is GroupModel &&
         other.ok == ok &&
         other.statusCode == statusCode &&
         other.message == message &&

@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/injector/injector.dart';
-import 'package:sorteador_amigo_secreto/pages/group/domain/entities/create_group_entity.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/participant_entity.dart';
-
 class SimpleAdvancedForm extends StatefulWidget {
   const SimpleAdvancedForm({super.key});
 
@@ -36,23 +31,7 @@ class _SimpleAdvancedFormState extends State<SimpleAdvancedForm> {
     return null;
   }
 
-  void _onSubmit() {
-    final isValid = _formKey.currentState?.validate() ?? false;
-    if (!isValid) return;
 
-    _formKey.currentState?.save();
-    final email = _emailCtrl.text;
-    final name = _nameCtrl.text;
-    final groupName = _groupName.text;
-    final entity = CreateGroupEntity(
-      name: groupName,
-      admin: ParticipantEntity(name: name, email: email),
-    );
-    getIt<GroupCubit>().create(entity);
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Form enviado com sucesso!')));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +124,7 @@ class _SimpleAdvancedFormState extends State<SimpleAdvancedForm> {
 
             const SizedBox(height: 16),
             FilledButton.icon(
-              onPressed: _onSubmit,
+              onPressed: (){},
               icon: const Icon(Icons.send),
               label: const Text('Enviar'),
             ),

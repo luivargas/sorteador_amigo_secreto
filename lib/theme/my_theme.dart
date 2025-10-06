@@ -13,6 +13,7 @@ ThemeData myTheme = ThemeData(
     iconColor: MyColors.sorteadorRoxo,
     prefixIconColor: MyColors.sorteadorRoxo,
     labelStyle: TextStyle(color: MyColors.sorteadorOrange),
+    hintStyle: TextStyle(color: MyColors.sorteadorOrange),
     border: OutlineInputBorder(
       borderSide: BorderSide(color: MyColors.sorteadorGrey),
       borderRadius: BorderRadius.circular(15),

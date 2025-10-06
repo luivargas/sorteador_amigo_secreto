@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-
 import 'package:sorteador_amigo_secreto/components/group_card.dart';
 import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
+import 'package:sorteador_amigo_secreto/pages/group/data/database/group_db.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/isar_group_model.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/service/group_service.dart';
 import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/widgets/filter_sheet.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
@@ -28,7 +27,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
   @override
   void initState() {
     super.initState();
-    _futureGroups = GroupService().getAllGroups();
+    _futureGroups = GroupDB().getAllGroups();
     widget.searchControler.addListener(_onSearchChanged);
   }
 
@@ -38,7 +37,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
 
   void _reload() {
     setState(() {
-      _futureGroups = GroupService().getAllGroups();
+      _futureGroups = GroupDB().getAllGroups();
     });
   }
 
@@ -66,7 +65,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
           onRefresh: _onRefresh,
           child: CustomScrollView(
             slivers: [
-              const SliverToBoxAdapter(
+              SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   child: MyHomeAppBar(),
@@ -81,7 +80,10 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
                         child: TextField(
                           controller: widget.searchControler,
                           decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.search, color: MyColors.sorteadorOrange),
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: MyColors.sorteadorOrange,
+                            ),
                             hintText: 'Buscar grupo',
                           ),
                         ),
@@ -93,12 +95,18 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
                             context: context,
                             isScrollControlled: true,
                             shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(20),
+                              ),
                             ),
                             builder: (context) => const FilterSheet(),
                           );
                         },
-                        icon: Icon(Icons.filter_alt, size: 30, color: MyColors.sorteadorOrange),
+                        icon: Icon(
+                          Icons.filter_alt,
+                          size: 30,
+                          color: MyColors.sorteadorOrange,
+                        ),
                       ),
                     ],
                   ),
@@ -124,7 +132,9 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
                     final q = widget.searchControler.text.trim().toLowerCase();
                     final filtered = q.isEmpty
                         ? data
-                        : data.where((g) => (g.name).toLowerCase().contains(q)).toList();
+                        : data
+                              .where((g) => (g.name).toLowerCase().contains(q))
+                              .toList();
 
                     if (filtered.isEmpty) {
                       return const Padding(
@@ -137,16 +147,19 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: filtered.length,
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16,0),
-                      separatorBuilder: (_, _) => const SizedBox(height: 10),
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                      separatorBuilder: (_, _) => Container(),
                       itemBuilder: (context, index) {
                         final g = filtered[index];
                         return InkWell(
-                          onTap: () => debugPrint('Card selecionado $index (id: ${g.id})'),
+                          onTap: () => debugPrint(
+                            'Card selecionado $index (id: ${g.id})',
+                          ),
                           child: GroupCard(
                             slideController: slideController,
                             index: index,
                             groupName: g.name,
+                            groupId: g.id,
                           ),
                         );
                       },

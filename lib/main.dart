@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/service/group_service.dart';
+import 'package:sorteador_amigo_secreto/pages/group/data/database/group_db.dart';
 import 'package:sorteador_amigo_secreto/routes/routes.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await GroupService().db;
+  await GroupDB().db;
   Injector();
   runApp(const MyApp());
 }
@@ -46,6 +47,13 @@ class MyApp extends StatelessWidget {
           enableBallisticLoad:
               true, // trigger load more by BallisticScrollActivity
           child: MaterialApp.router(
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [Locale('pt', 'BR')],
+            locale: const Locale('pt'),
             title: 'Sorteador Amigo Secreto',
             theme: myTheme,
             routerConfig: routes,

@@ -1,6 +1,6 @@
-import 'package:sorteador_amigo_secreto/pages/participant/data/model/create_participant_model.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/data/model/update_participant_model.dart';
 
-class CreateGroupModel {
+class UpdateGroupModel {
   final String code;
   final int shortCode;
   final String name;
@@ -18,9 +18,9 @@ class CreateGroupModel {
   final String? whatsappEnabledAt;
   final String status;
   final String token;
-  final List<CreateParticipantModel> participants;
+  final List<UpdateParticipantModel> participants;
 
-  CreateGroupModel({
+  UpdateGroupModel({
     this.drawDate,
     this.location,
     this.locale,
@@ -41,14 +41,14 @@ class CreateGroupModel {
     required this.participants,
   });
 
-  factory CreateGroupModel.fromJson(Map<String, dynamic> json) {
-    List<CreateParticipantModel> parseParticipants(List<dynamic> raw) {
+  factory UpdateGroupModel.fromJson(Map<String, dynamic> json) {
+    List<UpdateParticipantModel> parseParticipants(List<dynamic> raw) {
       return raw
-          .map((e) => CreateParticipantModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => UpdateParticipantModel.fromJson(e as Map<String, dynamic>))
           .toList();
     }
 
-    return CreateGroupModel(
+    return UpdateGroupModel(
       code: json['code'],
       shortCode: json['short_code'],
       name: json['name'],

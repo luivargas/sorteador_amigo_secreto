@@ -1,6 +1,4 @@
-import 'dart:ffi';
-
-import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/participant_entity.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 
 class GroupEntity {
   final String? code;
@@ -9,8 +7,8 @@ class GroupEntity {
   final String? drawDate;
   final String? location;
   final String? locale;
-  final Float? minGiftValue;
-  final Float? maxGiftValue;
+  final double? minGiftValue;
+  final double? maxGiftValue;
   final String? coverImageUrl;
   final String? welcomeMessage;
   final bool? isGiftListPublic;
@@ -20,7 +18,7 @@ class GroupEntity {
   final String? whatsappEnabledAt;
   final String? status;
   final String? token;
-  final List<ParticipantEntity>? participants;
+  final List<CreateParticipantEntity>? participants;
 
   GroupEntity({
     this.code,

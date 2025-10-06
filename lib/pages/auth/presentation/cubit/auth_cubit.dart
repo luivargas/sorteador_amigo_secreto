@@ -9,7 +9,7 @@ import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_logout_e
 import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_register_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/domain/usecases/auth_usecases.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_state.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/error_api.dart';
+import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/status_auth_api.dart';
 
 extension CubitExt<T> on Cubit<T> {
   void safeEmit(T state) {

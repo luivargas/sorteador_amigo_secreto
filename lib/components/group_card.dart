@@ -1,35 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:sorteador_amigo_secreto/injector/injector.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
-class GroupCard extends StatelessWidget {
-  final String? groupName;
+class GroupCard extends StatefulWidget {
+  final String groupName;
   final String? groupDate;
   final String? groupPrice;
   final String? groupImage;
+  final int groupId;
   final int index;
   final SlidableController slideController;
 
   const GroupCard({
     super.key,
-     this.groupName,
+    required this.groupName,
     this.groupImage,
     required this.index,
     required this.slideController,
-     this.groupDate,
-     this.groupPrice,
+    this.groupDate,
+    this.groupPrice,
+    required this.groupId,
   });
 
+  @override
+  State<GroupCard> createState() => _GroupCardState();
+}
+
+class _GroupCardState extends State<GroupCard> {
+
+  Future<void> _delete(int id) {
+    final delete = getIt<GroupCubit>().delete(id);
+    widget.slideController.openEndActionPane();
+    return delete;
+  }
+
   Text main() {
-    String text = groupName!.trim();
-    String secondLetter = "";
+    String text = widget.groupName.trim();
+    String firstWord = text.split(' ').first[0].toUpperCase();
+    String lastWord = text.split(' ').last[0].toUpperCase();
 
     int voidIndex = text.indexOf(' ');
-    String firstIndex = text.substring(0, 1).toUpperCase();
     if (voidIndex != -1 && voidIndex < text.length - 1) {
-      secondLetter = text.substring(voidIndex + 1, voidIndex + 2).toUpperCase();
       return Text(
-        "$firstIndex$secondLetter",
+        "$firstWord$lastWord",
         style: TextStyle(
           fontWeight: FontWeight.bold,
           color: Colors.white,
@@ -38,7 +53,7 @@ class GroupCard extends StatelessWidget {
       );
     }
     return Text(
-      firstIndex,
+      firstWord,
       style: TextStyle(
         fontWeight: FontWeight.bold,
         color: Colors.white,
@@ -55,28 +70,32 @@ class GroupCard extends StatelessWidget {
         Expanded(
           child: Slidable(
             // Specify a key if the Slidable is dismissible.
-            key: ValueKey(index),
-
+            key: ValueKey(widget.groupId),
             // The start action pane is the one at the left or the top side.
             startActionPane: ActionPane(
               // A motion is a widget used to control how the pane animates.
               motion: const ScrollMotion(),
-
               // A pane can dismiss the Slidable.
               dismissible: DismissiblePane(onDismissed: () {}),
-
               // All actions are defined in the children parameter.
               children: [
                 // A SlidableAction can have an icon and/or a label.
-                SlidableAction(
-                  onPressed: doNothing,
+                CustomSlidableAction(
+                  onPressed: (_) => _delete(widget.groupId),
                   backgroundColor: const Color(0xFFFE4A49),
                   foregroundColor: Colors.white,
-                  icon: Icons.delete,
-                  label: 'Excluir',
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.delete),
+                      Text("Excluir", overflow: TextOverflow.ellipsis),
+                    ],
+                  ),
+                  // icon: Icons.delete,
+                  // label: 'Excluir',
                 ),
                 SlidableAction(
-                  onPressed: doNothing,
+                  onPressed: (_) => widget.slideController.close(),
                   backgroundColor: const Color(0xFF21B7CA),
                   foregroundColor: Colors.white,
                   icon: Icons.share,
@@ -88,10 +107,11 @@ class GroupCard extends StatelessWidget {
             // The end action pane is the one at the right or the bottom side.
             endActionPane: ActionPane(
               motion: const ScrollMotion(),
+              dismissible: DismissiblePane(onDismissed: () {}),
               children: [
                 SlidableAction(
                   // An action can be bigger than the others.
-                  onPressed: (_) => slideController.openEndActionPane(),
+                  onPressed: (_) => widget.slideController.openEndActionPane(),
                   backgroundColor: const Color(0xFF7BC043),
                   foregroundColor: Colors.white,
                   icon: Icons.archive,
@@ -131,11 +151,9 @@ class GroupCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          groupName!,
+                          widget.groupName,
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        // Text(groupDate!),
-                        // Text(groupPrice!),
                       ],
                     ),
                   ],

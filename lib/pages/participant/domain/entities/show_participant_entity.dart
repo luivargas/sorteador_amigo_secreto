@@ -1,4 +1,4 @@
-class ParticipantEntity {
+class ShowParticipantEntity {
   final String? id;
   final String? name;
   final String? email;
@@ -18,7 +18,7 @@ class ParticipantEntity {
   final List<String>? size;
   final List<String>? dislike;
 
-  ParticipantEntity({
+  ShowParticipantEntity({
     this.id,
     this.name,
     this.email,

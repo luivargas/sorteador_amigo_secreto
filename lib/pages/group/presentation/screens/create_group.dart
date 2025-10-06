@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/form_group/form_group_body.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/create_form_group/form_group_body.dart';
 
 class CreateGroup extends StatefulWidget {
   const CreateGroup({super.key});
