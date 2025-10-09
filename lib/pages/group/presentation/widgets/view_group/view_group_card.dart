@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:sorteador_amigo_secreto/components/stat_card.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/widgets/list_participants_card.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
+import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class ViewGroupCard extends StatelessWidget {
-  final String groupName;
   final String eventLocation;
   final String minGiftValue;
   final String maxGiftValue;
   final String eventDate;
   final String eventTime;
   final String groupDescription;
+  final int participants;
+  final List<Map<String, dynamic>> participantsList;
 
   const ViewGroupCard({
     super.key,
-    required this.groupName,
+    required this.participants,
     required this.eventLocation,
     required this.minGiftValue,
     required this.maxGiftValue,
     required this.eventDate,
     required this.eventTime,
     required this.groupDescription,
+    required this.participantsList,
   });
 
   @override
@@ -27,54 +33,100 @@ class ViewGroupCard extends StatelessWidget {
         color: Theme.of(context).canvasColor,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  Column(
-                    spacing: 10,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        spacing: 20,
+        children: [
+          Row(
+            spacing: 10,
+            children: [
+              Expanded(
+                child: StatCard(
+                  value: eventDate,
+                  label: eventTime,
+                  icon: Icons.calendar_month,
+                ),
+              ),
+              Expanded(
+                child: StatCard(
+                  value: '$participants',
+                  label: 'Participantes',
+                  icon: Icons.group,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            spacing: 10,
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    StatCard(
+                      value: 'R\$ $minGiftValue - $maxGiftValue',
+                      label: 'Valor sugerido',
+                      icon: Icons.monetization_on,
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    StatCard(
+                      value: eventLocation,
+                      label: 'Local',
+                      icon: Icons.location_on,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.all(28),
+                  decoration: BoxDecoration(
+                    color: SecretSantaColors.neutral50,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: MyColors.sorteadorOrange,
+                      width: 1,
+                    ),
+                    boxShadow: SecretSantaShadows.medium,
+                  ),
+                  child: Column(
+                    spacing: 20,
                     children: [
                       Row(
+                        spacing: 5,
                         children: [
+                          Icon(
+                            Icons.description,
+                            color: MyColors.sorteadorPurpple,
+                          ),
                           Text(
-                            'Nome do grupo: ',
+                            'Descrição',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          Text(groupName),
                         ],
                       ),
-                      Row(children: [Text("Local: $eventLocation")]),
-                      Row(
-                        children: [
-                          Text(
-                            'Valor de R\$ $minGiftValue até R\$ $maxGiftValue',
-                          ),
-                        ],
-                      ),
-                      Text('Data: $eventDate Horário: $eventTime'),
-                      Text('Descricrição do grupo: $groupDescription'),
+                      Text(groupDescription),
                     ],
                   ),
-                ],
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.edit_note_rounded, size: 30),
                 ),
-                IconButton(onPressed: () {}, icon: Icon(Icons.share, size: 30)),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: ListParticipantsCard(participantsList: participantsList),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

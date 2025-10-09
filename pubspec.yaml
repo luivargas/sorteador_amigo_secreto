@@ -51,6 +51,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.20.2
+  expandable: ^5.0.1
 
 dev_dependencies:
   flutter_test:

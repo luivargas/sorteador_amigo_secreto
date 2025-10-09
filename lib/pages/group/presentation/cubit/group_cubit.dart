@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/create_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/usecases/group_usecases.dart';
@@ -23,39 +22,42 @@ class GroupCubit extends Cubit<GroupState> {
     try {
       final result = await groupUsecases.create(entity);
       // fazer um ternario com retorno do result.
-      result.ok
+      result.code.isNotEmpty
           ? emit(state.copyWith(isLoading: false, created: true))
           : emit(
               state.copyWith(
                 isLoading: false,
-                error: result.message,
+                error: result.toString(),
                 created: false,
               ),
             );
-    } on HttpException catch (_) {
-      emit(state.copyWith(isLoading: false, error: 'Falha de conexão! Verifique sua internet e tente novamente'));
     } catch (e) {
       emit(state.copyWith(error: e.toString(), isLoading: false));
     }
   }
 
-    Future<void> delete(int id) async {
+  Future<void> delete(int id) async {
     if (isClosed) return;
     safeEmit(state.copyWith(isLoading: true, error: null));
     try {
-      final result = await groupUsecases.delete(id);
+      await groupUsecases.delete(id);
       // fazer um ternario com retorno do result.
-      result.ok
-          ? emit(state.copyWith(isLoading: false, deleted: true))
-          : emit(
-              state.copyWith(
-                isLoading: false,
-                error: result.message,
-                deleted: false,
-              ),
-            );
-    } on HttpException catch (_) {
-      emit(state.copyWith(isLoading: false, error: 'Falha de conexão! Verifique sua internet e tente novamente'));
+      emit(state.copyWith(isLoading: false, deleted: true));
+    } catch (e) {
+      emit(state.copyWith(error: e.toString(), isLoading: false));
+    }
+  }
+
+  Future<void> show(int id) async {
+    safeEmit(state.copyWith(isLoading: true, error: null));
+    try {
+      final result = await groupUsecases.show(id);
+      // fazer um ternario com retorno do result.
+      if (result.code.isNotEmpty) {
+        emit(state.copyWith(isLoading: false, showed: true));
+      }
+      emit(state.copyWith(isLoading: false, showed: false));
+      throw result.toString();
     } catch (e) {
       emit(state.copyWith(error: e.toString(), isLoading: false));
     }

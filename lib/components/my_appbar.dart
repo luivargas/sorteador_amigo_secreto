@@ -1,17 +1,23 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_button.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/util/contants.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-
-  const MyAppBar({super.key});
+  List<Widget>? actions;
+  MyAppBar({super.key, this.actions});
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(backgroundColor: Theme.of(context).canvasColor);
+    return AppBar(
+      backgroundColor: Theme.of(context).canvasColor,
+      actions: actions,
+      title: Center(child: Image.asset('./assets/logos/full/logo_amigo_secreto.png', scale: 5,)),
+    );
   }
 }
 
@@ -20,9 +26,7 @@ class MyHomeAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = SizedBox(
-      child: Image.asset(logo, scale: 5,),
-    );
+    final title = SizedBox(child: Image.asset(logo, scale: 5));
     final actions = IconButton(
       onPressed: () => showModalBottomSheet<void>(
         backgroundColor: Theme.of(context).canvasColor,
@@ -32,6 +36,9 @@ class MyHomeAppBar extends StatelessWidget {
       icon: Icon(Icons.add_circle, color: MyColors.sorteadorOrange, size: 30),
     );
 
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [title, actions]);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [title, actions],
+    );
   }
 }

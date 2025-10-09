@@ -5,8 +5,10 @@ class GroupState {
   final bool? deleted;
   final bool? archived;
   final bool? unarchived;
+  final bool? showed;
 
   GroupState({
+    this.showed,
     this.error,
     this.archived,
     this.created,
@@ -22,6 +24,7 @@ class GroupState {
     final bool? deleted,
     final bool? archived,
     final bool? unarchived,
+    final bool? showed,
   }) {
     return GroupState(
       archived: archived,
@@ -29,6 +32,7 @@ class GroupState {
       deleted: deleted,
       isLoading: isLoading,
       unarchived: unarchived,
+      showed: showed,
     );
   }
 }

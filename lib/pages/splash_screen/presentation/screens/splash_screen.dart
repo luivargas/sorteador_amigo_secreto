@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen>
               spacing: 20,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset("./assets/logos/full/Logo_3.png", scale: 15),
+                Image.asset("./assets/logos/full/logo_amigo_secreto.png", scale: 15),
                 BlocListener<AuthCubit, AuthState>(
                   listener: (context, state) {
                     if (state.isLoading == false || state.isLogged != null) {

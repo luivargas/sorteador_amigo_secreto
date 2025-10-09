@@ -39,7 +39,7 @@ class _Access extends State<Access> {
                   children: [
                     ShaderMask(
                       shaderCallback: (Rect bounds) {
-                        return MyColors.buttonGradient.createShader(bounds);
+                        return MyColors.sorteadorGradient.createShader(bounds);
                       },
                       child: RichText(
                         text: TextSpan(

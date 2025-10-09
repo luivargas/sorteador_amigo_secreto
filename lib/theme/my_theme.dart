@@ -6,12 +6,11 @@ ThemeData myTheme = ThemeData(
   primaryColor: MyColors.sorteadorBackground,
   appBarTheme: AppBarTheme(
     backgroundColor: MyColors.sorteadorOrange,
-    titleSpacing: 100,
   ),
   canvasColor: MyColors.sorteadorBackground,
   inputDecorationTheme: InputDecorationTheme(
-    iconColor: MyColors.sorteadorRoxo,
-    prefixIconColor: MyColors.sorteadorRoxo,
+    iconColor: MyColors.sorteadorPurpple,
+    prefixIconColor: MyColors.sorteadorPurpple,
     labelStyle: TextStyle(color: MyColors.sorteadorOrange),
     hintStyle: TextStyle(color: MyColors.sorteadorOrange),
     border: OutlineInputBorder(
@@ -29,18 +28,18 @@ ThemeData myTheme = ThemeData(
   ),
   textTheme: TextTheme(
     titleSmall: TextStyle(
-      fontSize: 20,
-      color: MyColors.sorteadorGrey,
+      fontSize: 30,
+      color: MyColors.sorteadorOrange,
       fontWeight: FontWeight.bold,
     ),
     titleMedium: TextStyle(
-      fontSize: 30,
-      color: MyColors.sorteadorGrey,
+      fontSize: 40,
+      color: MyColors.sorteadorOrange,
       fontWeight: FontWeight.bold,
     ),
     titleLarge: TextStyle(
-      fontSize: 40,
-      color: MyColors.sorteadorGrey,
+      fontSize: 60,
+      color: MyColors.sorteadorOrange,
       fontWeight: FontWeight.bold,
     ),
   ),

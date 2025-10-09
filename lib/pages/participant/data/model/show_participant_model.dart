@@ -1,7 +1,7 @@
 class  ShowParticipantModel {
   final String id;
   final String name;
-  final String email;
+  final String? email;
   final String? idd;
   final String? phone;
   final bool? isParticipant;
@@ -21,7 +21,7 @@ class  ShowParticipantModel {
   ShowParticipantModel({
     required this.id,
     required this.name,
-    required this.email,
+    this.email,
     this.idd,
     this.phone,
     this.isParticipant,

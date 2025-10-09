@@ -67,7 +67,7 @@ final routes = GoRouter(
     ),
         GoRoute(
       path: '/test',
-      builder: (BuildContext context, GoRouterState state) => SimpleAdvancedForm(),
+      builder: (BuildContext context, GoRouterState state) => MyHomePage(),
     ),
 
     

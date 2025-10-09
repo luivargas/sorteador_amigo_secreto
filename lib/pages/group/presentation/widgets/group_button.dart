@@ -34,10 +34,10 @@ class GroupButton extends StatelessWidget {
               spacing: 10,
               children: [
                 MyButton(
-                  title: "Entrar em grupo",
+                  title: "Recuperar grupo",
                   icon: Icons.group,
                   subTitle: Text(
-                    'Entre em um grupo que ja foi criado',
+                    'Receba todos os grupos que você criou ou participa.',
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: () => context.push("/enter_group"),

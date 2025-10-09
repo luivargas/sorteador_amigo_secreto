@@ -139,7 +139,7 @@ class _GroupCardState extends State<GroupCard> {
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          gradient: MyColors.buttonGradient,
+                          gradient: MyColors.sorteadorGradient,
                           borderRadius: BorderRadius.circular(90),
                         ),
                         width: 70,
@@ -153,6 +153,7 @@ class _GroupCardState extends State<GroupCard> {
                         Text(
                           widget.groupName,
                           style: TextStyle(fontWeight: FontWeight.bold),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),

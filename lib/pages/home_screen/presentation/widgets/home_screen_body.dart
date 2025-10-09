@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-import 'package:sorteador_amigo_secreto/components/group_card.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_card.dart';
 import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/database/group_db.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/isar_group_model.dart';
@@ -152,9 +153,9 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
                       itemBuilder: (context, index) {
                         final g = filtered[index];
                         return InkWell(
-                          onTap: () => debugPrint(
-                            'Card selecionado $index (id: ${g.id})',
-                          ),
+                          onTap: () {
+                            context.push('/view_group');
+                          },
                           child: GroupCard(
                             slideController: slideController,
                             index: index,

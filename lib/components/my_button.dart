@@ -21,7 +21,7 @@ class MyButton extends StatelessWidget {
       borderRadius: BorderRadius.all(Radius.circular(20)),
       child: Container(
         decoration: BoxDecoration(
-          gradient: MyColors.buttonGradient,
+          gradient: MyColors.sorteadorGradient,
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         child: Padding(
