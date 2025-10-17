@@ -129,14 +129,14 @@ class _GroupCardState extends State<GroupCard> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(top: 16.0, bottom: 16),
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
                 child: Row(
                   spacing: 10,
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
+                      padding: const EdgeInsets.only(left: 20.0),
                       child: Container(
                         decoration: BoxDecoration(
                           gradient: MyColors.sorteadorGradient,
@@ -147,15 +147,17 @@ class _GroupCardState extends State<GroupCard> {
                         child: Center(child: main()),
                       ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.groupName,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.groupName,
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23, color: MyColors.sorteadorOrange),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -167,5 +169,3 @@ class _GroupCardState extends State<GroupCard> {
     );
   }
 }
-
-void doNothing(BuildContext context) {}

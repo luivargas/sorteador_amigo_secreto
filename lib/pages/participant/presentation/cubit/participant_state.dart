@@ -1,6 +1,6 @@
 import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
 
-class GroupState {
+class ParticipantState {
   bool? isLoading;
   String? error;
   bool? created;
@@ -8,9 +8,8 @@ class GroupState {
   bool? archived;
   bool? unarchived;
   bool? showed;
-  ShowGroupModel? group;
 
-  GroupState({
+  ParticipantState({
     this.showed,
     this.error,
     this.archived,
@@ -18,10 +17,9 @@ class GroupState {
     this.deleted,
     this.isLoading,
     this.unarchived,
-    this.group
   });
 
-  GroupState copyWith({
+  ParticipantState copyWith({
     bool? isLoading,
     String? error,
     bool? created,
@@ -31,14 +29,13 @@ class GroupState {
     bool? showed,
     ShowGroupModel? group,
   }) {
-    return GroupState(
+    return ParticipantState(
       archived: archived,
       created: created,
       deleted: deleted,
       isLoading: isLoading,
       unarchived: unarchived,
       showed: showed,
-      group: group,
     );
   }
 }

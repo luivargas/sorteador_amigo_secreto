@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
+import 'package:sorteador_amigo_secreto/pages/access/presentation/screens/access.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/screens/login.dart';
 import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/screens/home_screen.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
@@ -21,7 +22,7 @@ class _MyNavbarState extends State<MyNavbar>
   @override
   void initState() {
     currentPage = 0;
-    tabController = TabController(length: 2, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
     tabController.animation!.addListener(() {
       final value = tabController.animation!.value.round();
       if (value != currentPage && mounted) {
@@ -85,8 +86,7 @@ class _MyNavbarState extends State<MyNavbar>
             controller: tabController,
             dragStartBehavior: DragStartBehavior.down,
             physics: const BouncingScrollPhysics(),
-            children: [HomeScreen(), LoginPage()],
-            
+            children: [Access(), HomeScreen(), LoginPage()],
           ),
           child: TabBar(
             dividerColor: Colors.transparent,
@@ -95,10 +95,7 @@ class _MyNavbarState extends State<MyNavbar>
             indicatorPadding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
             controller: tabController,
             indicator: UnderlineTabIndicator(
-              borderSide: BorderSide(
-                color: colors,
-                width: 4,
-              ),
+              borderSide: BorderSide(color: colors, width: 4),
               insets: EdgeInsets.fromLTRB(16, 0, 16, 8),
             ),
             tabs: [
@@ -108,7 +105,7 @@ class _MyNavbarState extends State<MyNavbar>
                 child: Center(
                   child: Icon(
                     Icons.home,
-                    color: currentPage == 0 ? colors: unselectedColor,
+                    color: currentPage == 0 ? colors : unselectedColor,
                   ),
                 ),
               ),
@@ -117,8 +114,18 @@ class _MyNavbarState extends State<MyNavbar>
                 width: 40,
                 child: Center(
                   child: Icon(
-                    Icons.search,
+                    Icons.group,
                     color: currentPage == 1 ? colors : unselectedColor,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 55,
+                width: 40,
+                child: Center(
+                  child: Icon(
+                    Icons.login,
+                    color: currentPage == 2 ? colors : unselectedColor,
                   ),
                 ),
               ),

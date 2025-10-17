@@ -38,17 +38,13 @@ class StatCard extends StatelessWidget {
           spacing: 12,
           children: [
             Icon(icon, size: 40, color: MyColors.sorteadorPurpple),
-            ShaderMask(
-              shaderCallback: (bounds) =>
-                  SecretSantaColors.primaryGradient.createShader(bounds),
-              child: Text(
-                value,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                  overflow: TextOverflow.ellipsis,
-                ),
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w900,
+                color: MyColors.sorteadorOrange,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             Text(

@@ -5,7 +5,7 @@ ThemeData myTheme = ThemeData(
   useMaterial3: true,
   primaryColor: MyColors.sorteadorBackground,
   appBarTheme: AppBarTheme(
-    backgroundColor: MyColors.sorteadorOrange,
+    backgroundColor: MyColors.sorteadorBackground,
   ),
   canvasColor: MyColors.sorteadorBackground,
   inputDecorationTheme: InputDecorationTheme(
@@ -14,7 +14,7 @@ ThemeData myTheme = ThemeData(
     labelStyle: TextStyle(color: MyColors.sorteadorOrange),
     hintStyle: TextStyle(color: MyColors.sorteadorOrange),
     border: OutlineInputBorder(
-      borderSide: BorderSide(color: MyColors.sorteadorGrey),
+      borderSide: BorderSide(color: MyColors.sorteadorOrange),
       borderRadius: BorderRadius.circular(15),
     ),
     enabledBorder: OutlineInputBorder(
@@ -28,19 +28,19 @@ ThemeData myTheme = ThemeData(
   ),
   textTheme: TextTheme(
     titleSmall: TextStyle(
-      fontSize: 30,
-      color: MyColors.sorteadorOrange,
-      fontWeight: FontWeight.bold,
+      fontSize: 20,
+      color: MyColors.sorteadorGrey,
+      fontWeight: FontWeight.w800,
     ),
     titleMedium: TextStyle(
-      fontSize: 40,
-      color: MyColors.sorteadorOrange,
-      fontWeight: FontWeight.bold,
+      fontSize: 35,
+      color: MyColors.sorteadorGrey,
+      fontWeight: FontWeight.w800,
     ),
     titleLarge: TextStyle(
       fontSize: 60,
-      color: MyColors.sorteadorOrange,
-      fontWeight: FontWeight.bold,
+      color: MyColors.sorteadorGrey,
+      fontWeight: FontWeight.w800,
     ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(

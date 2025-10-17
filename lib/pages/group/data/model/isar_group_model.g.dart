@@ -35,7 +35,7 @@ const IsarGroupModelSchema = CollectionSchema(
     r'shortCode': PropertySchema(
       id: 3,
       name: r'shortCode',
-      type: IsarType.long,
+      type: IsarType.string,
     ),
     r'status': PropertySchema(
       id: 4,
@@ -71,6 +71,7 @@ int _isarGroupModelEstimateSize(
   bytesCount += 3 + object.adminId.length * 3;
   bytesCount += 3 + object.code.length * 3;
   bytesCount += 3 + object.name.length * 3;
+  bytesCount += 3 + object.shortCode.length * 3;
   bytesCount += 3 + object.status.length * 3;
   bytesCount += 3 + object.token.length * 3;
   return bytesCount;
@@ -85,7 +86,7 @@ void _isarGroupModelSerialize(
   writer.writeString(offsets[0], object.adminId);
   writer.writeString(offsets[1], object.code);
   writer.writeString(offsets[2], object.name);
-  writer.writeLong(offsets[3], object.shortCode);
+  writer.writeString(offsets[3], object.shortCode);
   writer.writeString(offsets[4], object.status);
   writer.writeString(offsets[5], object.token);
 }
@@ -101,7 +102,7 @@ IsarGroupModel _isarGroupModelDeserialize(
   object.code = reader.readString(offsets[1]);
   object.id = id;
   object.name = reader.readString(offsets[2]);
-  object.shortCode = reader.readLong(offsets[3]);
+  object.shortCode = reader.readString(offsets[3]);
   object.status = reader.readString(offsets[4]);
   object.token = reader.readString(offsets[5]);
   return object;
@@ -121,7 +122,7 @@ P _isarGroupModelDeserializeProp<P>(
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 4:
       return (reader.readString(offset)) as P;
     case 5:
@@ -691,49 +692,58 @@ extension IsarGroupModelQueryFilter
   }
 
   QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
-      shortCodeEqualTo(int value) {
+      shortCodeEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'shortCode',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
       shortCodeGreaterThan(
-    int value, {
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'shortCode',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
       shortCodeLessThan(
-    int value, {
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'shortCode',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
       shortCodeBetween(
-    int lower,
-    int upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -742,6 +752,77 @@ extension IsarGroupModelQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
+      shortCodeStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'shortCode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
+      shortCodeEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'shortCode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
+      shortCodeContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'shortCode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
+      shortCodeMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'shortCode',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
+      shortCodeIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'shortCode',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
+      shortCodeIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'shortCode',
+        value: '',
       ));
     });
   }
@@ -1216,10 +1297,10 @@ extension IsarGroupModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<IsarGroupModel, IsarGroupModel, QDistinct>
-      distinctByShortCode() {
+  QueryBuilder<IsarGroupModel, IsarGroupModel, QDistinct> distinctByShortCode(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'shortCode');
+      return query.addDistinctBy(r'shortCode', caseSensitive: caseSensitive);
     });
   }
 
@@ -1264,7 +1345,7 @@ extension IsarGroupModelQueryProperty
     });
   }
 
-  QueryBuilder<IsarGroupModel, int, QQueryOperations> shortCodeProperty() {
+  QueryBuilder<IsarGroupModel, String, QQueryOperations> shortCodeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'shortCode');
     });

@@ -1,7 +1,7 @@
-class  CreateParticipantModel {
+class CreateParticipantModel {
   final String id;
   final String name;
-  final String email;
+  final String? email;
   final String? idd;
   final String? phone;
   final bool? isParticipant;
@@ -21,7 +21,7 @@ class  CreateParticipantModel {
   CreateParticipantModel({
     required this.id,
     required this.name,
-    required this.email,
+    this.email,
     this.idd,
     this.phone,
     this.isParticipant,

@@ -7,8 +7,8 @@ class UpdateGroupEntity {
   final String? drawDate;
   final String? location;
   final String? locale;
-  final double? minGiftValue;
-  final double? maxGiftValue;
+  final String? minGiftValue;
+  final String? maxGiftValue;
   final String? coverImageUrl;
   final String? welcomeMessage;
   final bool? isGiftListPublic;

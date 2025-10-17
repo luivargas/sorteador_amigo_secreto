@@ -16,7 +16,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Theme.of(context).canvasColor,
       actions: actions,
-      title: Center(child: Image.asset('./assets/logos/full/logo_amigo_secreto.png', scale: 5,)),
+      title: Image.asset('./assets/logos/full/logo_amigo_secreto.png', scale: 5,),
+      surfaceTintColor: Theme.of(context).canvasColor,
     );
   }
 }

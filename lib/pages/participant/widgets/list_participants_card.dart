@@ -1,12 +1,19 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/participant_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class ListParticipantsCard extends StatelessWidget {
-  final List<Map<String, dynamic>> participantsList;
-  const ListParticipantsCard({super.key, required this.participantsList});
+  final int groupId;
+  final List<ShowParticipantModel> participantsList;
+  const ListParticipantsCard({
+    super.key,
+    required this.participantsList,
+    required this.groupId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +35,17 @@ class ListParticipantsCard extends StatelessWidget {
                 Icon(Icons.group, color: MyColors.sorteadorPurpple),
                 Expanded(
                   child: Text(
-                    'Participants (${participantsList.length})',
+                    'Participantes (${participantsList.length})',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.pushNamed(
+                      'create_part',
+                      pathParameters: {'groupId': '$groupId'},
+                    );
+                  },
                   icon: Icon(
                     Icons.add_circle_outline,
                     color: MyColors.sorteadorPurpple,
@@ -54,9 +66,9 @@ class ListParticipantsCard extends StatelessWidget {
                     return InkWell(
                       onTap: () {},
                       child: ParticipantCard(
-                        contact: f['email'] ?? f['phone'],
-                        name: f['name'],
-                        id: f['id'],
+                        contact: f.email ?? f.phone!,
+                        name: f.name,
+                        id: f.id,
                       ),
                     );
                   },
@@ -72,17 +84,18 @@ class ListParticipantsCard extends StatelessWidget {
                       context,
                       required: true,
                     )!;
-                    return Expanded(
-                      child: ElevatedButton.icon(
-                        label: Text(
-                          'Ver todos participantes'
+                    if (participantsList.length >= 2) {
+                      return Expanded(
+                        child: ElevatedButton.icon(
+                          label: Text('Ver todos participantes'),
+                          onPressed: () {
+                            controller.toggle();
+                          },
+                          icon: Icon(Icons.keyboard_arrow_down, size: 30),
                         ),
-                        onPressed: () {
-                          controller.toggle();
-                        },
-                        icon: Icon(Icons.keyboard_arrow_down, size: 30,),
-                      ),
-                    );
+                      );
+                    }
+                    return Text('Adicione mais participantes');
                   },
                 ),
               ],
@@ -115,7 +128,12 @@ class ListParticipantsCard extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.pushNamed(
+                      'create_part',
+                      pathParameters: {'groupId': '$groupId'},
+                    );
+                  },
                   icon: Icon(
                     Icons.add_circle_outline,
                     color: MyColors.sorteadorPurpple,
@@ -136,9 +154,9 @@ class ListParticipantsCard extends StatelessWidget {
                     return InkWell(
                       onTap: () {},
                       child: ParticipantCard(
-                        contact: p['email'] ?? p['phone'],
-                        name: p['name'],
-                        id: p['id'],
+                        contact: p.email ?? p.phone!,
+                        name: p.name,
+                        id: p.id,
                       ),
                     );
                   },
@@ -156,13 +174,11 @@ class ListParticipantsCard extends StatelessWidget {
                     )!;
                     return Expanded(
                       child: ElevatedButton.icon(
-                        label: Text(
-                          'Ver menos'
-                        ),
+                        label: Text('Ver menos'),
                         onPressed: () {
                           controller.toggle();
                         },
-                        icon: Icon(Icons.keyboard_arrow_up, size: 30,),
+                        icon: Icon(Icons.keyboard_arrow_up, size: 30),
                       ),
                     );
                   },

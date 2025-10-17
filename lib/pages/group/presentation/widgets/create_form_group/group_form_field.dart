@@ -224,7 +224,6 @@ class _GroupFormFieldsState extends State<GroupFormFields> {
                                 controller: widget.dateTimeController,
                                 readOnly: true,
                                 decoration: const InputDecoration(
-                                  labelText: 'Data e hora do sorteio',
                                   hintText: 'dd/mm/aaaa hh:mm',
                                   prefixIcon: Icon(Icons.event),
                                 ),

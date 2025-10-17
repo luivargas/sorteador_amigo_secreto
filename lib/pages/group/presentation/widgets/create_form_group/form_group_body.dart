@@ -108,8 +108,8 @@ class _FormGroupBody extends State<FormGroupBody> {
         final date = _selectedDateTime == null ? null : DateFormat('yyyy-MM-dd HH:mm:ss', 'en_US').format(_selectedDateTime!);
     final entity = CreateGroupEntity(
       name: groupName,
-      maxGiftValue: double.tryParse(maxPrice),
-      minGiftValue: double.tryParse(minPrice),
+      maxGiftValue: maxPrice,
+      minGiftValue: minPrice,
       location: location,
       drawDate: date,
       admin: CreateParticipantEntity(
@@ -141,7 +141,7 @@ class _FormGroupBody extends State<FormGroupBody> {
               padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 50),
               child: Column(
                 spacing: 20,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     'Crie seu grupo agora!',

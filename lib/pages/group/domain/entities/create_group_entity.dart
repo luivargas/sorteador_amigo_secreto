@@ -4,8 +4,8 @@ class CreateGroupEntity {
   final String name;
   final String? drawDate;
   final String? location;
-  final double? minGiftValue;
-  final double? maxGiftValue;
+  final String? minGiftValue;
+  final String? maxGiftValue;
   final String? coverImageUrl;
   final String? welcomeMessage;
   final bool? isGiftListPublic;

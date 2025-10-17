@@ -58,7 +58,7 @@ class _LoginPage extends State<LoginPage> {
     return Form(
       key: formKey,
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).canvasColor,
         body: SafeArea(
           bottom: false,
           child: ConstrainedBox(
@@ -70,7 +70,7 @@ class _LoginPage extends State<LoginPage> {
             ),
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.only(right: 16.0, left: 16, top: 20),
+                padding: const EdgeInsets.only(right:20.0, left: 20, top: 20),
                 child: Column(
                   spacing: 20,
                   children: [

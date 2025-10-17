@@ -1,17 +1,17 @@
 class ShowParticipantEntity {
-  final String? id;
-  final String? name;
+  final String id;
+  final String name;
   final String? email;
   final String? idd;
   final String? phone;
   final bool? isParticipant;
   final bool? isDependent;
-  final String? role;
-  final String? viewStatus;
+  final String role;
+  final String viewStatus;
   final String? viewedAt;
   final String? whatsappSentAt;
   final String? giftPurchased;
-  final String? status;
+  final String status;
   final String? redrawVote;
   final List<String>? wishList;
   final List<String>? preferences;
@@ -19,19 +19,19 @@ class ShowParticipantEntity {
   final List<String>? dislike;
 
   ShowParticipantEntity({
-    this.id,
-    this.name,
+    required this.id,
+    required this.name,
     this.email,
     this.idd,
     this.phone,
     this.isParticipant,
     this.isDependent,
-    this.role,
-    this.viewStatus,
+    required this.role,
+    required this.viewStatus,
     this.viewedAt,
     this.whatsappSentAt,
     this.giftPurchased,
-    this.status,
+    required this.status,
     this.redrawVote,
     this.wishList,
     this.preferences,

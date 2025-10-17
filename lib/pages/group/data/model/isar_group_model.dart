@@ -10,7 +10,7 @@ part 'isar_group_model.g.dart';
 class IsarGroupModel {
   Id id = Isar.autoIncrement;
   late String code;
-  late int shortCode;
+  late String shortCode;
   late String name;
   late String token;
   late String adminId;
@@ -23,6 +23,6 @@ extension IsarGroupToDomain on IsarGroupModel {
     shortCode: shortCode,
     name: name,
     token: token,
-    status: status,
+    status: status, participants: [],
   );
 }

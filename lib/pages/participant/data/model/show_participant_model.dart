@@ -1,4 +1,4 @@
-class  ShowParticipantModel {
+class ShowParticipantModel {
   final String id;
   final String name;
   final String? email;
@@ -6,17 +6,17 @@ class  ShowParticipantModel {
   final String? phone;
   final bool? isParticipant;
   final bool? isDependent;
-  final String role;
+  final String? role;
   final String? viewStatus;
   final String? viewedAt;
   final String? whatsappSentAt;
   final String? giftPurchased;
   final String? status;
   final String? redrawVote;
-  final List<String>? wishList;
-  final List<String>? preferences;
-  final List<String>? size;
-  final List<String>? dislike;
+  final List<dynamic>? wishList;
+  final List<dynamic>? preferences;
+  final List<dynamic>? size;
+  final List<dynamic>? dislike;
 
   ShowParticipantModel({
     required this.id,
@@ -26,7 +26,7 @@ class  ShowParticipantModel {
     this.phone,
     this.isParticipant,
     this.isDependent,
-    required this.role,
+    this.role,
     this.viewStatus,
     this.viewedAt,
     this.whatsappSentAt,

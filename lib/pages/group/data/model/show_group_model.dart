@@ -1,14 +1,15 @@
+import 'package:intl/intl.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 
 class ShowGroupModel {
   final String code;
-  final int shortCode;
+  final String shortCode;
   final String name;
   final String? drawDate;
   final String? location;
   final String? locale;
-  final double? minGiftValue;
-  final double? maxGiftValue;
+  final String? minGiftValue;
+  final String? maxGiftValue;
   final String? coverImageUrl;
   final String? welcomeMessage;
   final bool? isGiftListPublic;
@@ -17,8 +18,8 @@ class ShowGroupModel {
   final bool? whatsappEnabled;
   final String? whatsappEnabledAt;
   final String? status;
-  final String? token;
-  final List<ShowParticipantModel>? participants;
+  final String token;
+  final List<ShowParticipantModel> participants;
 
   ShowGroupModel({
     this.drawDate,
@@ -38,21 +39,30 @@ class ShowGroupModel {
     required this.name,
     this.whatsappEnabled,
     required this.token,
-    this.participants,
+    required this.participants,
   });
 
   factory ShowGroupModel.fromJson(Map<String, dynamic> json) {
     List<ShowParticipantModel> parseParticipants(List<dynamic> raw) {
-      return raw
-          .map((e) => ShowParticipantModel.fromJson(e as Map<String, dynamic>))
-          .toList();
+      return raw.map((e) => ShowParticipantModel.fromJson(e)).toList();
+    }
+
+    String parseDrawDate(dynamic raw) {
+      if (raw != null) {
+        final drawDate = DateFormat(
+          'dd/MM/yyyy HH:mm',
+          'pt_BR',
+        ).format(DateTime.parse(raw));
+        return drawDate;
+      }
+      return "00/00/00 00:00";
     }
 
     return ShowGroupModel(
       code: json['code'],
       shortCode: json['short_code'],
       name: json['name'],
-      drawDate: json['draw_date'],
+      drawDate: parseDrawDate(json["draw_date"]),
       location: json['location'],
       locale: json['locale'],
       minGiftValue: json['min_gift_value'],
@@ -66,8 +76,7 @@ class ShowGroupModel {
       whatsappEnabledAt: json['whatsapp_enabled_at'],
       status: json['status'],
       token: json['token'],
-      participants: parseParticipants(json['participants'] as List<dynamic>),
+      participants: parseParticipants(json['participants']),
     );
   }
-
 }

@@ -17,7 +17,7 @@ class GroupDatasource extends GroupRepository {
     try {
       resp = await dio.post(stageGroupApiUrl, data: entity.toJson());
       final created = CreateGroupModel.fromJson(resp.data);
-      await GroupDB().createGroup(created);
+      await GroupDB().create(created);
       return created;
     } on DioException {
       rethrow;
@@ -28,30 +28,30 @@ class GroupDatasource extends GroupRepository {
 
   @override
   Future<void> delete(int id) async {
-    final token = GroupDB().getAdminIdById(id);
+    final token = await GroupDB().getAdminIdById(id);
     try {
-      final resp = await dio.delete(
+      await dio.delete(
         stageGroupApiUrl,
         options: Options(
           headers: {'Authorization': bearerToken, 'Access-Key': token},
         ),
       );
       await GroupDB().delete(id);
-    } on DioException {
     } catch (_) {}
   }
 
   @override
   Future<ShowGroupModel> show(int id) async {
-    final token = GroupDB().getAccesKeyById(id);
+    final acessKey = await GroupDB().getAccesKeyById(id);
+    final code = await GroupDB().getCodeById(id);
     try {
       final resp = await dio.get(
-        stageGroupApiUrl,
+        '$stageGroupApiUrl/$code',
         options: Options(
-          headers: {'Authorization': bearerToken, 'Access-Key': token},
+          headers: {'Authorization': bearerToken, 'Access-Key': acessKey},
         ),
       );
-      final model = ShowGroupModel.fromJson(resp.data as Map<String, dynamic>);
+      final model = ShowGroupModel.fromJson(resp.data);
       return model;
     } on DioException {
       rethrow;
@@ -63,8 +63,8 @@ class GroupDatasource extends GroupRepository {
   @override
   Future<UpdateGroupModel> update(UpdateGroupEntity entity, int id) async {
     try{
-    final acessKey = GroupDB().getAccesKeyById(id);
-    final code = GroupDB().getCodeById(id);
+    final acessKey = await GroupDB().getAccesKeyById(id);
+    final code = await GroupDB().getCodeById(id);
     final resp = await dio.post(
       '$stageGroupApiUrl/$code/raffle',
       data: entity.toJson(),
@@ -78,46 +78,46 @@ class GroupDatasource extends GroupRepository {
     }
   }
 
-  @override
-  Future<CreateGroupModel> archive(CreateGroupEntity entity) async {
-    final resp = await dio.post(
-      '$stageGroupApiUrl/${entity}/archive',
-      data: entity.toJson(),
-      options: Options(),
-    );
-    return CreateGroupModel.fromJson(resp.data);
-  }
+  // @override
+  // Future<CreateGroupModel> archive(CreateGroupEntity entity) async {
+  //   final resp = await dio.post(
+  //     '$stageGroupApiUrl/$entity/archive',
+  //     data: entity.toJson(),
+  //     options: Options(),
+  //   );
+  //   return CreateGroupModel.fromJson(resp.data);
+  // }
 
-  @override
-  Future<CreateGroupModel> unArchive(CreateGroupEntity entity) async {
-    final resp = await dio.post(
-      '$stageGroupApiUrl/${entity}/unarchive',
-      data: entity.toJson(),
-      options: Options(),
-    );
-    return CreateGroupModel.fromJson(resp.data);
-  }
+  // @override
+  // Future<CreateGroupModel> unArchive(CreateGroupEntity entity) async {
+  //   final resp = await dio.post(
+  //     '$stageGroupApiUrl/$entity/unarchive',
+  //     data: entity.toJson(),
+  //     options: Options(),
+  //   );
+  //   return CreateGroupModel.fromJson(resp.data);
+  // }
 
-  @override
-  Future<String?> raffle(int id) async {
-    final acessKey = GroupDB().getAccesKeyById(id);
-    final code = GroupDB().getCodeById(id);
-    final resp = await dio.post(
-      '$stageGroupApiUrl/$code/raffle',
-      options: Options(
-        headers: {'Authorization': bearerToken, 'Access-Key': acessKey},
-      ),
-    );
-    return resp.statusMessage;
-  }
+  // @override
+  // Future<String?> raffle(int id) async {
+  //   final acessKey = GroupDB().getAccesKeyById(id);
+  //   final code = GroupDB().getCodeById(id);
+  //   final resp = await dio.post(
+  //     '$stageGroupApiUrl/$code/raffle',
+  //     options: Options(
+  //       headers: {'Authorization': bearerToken, 'Access-Key': acessKey},
+  //     ),
+  //   );
+  //   return resp.statusMessage;
+  // }
 
-  @override
-  Future<CreateGroupModel> redraw(CreateGroupEntity entity) async {
-    final resp = await dio.post(
-      '$stageGroupApiUrl/${entity}/redraw',
-      data: entity.toJson(),
-      options: Options(),
-    );
-    return CreateGroupModel.fromJson(resp.data);
-  }
+  // @override
+  // Future<CreateGroupModel> redraw(CreateGroupEntity entity) async {
+  //   final resp = await dio.post(
+  //     '$stageGroupApiUrl/$entity/redraw',
+  //     data: entity.toJson(),
+  //     options: Options(),
+  //   );
+  //   return CreateGroupModel.fromJson(resp.data);
+  // }
 }

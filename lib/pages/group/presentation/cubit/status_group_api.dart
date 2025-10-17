@@ -1,16 +1,3 @@
-// import 'package:dio/dio.dart';
-
-// String? extractApiMessage(DioException e) {
-//   final res = e.response;
-//   final data = res?.data;
-
-//   if (data is Map<String, dynamic>) {
-//     final v = data['message_code'];
-//     if (v is String && v.trim().isNotEmpty) return v;
-//   }
-//   return null;
-// }
-
 String statusFallback(int? code) {
   switch (code) {
     case 400:

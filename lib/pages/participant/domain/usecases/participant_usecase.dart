@@ -8,9 +8,9 @@ import 'package:sorteador_amigo_secreto/pages/participant/domain/repository/part
 class ParticipantUsecase {
   final ParticipantRepository repository;
   ParticipantUsecase(this.repository);
-  Future<CreateParticipantModel> create(CreateParticipantEntity entity, int id) =>
-      repository.create(entity, id);
-  Future<UpdateParticipantModel> update(UpdateParticipantEntity entity, int id) =>
-      repository.update(entity, id);
+  Future<CreateParticipantModel> create(CreateParticipantEntity entity, int groupId) =>
+      repository.create(entity, groupId);
+  Future<UpdateParticipantModel> update(UpdateParticipantEntity entity, int groupId) =>
+      repository.update(entity, groupId);
   Future<ShowParticipantModel> show(int id) => repository.show(id);
 }

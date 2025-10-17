@@ -6,8 +6,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_c
 import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/database/group_db.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/isar_group_model.dart';
-import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/widgets/filter_sheet.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
+//import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/widgets/filter_sheet.dart';
 
 class HomeScreenBody extends StatefulWidget {
   final TextEditingController searchControler;
@@ -68,7 +67,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
             slivers: [
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: MyHomeAppBar(),
                 ),
               ),
@@ -81,32 +80,48 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
                         child: TextField(
                           controller: widget.searchControler,
                           decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: MyColors.sorteadorOrange,
-                            ),
+                            prefixIcon: Icon(Icons.search),
                             hintText: 'Buscar grupo',
                           ),
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {
-                          showModalBottomSheet(
-                            backgroundColor: Theme.of(context).canvasColor,
-                            context: context,
-                            isScrollControlled: true,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(20),
-                              ),
-                            ),
-                            builder: (context) => const FilterSheet(),
-                          );
-                        },
-                        icon: Icon(
-                          Icons.filter_alt,
-                          size: 30,
-                          color: MyColors.sorteadorOrange,
+                      // IconButton(
+                      //   onPressed: () {
+                      //     showModalBottomSheet(
+                      //       backgroundColor: Theme.of(context).canvasColor,
+                      //       context: context,
+                      //       isScrollControlled: true,
+                      //       shape: const RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.vertical(
+                      //           top: Radius.circular(20),
+                      //         ),
+                      //       ),
+                      //       builder: (context) => const FilterSheet(),
+                      //     );
+                      //   },
+                      //   icon: Icon(
+                      //     Icons.filter_alt,
+                      //     size: 30,
+                      //     color: MyColors.sorteadorOrange,
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: InkWell(
+                  onTap: () {},
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20,10,20,10), 
+                        child: Container(
+                          decoration: BoxDecoration(),
+                          child: Row(
+                            spacing: 10,
+                            children: [Icon(Icons.archive), Text('Arquivados', style: Theme.of(context).textTheme.titleSmall,)],
+                          ),
                         ),
                       ),
                     ],
@@ -148,13 +163,14 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: filtered.length,
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                      //padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                       separatorBuilder: (_, _) => Container(),
                       itemBuilder: (context, index) {
                         final g = filtered[index];
                         return InkWell(
                           onTap: () {
-                            context.push('/view_group');
+                            context.pushNamed('view_group',
+                             pathParameters: {'id': '${g.id}' });
                           },
                           child: GroupCard(
                             slideController: slideController,

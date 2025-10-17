@@ -11,7 +11,7 @@ class GroupDB {
     db = openDB();
   }
 
-  Future<int> createGroup(CreateGroupModel result) async {
+  Future<int> create(CreateGroupModel result) async {
     final isar = await db;
     final group = IsarGroupModel()
       ..name = result.name
@@ -81,7 +81,6 @@ class GroupDB {
   Future<int> countAllGroups() async {
     final isar = await db;
     final group = isar.isarGroupModels.where().count();
-    print(group);
     return group;
   }
 

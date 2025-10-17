@@ -1,75 +1,79 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/components/my_navbar.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/access/presentation/screens/access.dart';
-import 'package:sorteador_amigo_secreto/pages/access/presentation/screens/identity.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/screens/forgot_password.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/create_group.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/view_group.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/enter_group/enter_group.dart';
 import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/screens/home_screen.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/participant_form.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/teste.dart';
 import 'package:sorteador_amigo_secreto/pages/splash_screen/presentation/screens/splash_screen.dart';
-import 'package:sorteador_amigo_secreto/pages/user/presentation/screens/user_screen.dart';
 
 final auth = getIt<AuthCubit>();
 
 final routes = GoRouter(
-  initialLocation: '/home',
+  initialLocation: '/nav_bar',
   routes: [
     GoRoute(
       path: '/home',
       builder: (BuildContext context, GoRouterState state) =>
-          const HomeScreen(),
+           HomeScreen(),
     ),
     GoRoute(
       path: '/access',
-      builder: (BuildContext context, GoRouterState state) => const Access(),
-    ),
-    GoRoute(
-      path: '/user',
-      builder: (BuildContext context, GoRouterState state) =>
-          const UserScreen(),
+      builder: (BuildContext context, GoRouterState state) =>  Access(),
     ),
     GoRoute(
       path: '/create_group',
       builder: (BuildContext context, GoRouterState state) =>
-          const CreateGroup(),
+           CreateGroup(),
     ),
     GoRoute(
       path: '/enter_group',
       builder: (BuildContext context, GoRouterState state) =>
-          const EnterGroup(),
+           EnterGroup(),
     ),
     GoRoute(
       path: '/forgot_password',
       builder: (BuildContext context, GoRouterState state) =>
-          const ForgotPassword(),
+           ForgotPassword(),
     ),
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) =>
-          const SplashScreen(),
+           SplashScreen(),
     ),
     GoRoute(
-      path: '/view_group',
-      builder: (BuildContext context, GoRouterState state) => const ViewGroup(),
+      name: 'view_group',
+      path: '/view_group/:id',
+      builder: (BuildContext context, GoRouterState state){
+        final id = state.pathParameters['id'];
+        final repo = getIt<GroupCubit>().groupUsecases;
+        return BlocProvider(create: (_) => GroupCubit(repo)..show(int.parse(id!)), child: ViewGroup(groupId: id),);
+      }
     ),
     GoRoute(
       path: '/nav_bar',
       builder: (BuildContext context, GoRouterState state) => MyNavbar(),
     ),
     GoRoute(
-      path: '/identify',
-      builder: (BuildContext context, GoRouterState state) => Identify(),
+      path: '/test',
+      builder: (BuildContext context, GoRouterState state) =>
+          FlutterContactsExample(),
     ),
         GoRoute(
-      path: '/test',
-      builder: (BuildContext context, GoRouterState state) => MyHomePage(),
+      name: 'create_part',
+      path: '/create_part/:groupId',
+      builder: (BuildContext context, GoRouterState state){
+        final groupId = state.pathParameters['groupId'];
+        return ParticipantForm(groupId: groupId,);
+      } ,
     ),
-
-    
   ],
 );

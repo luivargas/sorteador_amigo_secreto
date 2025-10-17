@@ -52,14 +52,9 @@ class GroupCubit extends Cubit<GroupState> {
     safeEmit(state.copyWith(isLoading: true, error: null));
     try {
       final result = await groupUsecases.show(id);
-      // fazer um ternario com retorno do result.
-      if (result.code.isNotEmpty) {
-        emit(state.copyWith(isLoading: false, showed: true));
-      }
-      emit(state.copyWith(isLoading: false, showed: false));
-      throw result.toString();
+      emit(state.copyWith(isLoading: false, showed: true, group: result)); 
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false));
+      emit(state.copyWith(error: e.toString(), isLoading: false, showed: false));
     }
   }
 }

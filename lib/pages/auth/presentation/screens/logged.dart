@@ -21,7 +21,7 @@ class _LoggedPage extends State<LoggedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).canvasColor,
       body: ConstrainedBox(
         constraints: BoxConstraints(
           minWidth: 300,

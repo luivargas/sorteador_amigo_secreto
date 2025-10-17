@@ -22,7 +22,7 @@ class _CreateGroup extends State<CreateGroup> {
           minHeight: 400,
           maxHeight: 800,
         ),
-        child: FormGroupBody(),
+        child: FormGroupBody(), 
       ),
     );
   }

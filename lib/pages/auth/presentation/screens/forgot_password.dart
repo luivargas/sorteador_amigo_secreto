@@ -75,7 +75,7 @@ class _ForgotPassword extends State<ForgotPassword> {
             key: formKey,
             child: Scaffold(
               appBar: MyAppBar(),
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).canvasColor,
               body: ConstrainedBox(
                 constraints: BoxConstraints(
                   minWidth: 300,
@@ -85,11 +85,7 @@ class _ForgotPassword extends State<ForgotPassword> {
                 ),
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.only(
-                      right: 16.0,
-                      left: 16,
-                      top: 20,
-                    ),
+                    padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 0),
                     child: Column(
                       spacing: 20,
                       children: [

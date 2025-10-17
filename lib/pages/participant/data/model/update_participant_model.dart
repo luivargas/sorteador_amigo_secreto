@@ -1,7 +1,7 @@
-class  UpdateParticipantModel {
+class UpdateParticipantModel {
   final String id;
   final String name;
-  final String email;
+  final String? email;
   final String? idd;
   final String? phone;
   final bool? isParticipant;
@@ -21,7 +21,7 @@ class  UpdateParticipantModel {
   UpdateParticipantModel({
     required this.id,
     required this.name,
-    required this.email,
+    this.email,
     this.idd,
     this.phone,
     this.isParticipant,

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/components/stat_card.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/list_participants_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class ViewGroupCard extends StatelessWidget {
+  final int groupId;
   final String eventLocation;
   final String minGiftValue;
   final String maxGiftValue;
@@ -12,7 +14,7 @@ class ViewGroupCard extends StatelessWidget {
   final String eventTime;
   final String groupDescription;
   final int participants;
-  final List<Map<String, dynamic>> participantsList;
+  final List<ShowParticipantModel> participantsList;
 
   const ViewGroupCard({
     super.key,
@@ -23,7 +25,7 @@ class ViewGroupCard extends StatelessWidget {
     required this.eventDate,
     required this.eventTime,
     required this.groupDescription,
-    required this.participantsList,
+    required this.participantsList, required this.groupId,
   });
 
   @override
@@ -122,7 +124,7 @@ class ViewGroupCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: ListParticipantsCard(participantsList: participantsList),
+                child: ListParticipantsCard(participantsList: participantsList, groupId: groupId,),
               ),
             ],
           ),
