@@ -1,19 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/database/group_db.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/data/datasource/participant_api_result.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/create_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/update_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/update_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/repository/participant_repository.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/status_auth_api.dart';
 import 'package:sorteador_amigo_secreto/util/contants.dart';
 
 class ParticipantDatasource extends ParticipantRepository {
   final dio = Dio(BaseOptions(headers: {'X-Tenant': xtenant}));
 
   @override
-  Future<CreateParticipantModel> create(
+  Future<ParticipantApiResult<CreateParticipantModel>> create(
     CreateParticipantEntity entity,
     int groupId,
   ) async {
@@ -26,16 +26,22 @@ class ParticipantDatasource extends ParticipantRepository {
         options: Options(headers: {'Access-Key': token}),
       );
       final model = CreateParticipantModel.fromJson(resp.data);
-      return model;
+      return Success(model);
     } on DioException catch (e) {
-      throw statusFallback(e.response?.statusCode);
-    } catch (_) {
-      throw Error;
+      return Failure(
+        ApiError(
+          e.message ?? 'Erro inesperado',
+          statusCode: e.response?.statusCode,
+          raw: e.response?.data,
+        ),
+      );
+    } catch (e) {
+      return Failure(ApiError('Erro inesperado', raw: e));
     }
   }
 
   @override
-  Future<ShowParticipantModel> show(int id) async {
+  Future<ParticipantApiResult<ShowParticipantModel>> show(int id) async {
     Response resp;
     try {
       resp = await dio.get(
@@ -43,16 +49,22 @@ class ParticipantDatasource extends ParticipantRepository {
         options: Options(headers: {'Authorization': bearerToken}),
       );
       final model = ShowParticipantModel.fromJson(resp.data);
-      return model;
+      return Success(model);
     } on DioException catch (e) {
-      throw statusFallback(e.response?.statusCode);
-    } catch (_) {
-      throw Error;
+      return Failure(
+        ApiError(
+          e.message ?? 'Erro inesperado',
+          statusCode: e.response?.statusCode,
+          raw: e.response?.data,
+        ),
+      );
+    } catch (e) {
+      return Failure(ApiError('Erro inesperado', raw: e));
     }
   }
 
   @override
-  Future<UpdateParticipantModel> update(
+  Future<ParticipantApiResult<UpdateParticipantModel>> update(
     UpdateParticipantEntity entity,
     int id,
   ) async {
@@ -63,11 +75,19 @@ class ParticipantDatasource extends ParticipantRepository {
         data: entity.toJson(),
         options: Options(headers: {'Authorization': bearerToken}),
       );
-      return UpdateParticipantModel.fromJson(resp.data);
+      final model = UpdateParticipantModel.fromJson(resp.data);
+
+      return Success(model);
     } on DioException catch (e) {
-      throw statusFallback(e.response?.statusCode);
-    } catch (_) {
-      throw Error();
+      return Failure(
+        ApiError(
+          e.message ?? 'Erro inesperado',
+          statusCode: e.response?.statusCode,
+          raw: e.response?.data,
+        ),
+      );
+    } catch (e) {
+      return Failure(ApiError('Erro inesperado', raw: e));
     }
   }
 }

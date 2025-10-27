@@ -15,9 +15,12 @@ class ViewGroupCard extends StatelessWidget {
   final String groupDescription;
   final int participants;
   final List<ShowParticipantModel> participantsList;
+  final String groupCode;
+  final BadgeType type;
 
   const ViewGroupCard({
     super.key,
+    required this.type,
     required this.participants,
     required this.eventLocation,
     required this.minGiftValue,
@@ -25,7 +28,9 @@ class ViewGroupCard extends StatelessWidget {
     required this.eventDate,
     required this.eventTime,
     required this.groupDescription,
-    required this.participantsList, required this.groupId,
+    required this.participantsList,
+    required this.groupId,
+    required this.groupCode,
   });
 
   @override
@@ -124,7 +129,11 @@ class ViewGroupCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: ListParticipantsCard(participantsList: participantsList, groupId: groupId,),
+                child: ListParticipantsCard(
+                  type: type,
+                  participantsList: participantsList,
+                  groupId: groupId, groupCode: groupCode,
+                ),
               ),
             ],
           ),

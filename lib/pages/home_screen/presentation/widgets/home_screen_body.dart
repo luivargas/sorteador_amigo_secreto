@@ -110,25 +110,6 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
                 ),
               ),
               SliverToBoxAdapter(
-                child: InkWell(
-                  onTap: () {},
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20,10,20,10), 
-                        child: Container(
-                          decoration: BoxDecoration(),
-                          child: Row(
-                            spacing: 10,
-                            children: [Icon(Icons.archive), Text('Arquivados', style: Theme.of(context).textTheme.titleSmall,)],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SliverToBoxAdapter(
                 child: FutureBuilder<List<IsarGroupModel>>(
                   future: _futureGroups,
                   builder: (context, snap) {
@@ -158,19 +139,19 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
                         child: Center(child: Text('Nenhum grupo encontrado')),
                       );
                     }
-
                     return ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: filtered.length,
-                      //padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                       separatorBuilder: (_, _) => Container(),
                       itemBuilder: (context, index) {
                         final g = filtered[index];
                         return InkWell(
                           onTap: () {
-                            context.pushNamed('view_group',
-                             pathParameters: {'id': '${g.id}' });
+                            context.pushNamed(
+                              'view_group',
+                              pathParameters: {'id': '${g.id}'},
+                            );
                           },
                           child: GroupCard(
                             slideController: slideController,

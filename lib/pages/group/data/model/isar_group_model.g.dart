@@ -37,13 +37,8 @@ const IsarGroupModelSchema = CollectionSchema(
       name: r'shortCode',
       type: IsarType.string,
     ),
-    r'status': PropertySchema(
-      id: 4,
-      name: r'status',
-      type: IsarType.string,
-    ),
     r'token': PropertySchema(
-      id: 5,
+      id: 4,
       name: r'token',
       type: IsarType.string,
     )
@@ -72,7 +67,6 @@ int _isarGroupModelEstimateSize(
   bytesCount += 3 + object.code.length * 3;
   bytesCount += 3 + object.name.length * 3;
   bytesCount += 3 + object.shortCode.length * 3;
-  bytesCount += 3 + object.status.length * 3;
   bytesCount += 3 + object.token.length * 3;
   return bytesCount;
 }
@@ -87,8 +81,7 @@ void _isarGroupModelSerialize(
   writer.writeString(offsets[1], object.code);
   writer.writeString(offsets[2], object.name);
   writer.writeString(offsets[3], object.shortCode);
-  writer.writeString(offsets[4], object.status);
-  writer.writeString(offsets[5], object.token);
+  writer.writeString(offsets[4], object.token);
 }
 
 IsarGroupModel _isarGroupModelDeserialize(
@@ -103,8 +96,7 @@ IsarGroupModel _isarGroupModelDeserialize(
   object.id = id;
   object.name = reader.readString(offsets[2]);
   object.shortCode = reader.readString(offsets[3]);
-  object.status = reader.readString(offsets[4]);
-  object.token = reader.readString(offsets[5]);
+  object.token = reader.readString(offsets[4]);
   return object;
 }
 
@@ -124,8 +116,6 @@ P _isarGroupModelDeserializeProp<P>(
     case 3:
       return (reader.readString(offset)) as P;
     case 4:
-      return (reader.readString(offset)) as P;
-    case 5:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -828,142 +818,6 @@ extension IsarGroupModelQueryFilter
   }
 
   QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
-      statusEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'status',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
-      statusGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'status',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
-      statusLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'status',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
-      statusBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'status',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
-      statusStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'status',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
-      statusEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'status',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
-      statusContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'status',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
-      statusMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'status',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
-      statusIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'status',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
-      statusIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'status',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterFilterCondition>
       tokenEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1158,19 +1012,6 @@ extension IsarGroupModelQuerySortBy
     });
   }
 
-  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterSortBy> sortByStatus() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'status', Sort.asc);
-    });
-  }
-
-  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterSortBy>
-      sortByStatusDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'status', Sort.desc);
-    });
-  }
-
   QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterSortBy> sortByToken() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'token', Sort.asc);
@@ -1248,19 +1089,6 @@ extension IsarGroupModelQuerySortThenBy
     });
   }
 
-  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterSortBy> thenByStatus() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'status', Sort.asc);
-    });
-  }
-
-  QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterSortBy>
-      thenByStatusDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'status', Sort.desc);
-    });
-  }
-
   QueryBuilder<IsarGroupModel, IsarGroupModel, QAfterSortBy> thenByToken() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'token', Sort.asc);
@@ -1304,13 +1132,6 @@ extension IsarGroupModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<IsarGroupModel, IsarGroupModel, QDistinct> distinctByStatus(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'status', caseSensitive: caseSensitive);
-    });
-  }
-
   QueryBuilder<IsarGroupModel, IsarGroupModel, QDistinct> distinctByToken(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1348,12 +1169,6 @@ extension IsarGroupModelQueryProperty
   QueryBuilder<IsarGroupModel, String, QQueryOperations> shortCodeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'shortCode');
-    });
-  }
-
-  QueryBuilder<IsarGroupModel, String, QQueryOperations> statusProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'status');
     });
   }
 

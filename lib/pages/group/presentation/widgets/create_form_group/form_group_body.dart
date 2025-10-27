@@ -112,6 +112,7 @@ class _FormGroupBody extends State<FormGroupBody> {
       minGiftValue: minPrice,
       location: location,
       drawDate: date,
+      description: descriptionController.text.trim(),
       admin: CreateParticipantEntity(
         name: name,
         email: email,

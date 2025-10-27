@@ -18,7 +18,7 @@ class GroupDB {
       ..shortCode = result.shortCode
       ..code = result.code
       ..token = result.token
-      ..status = result.status
+      // ..status = result.status
       ..adminId = result.participants[0].id;
     return isar.writeTxnSync(() => isar.isarGroupModels.putSync(group));
   }
@@ -56,27 +56,27 @@ class GroupDB {
     return group;
   }
 
-  Future<List<IsarGroupModel>> getAllActiveGroups() async {
-    final isar = await db;
-    final group = await isar.isarGroupModels
-        .where()
-        .filter()
-        .statusEqualTo('active')
-        .findAll();
-    group.map((e) => e.toDomain()).toList();
-    return group;
-  }
+  // Future<List<IsarGroupModel>> getAllActiveGroups() async {
+  //   final isar = await db;
+  //   final group = await isar.isarGroupModels
+  //       .where()
+  //       .filter()
+  //       .statusEqualTo('active')
+  //       .findAll();
+  //   group.map((e) => e.toDomain()).toList();
+  //   return group;
+  // }
 
-  Future<List<IsarGroupModel>> getAllArchivedGroups() async {
-    final isar = await db;
-    final group = await isar.isarGroupModels
-        .where()
-        .filter()
-        .statusEqualTo('archived')
-        .findAll();
-    group.map((e) => e.toDomain()).toList();
-    return group;
-  }
+  // Future<List<IsarGroupModel>> getAllArchivedGroups() async {
+  //   final isar = await db;
+  //   final group = await isar.isarGroupModels
+  //       .where()
+  //       .filter()
+  //       .statusEqualTo('archived')
+  //       .findAll();
+  //   group.map((e) => e.toDomain()).toList();
+  //   return group;
+  // }
 
   Future<int> countAllGroups() async {
     final isar = await db;

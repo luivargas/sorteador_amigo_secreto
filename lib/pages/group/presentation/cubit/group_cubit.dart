@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/create_group_entity.dart';
+import 'package:sorteador_amigo_secreto/pages/group/domain/entities/update_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/usecases/group_usecases.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
 
@@ -21,16 +22,16 @@ class GroupCubit extends Cubit<GroupState> {
     safeEmit(state.copyWith(isLoading: true, error: null));
     try {
       final result = await groupUsecases.create(entity);
-      // fazer um ternario com retorno do result.
-      result.code.isNotEmpty
-          ? emit(state.copyWith(isLoading: false, created: true))
-          : emit(
-              state.copyWith(
-                isLoading: false,
-                error: result.toString(),
-                created: false,
-              ),
-            );
+      result.when(
+        success: (s) => emit(state.copyWith(isLoading: false, created: true)),
+        failure: (f) => emit(
+          state.copyWith(
+            isLoading: false,
+            error: result.toString(),
+            created: false,
+          ),
+        ),
+      );
     } catch (e) {
       emit(state.copyWith(error: e.toString(), isLoading: false));
     }
@@ -52,9 +53,41 @@ class GroupCubit extends Cubit<GroupState> {
     safeEmit(state.copyWith(isLoading: true, error: null));
     try {
       final result = await groupUsecases.show(id);
-      emit(state.copyWith(isLoading: false, showed: true, group: result)); 
+      result.when(
+        success: (s) => emit(state.copyWith(isLoading: false, showed: true, group: s)),
+        failure: (f) => emit(
+          state.copyWith(
+            isLoading: false,
+            error: result.toString(),
+            created: false,
+          ),
+        ),
+      );
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false, showed: false));
+      emit(
+        state.copyWith(error: e.toString(), isLoading: false, showed: false),
+      );
+    }
+  }
+
+    Future<void> update(UpdateGroupEntity entity, int id) async {
+    safeEmit(state.copyWith(isLoading: true, error: null));
+    try {
+      final result = await groupUsecases.update(entity, id);
+      result.when(
+        success: (s) => emit(state.copyWith(isLoading: false, updated: true,)),
+        failure: (f) => emit(
+          state.copyWith(
+            isLoading: false,
+            error: result.toString(),
+            created: false,
+          ),
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(error: e.toString(), isLoading: false, showed: false),
+      );
     }
   }
 }

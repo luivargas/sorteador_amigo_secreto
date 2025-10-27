@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
 import 'package:sorteador_amigo_secreto/pages/access/presentation/screens/access.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/presentation/screens/login.dart';
 import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/screens/home_screen.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
@@ -22,7 +21,7 @@ class _MyNavbarState extends State<MyNavbar>
   @override
   void initState() {
     currentPage = 0;
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
     tabController.animation!.addListener(() {
       final value = tabController.animation!.value.round();
       if (value != currentPage && mounted) {
@@ -86,7 +85,7 @@ class _MyNavbarState extends State<MyNavbar>
             controller: tabController,
             dragStartBehavior: DragStartBehavior.down,
             physics: const BouncingScrollPhysics(),
-            children: [Access(), HomeScreen(), LoginPage()],
+            children: [Access(), HomeScreen()],
           ),
           child: TabBar(
             dividerColor: Colors.transparent,
@@ -116,16 +115,6 @@ class _MyNavbarState extends State<MyNavbar>
                   child: Icon(
                     Icons.group,
                     color: currentPage == 1 ? colors : unselectedColor,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 55,
-                width: 40,
-                child: Center(
-                  child: Icon(
-                    Icons.login,
-                    color: currentPage == 2 ? colors : unselectedColor,
                   ),
                 ),
               ),

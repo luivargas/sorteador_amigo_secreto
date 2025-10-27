@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/components/my_button.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class GroupOptions extends StatelessWidget {
-  const GroupOptions({super.key});
+  final String? groupId;
+  const GroupOptions({super.key, required this.groupId});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class GroupOptions extends StatelessWidget {
                     MyButton(
                       title: 'Editar grupo',
                       icon: Icons.edit_square,
-                      onTap: () {},
+                      onTap: () {context.pushNamed('edit_group', pathParameters: {"id": groupId!});},
                     ),
                   ],
                 ),

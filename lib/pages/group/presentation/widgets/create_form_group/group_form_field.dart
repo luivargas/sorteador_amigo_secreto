@@ -26,16 +26,15 @@ class GroupFormFields extends StatefulWidget {
     required this.addressController,
     required this.nameController,
     required this.emailController,
-    required this.phoneController, 
+    required this.phoneController,
     required this.onTapDateTime,
-
   });
 
   @override
-  State<GroupFormFields> createState() => _GroupFormFieldsState();
+  State<GroupFormFields> createState() => _GroupFormFields();
 }
 
-class _GroupFormFieldsState extends State<GroupFormFields> {
+class _GroupFormFields extends State<GroupFormFields> {
   String? usString;
 
   String? _validator(String? v) {
@@ -118,6 +117,7 @@ class _GroupFormFieldsState extends State<GroupFormFields> {
                 prefixIcon: Icon(Icons.group),
               ),
             ),
+
             TextButton.icon(
               onPressed: () => setState(() => _showAdvanced = !_showAdvanced),
               icon: Icon(_showAdvanced ? Icons.expand_less : Icons.expand_more),
@@ -144,21 +144,16 @@ class _GroupFormFieldsState extends State<GroupFormFields> {
                       maintainAnimation: true,
                       maintainSize: true,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         spacing: 10,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 10,
-                            children: [
-                              Text('Local do Evento'),
-                              TextFormField(
-                                controller: widget.addressController,
-                                decoration: const InputDecoration(
-                                  hintText: 'Escolha um local',
-                                  prefixIcon: Icon(Icons.place),
-                                ),
-                              ),
-                            ],
+                          Text('Local do Evento'),
+                          TextFormField(
+                            controller: widget.addressController,
+                            decoration: const InputDecoration(
+                              hintText: 'Escolha um local',
+                              prefixIcon: Icon(Icons.place),
+                            ),
                           ),
                           Row(
                             spacing: 20,
@@ -215,34 +210,22 @@ class _GroupFormFieldsState extends State<GroupFormFields> {
                               ),
                             ],
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 10,
-                            children: [
-                              Text('Date e Hora'),
-                              TextFormField(
-                                controller: widget.dateTimeController,
-                                readOnly: true,
-                                decoration: const InputDecoration(
-                                  hintText: 'dd/mm/aaaa hh:mm',
-                                  prefixIcon: Icon(Icons.event),
-                                ),
-                                onTap: widget.onTapDateTime,
-                              ),
-                            ],
+                          Text('Date e Hora'),
+                          TextFormField(
+                            controller: widget.dateTimeController,
+                            readOnly: true,
+                            decoration: const InputDecoration(
+                              hintText: 'dd/mm/aaaa hh:mm',
+                              prefixIcon: Icon(Icons.event),
+                            ),
+                            onTap: widget.onTapDateTime,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 10,
-                            children: [
-                              Text('Descrição do Grupo'),
-                              TextFormField(
-                                keyboardType: TextInputType.text,
-                                maxLength: 300,
-                                maxLines: 4,
-                                controller: widget.descriptionController,
-                              ),
-                            ],
+                          Text('Descrição do Grupo'),
+                          TextFormField(
+                            keyboardType: TextInputType.text,
+                            maxLength: 300,
+                            maxLines: 4,
+                            controller: widget.descriptionController,
                           ),
                         ],
                       ),

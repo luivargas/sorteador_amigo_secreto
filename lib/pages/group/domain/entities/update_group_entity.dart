@@ -1,9 +1,9 @@
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/update_participant_entity.dart';
 
 class UpdateGroupEntity {
-  final String code;
-  final String shortCode;
-  final String name;
+  final String? code;
+  final String? shortCode;
+  final String? name;
   final String? drawDate;
   final String? location;
   final String? locale;
@@ -14,16 +14,16 @@ class UpdateGroupEntity {
   final bool? isGiftListPublic;
   final String? description;
   final String? raffledAt;
-  final bool whatsappEnabled;
+  final bool? whatsappEnabled;
   final String? whatsappEnabledAt;
-  final String status;
-  final String token;
-  final List<UpdateParticipantEntity> participants;
+  final String? status;
+  final String? token;
+  final List<UpdateParticipantEntity>? participants;
 
   UpdateGroupEntity({
-    required this.code,
-    required this.shortCode,
-    required this.name,
+    this.code,
+    this.shortCode,
+    this.name,
     this.drawDate,
     this.location,
     this.locale,
@@ -34,20 +34,21 @@ class UpdateGroupEntity {
     this.isGiftListPublic,
     this.description,
     this.raffledAt,
-    required this.whatsappEnabled,
+    this.whatsappEnabled,
     this.whatsappEnabledAt,
-    required this.status,
-    required this.token,
-    required this.participants,
+    this.status,
+    this.token,
+    this.participants,
   });
 
-    Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     return {
-      "code": code,
-      "short_code": shortCode,
       "name": name,
-      "participants": participants,
-
+      "draw_date": drawDate,
+      "location": location,
+      "description": description,
+      "min_gift_value": minGiftValue,
+      "max_gift_value": maxGiftValue,
     };
   }
 }

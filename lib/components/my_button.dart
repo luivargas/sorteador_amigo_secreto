@@ -43,7 +43,6 @@ class MyButton extends StatelessWidget {
                       ),
                     ),
                     if (subTitle != null) ...[
-                      const SizedBox(height: 4),
                       subTitle!,
                     ],
                   ],

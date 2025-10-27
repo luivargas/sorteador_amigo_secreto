@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/database/group_db.dart';
+import 'package:sorteador_amigo_secreto/pages/group/data/datasource/group_api_result.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/create_group_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/update_group_model.dart';
@@ -12,17 +15,23 @@ class GroupDatasource extends GroupRepository {
   final dio = Dio(BaseOptions(headers: {'X-Tenant': xtenant}));
 
   @override
-  Future<CreateGroupModel> create(CreateGroupEntity entity) async {
+  Future<GroupApiResult<CreateGroupModel>> create(CreateGroupEntity entity) async {
     Response resp;
     try {
       resp = await dio.post(stageGroupApiUrl, data: entity.toJson());
-      final created = CreateGroupModel.fromJson(resp.data);
-      await GroupDB().create(created);
-      return created;
-    } on DioException {
-      rethrow;
+      final model = CreateGroupModel.fromJson(resp.data);
+      await GroupDB().create(model);
+      return Success(model);
+    } on DioException catch (e) {
+      return Failure(
+        ApiError(
+          e.message ?? 'Erro inesperado',
+          statusCode: e.response?.statusCode,
+          raw: e.response?.data,
+        ),
+      );
     } catch (_) {
-      rethrow;
+      return Failure(ApiError('Erro inesperado', raw: e));
     }
   }
 
@@ -37,11 +46,12 @@ class GroupDatasource extends GroupRepository {
         ),
       );
       await GroupDB().delete(id);
-    } catch (_) {}
+    } catch (_) {
+    }
   }
 
   @override
-  Future<ShowGroupModel> show(int id) async {
+  Future<GroupApiResult<ShowGroupModel>> show(int id) async {
     final acessKey = await GroupDB().getAccesKeyById(id);
     final code = await GroupDB().getCodeById(id);
     try {
@@ -52,29 +62,47 @@ class GroupDatasource extends GroupRepository {
         ),
       );
       final model = ShowGroupModel.fromJson(resp.data);
-      return model;
-    } on DioException {
-      rethrow;
+      return Success(model);
+    } on DioException catch (e) {
+      return Failure(
+        ApiError(
+          e.message ?? 'Erro inesperado',
+          statusCode: e.response?.statusCode,
+          raw: e.response?.data,
+        ),
+      );
     } catch (_) {
-      rethrow;
+      return Failure(ApiError('Erro inesperado', raw: e));
     }
   }
 
   @override
-  Future<UpdateGroupModel> update(UpdateGroupEntity entity, int id) async {
-    try{
-    final acessKey = await GroupDB().getAccesKeyById(id);
-    final code = await GroupDB().getCodeById(id);
-    final resp = await dio.post(
-      '$stageGroupApiUrl/$code/raffle',
-      data: entity.toJson(),
-      options: Options(
-        headers: {'Authorization': bearerToken, 'Access-Key': acessKey},
-      ),
-    );
-    return UpdateGroupModel.fromJson(resp.data);
-    }catch (_){
-      rethrow;
+  Future<GroupApiResult<UpdateGroupModel>> update(
+    UpdateGroupEntity entity,
+    int id,
+  ) async {
+    try {
+      final acessKey = await GroupDB().getAccesKeyById(id);
+      final code = await GroupDB().getCodeById(id);
+      final resp = await dio.put(
+        '$stageGroupApiUrl/$code',
+        data: entity.toJson(),
+        options: Options(
+          headers: {'Authorization': bearerToken, 'Access-Key': acessKey},
+        ),
+      );
+      final model = UpdateGroupModel.fromJson(resp.data);
+      return Success(model);
+    } on DioException catch (e) {
+      return Failure(
+        ApiError(
+          e.message ?? 'Erro inesperado',
+          statusCode: e.response?.statusCode,
+          raw: e.response?.data,
+        ),
+      );
+    } catch (_) {
+      return Failure(ApiError('Erro inesperado', raw: e));
     }
   }
 

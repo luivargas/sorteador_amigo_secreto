@@ -10,8 +10,10 @@ class CreateParticipantEntity {
   final List<String>? preferences;
   final List<String>? size;
   final List<String>? dislike;
+  final String? groupCode;
 
   CreateParticipantEntity({
+    this.groupCode,
     required this.name,
     this.email,
     this.idd,
@@ -37,5 +39,8 @@ class CreateParticipantEntity {
     'preferences': preferences,
     'size': size,
     'dislike': dislike,
+    'group_code': groupCode,
+    "status":"confirmed",
+    "view_status":"not_viewed",
   };
 }

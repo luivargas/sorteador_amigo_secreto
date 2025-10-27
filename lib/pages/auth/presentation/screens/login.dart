@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_login_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
@@ -58,6 +59,7 @@ class _LoginPage extends State<LoginPage> {
     return Form(
       key: formKey,
       child: Scaffold(
+        appBar: MyAppBar(),
         backgroundColor: Theme.of(context).canvasColor,
         body: SafeArea(
           bottom: false,
@@ -75,6 +77,7 @@ class _LoginPage extends State<LoginPage> {
                   spacing: 20,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('Fazer Login', style: myTheme.textTheme.titleSmall),
                       ],

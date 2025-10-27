@@ -4,14 +4,14 @@ import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class ParticipantFormFields extends StatefulWidget {
   final TextEditingController nameController;
-  final TextEditingController emailController;
-  final PhoneController phoneController;
+  final TextEditingController? emailController;
+  final PhoneController? phoneController;
 
-  const ParticipantFormFields({ 
+  const ParticipantFormFields({
     super.key,
     required this.nameController,
-    required this.emailController,
-    required this.phoneController,
+    this.emailController,
+    this.phoneController,
   });
 
   @override
@@ -30,7 +30,7 @@ class _ParticipantFormFieldsState extends State<ParticipantFormFields> {
 
   String? _emailValidator(String? v) {
     if (v == null || v.trim().isEmpty) {
-      return 'Informe seu e-mail';
+      return null;
     }
     final ok = RegExp(r'^[^@]+@[^@]+\.[^@]+$').hasMatch(v.trim());
     return ok ? null : 'E-mail inválido';
@@ -71,13 +71,6 @@ class _ParticipantFormFieldsState extends State<ParticipantFormFields> {
                 PhoneFormField(
                   controller: widget.phoneController,
                   keyboardType: TextInputType.numberWithOptions(),
-                  validator: PhoneValidator.compose([
-                    PhoneValidator.required(
-                      context,
-                      errorText: "Informe seu telefone",
-                    ),
-                    PhoneValidator.validMobile(context),
-                  ]),
                   countrySelectorNavigator: CountrySelectorNavigator.dialog(
                     backgroundColor: Theme.of(context).canvasColor,
                     titleStyle: myTheme.textTheme.titleSmall,
@@ -90,8 +83,8 @@ class _ParticipantFormFieldsState extends State<ParticipantFormFields> {
                 ),
               ],
             ),
-          ]
-        )
+          ],
+        ),
       ],
     );
   }

@@ -13,10 +13,10 @@ class CreateParticipantModel {
   final String? giftPurchased;
   final String? status;
   final String? redrawVote;
-  final List<String>? wishList;
-  final List<String>? preferences;
-  final List<String>? size;
-  final List<String>? dislike;
+  final List<dynamic>? wishList;
+  final List<dynamic>? preferences;
+  final List<dynamic>? size;
+  final List<dynamic>? dislike;
 
   CreateParticipantModel({
     required this.id,

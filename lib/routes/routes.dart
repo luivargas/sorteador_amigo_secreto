@@ -8,9 +8,11 @@ import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/screens/forgot_password.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/create_group.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/edit_group.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/view_group.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/enter_group/enter_group.dart';
 import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/screens/home_screen.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/participant_form.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/teste.dart';
 import 'package:sorteador_amigo_secreto/pages/splash_screen/presentation/screens/splash_screen.dart';
@@ -22,41 +24,39 @@ final routes = GoRouter(
   routes: [
     GoRoute(
       path: '/home',
-      builder: (BuildContext context, GoRouterState state) =>
-           HomeScreen(),
+      builder: (BuildContext context, GoRouterState state) => HomeScreen(),
     ),
     GoRoute(
       path: '/access',
-      builder: (BuildContext context, GoRouterState state) =>  Access(),
+      builder: (BuildContext context, GoRouterState state) => Access(),
     ),
     GoRoute(
       path: '/create_group',
-      builder: (BuildContext context, GoRouterState state) =>
-           CreateGroup(),
+      builder: (BuildContext context, GoRouterState state) => CreateGroup(),
     ),
     GoRoute(
       path: '/enter_group',
-      builder: (BuildContext context, GoRouterState state) =>
-           EnterGroup(),
+      builder: (BuildContext context, GoRouterState state) => EnterGroup(),
     ),
     GoRoute(
       path: '/forgot_password',
-      builder: (BuildContext context, GoRouterState state) =>
-           ForgotPassword(),
+      builder: (BuildContext context, GoRouterState state) => ForgotPassword(),
     ),
     GoRoute(
       path: '/',
-      builder: (BuildContext context, GoRouterState state) =>
-           SplashScreen(),
+      builder: (BuildContext context, GoRouterState state) => SplashScreen(),
     ),
     GoRoute(
       name: 'view_group',
       path: '/view_group/:id',
-      builder: (BuildContext context, GoRouterState state){
+      builder: (BuildContext context, GoRouterState state) {
         final id = state.pathParameters['id'];
         final repo = getIt<GroupCubit>().groupUsecases;
-        return BlocProvider(create: (_) => GroupCubit(repo)..show(int.parse(id!)), child: ViewGroup(groupId: id),);
-      }
+        return BlocProvider(
+          create: (_) => GroupCubit(repo)..show(int.parse(id!)),
+          child: ViewGroup(groupId: id),
+        );
+      },
     ),
     GoRoute(
       path: '/nav_bar',
@@ -67,13 +67,29 @@ final routes = GoRouter(
       builder: (BuildContext context, GoRouterState state) =>
           FlutterContactsExample(),
     ),
-        GoRoute(
+    GoRoute(
       name: 'create_part',
-      path: '/create_part/:groupId',
-      builder: (BuildContext context, GoRouterState state){
+      path: '/create_part/:groupId/:groupCode',
+      builder: (BuildContext context, GoRouterState state) {
         final groupId = state.pathParameters['groupId'];
-        return ParticipantForm(groupId: groupId,);
-      } ,
+        final groupCode = state.pathParameters['groupCode'];
+        final repo = getIt<ParticipantCubit>().participantUsecase;
+        return BlocProvider<ParticipantCubit>(
+          create: (BuildContext context) => ParticipantCubit(repo),
+          child: ParticipantForm(groupId: groupId, groupCode: groupCode));
+      },
+    ),
+    GoRoute(
+      name: 'edit_group',
+      path: '/edit_group/:id',
+      builder: (BuildContext context, GoRouterState state) {
+        final id = state.pathParameters['id'];
+        final repo = getIt<GroupCubit>().groupUsecases;
+        return BlocProvider<GroupCubit>(
+          create: (_) => GroupCubit(repo)..show(int.parse(id!)),
+          child: EditGroup(groupId: id),
+        );
+      },
     ),
   ],
 );

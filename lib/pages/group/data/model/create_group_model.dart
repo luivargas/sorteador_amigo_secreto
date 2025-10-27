@@ -16,7 +16,7 @@ class CreateGroupModel {
   final String? raffledAt;
   final bool whatsappEnabled;
   final String? whatsappEnabledAt;
-  final String status;
+  final String? status;
   final String token;
   final List<CreateParticipantModel> participants;
 
@@ -32,7 +32,7 @@ class CreateGroupModel {
     this.description,
     this.raffledAt,
     this.whatsappEnabledAt,
-    required this.status,
+    this.status,
     required this.code,
     required this.shortCode,
     required this.name,
