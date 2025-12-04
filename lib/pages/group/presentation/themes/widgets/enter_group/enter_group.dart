@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/enter_group/enter_group_body.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/themes/widgets/enter_group/enter_group_body.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class EnterGroup extends StatefulWidget {

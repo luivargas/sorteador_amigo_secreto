@@ -1,6 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/participant_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
@@ -141,14 +145,19 @@ class ListParticipantsCard extends StatelessWidget {
                   ),
                   if (type == BadgeType.pending) ...[
                     IconButton(
-                      onPressed: () {
-                        context.pushNamed(
-                          'create_part',
+                      onPressed: () async {
+                        final result = await context.pushNamed(
+                                    'create_part',
                           pathParameters: {
                             'groupId': '$groupId',
                             'groupCode': groupCode,
                           },
                         );
+                        if (result == true) {
+                          context.read<GroupCubit>().show(
+                            int.parse('$groupId'),
+                          );
+                        }
                       },
                       icon: Icon(
                         Icons.add_circle_outline,

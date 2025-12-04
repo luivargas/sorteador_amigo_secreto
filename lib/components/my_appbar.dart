@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_button.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/themes/widgets/group_button.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/util/contants.dart';
 

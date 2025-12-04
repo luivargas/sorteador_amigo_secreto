@@ -21,6 +21,7 @@ class ParticipantState {
     bool? showed,
   }) {
     return ParticipantState(
+      error: error,
       created: created,
       deleted: deleted,
       isLoading: isLoading,

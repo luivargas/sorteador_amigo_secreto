@@ -19,14 +19,15 @@ class GroupOptions extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.horizontal_rule, size: 45,),
-              ],
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Icon(Icons.horizontal_rule, size: 45)],
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom:  15.0),
-              child: Text("Opções do grupo", style: myTheme.textTheme.titleSmall),
+              padding: const EdgeInsets.only(bottom: 15.0),
+              child: Text(
+                "Opções do grupo",
+                style: myTheme.textTheme.titleSmall,
+              ),
             ),
             Column(
               spacing: 10,
@@ -37,7 +38,12 @@ class GroupOptions extends StatelessWidget {
                     MyButton(
                       title: 'Editar grupo',
                       icon: Icons.edit_square,
-                      onTap: () {context.pushNamed('edit_group', pathParameters: {"id": groupId!});},
+                      onTap: () {
+                        context.pushNamed(
+                          'edit_group',
+                          pathParameters: {"id": groupId!},
+                        );
+                      },
                     ),
                   ],
                 ),

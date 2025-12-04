@@ -18,7 +18,7 @@ class ParticipantCubit extends Cubit<ParticipantState> {
 
   Future<void> create(CreateParticipantEntity entity, id) async {
     if (isClosed) return;
-    safeEmit(state.copyWith(isLoading: true, error: null));
+    safeEmit(state.copyWith(isLoading: true, error: null, created: false));
     try {
       final result = await participantUsecase.create(entity, id);
       result.when(
@@ -32,7 +32,7 @@ class ParticipantCubit extends Cubit<ParticipantState> {
         ),
       );
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false));
+      emit(state.copyWith(error: e.toString(), isLoading: false, created: false));
     }
   }
 }

@@ -13,6 +13,8 @@
 migrate_working_dir/
 lib/util/
 
+API_DOCUMENTATION.md
+
 # IntelliJ related
 *.iml
 *.ipr

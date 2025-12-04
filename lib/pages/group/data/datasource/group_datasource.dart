@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/database/group_db.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/datasource/group_api_result.dart';

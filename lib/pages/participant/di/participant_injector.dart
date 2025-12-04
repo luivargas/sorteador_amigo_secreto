@@ -6,6 +6,6 @@ import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/par
 
 void participantInjectors(){
   getIt.registerLazySingleton<ParticipantRepository>(() => ParticipantDatasource());
-  getIt.registerLazySingleton(() => ParticipantUsecase(getIt<ParticipantRepository>()));
-  getIt.registerLazySingleton(() => ParticipantCubit(getIt<ParticipantUsecase>()));
+  getIt.registerFactory(() => ParticipantUsecase(getIt<ParticipantRepository>()));
+  getIt.registerFactory(() => ParticipantCubit(getIt<ParticipantUsecase>()));
 }

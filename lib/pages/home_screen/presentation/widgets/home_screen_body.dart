@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_card.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/themes/widgets/group_card.dart';
 import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/database/group_db.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/isar_group_model.dart';
@@ -85,26 +85,6 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
                           ),
                         ),
                       ),
-                      // IconButton(
-                      //   onPressed: () {
-                      //     showModalBottomSheet(
-                      //       backgroundColor: Theme.of(context).canvasColor,
-                      //       context: context,
-                      //       isScrollControlled: true,
-                      //       shape: const RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.vertical(
-                      //           top: Radius.circular(20),
-                      //         ),
-                      //       ),
-                      //       builder: (context) => const FilterSheet(),
-                      //     );
-                      //   },
-                      //   icon: Icon(
-                      //     Icons.filter_alt,
-                      //     size: 30,
-                      //     color: MyColors.sorteadorOrange,
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),

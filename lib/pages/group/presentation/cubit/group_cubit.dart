@@ -71,7 +71,7 @@ class GroupCubit extends Cubit<GroupState> {
   }
 
     Future<void> update(UpdateGroupEntity entity, int id) async {
-    safeEmit(state.copyWith(isLoading: true, error: null));
+    safeEmit(state.copyWith(isLoading: true, error: null, updated: false));
     try {
       final result = await groupUsecases.update(entity, id);
       result.when(

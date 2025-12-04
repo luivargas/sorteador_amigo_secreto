@@ -2,14 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
 import 'package:sorteador_amigo_secreto/components/my_button.dart';
-import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/update_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/edit_group/edit_group_field.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/themes/widgets/edit_group/edit_group_field.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class EditGroup extends StatefulWidget {
@@ -133,7 +133,7 @@ class _EditGroup extends State<EditGroup> {
       location: location,
       drawDate: date,
     );
-    getIt<GroupCubit>().update(entity, int.parse(widget.groupId!));
+    context.read<GroupCubit>().update(entity, int.parse(widget.groupId!));
   }
 
   @override
@@ -146,6 +146,9 @@ class _EditGroup extends State<EditGroup> {
         body: BlocConsumer<GroupCubit, GroupState>(
           listener: (context, state) {
             _prefillFromApi(state);
+            if(state.updated == true){
+              context.pop();
+            }
           },
           builder: (context, state) {
             if (state.showed != true || state.isLoading != false) {
@@ -183,7 +186,9 @@ class _EditGroup extends State<EditGroup> {
                         onTapDateTime: _pickDateTime,
                       ),
                       MyButton(
-                        onTap: _onSubmit,
+                        onTap: () {
+                          _onSubmit();
+                        },
                         title: "Salvar",
                         icon: Icons.save,
                       ),

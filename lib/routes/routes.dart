@@ -9,7 +9,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cub
 import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/create_group.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/edit_group.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/view_group.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/enter_group/enter_group.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/themes/widgets/enter_group/enter_group.dart';
 import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/screens/home_screen.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/participant_form.dart';

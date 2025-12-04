@@ -1,13 +1,11 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
 import 'package:sorteador_amigo_secreto/components/my_button.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_options.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/view_group/view_group_card.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/themes/widgets/group_options.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/themes/widgets/view_group/view_group_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class ViewGroup extends StatefulWidget {
