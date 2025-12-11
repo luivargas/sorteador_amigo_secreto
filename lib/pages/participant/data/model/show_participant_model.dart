@@ -2,7 +2,6 @@ class ShowParticipantModel {
   final String id;
   final String name;
   final String? email;
-  final String? idd;
   final String? phone;
   final bool? isParticipant;
   final bool? isDependent;
@@ -22,7 +21,6 @@ class ShowParticipantModel {
     required this.id,
     required this.name,
     this.email,
-    this.idd,
     this.phone,
     this.isParticipant,
     this.isDependent,
@@ -44,7 +42,6 @@ class ShowParticipantModel {
       id: json['id'],
       name: json['name'],
       email: json['email'],
-      idd: json['idd'],
       phone: json['phone'],
       isParticipant: json['is_participant'],
       isDependent: json['is_dependent'],

@@ -35,4 +35,24 @@ class ParticipantCubit extends Cubit<ParticipantState> {
       emit(state.copyWith(error: e.toString(), isLoading: false, created: false));
     }
   }
+
+    Future<void> show(String id) async {
+    if (isClosed) return;
+    safeEmit(state.copyWith(isLoading: true, error: null, created: false));
+    try {
+      final result = await participantUsecase.show(id); 
+      result.when(
+        success: (s) => emit(state.copyWith(isLoading: false, showed: true, participant: s)),
+        failure: (f) => emit(
+          state.copyWith(
+            isLoading: false,
+            error: result.toString(),
+            created: false,
+          ),
+        ),
+      );
+    } catch (e) {
+      emit(state.copyWith(error: e.toString(), isLoading: false, created: false));
+    }
+  }
 }

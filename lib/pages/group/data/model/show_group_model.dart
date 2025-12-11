@@ -47,7 +47,7 @@ class ShowGroupModel {
       return raw.map((e) => ShowParticipantModel.fromJson(e)).toList();
     }
 
-    String parseDrawDate(dynamic raw) {
+    parseDrawDate(dynamic raw) {
       if (raw != null) {
         final drawDate = DateFormat(
           'dd/MM/yyyy HH:mm',
@@ -55,7 +55,7 @@ class ShowGroupModel {
         ).format(DateTime.parse(raw));
         return drawDate;
       }
-      return "00/00/00 00:00";
+      return null;
     }
 
     return ShowGroupModel(

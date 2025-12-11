@@ -9,6 +9,7 @@ class GroupState {
   bool? archived;
   bool? unarchived;
   bool? showed;
+  bool? raffled;
   ShowGroupModel? group;
 
   GroupState({
@@ -20,7 +21,8 @@ class GroupState {
     this.isLoading,
     this.unarchived,
     this.group,
-    this.updated
+    this.updated,
+    this.raffled,
   });
 
   GroupState copyWith({
@@ -32,6 +34,7 @@ class GroupState {
     bool? unarchived,
     bool? showed,
     bool? updated,
+    bool? raffled,
     ShowGroupModel? group,
   }) {
     return GroupState(
@@ -42,7 +45,8 @@ class GroupState {
       unarchived: unarchived,
       showed: showed,
       group: group,
-      updated: updated
+      updated: updated,
+      raffled: raffled,
     );
   }
 }

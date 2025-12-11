@@ -102,7 +102,7 @@ class _ParticipantForm extends State<ParticipantForm> {
                       ParticipantFormFields(
                         nameController: nameController,
                         emailController: emailController,
-                        phoneController: phoneController,
+                        phoneController: phoneController, readOnly: false,
                       ),
                       MyButton(
                         onTap: _onSubmit,

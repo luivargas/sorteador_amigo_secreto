@@ -18,4 +18,5 @@ class GroupUsecases {
     UpdateGroupEntity entity,
     int id,
   ) => repository.update(entity, id);
+  Future<GroupApiResult<String>>raffle(String code,int id) => repository.raffle(code, id );
 }

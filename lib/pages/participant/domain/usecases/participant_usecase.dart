@@ -17,6 +17,6 @@ class ParticipantUsecase {
     UpdateParticipantEntity entity,
     int groupId,
   ) => repository.update(entity, groupId);
-  Future<ParticipantApiResult<ShowParticipantModel>> show(int id) =>
+  Future<ParticipantApiResult<ShowParticipantModel>> show(String id) =>
       repository.show(id);
 }

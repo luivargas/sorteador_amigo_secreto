@@ -6,10 +6,12 @@ class ParticipantFormFields extends StatefulWidget {
   final TextEditingController nameController;
   final TextEditingController? emailController;
   final PhoneController? phoneController;
+  final bool readOnly;
 
   const ParticipantFormFields({
     super.key,
     required this.nameController,
+    required this.readOnly, 
     this.emailController,
     this.phoneController,
   });
@@ -19,7 +21,6 @@ class ParticipantFormFields extends StatefulWidget {
 }
 
 class _ParticipantFormFieldsState extends State<ParticipantFormFields> {
-  String? usString;
 
   String? _validator(String? v) {
     if (v == null || v.trim().isEmpty) {
@@ -44,8 +45,9 @@ class _ParticipantFormFieldsState extends State<ParticipantFormFields> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 10,
           children: [
-            Text('Seu nome'),
+            Text('Nome'),
             TextFormField(
+              readOnly: widget.readOnly,
               validator: _validator,
               controller: widget.nameController,
               decoration: const InputDecoration(
@@ -55,6 +57,7 @@ class _ParticipantFormFieldsState extends State<ParticipantFormFields> {
             ),
             Text('E-mail'),
             TextFormField(
+              readOnly: widget.readOnly,
               keyboardType: TextInputType.emailAddress,
               validator: _emailValidator,
               controller: widget.emailController,
@@ -69,6 +72,7 @@ class _ParticipantFormFieldsState extends State<ParticipantFormFields> {
               children: [
                 Text('DDD + Celular'),
                 PhoneFormField(
+                  enableInteractiveSelection: widget.readOnly,
                   controller: widget.phoneController,
                   keyboardType: TextInputType.numberWithOptions(),
                   countrySelectorNavigator: CountrySelectorNavigator.dialog(
@@ -76,7 +80,7 @@ class _ParticipantFormFieldsState extends State<ParticipantFormFields> {
                     titleStyle: myTheme.textTheme.titleSmall,
                     searchBoxTextStyle: myTheme.inputDecorationTheme.labelStyle,
                   ),
-                  enabled: true,
+                  enabled: !widget.readOnly,
                   isCountrySelectionEnabled: true,
                   isCountryButtonPersistent: true,
                   countryButtonStyle: CountryButtonStyle(),

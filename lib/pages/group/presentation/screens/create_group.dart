@@ -6,7 +6,7 @@ import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
 import 'package:sorteador_amigo_secreto/components/my_button.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/create_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/themes/widgets/create_form_group/group_form_field.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/create_form_group/group_form_field.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
@@ -69,7 +69,7 @@ class _FormGroupBody extends State<CreateGroup> {
       pickedDate.year,
       pickedDate.month,
       pickedDate.day,
-      pickedTime.hour,
+      pickedTime.hour - 3,
       pickedTime.minute,
     );
 
@@ -105,9 +105,14 @@ class _FormGroupBody extends State<CreateGroup> {
         .replaceAll("R\$", "")
         .trim();
     final location = locationController.text.trim();
-    final date = _selectedDateTime == null
+    DateTime? toSend;
+    if (_selectedDateTime != null) {
+      // aqui você gera a data que será enviada pro back (3h a menos)
+      toSend = _selectedDateTime!.subtract(const Duration(hours: 3));
+    }
+    final date = toSend == null
         ? null
-        : DateFormat('yyyy-MM-dd HH:mm:ss', 'en_US').format(_selectedDateTime!);
+        : DateFormat('yyyy-MM-dd HH:mm:ss', 'en_US').format(toSend);
     final entity = CreateGroupEntity(
       name: groupName,
       maxGiftValue: maxPrice,

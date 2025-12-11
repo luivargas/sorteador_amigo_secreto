@@ -10,4 +10,5 @@ abstract class GroupRepository {
   Future<void>delete(int id);
   Future<GroupApiResult<ShowGroupModel>>show(int id);
   Future<GroupApiResult<UpdateGroupModel>>update(UpdateGroupEntity entity, int id);
+  Future<GroupApiResult<String>>raffle(String code,int id, );
 }

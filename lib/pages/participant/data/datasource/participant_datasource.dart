@@ -41,11 +41,11 @@ class ParticipantDatasource extends ParticipantRepository {
   }
 
   @override
-  Future<ParticipantApiResult<ShowParticipantModel>> show(int id) async {
+  Future<ParticipantApiResult<ShowParticipantModel>> show(String id) async {
     Response resp;
     try {
       resp = await dio.get(
-        stageParticipantApiUrl,
+        "$stageParticipantApiUrl/$id",
         options: Options(headers: {'Authorization': bearerToken}),
       );
       final model = ShowParticipantModel.fromJson(resp.data);

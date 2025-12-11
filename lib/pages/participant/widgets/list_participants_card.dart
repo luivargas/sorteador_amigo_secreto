@@ -36,7 +36,12 @@ class ListParticipantsCard extends StatelessWidget {
             itemBuilder: (context, index) {
               final f = participantsList[0];
               return InkWell(
-                onTap: () {},
+                onTap: () {
+                  context.pushNamed(
+                    'view_parti',
+                    pathParameters: {'userId': f.id},
+                  );
+                },
                 child: ParticipantCard(
                   contact: f.email ?? f.phone!,
                   name: f.name,
@@ -85,7 +90,12 @@ class ListParticipantsCard extends StatelessWidget {
             itemBuilder: (context, index) {
               final p = participantsList[index];
               return InkWell(
-                onTap: () {},
+                onTap: () {
+                  context.pushNamed(
+                    'view_parti',
+                    pathParameters: {'userId': p.id},
+                  );
+                },
                 child: ParticipantCard(
                   contact: p.email ?? p.phone!,
                   name: p.name,
@@ -147,7 +157,7 @@ class ListParticipantsCard extends StatelessWidget {
                     IconButton(
                       onPressed: () async {
                         final result = await context.pushNamed(
-                                    'create_part',
+                          'create_part',
                           pathParameters: {
                             'groupId': '$groupId',
                             'groupCode': groupCode,

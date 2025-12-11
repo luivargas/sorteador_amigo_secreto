@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/themes/widgets/group_card.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_card.dart';
 import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/database/group_db.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/isar_group_model.dart';
-//import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/widgets/filter_sheet.dart';
 
 class HomeScreenBody extends StatefulWidget {
   final TextEditingController searchControler;
@@ -21,7 +20,6 @@ class _HomeScreenBodyState extends State<HomeScreenBody>
   late final SlidableController slideController = SlidableController(this);
   final RefreshController _refreshController = RefreshController();
 
-  // Tornar mutável para poder recarregar no pull-to-refresh
   late Future<List<IsarGroupModel>> _futureGroups;
 
   @override

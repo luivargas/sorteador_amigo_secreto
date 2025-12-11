@@ -9,7 +9,7 @@ import 'package:sorteador_amigo_secreto/components/my_button.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/update_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/themes/widgets/edit_group/edit_group_field.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/edit_group/edit_group_field.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class EditGroup extends StatefulWidget {
@@ -45,6 +45,7 @@ class _EditGroup extends State<EditGroup> {
 
   void _prefillFromApi(GroupState state) {
     if (_prefilledOnce) return;
+    if (state.group == null) return;
     final g = state.group!;
 
     groupNameController.text = g.name;
@@ -52,7 +53,28 @@ class _EditGroup extends State<EditGroup> {
     locationController.text = g.location ?? '';
     minPriceController.text = g.minGiftValue ?? '';
     maxPriceController.text = g.maxGiftValue ?? '';
-    dateTimeController.text = g.drawDate ?? '';
+    if (g.drawDate != null && g.drawDate!.isNotEmpty) {
+      try {
+        // parse do formato da API
+        final parsed = DateFormat('dd/MM/yyyy HH:mm').parse(g.drawDate!);
+        final dt = DateTime(
+          parsed.year,
+          parsed.month,
+          parsed.day,
+          parsed.hour,
+          parsed.minute,
+        );
+        _selectedDateTime = dt;
+        dateTimeController.text = g.drawDate!;
+      } catch (_) {
+        // se der ruim no parse, pelo menos mostra o valor cru
+        dateTimeController.text = g.drawDate!;
+      }
+    } else {
+      dateTimeController.text = '';
+      _selectedDateTime = null;
+    }
+
     _prefilledOnce = true;
   }
 
@@ -62,7 +84,7 @@ class _EditGroup extends State<EditGroup> {
     final now = DateTime.now();
 
     // 1) Data
-    final pickedDate = await showDatePicker(
+    var pickedDate = await showDatePicker(
       context: context,
       initialDate: _selectedDateTime ?? now,
       firstDate: DateTime(now.year - 100),
@@ -72,10 +94,11 @@ class _EditGroup extends State<EditGroup> {
       cancelText: 'Cancelar',
       confirmText: 'OK',
     );
+
     if (pickedDate == null) return;
 
     // 2) Hora
-    final pickedTime = await showTimePicker(
+    var pickedTime = await showTimePicker(
       initialEntryMode: TimePickerEntryMode.inputOnly,
       context: context,
       initialTime: _selectedDateTime == null
@@ -111,6 +134,7 @@ class _EditGroup extends State<EditGroup> {
     if (!isValid) return;
 
     _formKey.currentState?.save();
+
     final description = descriptionController.text.trim();
     final groupName = groupNameController.text.trim();
     final minPrice = minPriceController.text
@@ -122,9 +146,13 @@ class _EditGroup extends State<EditGroup> {
         .replaceAll("R\$", "")
         .trim();
     final location = locationController.text.trim();
-    final date = _selectedDateTime == null
+    DateTime? toSend;
+    if (_selectedDateTime != null) {
+      toSend = _selectedDateTime!.subtract(const Duration(hours: 3));
+    }
+    final date = toSend == null
         ? null
-        : DateFormat('yyyy-MM-dd HH:mm:ss', 'en_US').format(_selectedDateTime!);
+        : DateFormat('yyyy-MM-dd HH:mm:ss', 'en_US').format(toSend);
     final entity = UpdateGroupEntity(
       description: description,
       name: groupName,
@@ -146,7 +174,7 @@ class _EditGroup extends State<EditGroup> {
         body: BlocConsumer<GroupCubit, GroupState>(
           listener: (context, state) {
             _prefillFromApi(state);
-            if(state.updated == true){
+            if (state.updated == true) {
               context.pop();
             }
           },
