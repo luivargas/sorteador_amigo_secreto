@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+import 'package:go_router/go_router.dart';
+// import 'package:intl/intl.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
 import 'package:sorteador_amigo_secreto/components/my_button.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/create_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/create_form_group/group_form_field.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
@@ -25,63 +27,63 @@ class _FormGroupBody extends State<CreateGroup> {
   final PhoneController phoneController = PhoneController(
     initialValue: PhoneNumber(isoCode: IsoCode.BR, nsn: ''),
   );
-  final TextEditingController minPriceController = TextEditingController();
-  final TextEditingController maxPriceController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController dateTimeController = TextEditingController();
-  final TextEditingController locationController = TextEditingController();
-  DateTime? _selectedDateTime;
+  // final TextEditingController minPriceController = TextEditingController();
+  // final TextEditingController maxPriceController = TextEditingController();
+  // final TextEditingController descriptionController = TextEditingController();
+  // final TextEditingController dateTimeController = TextEditingController();
+  // final TextEditingController locationController = TextEditingController();
+  // DateTime? _selectedDateTime;
 
-  Future<void> _pickDateTime() async {
-    FocusScope.of(context).unfocus();
+  // Future<void> _pickDateTime() async {
+  //   FocusScope.of(context).unfocus();
 
-    final now = DateTime.now();
+  //   final now = DateTime.now();
 
-    // 1) Data
-    final pickedDate = await showDatePicker(
-      context: context,
-      initialDate: _selectedDateTime ?? now,
-      firstDate: DateTime(now.year - 100),
-      lastDate: DateTime(now.year + 5),
-      locale: const Locale('pt', 'BR'),
-      helpText: 'Selecione a data',
-      cancelText: 'Cancelar',
-      confirmText: 'OK',
-    );
-    if (pickedDate == null) return;
+  //   // 1) Data
+  //   final pickedDate = await showDatePicker(
+  //     context: context,
+  //     initialDate: _selectedDateTime ?? now,
+  //     firstDate: DateTime(now.year - 100),
+  //     lastDate: DateTime(now.year + 5),
+  //     locale: const Locale('pt', 'BR'),
+  //     helpText: 'Selecione a data',
+  //     cancelText: 'Cancelar',
+  //     confirmText: 'OK',
+  //   );
+  //   if (pickedDate == null) return;
 
-    // 2) Hora
-    final pickedTime = await showTimePicker(
-      initialEntryMode: TimePickerEntryMode.inputOnly,
-      // ignore: use_build_context_synchronously
-      context: context,
-      initialTime: _selectedDateTime == null
-          ? TimeOfDay.fromDateTime(now)
-          : TimeOfDay.fromDateTime(_selectedDateTime!),
-      helpText: 'Selecione o horário',
-      cancelText: 'Cancelar',
-      confirmText: 'OK',
-    );
-    if (pickedTime == null) return;
+  //   // 2) Hora
+  //   final pickedTime = await showTimePicker(
+  //     initialEntryMode: TimePickerEntryMode.inputOnly,
+  //     // ignore: use_build_context_synchronously
+  //     context: context,
+  //     initialTime: _selectedDateTime == null
+  //         ? TimeOfDay.fromDateTime(now)
+  //         : TimeOfDay.fromDateTime(_selectedDateTime!),
+  //     helpText: 'Selecione o horário',
+  //     cancelText: 'Cancelar',
+  //     confirmText: 'OK',
+  //   );
+  //   if (pickedTime == null) return;
 
-    // 3) Combina e atualiza
-    final dt = DateTime(
-      pickedDate.year,
-      pickedDate.month,
-      pickedDate.day,
-      pickedTime.hour - 3,
-      pickedTime.minute,
-    );
+  //   // 3) Combina e atualiza
+  //   final dt = DateTime(
+  //     pickedDate.year,
+  //     pickedDate.month,
+  //     pickedDate.day,
+  //     pickedTime.hour - 3,
+  //     pickedTime.minute,
+  //   );
 
-    // mostra no campo em pt-BR
-    dateTimeController.text = DateFormat(
-      'dd/MM/yyyy HH:mm',
-      'pt_BR',
-    ).format(dt);
+  //   // mostra no campo em pt-BR
+  //   dateTimeController.text = DateFormat(
+  //     'dd/MM/yyyy HH:mm',
+  //     'pt_BR',
+  //   ).format(dt);
 
-    // guarda o valor cru
-    setState(() => _selectedDateTime = dt);
-  }
+  //   // guarda o valor cru
+  //   setState(() => _selectedDateTime = dt);
+  // }
 
   void _onSubmit() {
     final isValid = _formKey.currentState?.validate() ?? false;
@@ -96,30 +98,30 @@ class _FormGroupBody extends State<CreateGroup> {
       '+$idd',
       '',
     );
-    final minPrice = minPriceController.text
-        .replaceAll(",", ".")
-        .replaceAll("R\$", "")
-        .trim();
-    final maxPrice = maxPriceController.text
-        .replaceAll(",", ".")
-        .replaceAll("R\$", "")
-        .trim();
-    final location = locationController.text.trim();
-    DateTime? toSend;
-    if (_selectedDateTime != null) {
-      // aqui você gera a data que será enviada pro back (3h a menos)
-      toSend = _selectedDateTime!.subtract(const Duration(hours: 3));
-    }
-    final date = toSend == null
-        ? null
-        : DateFormat('yyyy-MM-dd HH:mm:ss', 'en_US').format(toSend);
+    // final minPrice = minPriceController.text
+    //     .replaceAll(",", ".")
+    //     .replaceAll("R\$", "")
+    //     .trim();
+    // final maxPrice = maxPriceController.text
+    //     .replaceAll(",", ".")
+    //     .replaceAll("R\$", "")
+    //     .trim();
+    // final location = locationController.text.trim();
+    // DateTime? toSend;
+    // if (_selectedDateTime != null) {
+    //   toSend = _selectedDateTime!.subtract(const Duration(hours: 3));
+    // }
+    // final date = toSend == null
+    //     ? null
+    //     : DateFormat('yyyy-MM-dd HH:mm:ss', 'en_US').format(toSend);
     final entity = CreateGroupEntity(
       name: groupName,
-      maxGiftValue: maxPrice,
-      minGiftValue: minPrice,
-      location: location,
-      drawDate: date,
-      description: descriptionController.text.trim(),
+
+      // maxGiftValue: maxPrice,
+      // minGiftValue: minPrice,
+      // description: descriptionController.text.trim(),
+      // location: location,
+      // drawDate: date,
       admin: CreateParticipantEntity(
         name: name,
         email: email,
@@ -137,54 +139,76 @@ class _FormGroupBody extends State<CreateGroup> {
       child: Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
         appBar: MyAppBar(),
-        body: ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: 300,
-            maxWidth: 600,
-            minHeight: 400,
-            maxHeight: 800,
-          ),
-          child: SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).canvasColor,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+        body: BlocConsumer<GroupCubit, GroupState>(
+          listenWhen: (previous, current) =>
+              previous.isLoading == true &&
+              current.isLoading == false &&
+              current.created == true,
+          listener: (context, state) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  "Grupo ${groupNameController.text} criado com sucesso!",
+                ),
+                showCloseIcon: true,
+              ),
+            );
+            context.pop(true);
+          },
+          builder: (context, state) {
+            if (state.isLoading == true) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return ConstrainedBox(
+              constraints: BoxConstraints(
+                minWidth: 300,
+                maxWidth: 600,
+                minHeight: 400,
+                maxHeight: 900,
+              ),
+              child: SingleChildScrollView(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).canvasColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 40),
+                    child: Column(
+                      spacing: 20,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Crie seu grupo agora!',
+                          style: myTheme.textTheme.titleSmall,
+                        ),
+                        GroupFormFields(
+                          groupNameController: groupNameController,
+                          nameController: nameController,
+                          emailController: emailController,
+                          phoneController: phoneController,
+                          // dateTimeController: dateTimeController,
+                          // descriptionController: descriptionController,
+                          // minPriceController: minPriceController,
+                          // maxPriceController: maxPriceController,
+                          // addressController: locationController,¸
+                          // onTapDateTime: _pickDateTime,
+                        ),
+                        MyButton(
+                          onTap: _onSubmit,
+                          title: "Criar grupo",
+                          icon: Icons.create,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 50),
-                child: Column(
-                  spacing: 20,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Crie seu grupo agora!',
-                      style: myTheme.textTheme.titleSmall,
-                    ),
-                    GroupFormFields(
-                      groupNameController: groupNameController,
-                      dateTimeController: dateTimeController,
-                      descriptionController: descriptionController,
-                      minPriceController: minPriceController,
-                      maxPriceController: maxPriceController,
-                      addressController: locationController,
-                      nameController: nameController,
-                      emailController: emailController,
-                      phoneController: phoneController,
-                      onTapDateTime: _pickDateTime,
-                    ),
-                    MyButton(
-                      onTap: _onSubmit,
-                      title: "Criar grupo",
-                      icon: Icons.create,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );

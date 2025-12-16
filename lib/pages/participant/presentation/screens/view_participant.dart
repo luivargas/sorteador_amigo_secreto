@@ -6,7 +6,7 @@ import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
 import 'package:sorteador_amigo_secreto/components/my_button.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/widgets/participant_form_field.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/widgets/view_participant_form_fields.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
@@ -52,7 +52,6 @@ class _ViewParticipant extends State<ViewParticipant> {
     phoneController.value = PhoneNumber(isoCode: IsoCode.BR, nsn: phone);
     _prefilledOnce = true;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -122,11 +121,12 @@ class _ViewParticipant extends State<ViewParticipant> {
                                 scale: 25,
                               ),
                             ),
-                            ParticipantFormFields(
+                            ViewParticipantFormFields(
                               nameController: nameController,
                               readOnly: readOnly,
                               phoneController: phoneController,
                               emailController: emailController,
+                              participant: state.participant!,
                             ),
                             TextButton(
                               onPressed: () {
@@ -134,7 +134,10 @@ class _ViewParticipant extends State<ViewParticipant> {
                                   readOnly = !readOnly;
                                 });
                               },
-                              child: Text('Editar', style: Theme.of(context).textTheme.titleSmall,),
+                              child: Text(
+                                'Editar',
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),

@@ -12,8 +12,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/view_gr
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/enter_group/enter_group.dart';
 import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/screens/home_screen.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/edit_paticipant.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/participant_form.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/create_participant.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/teste.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/view_participant.dart';
 import 'package:sorteador_amigo_secreto/pages/splash_screen/presentation/screens/splash_screen.dart';
@@ -30,8 +29,15 @@ final routes = GoRouter(
       builder: (BuildContext context, GoRouterState state) => Access(),
     ),
     GoRoute(
+      name: 'create_group',
       path: '/create_group',
-      builder: (BuildContext context, GoRouterState state) => CreateGroup(),
+      builder: (BuildContext context, GoRouterState state) {
+        final repo = getIt<GroupCubit>().groupUsecases;
+        return BlocProvider<GroupCubit>(
+          create: (BuildContext context) => GroupCubit(repo),
+          child:  CreateGroup(),
+        );
+      },
     ),
     GoRoute(
       path: '/enter_group',
@@ -75,7 +81,7 @@ final routes = GoRouter(
         final repo = getIt<ParticipantCubit>().participantUsecase;
         return BlocProvider<ParticipantCubit>(
           create: (BuildContext context) => ParticipantCubit(repo),
-          child: ParticipantForm(groupId: groupId, groupCode: groupCode),
+          child: CreateParticipant(groupId: groupId, groupCode: groupCode),
         );
       },
     ),
@@ -88,18 +94,6 @@ final routes = GoRouter(
         return BlocProvider<GroupCubit>(
           create: (_) => GroupCubit(repo)..show(int.parse(id!)),
           child: EditGroup(groupId: id),
-        );
-      },
-    ),
-    GoRoute(
-      name: 'edit_parti',
-      path: '/edit_parti/:userId',
-      builder: (BuildContext context, GoRouterState state) {
-        final userId = state.pathParameters['userId'];
-        final repo = getIt<ParticipantCubit>().participantUsecase;
-        return BlocProvider<ParticipantCubit>(
-          create: (_) => ParticipantCubit(repo)..show(userId!),
-          child: EditPaticipant(userId: userId),
         );
       },
     ),

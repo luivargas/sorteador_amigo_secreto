@@ -69,7 +69,7 @@ class ViewGroupCard extends StatelessWidget {
                 child: Column(
                   children: [
                     StatCard(
-                      value: 'R\$ $minGiftValue - $maxGiftValue',
+                      value: 'R\$ $minGiftValue - R\$ $maxGiftValue',
                       label: 'Valor sugerido',
                       icon: Icons.monetization_on,
                     ),

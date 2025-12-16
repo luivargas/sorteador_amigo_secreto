@@ -1,26 +1,34 @@
+// ignore_for_file: unrelated_type_equality_checks
 import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
-class ParticipantFormFields extends StatefulWidget {
+enum ParticipantRole { admin }
+
+class ViewParticipantFormFields extends StatefulWidget {
   final TextEditingController nameController;
-  final TextEditingController? emailController;
-  final PhoneController? phoneController;
+  final TextEditingController emailController;
+  final PhoneController phoneController;
+  final ShowParticipantModel participant;
   final bool readOnly;
 
-  const ParticipantFormFields({
+  const ViewParticipantFormFields({
     super.key,
     required this.nameController,
-    required this.readOnly, 
-    this.emailController,
-    this.phoneController,
+    required this.readOnly,
+    required this.emailController,
+    required this.phoneController,
+    required this.participant,
   });
 
   @override
-  State<ParticipantFormFields> createState() => _ParticipantFormFieldsState();
+  State<ViewParticipantFormFields> createState() =>
+      _ViewParticipantFormFields();
 }
 
-class _ParticipantFormFieldsState extends State<ParticipantFormFields> {
+class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
+  late ShowParticipantModel data = widget.participant;
 
   String? _validator(String? v) {
     if (v == null || v.trim().isEmpty) {
@@ -30,11 +38,15 @@ class _ParticipantFormFieldsState extends State<ParticipantFormFields> {
   }
 
   String? _emailValidator(String? v) {
-    if (v == null || v.trim().isEmpty) {
-      return null;
+    if (data.role == ParticipantRole.admin) {
+      if (v == null || v.trim().isEmpty) {
+        return 'Informe seu e-mail';
+      }
+      final ok = RegExp(r'^[^@]+@[^@]+\.[^@]+$').hasMatch(v.trim());
+      return ok ? null : 'E-mail inválido';
     }
-    final ok = RegExp(r'^[^@]+@[^@]+\.[^@]+$').hasMatch(v.trim());
-    return ok ? null : 'E-mail inválido';
+
+    return null;
   }
 
   @override

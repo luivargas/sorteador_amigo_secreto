@@ -26,7 +26,9 @@ class GroupButton extends StatelessWidget {
                     'Crie um novo grupo do zero',
                     style: TextStyle(color: Colors.white),
                   ),
-                  onTap: () => context.push("/create_group"),
+                  onTap: () async {
+                    context.push("/create_group");
+                  },
                 ),
               ],
             ),

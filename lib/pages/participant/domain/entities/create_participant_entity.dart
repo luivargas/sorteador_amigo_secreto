@@ -40,7 +40,5 @@ class CreateParticipantEntity {
     'size': size,
     'dislike': dislike,
     'group_code': groupCode,
-    "status":"confirmed",
-    "view_status":"not_viewed",
   };
 }

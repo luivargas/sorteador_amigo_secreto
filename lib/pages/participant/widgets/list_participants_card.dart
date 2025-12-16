@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:math';
+
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,9 +34,9 @@ class ListParticipantsCard extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             separatorBuilder: (_, _) => Container(),
-            itemCount: 1,
+            itemCount: min(participantsList.length, 6),
             itemBuilder: (context, index) {
-              final f = participantsList[0];
+              final f = participantsList[index];
               return InkWell(
                 onTap: () {
                   context.pushNamed(
@@ -43,7 +45,7 @@ class ListParticipantsCard extends StatelessWidget {
                   );
                 },
                 child: ParticipantCard(
-                  contact: f.email ?? f.phone!,
+                  contact: f.email ?? f.phone ?? "",
                   name: f.name,
                   id: f.id,
                 ),
@@ -59,7 +61,7 @@ class ListParticipantsCard extends StatelessWidget {
                     context,
                     required: true,
                   )!;
-                  if (participantsList.length >= 2) {
+                  if (participantsList.length > 6) {
                     return Expanded(
                       child: ElevatedButton.icon(
                         label: Text('Ver todos participantes'),
@@ -97,7 +99,7 @@ class ListParticipantsCard extends StatelessWidget {
                   );
                 },
                 child: ParticipantCard(
-                  contact: p.email ?? p.phone!,
+                  contact: p.email ?? p.phone ?? "",
                   name: p.name,
                   id: p.id,
                 ),

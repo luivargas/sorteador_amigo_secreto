@@ -127,9 +127,9 @@ class GroupDatasource extends GroupRepository {
   // }
 
   @override
-  Future<GroupApiResult<String>> raffle(String code,int id) async {
+  Future<GroupApiResult<String>> raffle(String code, int id) async {
     try {
-      final acessKey = GroupDB().getAccesKeyById(id);
+      final acessKey = await GroupDB().getAccesKeyById(id);
       final resp = await dio.post(
         '$stageGroupApiUrl/$code/raffle',
         options: Options(

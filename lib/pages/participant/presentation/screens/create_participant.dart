@@ -7,23 +7,22 @@ import 'package:sorteador_amigo_secreto/components/my_button.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/widgets/participant_form_field.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/widgets/create_participant_form_fields.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
-class ParticipantForm extends StatefulWidget {
+class CreateParticipant extends StatefulWidget {
   final String? groupId;
   final String? groupCode;
-  const ParticipantForm({super.key, this.groupId, this.groupCode});
+  const CreateParticipant({super.key, this.groupId, this.groupCode});
 
   @override
-  State<ParticipantForm> createState() => _ParticipantForm();
+  State<CreateParticipant> createState() => _CreateParticipant();
 }
 
-class _ParticipantForm extends State<ParticipantForm> {
-  bool isAdmin = false;
+class _CreateParticipant extends State<CreateParticipant> {
   Color activeColor = MyColors.sorteadorOrange;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _createFormKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final PhoneController phoneController = PhoneController(
@@ -31,10 +30,11 @@ class _ParticipantForm extends State<ParticipantForm> {
   );
 
   void _onSubmit() {
-    final isValid = _formKey.currentState?.validate() ?? false;
+    if (_createFormKey.currentState!.validate()) {}
+    final isValid = _createFormKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
-    _formKey.currentState?.save();
+    _createFormKey.currentState?.save();
     final email = emailController.text.trim();
     final name = nameController.text.trim();
     final idd = phoneController.value.countryCode.trim();
@@ -47,7 +47,7 @@ class _ParticipantForm extends State<ParticipantForm> {
       email: email,
       phone: phone,
       idd: idd,
-      role: isAdmin ? "admin" : "participant",
+      role: "participant",
       groupCode: widget.groupCode,
     );
     context.read<ParticipantCubit>().create(entity, int.parse(widget.groupId!));
@@ -56,7 +56,8 @@ class _ParticipantForm extends State<ParticipantForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: _createFormKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Scaffold(
         appBar: MyAppBar(),
         backgroundColor: Theme.of(context).canvasColor,
@@ -99,10 +100,10 @@ class _ParticipantForm extends State<ParticipantForm> {
                         'Adicionar participante',
                         style: myTheme.textTheme.titleSmall,
                       ),
-                      ParticipantFormFields(
+                      CreateParticipantFormFields(
                         nameController: nameController,
                         emailController: emailController,
-                        phoneController: phoneController, readOnly: false,
+                        phoneController: phoneController,
                       ),
                       MyButton(
                         onTap: _onSubmit,

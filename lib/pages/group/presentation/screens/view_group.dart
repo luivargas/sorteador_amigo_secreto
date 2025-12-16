@@ -24,8 +24,8 @@ class _ViewGroupBody extends State<ViewGroup> {
     await context.read<GroupCubit>().show(int.parse(widget.groupId!));
   }
 
-  Future<void> _onSubmit(String code, int id) async{
-   await context.read<GroupCubit>().raffle(code, id);
+  Future<void> _onSubmit(String code, int id) async {
+    await context.read<GroupCubit>().raffle(code, id);
   }
 
   @override
@@ -51,13 +51,23 @@ class _ViewGroupBody extends State<ViewGroup> {
         ],
       ),
       backgroundColor: Theme.of(context).canvasColor,
-      body: BlocBuilder<GroupCubit, GroupState>(
+      body: BlocConsumer<GroupCubit, GroupState>(
+        listenWhen: (previous, current) =>
+            previous.isLoading == true &&
+            current.isLoading == false &&
+            current.raffled == true,
+        listener: (context, state) => _onRefresh(),
+
         builder: (context, state) {
-          if (state.showed != true || state.isLoading != false) {
+          if (state.isLoading == true) {
             return const Center(child: CircularProgressIndicator());
           }
           if (state.error != null) {
-            return Center(child: Text('Tente novamente'));
+            return SmartRefresher(
+              controller: _refreshController,
+              onRefresh: _onRefresh,
+              child: Text('Tente novamente'),
+            );
           }
           return SmartRefresher(
             controller: _refreshController,
@@ -65,7 +75,7 @@ class _ViewGroupBody extends State<ViewGroup> {
             child: ListView(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 0),
+                  padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 60),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -99,12 +109,16 @@ class _ViewGroupBody extends State<ViewGroup> {
                           groupCode: state.group!.code,
                         ),
                       ),
-                      if (state.group?.raffledAt == null) ...[
+                      if (state.group?.raffledAt == null &&
+                          state.group!.participants.length >= 2) ...[
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0, bottom: 40),
                           child: MyButton(
                             onTap: () {
-                              _onSubmit(state.group!.code, int.parse(widget.groupId!));
+                              _onSubmit(
+                                state.group!.code,
+                                int.parse(widget.groupId!),
+                              );
                             },
                             title: "Sortear",
                             icon: Icons.draw,
