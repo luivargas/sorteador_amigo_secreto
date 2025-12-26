@@ -60,7 +60,7 @@ class _GroupFormFields extends State<GroupFormFields> {
             Text('E-mail'),
             TextFormField(
               keyboardType: TextInputType.emailAddress,
-              validator: (_) =>  ValidatorUtils.emailValidator(v: widget.nameController.text),
+              validator: (_) =>  ValidatorUtils.emailValidator(v: widget.emailController.text),
               controller: widget.emailController,
               decoration: const InputDecoration(
                 hintText: 'Ex: simba@disney.com',

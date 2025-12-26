@@ -1,7 +1,4 @@
-// ignore_for_file: void_checks
-
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_card.dart';
@@ -17,11 +14,10 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-  with SingleTickerProviderStateMixin {
-  late final SlidableController slideController = SlidableController(this);
+class _HomeScreenState extends State<HomeScreen> {
   final RefreshController _refreshController = RefreshController();
   final TextEditingController searchControler = TextEditingController();
+
   late Future<List<IsarGroupModel>> _futureGroups;
 
   @override
@@ -32,11 +28,12 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _onSearchChanged() {
+    if (!mounted) return;
     setState(() {});
   }
 
-  // ignore: strict_top_level_inference
-  dynamic _reload() {
+  void _reload() {
+    if (!mounted) return;
     setState(() {
       _futureGroups = GroupDB().getAllGroups();
     });
@@ -44,13 +41,14 @@ class _HomeScreenState extends State<HomeScreen>
 
   Future<void> _onRefresh() async {
     _reload();
+    if (!mounted) return;
     _refreshController.refreshCompleted();
   }
 
   @override
   void dispose() {
     searchControler.removeListener(_onSearchChanged);
-    slideController.dispose();
+    searchControler.dispose();
     _refreshController.dispose();
     super.dispose();
   }
@@ -68,25 +66,19 @@ class _HomeScreenState extends State<HomeScreen>
             slivers: [
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  child: MyHomeAppBar(reload: _reload()),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: MyHomeAppBar(reload: _reload), // ✅ sem ()
                 ),
               ),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: searchControler,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.search),
-                            hintText: 'Buscar grupo',
-                          ),
-                        ),
-                      ),
-                    ],
+                  child: TextField(
+                    controller: searchControler,
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.search),
+                      hintText: 'Buscar grupo',
+                    ),
                   ),
                 ),
               ),
@@ -97,22 +89,24 @@ class _HomeScreenState extends State<HomeScreen>
                     if (snap.connectionState == ConnectionState.waiting) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 40),
-                        child: Center(child: CircularProgressIndicator(color: myProgressIndicator.color,)),
+                        child: Center(
+                          child: CircularProgressIndicator(color: myProgressIndicator.color),
+                        ),
                       );
                     }
+
                     if (snap.hasError) {
                       return Padding(
                         padding: const EdgeInsets.all(20),
                         child: Text('Erro ao carregar grupos: ${snap.error}'),
                       );
                     }
+
                     final data = snap.data ?? const <IsarGroupModel>[];
                     final q = searchControler.text.trim().toLowerCase();
                     final filtered = q.isEmpty
                         ? data
-                        : data
-                              .where((g) => (g.name).toLowerCase().contains(q))
-                              .toList();
+                        : data.where((g) => g.name.toLowerCase().contains(q)).toList();
 
                     if (filtered.isEmpty) {
                       return const Padding(
@@ -120,11 +114,12 @@ class _HomeScreenState extends State<HomeScreen>
                         child: Center(child: Text('Nenhum grupo encontrado')),
                       );
                     }
+
                     return ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: filtered.length,
-                      separatorBuilder: (_, _) => Container(),
+                      separatorBuilder: (_, __) => const SizedBox.shrink(),
                       itemBuilder: (context, index) {
                         final g = filtered[index];
                         return InkWell(
@@ -135,7 +130,6 @@ class _HomeScreenState extends State<HomeScreen>
                             );
                           },
                           child: GroupCard(
-                            slideController: slideController,
                             index: index,
                             groupName: g.name,
                             groupId: g.id,

@@ -23,8 +23,12 @@ class MyApp extends StatelessWidget {
     return ResponsiveApp(
       builder: (context) {
         return RefreshConfiguration(
-          headerBuilder: () => WaterDropHeader(
+          headerBuilder: 
+           () => WaterDropHeader(
+            complete: Text('Atualizado!'),
+            refresh: Text("Atualizando..."),
             waterDropColor: MyColors.sorteadorOrange,
+            completeDuration: Duration(milliseconds: 800),
           ), // Configure the default header indicator. If you have the same header indicator for each page, you need to set this
           footerBuilder: () =>
               ClassicFooter(), // Configure default bottom indicator

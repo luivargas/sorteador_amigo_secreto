@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen>
                     if (state.isLoading == false || state.isLogged != null) {
                       Future.delayed(Duration(seconds: 3)).then((value) {
                         if (context.mounted) {
-                          context.go('/home');
+                          context.go('/nav_bar');
                         }
                       });
                     }

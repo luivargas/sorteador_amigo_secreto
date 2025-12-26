@@ -27,7 +27,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class MyHomeAppBar extends StatelessWidget {
-  final dynamic reload;
+  final VoidCallback reload;
   const MyHomeAppBar({super.key, required this.reload});
 
   @override
@@ -36,15 +36,11 @@ class MyHomeAppBar extends StatelessWidget {
     final actions = IconButton(
       onPressed: () async {
         final result = await context.push("/create_group");
+        if (!context.mounted) return;
         if (result == true) {
-          reload;
+          reload();
         }
       },
-      // () => showModalBottomSheet<void>(
-      //   backgroundColor: Theme.of(context).canvasColor,
-      //   context: context,
-      //   builder: (context) => GroupButton(),
-      // ),
       icon: Icon(Icons.add_circle, color: MyColors.sorteadorOrange, size: 30),
     );
 
