@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 // import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_button.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
-import 'package:sorteador_amigo_secreto/util/contants.dart';
+import 'package:sorteador_amigo_secreto/core/network/contants.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   List<Widget>? actions;
@@ -27,7 +27,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class MyHomeAppBar extends StatelessWidget {
-  final void reload;
+  final dynamic reload;
   const MyHomeAppBar({super.key, required this.reload});
 
   @override

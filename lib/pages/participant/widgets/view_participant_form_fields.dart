@@ -3,23 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
+import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
 
-enum ParticipantRole { admin }
+enum ParticipantRole { admin, participant, observer }
 
 class ViewParticipantFormFields extends StatefulWidget {
+  final ShowParticipantModel participant;
   final TextEditingController nameController;
   final TextEditingController emailController;
   final PhoneController phoneController;
-  final ShowParticipantModel participant;
+
   final bool readOnly;
 
   const ViewParticipantFormFields({
     super.key,
+    required this.participant,
     required this.nameController,
     required this.readOnly,
     required this.emailController,
     required this.phoneController,
-    required this.participant,
   });
 
   @override
@@ -28,24 +30,14 @@ class ViewParticipantFormFields extends StatefulWidget {
 }
 
 class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
-  late ShowParticipantModel data = widget.participant;
-
-  String? _validator(String? v) {
-    if (v == null || v.trim().isEmpty) {
-      return 'Campo obrigatório';
-    }
-    return null;
-  }
-
   String? _emailValidator(String? v) {
+    ShowParticipantModel data = widget.participant;
     if (data.role == ParticipantRole.admin) {
-      if (v == null || v.trim().isEmpty) {
-        return 'Informe seu e-mail';
-      }
-      final ok = RegExp(r'^[^@]+@[^@]+\.[^@]+$').hasMatch(v.trim());
-      return ok ? null : 'E-mail inválido';
+      return ValidatorUtils.emailValidator(v: v);
     }
-
+    if (data.role != ParticipantRole.admin && v != null) {
+      return ValidatorUtils.isValidEmail(v: v);
+    }
     return null;
   }
 
@@ -60,7 +52,8 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
             Text('Nome'),
             TextFormField(
               readOnly: widget.readOnly,
-              validator: _validator,
+              validator: (_) =>
+                  ValidatorUtils.nameValidator(v: widget.nameController.text),
               controller: widget.nameController,
               decoration: const InputDecoration(
                 hintText: 'Ex: Simba',
@@ -92,6 +85,9 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
                     titleStyle: myTheme.textTheme.titleSmall,
                     searchBoxTextStyle: myTheme.inputDecorationTheme.labelStyle,
                   ),
+                  validator: PhoneValidator.compose([
+                    PhoneValidator.validMobile(context),
+                  ]),
                   enabled: !widget.readOnly,
                   isCountrySelectionEnabled: true,
                   isCountryButtonPersistent: true,

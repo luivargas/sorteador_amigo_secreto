@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
 import 'package:sorteador_amigo_secreto/components/my_button.dart';
@@ -8,6 +9,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_sta
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_options.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/view_group/view_group_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
+import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class ViewGroup extends StatefulWidget {
   final String? groupId;
@@ -57,10 +59,13 @@ class _ViewGroupBody extends State<ViewGroup> {
             current.isLoading == false &&
             current.raffled == true,
         listener: (context, state) => _onRefresh(),
-
         builder: (context, state) {
           if (state.isLoading == true) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+              child: CircularProgressIndicator(
+                color: myProgressIndicator.color,
+              ),
+            );
           }
           if (state.error != null) {
             return SmartRefresher(
@@ -77,6 +82,7 @@ class _ViewGroupBody extends State<ViewGroup> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 60),
                   child: Column(
+                    spacing: 10,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
@@ -88,8 +94,14 @@ class _ViewGroupBody extends State<ViewGroup> {
                             ? type = BadgeType.pending
                             : type = BadgeType.raffled,
                       ),
+                      TextButton.icon(onPressed: ()                       {
+                        context.pushNamed(
+                          'edit_group',
+                          pathParameters: {"id": widget. groupId!},
+                        );
+                      },icon: Icon(Icons.edit), label: Text('Editar'),),
                       Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
+                        padding: const EdgeInsets.only(top: 10.0),
                         child: ViewGroupCard(
                           type: type,
                           eventLocation:

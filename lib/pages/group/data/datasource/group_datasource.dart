@@ -8,7 +8,7 @@ import 'package:sorteador_amigo_secreto/pages/group/data/model/update_group_mode
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/create_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/update_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/repository/group_repository.dart';
-import 'package:sorteador_amigo_secreto/util/contants.dart';
+import 'package:sorteador_amigo_secreto/core/network/contants.dart';
 
 class GroupDatasource extends GroupRepository {
   final dio = Dio(BaseOptions(headers: {'X-Tenant': xtenant}));

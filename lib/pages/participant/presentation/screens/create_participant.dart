@@ -57,7 +57,6 @@ class _CreateParticipant extends State<CreateParticipant> {
   Widget build(BuildContext context) {
     return Form(
       key: _createFormKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Scaffold(
         appBar: MyAppBar(),
         backgroundColor: Theme.of(context).canvasColor,
@@ -79,7 +78,7 @@ class _CreateParticipant extends State<CreateParticipant> {
           },
           builder: (context, state) {
             if (state.isLoading == true) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator(color: myProgressIndicator.color,));
             }
             return SingleChildScrollView(
               child: Container(

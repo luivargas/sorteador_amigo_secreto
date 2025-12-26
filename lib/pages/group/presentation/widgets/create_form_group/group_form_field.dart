@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:brasil_fields/brasil_fields.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
+import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
 
 class GroupFormFields extends StatefulWidget {
   final TextEditingController nameController;
@@ -35,22 +36,7 @@ class GroupFormFields extends StatefulWidget {
 }
 
 class _GroupFormFields extends State<GroupFormFields> {
-  String? usString;
-
-  String? _validator(String? v) {
-    if (v == null || v.trim().isEmpty) {
-      return 'Campo obrigatório';
-    }
-    return null;
-  }
-
-  String? _emailValidator(String? v) {
-    if (v == null || v.trim().isEmpty) {
-      return 'Informe seu e-mail';
-    }
-    final ok = RegExp(r'^[^@]+@[^@]+\.[^@]+$').hasMatch(v.trim());
-    return ok ? null : 'E-mail inválido';
-  }
+  // String? usString;
 
   // bool _showAdvanced = false;
 
@@ -64,7 +50,7 @@ class _GroupFormFields extends State<GroupFormFields> {
           children: [
             Text('Seu nome'),
             TextFormField(
-              validator: _validator,
+              validator:(_) =>  ValidatorUtils.nameValidator(v: widget.nameController.text),
               controller: widget.nameController,
               decoration: const InputDecoration(
                 hintText: 'Ex: João da Silva',
@@ -74,7 +60,7 @@ class _GroupFormFields extends State<GroupFormFields> {
             Text('E-mail'),
             TextFormField(
               keyboardType: TextInputType.emailAddress,
-              validator: _emailValidator,
+              validator: (_) =>  ValidatorUtils.emailValidator(v: widget.nameController.text),
               controller: widget.emailController,
               decoration: const InputDecoration(
                 hintText: 'Ex: simba@disney.com',
@@ -110,7 +96,7 @@ class _GroupFormFields extends State<GroupFormFields> {
             ),
             Text('Nome do Grupo'),
             TextFormField(
-              validator: _validator,
+              validator: (_) =>  ValidatorUtils.nameValidator(v: widget.groupNameController.text),
               controller: widget.groupNameController,
               decoration: const InputDecoration(
                 hintText: 'Ex: Amigo Secreto do Escritório',

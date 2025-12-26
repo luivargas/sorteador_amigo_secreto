@@ -1,8 +1,7 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
+import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
 
 class CreateParticipantFormFields extends StatefulWidget {
   final TextEditingController nameController;
@@ -23,15 +22,6 @@ class CreateParticipantFormFields extends StatefulWidget {
 
 class _CreateParticipantFormFields extends State<CreateParticipantFormFields> {
 
-  String? _nameValidator({
-    required String name,
-  }) {
-    if (name.isEmpty) {
-      return "Campo obrigatório";
-    }
-    return null;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,9 +32,8 @@ class _CreateParticipantFormFields extends State<CreateParticipantFormFields> {
           children: [
             Text('Nome'),
             TextFormField(
-              validator: (_) => _nameValidator(
-                name: widget.nameController.text,
-              ),
+              validator: (_) =>
+                  ValidatorUtils.nameValidator(v: widget.nameController.text),
               controller: widget.nameController,
               decoration: const InputDecoration(
                 hintText: 'Ex: Simba',

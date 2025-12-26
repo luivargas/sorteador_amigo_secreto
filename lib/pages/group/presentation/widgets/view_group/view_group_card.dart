@@ -43,49 +43,26 @@ class ViewGroupCard extends StatelessWidget {
       child: Column(
         spacing: 20,
         children: [
-          Row(
-            spacing: 10,
+          StatCard(
+            value: eventDate,
+            label: eventTime,
+            icon: Icons.calendar_month,
+          ),
+          Column(
             children: [
-              Expanded(
-                child: StatCard(
-                  value: eventDate,
-                  label: eventTime,
-                  icon: Icons.calendar_month,
-                ),
-              ),
-              Expanded(
-                child: StatCard(
-                  value: '$participants',
-                  label: 'Participantes',
-                  icon: Icons.group,
-                ),
+              StatCard(
+                value: 'R\$ $minGiftValue - R\$ $maxGiftValue',
+                label: 'Valor sugerido',
+                icon: Icons.monetization_on,
               ),
             ],
           ),
-          Row(
-            spacing: 10,
+          Column(
             children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    StatCard(
-                      value: 'R\$ $minGiftValue - R\$ $maxGiftValue',
-                      label: 'Valor sugerido',
-                      icon: Icons.monetization_on,
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Column(
-                  children: [
-                    StatCard(
-                      value: eventLocation,
-                      label: 'Local',
-                      icon: Icons.location_on,
-                    ),
-                  ],
-                ),
+              StatCard(
+                value: eventLocation,
+                label: 'Local',
+                icon: Icons.location_on,
               ),
             ],
           ),

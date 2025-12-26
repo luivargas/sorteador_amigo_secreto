@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
+ProgressIndicatorThemeData myProgressIndicator = ProgressIndicatorThemeData(
+  color: MyColors.sorteadorOrange,
+);
+
 ThemeData myTheme = ThemeData(
-  useMaterial3: true,
   primaryColor: MyColors.sorteadorBackground,
   appBarTheme: AppBarTheme(
     backgroundColor: MyColors.sorteadorBackground,
   ),
   canvasColor: MyColors.sorteadorBackground,
   inputDecorationTheme: InputDecorationTheme(
+    filled: true,
+    fillColor: Colors.white,
     iconColor: MyColors.sorteadorPurpple,
     prefixIconColor: MyColors.sorteadorPurpple,
     labelStyle: TextStyle(color: MyColors.sorteadorOrange),
@@ -23,6 +28,10 @@ ThemeData myTheme = ThemeData(
     ),
     focusedBorder: OutlineInputBorder(
       borderSide: BorderSide(color: MyColors.sorteadorOrange),
+      borderRadius: BorderRadius.circular(15),
+    ),
+    disabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: MyColors.neutral700),
       borderRadius: BorderRadius.circular(15),
     ),
   ),

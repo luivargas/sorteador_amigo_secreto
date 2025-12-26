@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/components/my_button.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
@@ -32,21 +31,21 @@ class GroupOptions extends StatelessWidget {
             Column(
               spacing: 10,
               children: [
-                Column(
-                  spacing: 10,
-                  children: [
-                    MyButton(
-                      title: 'Editar grupo',
-                      icon: Icons.edit_square,
-                      onTap: () {
-                        context.pushNamed(
-                          'edit_group',
-                          pathParameters: {"id": groupId!},
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                // Column(
+                //   spacing: 10,
+                //   children: [
+                //     MyButton(
+                //       title: 'Editar grupo',
+                //       icon: Icons.edit_square,
+                //       onTap: () {
+                //         context.pushNamed(
+                //           'edit_group',
+                //           pathParameters: {"id": groupId!},
+                //         );
+                //       },
+                //     ),
+                //   ],
+                // ),
                 Column(
                   spacing: 10,
                   children: [

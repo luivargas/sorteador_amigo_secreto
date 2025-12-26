@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sorteador_amigo_secreto/core/network/contants.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_login_model.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_register_model.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_forgot_password_entity.dart';
@@ -8,11 +9,10 @@ import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_login_en
 import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_logout_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_register_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/domain/repository/auth_repository.dart';
-import 'package:sorteador_amigo_secreto/util/contants.dart';
 
 class AuthDatasource extends AuthRepository {
   final SharedPreferencesAsync asyncPrefs = SharedPreferencesAsync();
-  final dio = Dio(BaseOptions(headers: {'X-Tenant': xtenant}));
+  final dio = Dio(BaseOptions());
 
   @override
   Future<AuthRegisterModel> register(AuthRegisterEntity entity) async {

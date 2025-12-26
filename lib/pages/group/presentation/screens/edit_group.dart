@@ -180,7 +180,7 @@ class _EditGroup extends State<EditGroup> {
           },
           builder: (context, state) {
             if (state.showed != true || state.isLoading != false) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator(color: myProgressIndicator.color,));
             }
             if (state.error != null) {
               return Center(child: Text('Tente novamente'));

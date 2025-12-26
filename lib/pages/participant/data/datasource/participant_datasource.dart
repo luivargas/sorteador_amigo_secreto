@@ -7,7 +7,7 @@ import 'package:sorteador_amigo_secreto/pages/participant/data/model/update_part
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/update_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/repository/participant_repository.dart';
-import 'package:sorteador_amigo_secreto/util/contants.dart';
+import 'package:sorteador_amigo_secreto/core/network/contants.dart';
 
 class ParticipantDatasource extends ParticipantRepository {
   final dio = Dio(BaseOptions(headers: {'X-Tenant': xtenant}));

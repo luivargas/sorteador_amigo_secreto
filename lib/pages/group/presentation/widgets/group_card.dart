@@ -48,7 +48,7 @@ class _GroupCardState extends State<GroupCard> {
         style: TextStyle(
           fontWeight: FontWeight.bold,
           color: Colors.white,
-          fontSize: 35,
+          fontSize: 30,
         ),
       );
     }
@@ -57,7 +57,7 @@ class _GroupCardState extends State<GroupCard> {
       style: TextStyle(
         fontWeight: FontWeight.bold,
         color: Colors.white,
-        fontSize: 35,
+        fontSize: 30,
       ),
     );
   }
@@ -142,8 +142,8 @@ class _GroupCardState extends State<GroupCard> {
                           gradient: MyColors.sorteadorGradient,
                           borderRadius: BorderRadius.circular(90),
                         ),
-                        width: 70,
-                        height: 70,
+                        width: 60,
+                        height: 60,
                         child: Center(child: main()),
                       ),
                     ),

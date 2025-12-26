@@ -21,7 +21,7 @@ class StatCard extends StatelessWidget {
       onTap: () {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: SnackBarAction(label: "$label - $value" , onPressed: () {}),
+            content: SnackBarAction(label: "$label - $value", onPressed: () {}),
             showCloseIcon: true,
           ),
         );
@@ -37,23 +37,34 @@ class StatCard extends StatelessWidget {
         child: Column(
           spacing: 12,
           children: [
-            Icon(icon, size: 40, color: MyColors.sorteadorPurpple),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w900,
-                color: MyColors.sorteadorOrange,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Text(
-              label,
-              style: SecretSantaTextStyles.labelSmall.copyWith(
-                color: SecretSantaColors.neutral600,
-                fontWeight: FontWeight.w700,
-              ),
-              textAlign: TextAlign.center,
+            Row(
+              children: [
+                Icon(icon, size: 40, color: MyColors.sorteadorPurpple),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        value,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w900,
+                          color: MyColors.sorteadorOrange,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Text(
+                        label,
+                        style: SecretSantaTextStyles.labelSmall.copyWith(
+                          color: SecretSantaColors.neutral600,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 15,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ],
         ),

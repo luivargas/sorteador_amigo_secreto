@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_state.dart';
+import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -37,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen>
                       });
                     }
                   },
-                  child: CircularProgressIndicator(color: Colors.white),
+                  child: CircularProgressIndicator(color: myProgressIndicator.color,),
                 ),
               ],
             ),

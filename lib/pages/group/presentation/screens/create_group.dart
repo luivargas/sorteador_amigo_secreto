@@ -157,7 +157,7 @@ class _FormGroupBody extends State<CreateGroup> {
           },
           builder: (context, state) {
             if (state.isLoading == true) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator(color: myProgressIndicator.color,));
             }
             return ConstrainedBox(
               constraints: BoxConstraints(

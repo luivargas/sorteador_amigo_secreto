@@ -1,3 +1,5 @@
+// ignore_for_file: void_checks
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
@@ -6,6 +8,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_c
 import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/database/group_db.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/isar_group_model.dart';
+import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,7 +35,8 @@ class _HomeScreenState extends State<HomeScreen>
     setState(() {});
   }
 
-  void _reload() {
+  // ignore: strict_top_level_inference
+  dynamic _reload() {
     setState(() {
       _futureGroups = GroupDB().getAllGroups();
     });
@@ -91,9 +95,9 @@ class _HomeScreenState extends State<HomeScreen>
                   future: _futureGroups,
                   builder: (context, snap) {
                     if (snap.connectionState == ConnectionState.waiting) {
-                      return const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 40),
-                        child: Center(child: CircularProgressIndicator()),
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 40),
+                        child: Center(child: CircularProgressIndicator(color: myProgressIndicator.color,)),
                       );
                     }
                     if (snap.hasError) {
