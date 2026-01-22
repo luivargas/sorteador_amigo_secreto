@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -94,12 +96,21 @@ class _ViewGroupBody extends State<ViewGroup> {
                             ? type = BadgeType.pending
                             : type = BadgeType.raffled,
                       ),
-                      TextButton.icon(onPressed: ()                       {
-                        context.pushNamed(
-                          'edit_group',
-                          pathParameters: {"id": widget. groupId!},
-                        );
-                      },icon: Icon(Icons.edit), label: Text('Editar'),),
+                      TextButton.icon(
+                        onPressed: () async {
+                          final result = await context.pushNamed(
+                            'edit_group',
+                            pathParameters: {"id": widget.groupId!},
+                          );
+                          if (result == true) {
+                            context.read<GroupCubit>().show(
+                              int.parse(widget.groupId!),
+                            );
+                          }
+                        },
+                        icon: Icon(Icons.edit),
+                        label: Text('Editar'),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10.0),
                         child: ViewGroupCard(

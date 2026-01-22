@@ -11,7 +11,7 @@ class GroupOptions extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
       child: SizedBox(
-        height: 300,
+        height: 250,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -19,7 +19,7 @@ class GroupOptions extends StatelessWidget {
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [Icon(Icons.horizontal_rule, size: 45)],
+              children: [Icon(Icons.horizontal_rule, size: 45)], 
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 15.0),
@@ -31,21 +31,6 @@ class GroupOptions extends StatelessWidget {
             Column(
               spacing: 10,
               children: [
-                // Column(
-                //   spacing: 10,
-                //   children: [
-                //     MyButton(
-                //       title: 'Editar grupo',
-                //       icon: Icons.edit_square,
-                //       onTap: () {
-                //         context.pushNamed(
-                //           'edit_group',
-                //           pathParameters: {"id": groupId!},
-                //         );
-                //       },
-                //     ),
-                //   ],
-                // ),
                 Column(
                   spacing: 10,
                   children: [

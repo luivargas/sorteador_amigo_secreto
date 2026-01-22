@@ -20,4 +20,22 @@ class ValidatorUtils {
     final ok = RegexUtils.emailRegExp.hasMatch(v.trim());
     return ok ? null : 'E-mail inválido';
   }
+
+  static String? giftValue({required String? min, required String? max}) {
+    if (min == '' && max == '') {
+      return null;
+    }
+    if (min != '' && max != '') {
+      final minGiftValue = double.parse(
+        min!.replaceAll(",", ".").replaceFirst("R\$", "").trim(),
+      );
+      final maxGiftValue = double.parse(
+        max!.replaceAll(",", ".").replaceFirst("R\$", "").trim(),
+      );
+      if (minGiftValue > maxGiftValue) {
+        return 'Corrija os valores';
+      }
+    }
+    return null;
+  }
 }

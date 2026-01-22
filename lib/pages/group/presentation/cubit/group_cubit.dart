@@ -60,7 +60,7 @@ class GroupCubit extends Cubit<GroupState> {
           state.copyWith(
             isLoading: false,
             error: result.toString(),
-            created: false,
+            showed: false,
           ),
         ),
       );
@@ -79,7 +79,7 @@ class GroupCubit extends Cubit<GroupState> {
           state.copyWith(
             isLoading: false,
             error: result.toString(),
-            created: false,
+            updated: false,
           ),
         ),
       );

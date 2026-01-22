@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  child: MyHomeAppBar(reload: _reload), // ✅ sem ()
+                  child: MyHomeAppBar(reload: _reload),
                 ),
               ),
               SliverToBoxAdapter(
@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: filtered.length,
-                      separatorBuilder: (_, __) => const SizedBox.shrink(),
+                      separatorBuilder: (_, _) => const SizedBox.shrink(),
                       itemBuilder: (context, index) {
                         final g = filtered[index];
                         return InkWell(

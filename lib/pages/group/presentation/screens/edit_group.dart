@@ -21,10 +21,10 @@ class EditGroup extends StatefulWidget {
 }
 
 class _EditGroup extends State<EditGroup> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _editGroupKey = GlobalKey<FormState>();
   final TextEditingController groupNameController = TextEditingController();
-  final TextEditingController minPriceController = TextEditingController();
-  final TextEditingController maxPriceController = TextEditingController();
+  final TextEditingController minGiftValueController = TextEditingController();
+  final TextEditingController maxGiftValueController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController dateTimeController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
@@ -35,8 +35,8 @@ class _EditGroup extends State<EditGroup> {
   @override
   void dispose() {
     groupNameController.dispose();
-    minPriceController.dispose();
-    maxPriceController.dispose();
+    minGiftValueController.dispose();
+    maxGiftValueController.dispose();
     descriptionController.dispose();
     dateTimeController.dispose();
     locationController.dispose();
@@ -51,8 +51,8 @@ class _EditGroup extends State<EditGroup> {
     groupNameController.text = g.name;
     descriptionController.text = g.description ?? '';
     locationController.text = g.location ?? '';
-    minPriceController.text = g.minGiftValue ?? '';
-    maxPriceController.text = g.maxGiftValue ?? '';
+    minGiftValueController.text = g.minGiftValue ?? '';
+    maxGiftValueController.text = g.maxGiftValue ?? '';
     if (g.drawDate != null && g.drawDate!.isNotEmpty) {
       try {
         // parse do formato da API
@@ -130,18 +130,18 @@ class _EditGroup extends State<EditGroup> {
   }
 
   void _onSubmit() {
-    final isValid = _formKey.currentState?.validate() ?? false;
+    final isValid = _editGroupKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
-    _formKey.currentState?.save();
+    _editGroupKey.currentState?.save();
 
     final description = descriptionController.text.trim();
     final groupName = groupNameController.text.trim();
-    final minPrice = minPriceController.text
+    final minGiftValue = minGiftValueController.text
         .replaceAll(",", ".")
         .replaceAll("R\$", "")
         .trim();
-    final maxPrice = maxPriceController.text
+    final maxGiftValue = maxGiftValueController.text
         .replaceAll(",", ".")
         .replaceAll("R\$", "")
         .trim();
@@ -156,8 +156,8 @@ class _EditGroup extends State<EditGroup> {
     final entity = UpdateGroupEntity(
       description: description,
       name: groupName,
-      maxGiftValue: maxPrice,
-      minGiftValue: minPrice,
+      maxGiftValue: maxGiftValue,
+      minGiftValue: minGiftValue,
       location: location,
       drawDate: date,
     );
@@ -167,7 +167,7 @@ class _EditGroup extends State<EditGroup> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: _editGroupKey,
       child: Scaffold(
         appBar: MyAppBar(),
         backgroundColor: Theme.of(context).canvasColor,
@@ -175,7 +175,7 @@ class _EditGroup extends State<EditGroup> {
           listener: (context, state) {
             _prefillFromApi(state);
             if (state.updated == true) {
-              context.pop();
+              context.pop(true);
             }
           },
           builder: (context, state) {
@@ -208,8 +208,8 @@ class _EditGroup extends State<EditGroup> {
                         groupNameController: groupNameController,
                         dateTimeController: dateTimeController,
                         descriptionController: descriptionController,
-                        minPriceController: minPriceController,
-                        maxPriceController: maxPriceController,
+                        minGiftValueController: minGiftValueController,
+                        maxGiftValueController: maxGiftValueController,
                         addressController: locationController,
                         onTapDateTime: _pickDateTime,
                       ),

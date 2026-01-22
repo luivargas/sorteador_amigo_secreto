@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
 
 class EditGroupFields extends StatefulWidget {
   final TextEditingController groupNameController;
-  final TextEditingController minPriceController;
-  final TextEditingController maxPriceController;
+  final TextEditingController minGiftValueController;
+  final TextEditingController maxGiftValueController;
   final TextEditingController dateTimeController;
   final TextEditingController descriptionController;
   final TextEditingController addressController;
@@ -16,8 +17,8 @@ class EditGroupFields extends StatefulWidget {
     required this.groupNameController,
     required this.dateTimeController,
     required this.descriptionController,
-    required this.minPriceController,
-    required this.maxPriceController,
+    required this.minGiftValueController,
+    required this.maxGiftValueController,
     required this.addressController,
     required this.onTapDateTime,
   });
@@ -28,13 +29,6 @@ class EditGroupFields extends StatefulWidget {
 
 class _EditGroupFields extends State<EditGroupFields> {
   String? usString;
-
-  String? _validator(String? v) {
-    if (v == null || v.trim().isEmpty) {
-      return 'Campo obrigatório';
-    }
-    return null;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +41,9 @@ class _EditGroupFields extends State<EditGroupFields> {
           children: [
             Text('Nome do Grupo'),
             TextFormField(
-              validator: _validator,
+              validator: (_) => ValidatorUtils.nameValidator(
+                v: widget.groupNameController.text,
+              ),
               controller: widget.groupNameController,
               decoration: const InputDecoration(
                 hintText: 'Ex: Amigo Secreto do Escritório',
@@ -85,7 +81,7 @@ class _EditGroupFields extends State<EditGroupFields> {
                       FilteringTextInputFormatter.digitsOnly,
                       CentavosInputFormatter(casasDecimais: 2, moeda: true),
                     ],
-                    controller: widget.minPriceController,
+                    controller: widget.minGiftValueController,
                     decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.attach_money),
                       hintText: 'Ex: R\$ 100,00',
@@ -101,12 +97,16 @@ class _EditGroupFields extends State<EditGroupFields> {
                 children: [
                   Text('Valor Máximo'),
                   TextFormField(
+                    validator: (_) => ValidatorUtils.giftValue(
+                      min: widget.minGiftValueController.text,
+                      max: widget.maxGiftValueController.text,
+                    ),
                     keyboardType: TextInputType.numberWithOptions(),
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
                       CentavosInputFormatter(casasDecimais: 2, moeda: true),
                     ],
-                    controller: widget.maxPriceController,
+                    controller: widget.maxGiftValueController,
                     decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.attach_money),
                       hintText: 'Ex: R\$ 150,00',
