@@ -50,17 +50,17 @@ class GroupCubit extends Cubit<GroupState> {
   }
 
   Future<void> show(int id) async {
-    safeEmit(state.copyWith(isLoading: true, error: null, showed: false));
+    safeEmit(state.copyWith(isLoading: true, error: null, group: null));
     try {
       final result = await groupUsecases.show(id);
       result.when(
         success: (s) =>
-            emit(state.copyWith(group: s, isLoading: false, showed: true)),
+            emit(state.copyWith(group: s, isLoading: false)),
         failure: (f) => emit(
           state.copyWith(
             isLoading: false,
             error: result.toString(),
-            showed: false,
+            group: null
           ),
         ),
       );

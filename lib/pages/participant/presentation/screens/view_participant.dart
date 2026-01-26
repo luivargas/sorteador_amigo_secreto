@@ -12,8 +12,9 @@ import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class ViewParticipant extends StatefulWidget {
-  final String? userId;
-  const ViewParticipant({super.key, required this.userId});
+  final String userId;
+  final String groupAccessKey;
+  const ViewParticipant({super.key, required this.userId, required this.groupAccessKey});
 
   @override
   State<ViewParticipant> createState() => _ViewParticipant();
@@ -31,7 +32,7 @@ class _ViewParticipant extends State<ViewParticipant> {
   bool readOnly = true;
 
   Future<void> _onRefresh() async {
-    await context.read<ParticipantCubit>().show(widget.userId!);
+    await context.read<ParticipantCubit>().show(widget.userId, widget.groupAccessKey);
   }
 
   @override

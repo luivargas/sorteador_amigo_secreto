@@ -17,8 +17,9 @@ class ShowParticipantEntity {
   final List<String>? preferences;
   final List<String>? size;
   final List<String>? dislike;
+  final String groupToken;
 
-  ShowParticipantEntity({
+  ShowParticipantEntity(this.groupToken,{
     required this.id,
     required this.name,
     this.email,
@@ -36,7 +37,7 @@ class ShowParticipantEntity {
     this.wishList,
     this.preferences,
     this.size,
-    this.dislike,
+    this.dislike
   });
 
   Map<String, dynamic> toJson() => {

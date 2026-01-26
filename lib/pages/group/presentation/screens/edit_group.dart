@@ -13,7 +13,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/edit_gr
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class EditGroup extends StatefulWidget {
-  final String? groupId;
+  final int? groupId;
   const EditGroup({super.key, required this.groupId});
 
   @override
@@ -161,7 +161,7 @@ class _EditGroup extends State<EditGroup> {
       location: location,
       drawDate: date,
     );
-    context.read<GroupCubit>().update(entity, int.parse(widget.groupId!));
+    context.read<GroupCubit>().update(entity, widget.groupId!);
   }
 
   @override
@@ -179,9 +179,13 @@ class _EditGroup extends State<EditGroup> {
             }
           },
           builder: (context, state) {
-            if (state.showed != true || state.isLoading != false) {
-              return Center(child: CircularProgressIndicator(color: myProgressIndicator.color,));
-            }
+          while (state.isLoading == true && state.group == null) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: myProgressIndicator.color,
+              ),
+            );
+          }
             if (state.error != null) {
               return Center(child: Text('Tente novamente'));
             }

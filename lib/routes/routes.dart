@@ -6,12 +6,14 @@ import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/access/presentation/screens/access.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/screens/forgot_password.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/create_group.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/edit_group.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/view_group.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/enter_group/enter_group.dart';
 import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/screens/home_screen.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/show_parti_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/create_participant.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/teste.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/view_participant.dart';
@@ -53,13 +55,13 @@ final routes = GoRouter(
     ),
     GoRoute(
       name: 'view_group',
-      path: '/view_group/:id',
+      path: '/view_group',
       builder: (BuildContext context, GoRouterState state) {
-        final id = state.pathParameters['id'];
+        final extra = state.extra as ShowGroupArgs;
         final repo = getIt<GroupCubit>().groupUsecases;
         return BlocProvider(
-          create: (_) => GroupCubit(repo)..show(int.parse(id!)),
-          child: ViewGroup(groupId: id),
+          create: (_) => GroupCubit(repo)..show(extra.groupId),
+          child: ViewGroup(groupId: extra.groupId, groupAccessKey: '', ),
         );
       },
     ),
@@ -72,40 +74,39 @@ final routes = GoRouter(
       builder: (BuildContext context, GoRouterState state) =>
           FlutterContactsExample(),
     ),
-    GoRoute(
-      name: 'create_part',
-      path: '/create_part/:groupId/:groupCode',
+        GoRoute(
+      name: 'edit_group',
+      path: '/edit_group',
       builder: (BuildContext context, GoRouterState state) {
-        final groupId = state.pathParameters['groupId'];
-        final groupCode = state.pathParameters['groupCode'];
-        final repo = getIt<ParticipantCubit>().participantUsecase;
-        return BlocProvider<ParticipantCubit>(
-          create: (BuildContext context) => ParticipantCubit(repo),
-          child: CreateParticipant(groupId: groupId, groupCode: groupCode),
+        final extra = state.extra as ShowGroupArgs;
+        final repo = getIt<GroupCubit>().groupUsecases;
+        return BlocProvider<GroupCubit>(
+          create: (_) => GroupCubit(repo)..show(extra.groupId),
+          child: EditGroup(groupId: extra.groupId),
         );
       },
     ),
     GoRoute(
-      name: 'edit_group',
-      path: '/edit_group/:id',
+      name: 'create_part',
+      path: '/create_part',
       builder: (BuildContext context, GoRouterState state) {
-        final id = state.pathParameters['id'];
-        final repo = getIt<GroupCubit>().groupUsecases;
-        return BlocProvider<GroupCubit>(
-          create: (_) => GroupCubit(repo)..show(int.parse(id!)),
-          child: EditGroup(groupId: id),
+        final extra = state.extra as CreateParticipant;
+        final repo = getIt<ParticipantCubit>().participantUsecase;
+        return BlocProvider<ParticipantCubit>(
+          create: (BuildContext context) => ParticipantCubit(repo),
+          child: CreateParticipant(groupId: extra.groupId, groupCode: extra.groupCode),
         );
       },
     ),
     GoRoute(
       name: 'view_parti',
-      path: '/view_parti/:userId',
+      path: '/view_parti',
       builder: (BuildContext context, GoRouterState state) {
-        final userId = state.pathParameters['userId'];
-        final repo = getIt<ParticipantCubit>().participantUsecase;
+        final extra = state.extra as ShowParticipantArgs;
+        final repo = getIt<ParticipantCubit>().participantUsecase;  
         return BlocProvider<ParticipantCubit>(
-          create: (_) => ParticipantCubit(repo)..show(userId!),
-          child: ViewParticipant(userId: userId),
+          create: (_) => ParticipantCubit(repo)..show(extra.userId, extra.groupAccessKey),
+          child: ViewParticipant(userId: extra.userId, groupAccessKey: extra.groupAccessKey),
         );
       },
     ),

@@ -10,10 +10,10 @@ class CreateParticipantEntity {
   final List<String>? preferences;
   final List<String>? size;
   final List<String>? dislike;
-  final String? groupCode;
+  final String groupCode;
 
   CreateParticipantEntity({
-    this.groupCode,
+    required this.groupCode,
     required this.name,
     this.email,
     this.idd,

@@ -12,9 +12,9 @@ import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class CreateParticipant extends StatefulWidget {
-  final String? groupId;
-  final String? groupCode;
-  const CreateParticipant({super.key, this.groupId, this.groupCode});
+  final String groupId;
+  final String groupCode;
+  const CreateParticipant({super.key, required this.groupId, required this.groupCode});
 
   @override
   State<CreateParticipant> createState() => _CreateParticipant();
@@ -50,7 +50,7 @@ class _CreateParticipant extends State<CreateParticipant> {
       role: "participant",
       groupCode: widget.groupCode,
     );
-    context.read<ParticipantCubit>().create(entity, int.parse(widget.groupId!));
+    context.read<ParticipantCubit>().create(entity, int.parse(widget.groupId));
   }
 
   @override

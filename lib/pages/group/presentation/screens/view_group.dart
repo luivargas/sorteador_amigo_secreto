@@ -8,14 +8,16 @@ import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
 import 'package:sorteador_amigo_secreto/components/my_button.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_options.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/view_group/view_group_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class ViewGroup extends StatefulWidget {
-  final String? groupId;
-  const ViewGroup({super.key, required this.groupId});
+  final int groupId;
+  final String groupAccessKey;
+  const ViewGroup({super.key, required this.groupId, required this.groupAccessKey});
 
   @override
   State<ViewGroup> createState() => _ViewGroupBody();
@@ -23,9 +25,11 @@ class ViewGroup extends StatefulWidget {
 
 class _ViewGroupBody extends State<ViewGroup> {
   final RefreshController _refreshController = RefreshController();
+  
+  var group;
 
   Future<void> _onRefresh() async {
-    await context.read<GroupCubit>().show(int.parse(widget.groupId!));
+    await context.read<GroupCubit>().show(widget.groupId);
   }
 
   Future<void> _onSubmit(String code, int id) async {
@@ -48,7 +52,7 @@ class _ViewGroupBody extends State<ViewGroup> {
             onPressed: () => showModalBottomSheet<void>(
               backgroundColor: Theme.of(context).canvasColor,
               context: context,
-              builder: (context) => GroupOptions(groupId: widget.groupId!),
+              builder: (context) => GroupOptions(groupId: widget.groupId),
             ),
             icon: Icon(Icons.more_vert, size: 30),
           ),
@@ -62,7 +66,7 @@ class _ViewGroupBody extends State<ViewGroup> {
             current.raffled == true,
         listener: (context, state) => _onRefresh(),
         builder: (context, state) {
-          if (state.isLoading == true) {
+          while (state.isLoading == true && state.group == null) {
             return Center(
               child: CircularProgressIndicator(
                 color: myProgressIndicator.color,
@@ -76,6 +80,9 @@ class _ViewGroupBody extends State<ViewGroup> {
               child: Text('Tente novamente'),
             );
           }
+          if ( state.group != null){
+            group = state.group!;
+          }else{}
           return SmartRefresher(
             controller: _refreshController,
             onRefresh: _onRefresh,
@@ -88,11 +95,11 @@ class _ViewGroupBody extends State<ViewGroup> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        state.group!.name,
+                        group.name,
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                       SecretSantaBadge(
-                        type: state.group?.raffledAt == null
+                        type: group.raffledAt == null
                             ? type = BadgeType.pending
                             : type = BadgeType.raffled,
                       ),
@@ -100,12 +107,10 @@ class _ViewGroupBody extends State<ViewGroup> {
                         onPressed: () async {
                           final result = await context.pushNamed(
                             'edit_group',
-                            pathParameters: {"id": widget.groupId!},
+                            extra: ShowGroupArgs(groupId: widget.groupId,),
                           );
                           if (result == true) {
-                            context.read<GroupCubit>().show(
-                              int.parse(widget.groupId!),
-                            );
+                            context.read<GroupCubit>().show(widget.groupId);
                           }
                         },
                         icon: Icon(Icons.edit),
@@ -116,32 +121,29 @@ class _ViewGroupBody extends State<ViewGroup> {
                         child: ViewGroupCard(
                           type: type,
                           eventLocation:
-                              state.group?.location ?? "Não definido",
-                          minGiftValue: state.group?.minGiftValue ?? "00,00",
-                          maxGiftValue: state.group?.maxGiftValue ?? "00,00",
+                              group.location ?? "Não definido",
+                          minGiftValue: group.minGiftValue ?? "00,00",
+                          maxGiftValue: group.maxGiftValue ?? "00,00",
                           eventDate:
-                              state.group?.drawDate?.split(' ').first ??
+                              group.drawDate?.split(' ').first ??
                               "00/00/0000",
                           eventTime:
-                              state.group?.drawDate?.split(' ').last ?? "00:00",
+                              group.drawDate?.split(' ').last ?? "00:00",
                           groupDescription:
-                              state.group?.description ?? "Sem descrição",
-                          participants: state.group!.participants.length,
-                          participantsList: state.group!.participants,
-                          groupId: int.parse(widget.groupId!),
-                          groupCode: state.group!.code,
+                              group.description ?? "Sem descrição",
+                          participants: group.participants.length,
+                          participantsList: group.participants,
+                          groupId: widget.groupId,
+                          groupAccessKey: group.code,
                         ),
                       ),
-                      if (state.group?.raffledAt == null &&
-                          state.group!.participants.length >= 2) ...[
+                      if (group.raffledAt == null &&
+                          group.participants.length >= 2) ...[
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0, bottom: 40),
                           child: MyButton(
                             onTap: () {
-                              _onSubmit(
-                                state.group!.code,
-                                int.parse(widget.groupId!),
-                              );
+                              _onSubmit(group.code, widget.groupId);
                             },
                             title: "Sortear",
                             icon: Icons.draw,

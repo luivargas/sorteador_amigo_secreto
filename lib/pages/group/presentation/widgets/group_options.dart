@@ -3,7 +3,7 @@ import 'package:sorteador_amigo_secreto/components/my_button.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class GroupOptions extends StatelessWidget {
-  final String? groupId;
+  final int groupId;
   const GroupOptions({super.key, required this.groupId});
 
   @override

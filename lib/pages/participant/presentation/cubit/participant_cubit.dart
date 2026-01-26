@@ -36,11 +36,11 @@ class ParticipantCubit extends Cubit<ParticipantState> {
     }
   }
 
-    Future<void> show(String id) async {
+    Future<void> show(String id, String groupToken) async {
     if (isClosed) return;
     safeEmit(state.copyWith(isLoading: true, error: null, created: false));
     try {
-      final result = await participantUsecase.show(id); 
+      final result = await participantUsecase.show(id, groupToken); 
       result.when(
         success: (s) => emit(state.copyWith(isLoading: false, showed: true, participant: s)),
         failure: (f) => emit(

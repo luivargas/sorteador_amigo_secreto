@@ -7,21 +7,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/show_parti_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/participant_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class ListParticipantsCard extends StatelessWidget {
   final int groupId;
-  final String groupCode;
+  final String groupAccessKey;
   final BadgeType type;
   final List<ShowParticipantModel> participantsList;
   const ListParticipantsCard({
     super.key,
     required this.participantsList,
     required this.groupId,
-    required this.groupCode,
+    required this.groupAccessKey,
     required this.type,
   });
 
@@ -41,11 +43,11 @@ class ListParticipantsCard extends StatelessWidget {
                 onTap: () {
                   context.pushNamed(
                     'view_parti',
-                    pathParameters: {'userId': f.id},
+                    extra: ShowParticipantArgs(f.id, groupAccessKey),
                   );
                 },
                 child: ParticipantCard(
-                  contact: f.email ?? f.phone ?? "",
+                  contact: f.email ?? f.phone ?? "",  
                   name: f.name,
                   id: f.id,
                 ),
@@ -160,10 +162,7 @@ class ListParticipantsCard extends StatelessWidget {
                       onPressed: () async {
                         final result = await context.pushNamed(
                           'create_part',
-                          pathParameters: {
-                            'groupId': '$groupId',
-                            'groupCode': groupCode,
-                          },
+                          extra: ShowGroupArgs(groupId: groupId),
                         );
                         if (result == true) {
                           context.read<GroupCubit>().show(
