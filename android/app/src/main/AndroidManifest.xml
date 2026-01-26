@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <application
-        android:label="flutter_application_1"
-        android:name="${applicationName}"
+        android:label="amigosecreto.org"
+        android:name="${amigosecreto.org}"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
