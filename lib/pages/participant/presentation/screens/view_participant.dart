@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
-import 'package:sorteador_amigo_secreto/components/my_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_appbar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_button.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/view_participant_form_fields.dart';
@@ -13,8 +13,8 @@ import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class ViewParticipant extends StatefulWidget {
   final String userId;
-  final String groupAccessKey;
-  const ViewParticipant({super.key, required this.userId, required this.groupAccessKey});
+  final String groupToken;
+  const ViewParticipant({super.key, required this.userId, required this.groupToken});
 
   @override
   State<ViewParticipant> createState() => _ViewParticipant();
@@ -32,7 +32,7 @@ class _ViewParticipant extends State<ViewParticipant> {
   bool readOnly = true;
 
   Future<void> _onRefresh() async {
-    await context.read<ParticipantCubit>().show(widget.userId, widget.groupAccessKey);
+    await context.read<ParticipantCubit>().show(widget.userId, widget.groupToken);
   }
 
   @override

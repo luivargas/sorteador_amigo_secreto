@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/database/group_db.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/data/datasource/api_error_mapper.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/datasource/participant_api_result.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/create_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
@@ -10,17 +11,17 @@ import 'package:sorteador_amigo_secreto/pages/participant/domain/repository/part
 import 'package:sorteador_amigo_secreto/core/network/contants.dart';
 
 class ParticipantDatasource extends ParticipantRepository {
-  final dio = Dio(BaseOptions(headers: {'X-Tenant': xtenant}));
+  final dio = Dio(BaseOptions(headers: { 'Accept': 'application/json' }));
 
   @override
   Future<ParticipantApiResult<CreateParticipantModel>> create(
     CreateParticipantEntity entity,
     int groupId,
   ) async {
-    Response resp;
+    
     try {
       final token = await GroupDB().getAccesKeyById(groupId);
-      resp = await dio.post(
+      final resp = await dio.post(
         stageParticipantApiUrl,
         data: entity.toJson(),
         options: Options(headers: {'Access-Key': token}),
@@ -30,23 +31,23 @@ class ParticipantDatasource extends ParticipantRepository {
     } on DioException catch (e) {
       return Failure(
         ApiError(
-          e.message ?? 'Erro inesperado',
+          ApiErrorMapper.map(e),
           statusCode: e.response?.statusCode,
           raw: e.response?.data,
         ),
       );
     } catch (e) {
-      return Failure(ApiError('Erro inesperado', raw: e));
+      return Failure(ApiError('Erro inesperado' ,raw: e ));
     }
   }
 
   @override
-  Future<ParticipantApiResult<ShowParticipantModel>> show(String id, String accessKey) async {
-    Response resp;
+  Future<ParticipantApiResult<ShowParticipantModel>> show(String id, String token) async {
+
     try {
-      resp = await dio.get(
+      final resp = await dio.get(
         "$stageParticipantApiUrl/$id",
-        options: Options(headers: {'Authorization': bearerToken, 'Access-key': accessKey}),
+        options: Options(headers: {'Access-key': token}),
       );
       final model = ShowParticipantModel.fromJson(resp.data);
       return Success(model);

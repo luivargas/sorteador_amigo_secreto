@@ -27,7 +27,7 @@ class GroupCubit extends Cubit<GroupState> {
         failure: (f) => emit(
           state.copyWith(
             isLoading: false,
-            error: result.toString(),
+            error: f.message,
             created: false,
           ),
         ),
@@ -59,7 +59,7 @@ class GroupCubit extends Cubit<GroupState> {
         failure: (f) => emit(
           state.copyWith(
             isLoading: false,
-            error: result.toString(),
+            error: f.message,
             group: null
           ),
         ),
@@ -78,7 +78,7 @@ class GroupCubit extends Cubit<GroupState> {
         failure: (f) => emit(
           state.copyWith(
             isLoading: false,
-            error: result.toString(),
+            error: f.message,
             updated: false,
           ),
         ),
@@ -101,7 +101,7 @@ class GroupCubit extends Cubit<GroupState> {
         failure: (f) => emit(
           state.copyWith(
             isLoading: false,
-            error: result.toString(),
+            error: f.message,
             raffled: false,
           ),
         ),

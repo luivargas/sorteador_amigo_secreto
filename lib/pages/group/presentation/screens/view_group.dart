@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
-import 'package:sorteador_amigo_secreto/components/my_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_appbar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_button.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
@@ -16,8 +16,7 @@ import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class ViewGroup extends StatefulWidget {
   final int groupId;
-  final String groupAccessKey;
-  const ViewGroup({super.key, required this.groupId, required this.groupAccessKey});
+  const ViewGroup({super.key, required this.groupId});
 
   @override
   State<ViewGroup> createState() => _ViewGroupBody();
@@ -26,7 +25,7 @@ class ViewGroup extends StatefulWidget {
 class _ViewGroupBody extends State<ViewGroup> {
   final RefreshController _refreshController = RefreshController();
   
-  var group;
+  dynamic group;
 
   Future<void> _onRefresh() async {
     await context.read<GroupCubit>().show(widget.groupId);
@@ -77,7 +76,7 @@ class _ViewGroupBody extends State<ViewGroup> {
             return SmartRefresher(
               controller: _refreshController,
               onRefresh: _onRefresh,
-              child: Text('Tente novamente'),
+              child: Text('Erro: ${state.error}, tente novamente'),
             );
           }
           if ( state.group != null){
@@ -134,7 +133,7 @@ class _ViewGroupBody extends State<ViewGroup> {
                           participants: group.participants.length,
                           participantsList: group.participants,
                           groupId: widget.groupId,
-                          groupAccessKey: group.code,
+                          groupToken: group.token, groupCode: group.code,
                         ),
                       ),
                       if (group.raffledAt == null &&

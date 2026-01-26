@@ -18,7 +18,6 @@ class GroupDB {
       ..shortCode = result.shortCode
       ..code = result.code
       ..token = result.token
-      // ..status = result.status
       ..adminId = result.participants[0].id;
     return isar.writeTxnSync(() => isar.isarGroupModels.putSync(group));
   }

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
-import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
-import 'package:sorteador_amigo_secreto/components/my_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/alerts/dialog.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_appbar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_button.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
@@ -12,9 +13,13 @@ import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class CreateParticipant extends StatefulWidget {
-  final String groupId;
+  final int groupId;
   final String groupCode;
-  const CreateParticipant({super.key, required this.groupId, required this.groupCode});
+  const CreateParticipant({
+    super.key,
+    required this.groupId,
+    required this.groupCode,
+  });
 
   @override
   State<CreateParticipant> createState() => _CreateParticipant();
@@ -50,7 +55,7 @@ class _CreateParticipant extends State<CreateParticipant> {
       role: "participant",
       groupCode: widget.groupCode,
     );
-    context.read<ParticipantCubit>().create(entity, int.parse(widget.groupId));
+    context.read<ParticipantCubit>().create(entity, widget.groupId);
   }
 
   @override
@@ -62,23 +67,59 @@ class _CreateParticipant extends State<CreateParticipant> {
         backgroundColor: Theme.of(context).canvasColor,
         body: BlocConsumer<ParticipantCubit, ParticipantState>(
           listenWhen: (prev, curr) =>
-              prev.isLoading == true &&
-              curr.isLoading == false &&
-              curr.created == true,
-          listener: (context, state) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'Participante ${nameController.text} adicionado com sucesso!',
+              prev.isLoading == true && curr.isLoading == false,
+          listener: (context, state) async {
+            if (state.created == true) {
+              // ✅ SUCESSO
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Participante ${nameController.text} adicionado com sucesso!',
+                  ),
+                  showCloseIcon: true,
+                  backgroundColor: Colors.green,
                 ),
-                showCloseIcon: true,
-              ),
-            );
-            context.pop(true);
+              );
+              context.pop(true);
+            }
+
+            if (state.error != null) {
+              // ❌ ERRO
+              await AppDialog.show(
+                context: context,
+                title: 'Erro',
+                message: state.error!,
+              );
+            }
           },
           builder: (context, state) {
             if (state.isLoading == true) {
-              return Center(child: CircularProgressIndicator(color: myProgressIndicator.color,));
+              return Center(
+                child: CircularProgressIndicator(
+                  color: myProgressIndicator.color,
+                ),
+              );
+            }
+            if (state.error != null) {
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.red.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.error_outline, color: Colors.red),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        state.error!,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  ],
+                ),
+              );
             }
             return SingleChildScrollView(
               child: Container(

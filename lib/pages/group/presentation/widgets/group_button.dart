@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sorteador_amigo_secreto/components/my_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_button.dart';
 
 class GroupButton extends StatelessWidget {
   const GroupButton({super.key});

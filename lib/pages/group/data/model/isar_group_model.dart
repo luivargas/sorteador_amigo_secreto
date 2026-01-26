@@ -14,7 +14,6 @@ class IsarGroupModel {
   late String name;
   late String token;
   late String adminId;
-  // late String status;
 }
 
 extension IsarGroupToDomain on IsarGroupModel {
@@ -23,7 +22,6 @@ extension IsarGroupToDomain on IsarGroupModel {
     shortCode: shortCode,
     name: name,
     token: token,
-    // status: status, 
     participants: [],
   );
 }

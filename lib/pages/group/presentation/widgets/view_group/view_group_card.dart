@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/components/stat_card.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/stat_card.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/list_participants_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
@@ -15,7 +15,8 @@ class ViewGroupCard extends StatelessWidget {
   final String groupDescription;
   final int participants;
   final List<ShowParticipantModel> participantsList;
-  final String groupAccessKey;
+  final String groupToken;
+  final String groupCode;
   final BadgeType type;
 
   const ViewGroupCard({
@@ -30,7 +31,7 @@ class ViewGroupCard extends StatelessWidget {
     required this.groupDescription,
     required this.participantsList,
     required this.groupId,
-    required this.groupAccessKey,
+    required this.groupToken, required this.groupCode,
   });
 
   @override
@@ -109,7 +110,7 @@ class ViewGroupCard extends StatelessWidget {
                 child: ListParticipantsCard(
                   type: type,
                   participantsList: participantsList,
-                  groupId: groupId, groupAccessKey: groupAccessKey,
+                  groupId: groupId, groupToken: groupToken, groupCode: groupCode,
                 ),
               ),
             ],

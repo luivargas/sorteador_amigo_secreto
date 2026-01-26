@@ -32,7 +32,7 @@ class GroupDatasource extends GroupRepository {
         ),
       );
     } catch (_) {
-      return Failure(ApiError('Erro inesperado', raw: e));
+      return Failure(ApiError('Erro inesperado', statusCode: e.hashCode, raw: e));
     }
   }
 
@@ -43,7 +43,7 @@ class GroupDatasource extends GroupRepository {
       await dio.delete(
         stageGroupApiUrl,
         options: Options(
-          headers: {'Authorization': bearerToken, 'Access-Key': token},
+          headers: {'Access-Key': token},
         ),
       );
       await GroupDB().delete(id);
@@ -52,13 +52,13 @@ class GroupDatasource extends GroupRepository {
 
   @override
   Future<GroupApiResult<ShowGroupModel>> show(int id) async {
-    final acessKey = await GroupDB().getAccesKeyById(id);
+    final token = await GroupDB().getAccesKeyById(id);
     final code = await GroupDB().getCodeById(id);
     try {
       final resp = await dio.get(
         '$stageGroupApiUrl/$code',
         options: Options(
-          headers: {'Authorization': bearerToken, 'Access-Key': acessKey},
+          headers: {'Access-Key': token},
         ),
       );
       final model = ShowGroupModel.fromJson(resp.data);
@@ -72,7 +72,7 @@ class GroupDatasource extends GroupRepository {
         ),
       );
     } catch (_) {
-      return Failure(ApiError('Erro inesperado', raw: e));
+      return Failure(ApiError('Erro inesperado',statusCode: e.hashCode, raw: e));
     }
   }
 
@@ -82,13 +82,13 @@ class GroupDatasource extends GroupRepository {
     int id,
   ) async {
     try {
-      final acessKey = await GroupDB().getAccesKeyById(id);
+      final token = await GroupDB().getAccesKeyById(id);
       final code = await GroupDB().getCodeById(id);
       final resp = await dio.put(
         '$stageGroupApiUrl/$code',
         data: entity.toJson(),
         options: Options(
-          headers: {'Authorization': bearerToken, 'Access-Key': acessKey},
+          headers: {'Authorization': bearerToken, 'Access-Key': token},
         ),
       );
       final model = UpdateGroupModel.fromJson(resp.data);
@@ -129,11 +129,11 @@ class GroupDatasource extends GroupRepository {
   @override
   Future<GroupApiResult<String>> raffle(String code, int id) async {
     try {
-      final acessKey = await GroupDB().getAccesKeyById(id);
+      final token = await GroupDB().getAccesKeyById(id);
       final resp = await dio.post(
         '$stageGroupApiUrl/$code/raffle',
         options: Options(
-          headers: {'Authorization': bearerToken, 'Access-Key': acessKey},
+          headers: {'Authorization': bearerToken, 'Access-Key': token},
         ),
       );
       return Success(resp.statusMessage!);

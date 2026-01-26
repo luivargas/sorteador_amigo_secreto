@@ -26,7 +26,7 @@ class ParticipantCubit extends Cubit<ParticipantState> {
         failure: (f) => emit(
           state.copyWith(
             isLoading: false,
-            error: result.toString(),
+            error: f.message,
             created: false,
           ),
         ),
@@ -38,7 +38,7 @@ class ParticipantCubit extends Cubit<ParticipantState> {
 
     Future<void> show(String id, String groupToken) async {
     if (isClosed) return;
-    safeEmit(state.copyWith(isLoading: true, error: null, created: false));
+    safeEmit(state.copyWith(isLoading: true, error: null, showed: false));
     try {
       final result = await participantUsecase.show(id, groupToken); 
       result.when(
@@ -46,13 +46,13 @@ class ParticipantCubit extends Cubit<ParticipantState> {
         failure: (f) => emit(
           state.copyWith(
             isLoading: false,
-            error: result.toString(),
+            error: f.message,
             created: false,
           ),
         ),
       );
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false, created: false));
+      emit(state.copyWith(error: e.toString(), isLoading: false, showed: false));
     }
   }
 }

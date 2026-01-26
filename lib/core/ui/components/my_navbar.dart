@@ -50,6 +50,7 @@ class _MyNavbarState extends State<MyNavbar>
       top: false,
       bottom: false,
       child: Scaffold(
+        backgroundColor: Theme.of(context).canvasColor,
         body: BottomBar(
           fit: StackFit.expand,
           icon: (width, height) => Center(

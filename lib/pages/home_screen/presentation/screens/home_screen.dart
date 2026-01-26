@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_card.dart';
-import 'package:sorteador_amigo_secreto/components/my_appbar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_appbar.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/database/group_db.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/isar_group_model.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';

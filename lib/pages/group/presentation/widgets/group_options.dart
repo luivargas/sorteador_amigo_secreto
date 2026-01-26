@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/components/my_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_button.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class GroupOptions extends StatelessWidget {
