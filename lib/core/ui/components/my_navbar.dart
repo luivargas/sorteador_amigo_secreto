@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
-import 'package:sorteador_amigo_secreto/pages/access/presentation/screens/access.dart';
+import 'package:sorteador_amigo_secreto/pages/splash_screen/presentation/screens/access.dart';
 import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/screens/home_screen.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 

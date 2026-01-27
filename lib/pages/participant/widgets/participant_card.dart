@@ -1,19 +1,25 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/show_parti_args.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class ParticipantCard extends StatefulWidget {
-  late String name;
-  late String contact;
-  late String id;
+  final String name;
+  final String contact;
+  final String id;
+  final String groupToken;
 
-
-  ParticipantCard({
+  const ParticipantCard({
     super.key,
     required this.contact,
     required this.name,
-    required this.id
+    required this.id,
+    required this.groupToken,
   });
 
   @override
@@ -21,6 +27,11 @@ class ParticipantCard extends StatefulWidget {
 }
 
 class _ParticipantCardState extends State<ParticipantCard> {
+  Future<void> _delete(BuildContext ctx, String id) async {
+    Slidable.of(ctx)?.close();
+    await context.read<ParticipantCubit>();
+  }
+
   Text main() {
     String text = widget.name.trim();
     String firstWord = text.split(' ').first[0].toUpperCase();
@@ -49,55 +60,90 @@ class _ParticipantCardState extends State<ParticipantCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              border: BoxBorder.fromLTRB(
-                top: BorderSide(color: Colors.grey.shade300),
-              ),
+    return Slidable(
+      key: ValueKey(widget.id),
+      startActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        children: [
+          CustomSlidableAction(
+            onPressed: (ctx) => _delete(ctx, widget.id),
+            backgroundColor: const Color(0xFFFE4A49),
+            foregroundColor: Colors.white,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(Icons.delete),
+                Text("Excluir", overflow: TextOverflow.ellipsis),
+              ],
             ),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 16.0, bottom: 16),
-              child: Row(
-                spacing: 10,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: MyColors.sorteadorGradient,
-                        borderRadius: BorderRadius.circular(90),
-                      ),
-                      width: 60,
-                      height: 60,
-                      child: Center(child: main()),
-                    ),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: InkWell(
+              onTap: () {
+                context.pushNamed(
+                  'view_parti',
+                  extra: ShowParticipantArgs(
+                    userId: widget.id,
+                    groupToken:
+                        widget.groupToken,
                   ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.name,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                          overflow: TextOverflow.ellipsis,
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  border: BoxBorder.fromLTRB(
+                    top: BorderSide(color: Colors.grey.shade300),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 16.0, bottom: 16),
+                  child: Row(
+                    spacing: 10,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: MyColors.sorteadorGradient,
+                            borderRadius: BorderRadius.circular(90),
+                          ),
+                          width: 60,
+                          height: 60,
+                          child: Center(child: main()),
                         ),
-                        Text(widget.contact,overflow: TextOverflow.ellipsis)
-                      ],
-                    ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.name,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              widget.contact,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Icon(Icons.arrow_forward_ios),
+                    ],
                   ),
-                  Icon(Icons.arrow_forward_ios),
-                ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

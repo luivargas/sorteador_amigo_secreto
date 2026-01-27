@@ -6,18 +6,20 @@ class MyButton extends StatelessWidget {
   final String title;
   final Text? subTitle;
   final IconData icon;
+  final bool isLoading;
   const MyButton({
     super.key,
     required this.onTap,
     required this.title,
     this.subTitle,
     required this.icon,
+    this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: isLoading ? null : onTap,
       borderRadius: BorderRadius.all(Radius.circular(20)),
       child: Container(
         decoration: BoxDecoration(
@@ -26,30 +28,43 @@ class MyButton extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Row(
-            spacing: 10,
-            children: [
-              Icon(icon, color: Colors.white),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        fontSize: 20,
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 50),
+            child: isLoading
+                ? const Center(
+                    key: ValueKey('loading'),
+                    child: SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    if (subTitle != null) ...[
-                      subTitle!,
+                  )
+                : Row(
+                    spacing: 10,
+                    children: [
+                      Icon(icon, color: Colors.white),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              title,
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            if (subTitle != null) ...[subTitle!],
+                          ],
+                        ),
+                      ),
+                      Icon(Icons.arrow_forward_ios, color: Colors.white),
                     ],
-                  ],
-                ),
-              ),
-              Icon(Icons.arrow_forward_ios, color: Colors.white),
-            ],
+                  ),
           ),
         ),
       ),

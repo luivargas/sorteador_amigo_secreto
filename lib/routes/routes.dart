@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_navbar.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
-import 'package:sorteador_amigo_secreto/pages/access/presentation/screens/access.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/presentation/screens/forgot_password.dart';
+import 'package:sorteador_amigo_secreto/pages/splash_screen/presentation/screens/access.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/create_group.dart';
@@ -45,10 +44,6 @@ final routes = GoRouter(
     GoRoute(
       path: '/enter_group',
       builder: (BuildContext context, GoRouterState state) => EnterGroup(),
-    ),
-    GoRoute(
-      path: '/forgot_password',
-      builder: (BuildContext context, GoRouterState state) => ForgotPassword(),
     ),
     GoRoute(
       path: '/',

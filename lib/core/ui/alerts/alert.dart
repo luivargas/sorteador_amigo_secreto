@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 enum AlertType { success, error, warning, info }
 
 class AppAlert {
-  static void show(
+  static Future<void> show(
     BuildContext context, {
     required String message,
     AlertType type = AlertType.info,
@@ -12,7 +12,7 @@ class AppAlert {
     final color = _backgroundColor(type);
     final icon = _icon(type);
 
-    ScaffoldMessenger.of(context).showSnackBar(
+    final controller = ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: duration,
         backgroundColor: color,
@@ -32,6 +32,7 @@ class AppAlert {
         ),
       ),
     );
+    return controller.closed;
   }
 
   static Color _backgroundColor(AlertType type) {

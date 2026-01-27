@@ -7,9 +7,7 @@ ProgressIndicatorThemeData myProgressIndicator = ProgressIndicatorThemeData(
 
 ThemeData myTheme = ThemeData(
   primaryColor: MyColors.sorteadorBackground,
-  appBarTheme: AppBarTheme(
-    backgroundColor: MyColors.sorteadorBackground,
-  ),
+  appBarTheme: AppBarTheme(backgroundColor: MyColors.sorteadorBackground),
   canvasColor: MyColors.sorteadorBackground,
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
@@ -59,6 +57,7 @@ ThemeData myTheme = ThemeData(
           WidgetState.any: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
+            fontSize: 20,
           ),
         },
       ),
@@ -72,6 +71,9 @@ ThemeData myTheme = ThemeData(
       ),
       minimumSize: WidgetStateProperty<Size?>.fromMap(
         <WidgetStatesConstraint, Size?>{WidgetState.any: Size(0, 50)},
+      ),
+      iconSize: WidgetStateProperty<double?>.fromMap(
+        <WidgetStatesConstraint, double?>{WidgetState.any: 20.0},
       ),
     ),
   ),

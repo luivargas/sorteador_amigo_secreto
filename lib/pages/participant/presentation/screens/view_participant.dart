@@ -14,7 +14,11 @@ import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 class ViewParticipant extends StatefulWidget {
   final String userId;
   final String groupToken;
-  const ViewParticipant({super.key, required this.userId, required this.groupToken});
+  const ViewParticipant({
+    super.key,
+    required this.userId,
+    required this.groupToken,
+  });
 
   @override
   State<ViewParticipant> createState() => _ViewParticipant();
@@ -32,7 +36,10 @@ class _ViewParticipant extends State<ViewParticipant> {
   bool readOnly = true;
 
   Future<void> _onRefresh() async {
-    await context.read<ParticipantCubit>().show(widget.userId, widget.groupToken);
+    await context.read<ParticipantCubit>().show(
+      widget.userId,
+      widget.groupToken,
+    );
   }
 
   @override
@@ -57,9 +64,8 @@ class _ViewParticipant extends State<ViewParticipant> {
   }
 
   void _onSubmit() {
-    if (_validadeFormKey.currentState!.validate()) {}
-    final isValid = _validadeFormKey.currentState?.validate() ?? false;
-    if (!isValid) return;
+    final formState = _validadeFormKey.currentState;
+    if (formState == null || !formState.validate()) return;
   }
 
   @override
@@ -143,19 +149,29 @@ class _ViewParticipant extends State<ViewParticipant> {
                                 emailController: emailController,
                                 participant: state.participant!,
                               ),
-                              TextButton(
-                                onPressed: () {
-                                  setState(() {
-                                    readOnly = !readOnly;
-                                  });
-                                },
-                                child: Text(
-                                  'Editar',
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        readOnly = !readOnly;
+                                      });
+                                    },
+                                                              child: Row(
+                                  spacing: 5,
+                                  children: [Icon(Icons.edit), Text('Editar')],
+                                                              ),
+                                  ),
+                                ],
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                padding: const EdgeInsets.fromLTRB(
+                                  20,
+                                  0,
+                                  20,
+                                  0,
+                                ),
                                 child: MyButton(
                                   onTap: _onSubmit,
                                   title: "Salvar",

@@ -9,7 +9,6 @@ import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/create_parti_args.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/show_parti_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/participant_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
@@ -25,7 +24,8 @@ class ListParticipantsCard extends StatelessWidget {
     required this.participantsList,
     required this.groupId,
     required this.groupToken,
-    required this.type, required this.groupCode,
+    required this.type,
+    required this.groupCode,
   });
 
   @override
@@ -40,21 +40,11 @@ class ListParticipantsCard extends StatelessWidget {
             itemCount: min(participantsList.length, 6),
             itemBuilder: (context, index) {
               final f = participantsList[index];
-              return InkWell(
-                onTap: () {
-                  context.pushNamed(
-                    'view_parti',
-                    extra: ShowParticipantArgs(
-                      userId: f.id,
-                      groupToken: groupToken,
-                    ),
-                  );
-                },
-                child: ParticipantCard(
-                  contact: f.email ?? f.phone ?? "",
-                  name: f.name,
-                  id: f.id,
-                ),
+              return ParticipantCard(
+                contact: f.email ?? f.phone ?? "",
+                name: f.name,
+                id: f.id,
+                groupToken: groupToken,
               );
             },
           ),
@@ -78,7 +68,7 @@ class ListParticipantsCard extends StatelessWidget {
                       ),
                     );
                   }
-                  return Text('Adicione mais participantes');
+                  return Container();
                 },
               ),
             ],
@@ -97,21 +87,11 @@ class ListParticipantsCard extends StatelessWidget {
             itemCount: participantsList.length,
             itemBuilder: (context, index) {
               final p = participantsList[index];
-              return InkWell(
-                onTap: () {
-                  context.pushNamed(
-                    'view_parti',
-                    extra: ShowParticipantArgs(
-                      userId: p.id,
-                      groupToken: groupToken,
-                    ),
-                  );
-                },
-                child: ParticipantCard(
-                  contact: p.email ?? p.phone ?? "",
-                  name: p.name,
-                  id: p.id,
-                ),
+              return ParticipantCard(
+                contact: p.email ?? p.phone ?? "",
+                name: p.name,
+                id: p.id,
+                groupToken: groupToken,
               );
             },
           ),
