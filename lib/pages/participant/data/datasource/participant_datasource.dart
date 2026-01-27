@@ -11,14 +11,13 @@ import 'package:sorteador_amigo_secreto/pages/participant/domain/repository/part
 import 'package:sorteador_amigo_secreto/core/network/contants.dart';
 
 class ParticipantDatasource extends ParticipantRepository {
-  final dio = Dio(BaseOptions(headers: { 'Accept': 'application/json' }));
+  final dio = Dio(BaseOptions(headers: {'Accept': 'application/json'}));
 
   @override
   Future<ParticipantApiResult<CreateParticipantModel>> create(
     CreateParticipantEntity entity,
     int groupId,
   ) async {
-    
     try {
       final token = await GroupDB().getAccesKeyById(groupId);
       final resp = await dio.post(
@@ -37,24 +36,26 @@ class ParticipantDatasource extends ParticipantRepository {
         ),
       );
     } catch (e) {
-      return Failure(ApiError('Erro inesperado' ,raw: e ));
+      return Failure(ApiError('Erro inesperado', raw: e));
     }
   }
 
   @override
-  Future<ParticipantApiResult<ShowParticipantModel>> show(String id, String token) async {
-
+  Future<ParticipantApiResult<ShowParticipantModel>> show(
+    String id,
+    String token,
+  ) async {
     try {
       final resp = await dio.get(
         "$stageParticipantApiUrl/$id",
-        options: Options(headers: {'Access-key': token}),
+        options: Options(headers: {'Access-key': token, }),
       );
       final model = ShowParticipantModel.fromJson(resp.data);
       return Success(model);
     } on DioException catch (e) {
       return Failure(
         ApiError(
-          e.message ?? 'Erro inesperado',
+          ApiErrorMapper.map(e),
           statusCode: e.response?.statusCode,
           raw: e.response?.data,
         ),
@@ -82,7 +83,7 @@ class ParticipantDatasource extends ParticipantRepository {
     } on DioException catch (e) {
       return Failure(
         ApiError(
-          e.message ?? 'Erro inesperado',
+          ApiErrorMapper.map(e),
           statusCode: e.response?.statusCode,
           raw: e.response?.data,
         ),

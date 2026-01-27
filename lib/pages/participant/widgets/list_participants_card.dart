@@ -60,7 +60,7 @@ class ListParticipantsCard extends StatelessWidget {
                   if (participantsList.length > 6) {
                     return Expanded(
                       child: ElevatedButton.icon(
-                        label: Text('Ver todos participantes'),
+                        label: Text('Ver todos '),
                         onPressed: () {
                           controller.toggle();
                         },

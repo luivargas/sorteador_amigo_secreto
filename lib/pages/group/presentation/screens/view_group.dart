@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_appbar.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
@@ -24,7 +24,7 @@ class ViewGroup extends StatefulWidget {
 
 class _ViewGroupBody extends State<ViewGroup> {
   final RefreshController _refreshController = RefreshController();
-  
+
   dynamic group;
 
   Future<void> _onRefresh() async {
@@ -79,9 +79,9 @@ class _ViewGroupBody extends State<ViewGroup> {
               child: Text('Erro: ${state.error}, tente novamente'),
             );
           }
-          if ( state.group != null){
+          if (state.group != null) {
             group = state.group!;
-          }else{}
+          } else {}
           return SmartRefresher(
             controller: _refreshController,
             onRefresh: _onRefresh,
@@ -102,45 +102,51 @@ class _ViewGroupBody extends State<ViewGroup> {
                             ? type = BadgeType.pending
                             : type = BadgeType.raffled,
                       ),
-                      TextButton.icon(
-                        onPressed: () async {
-                          final result = await context.pushNamed(
-                            'edit_group',
-                            extra: ShowGroupArgs(groupId: widget.groupId,),
-                          );
-                          if (result == true) {
-                            context.read<GroupCubit>().show(widget.groupId);
-                          }
-                        },
-                        icon: Icon(Icons.edit),
-                        label: Text('Editar'),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () async {
+                              final result = await context.pushNamed(
+                                'edit_group',
+                                extra: ShowGroupArgs(groupId: widget.groupId),
+                              );
+                              if (result == true) {
+                                context.read<GroupCubit>().show(widget.groupId);
+                              }
+                            },
+                            child: Row(
+                              spacing: 7,
+                              children: [Icon(Icons.edit), Text('Editar')],
+                            ),
+                          ),
+                        ],
                       ),
+
                       Padding(
                         padding: const EdgeInsets.only(top: 10.0),
                         child: ViewGroupCard(
                           type: type,
-                          eventLocation:
-                              group.location ?? "Não definido",
+                          eventLocation: group.location ?? "Não definido",
                           minGiftValue: group.minGiftValue ?? "00,00",
                           maxGiftValue: group.maxGiftValue ?? "00,00",
                           eventDate:
-                              group.drawDate?.split(' ').first ??
-                              "00/00/0000",
-                          eventTime:
-                              group.drawDate?.split(' ').last ?? "00:00",
+                              group.drawDate?.split(' ').first ?? "00/00/0000",
+                          eventTime: group.drawDate?.split(' ').last ?? "00:00",
                           groupDescription:
                               group.description ?? "Sem descrição",
                           participants: group.participants.length,
                           participantsList: group.participants,
                           groupId: widget.groupId,
-                          groupToken: group.token, groupCode: group.code,
+                          groupToken: group.token,
+                          groupCode: group.code,
                         ),
                       ),
                       if (group.raffledAt == null &&
                           group.participants.length >= 2) ...[
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0, bottom: 40),
-                          child: MyButton(
+                          child: MyGradientButton(
                             onTap: () {
                               _onSubmit(group.code, widget.groupId);
                             },

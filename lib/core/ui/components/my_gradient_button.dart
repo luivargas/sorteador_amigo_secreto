@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
-class MyButton extends StatelessWidget {
+class MyGradientButton extends StatelessWidget {
   final VoidCallback onTap;
   final String title;
   final Text? subTitle;
   final IconData icon;
   final bool isLoading;
-  const MyButton({
+  const MyGradientButton({
     super.key,
     required this.onTap,
     required this.title,

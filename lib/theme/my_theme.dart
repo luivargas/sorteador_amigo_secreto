@@ -57,7 +57,7 @@ ThemeData myTheme = ThemeData(
           WidgetState.any: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 18,
           ),
         },
       ),
@@ -73,7 +73,7 @@ ThemeData myTheme = ThemeData(
         <WidgetStatesConstraint, Size?>{WidgetState.any: Size(0, 50)},
       ),
       iconSize: WidgetStateProperty<double?>.fromMap(
-        <WidgetStatesConstraint, double?>{WidgetState.any: 20.0},
+        <WidgetStatesConstraint, double?>{WidgetState.any: 18.0},
       ),
     ),
   ),

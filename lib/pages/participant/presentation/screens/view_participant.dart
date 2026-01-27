@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
+import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_appbar.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/view_participant_form_fields.dart';
-import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart' hide AlertType;
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
@@ -78,9 +79,12 @@ class _ViewParticipant extends State<ViewParticipant> {
         body: BlocConsumer<ParticipantCubit, ParticipantState>(
           listener: (context, state) {
             _prefillFromApi(state);
+            if (state.error != null){
+              AppAlert.show(context, message: state.error!, type: AlertType.error);
+            }
           },
           builder: (context, state) {
-            if (state.showed != true || state.isLoading != false) {
+            if (state.isLoading == true) {
               return Center(
                 child: CircularProgressIndicator(
                   color: myProgressIndicator.color,
@@ -91,7 +95,7 @@ class _ViewParticipant extends State<ViewParticipant> {
               return SmartRefresher(
                 controller: _refreshController,
                 onRefresh: _onRefresh,
-                child: Center(child: Text("Tente novamente")),
+                child: Center(child: Text("Tente novamente!")),
               );
             }
             return SmartRefresher(
@@ -158,10 +162,13 @@ class _ViewParticipant extends State<ViewParticipant> {
                                         readOnly = !readOnly;
                                       });
                                     },
-                                                              child: Row(
-                                  spacing: 5,
-                                  children: [Icon(Icons.edit), Text('Editar')],
-                                                              ),
+                                    child: Row(
+                                      spacing: 5,
+                                      children: [
+                                        Icon(Icons.edit),
+                                        Text('Editar'),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -172,7 +179,7 @@ class _ViewParticipant extends State<ViewParticipant> {
                                   20,
                                   0,
                                 ),
-                                child: MyButton(
+                                child: MyGradientButton(
                                   onTap: _onSubmit,
                                   title: "Salvar",
                                   icon: Icons.save,

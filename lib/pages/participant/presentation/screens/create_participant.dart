@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/dialog.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_appbar.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
@@ -40,18 +41,12 @@ class _CreateParticipant extends State<CreateParticipant> {
     if (!isValid) return;
 
     _createFormKey.currentState?.save();
-    final email = emailController.text.trim();
-    final name = nameController.text.trim();
-    final idd = phoneController.value.countryCode.trim();
-    final phone = phoneController.value.international.trim().replaceFirst(
-      '+$idd',
-      '',
-    );
+
     final entity = CreateParticipantEntity(
-      name: name,
-      email: email,
-      phone: phone,
-      idd: idd,
+      name: nameController.text,
+      email: emailController.text,
+      phone: phoneController.value.international,
+      idd: phoneController.value.countryCode,
       role: "participant",
       groupCode: widget.groupCode,
     );
@@ -70,21 +65,18 @@ class _CreateParticipant extends State<CreateParticipant> {
               prev.isLoading == true && curr.isLoading == false,
           listener: (context, state) async {
             if (state.created == true) {
-              // ✅ SUCESSO
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
+              AppAlert.show(
+                context,
+                message:
                     'Participante ${nameController.text} adicionado com sucesso!',
-                  ),
-                  showCloseIcon: true,
-                  backgroundColor: Colors.green,
-                ),
+                    type: AlertType.success
               );
-              context.pop(true);
+              if (context.mounted) {
+                context.pop(true);
+              }
             }
 
             if (state.error != null) {
-              // ❌ ERRO
               await AppDialog.show(
                 context: context,
                 title: 'Erro',
@@ -93,34 +85,6 @@ class _CreateParticipant extends State<CreateParticipant> {
             }
           },
           builder: (context, state) {
-            if (state.isLoading == true) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: myProgressIndicator.color,
-                ),
-              );
-            }
-            if (state.error != null) {
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.error_outline, color: Colors.red),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        state.error!,
-                        style: const TextStyle(color: Colors.red),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
             return SingleChildScrollView(
               child: Container(
                 decoration: BoxDecoration(
@@ -145,10 +109,11 @@ class _CreateParticipant extends State<CreateParticipant> {
                         emailController: emailController,
                         phoneController: phoneController,
                       ),
-                      MyButton(
+                      MyGradientButton(
                         onTap: _onSubmit,
                         title: "Adicionar participante",
                         icon: Icons.create,
+                        isLoading: state.isLoading == true,
                       ),
                     ],
                   ),

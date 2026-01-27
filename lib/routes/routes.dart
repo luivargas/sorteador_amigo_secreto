@@ -99,7 +99,7 @@ final routes = GoRouter(
       path: '/view_parti',
       builder: (BuildContext context, GoRouterState state) {
         final extra = state.extra as ShowParticipantArgs;
-        final repo = getIt<ParticipantCubit>().participantUsecase;  
+        final repo = getIt<ParticipantCubit>().participantUsecase;
         return BlocProvider<ParticipantCubit>(
           create: (_) => ParticipantCubit(repo)..show(extra.userId, extra.groupToken),
           child: ViewParticipant(userId: extra.userId, groupToken: extra.groupToken),

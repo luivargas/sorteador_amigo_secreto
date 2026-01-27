@@ -10,10 +10,10 @@ class CreateParticipantEntity {
   final List<String>? preferences;
   final List<String>? size;
   final List<String>? dislike;
-  final String groupCode;
+  final String? groupCode;
 
   CreateParticipantEntity({
-    required this.groupCode,
+    this.groupCode,
     required this.name,
     this.email,
     this.idd,
@@ -28,10 +28,10 @@ class CreateParticipantEntity {
   });
 
   Map<String, dynamic> toJson() => {
-    'name': name,
-    'email': email,
-    'idd': idd,
-    'phone': phone,
+    'name': name.trim(),
+    'email': email?.toLowerCase(),
+    'idd': idd?.trim(),
+    'phone': phone?.trim().replaceFirst('+$idd', ''),
     'is_participant': isParticipant,
     'is_dependent': isDependent,
     'role': role,
@@ -39,6 +39,6 @@ class CreateParticipantEntity {
     'preferences': preferences,
     'size': size,
     'dislike': dislike,
-    'group_code': groupCode,
+    'group_code': groupCode?.trim(),
   };
 }

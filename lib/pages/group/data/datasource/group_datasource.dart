@@ -11,7 +11,7 @@ import 'package:sorteador_amigo_secreto/pages/group/domain/repository/group_repo
 import 'package:sorteador_amigo_secreto/core/network/contants.dart';
 
 class GroupDatasource extends GroupRepository {
-  final dio = Dio(BaseOptions(headers: {'X-Tenant': xtenant}));
+  final dio = Dio(BaseOptions(headers: {'Accept': 'application/json'}));
 
   @override
   Future<GroupApiResult<CreateGroupModel>> create(
@@ -32,7 +32,9 @@ class GroupDatasource extends GroupRepository {
         ),
       );
     } catch (_) {
-      return Failure(ApiError('Erro inesperado', statusCode: e.hashCode, raw: e));
+      return Failure(
+        ApiError('Erro inesperado', statusCode: e.hashCode, raw: e),
+      );
     }
   }
 
@@ -42,9 +44,7 @@ class GroupDatasource extends GroupRepository {
     try {
       await dio.delete(
         stageGroupApiUrl,
-        options: Options(
-          headers: {'Access-Key': token},
-        ),
+        options: Options(headers: {'Access-Key': token}),
       );
       await GroupDB().delete(id);
     } catch (_) {}
@@ -57,9 +57,7 @@ class GroupDatasource extends GroupRepository {
     try {
       final resp = await dio.get(
         '$stageGroupApiUrl/$code',
-        options: Options(
-          headers: {'Access-Key': token},
-        ),
+        options: Options(headers: {'Access-Key': token}),
       );
       final model = ShowGroupModel.fromJson(resp.data);
       return Success(model);
@@ -72,7 +70,9 @@ class GroupDatasource extends GroupRepository {
         ),
       );
     } catch (_) {
-      return Failure(ApiError('Erro inesperado',statusCode: e.hashCode, raw: e));
+      return Failure(
+        ApiError('Erro inesperado', statusCode: e.hashCode, raw: e),
+      );
     }
   }
 

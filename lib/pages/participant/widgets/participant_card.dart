@@ -29,7 +29,7 @@ class ParticipantCard extends StatefulWidget {
 class _ParticipantCardState extends State<ParticipantCard> {
   Future<void> _delete(BuildContext ctx, String id) async {
     Slidable.of(ctx)?.close();
-    await context.read<ParticipantCubit>();
+    context.read<ParticipantCubit>();
   }
 
   Text main() {

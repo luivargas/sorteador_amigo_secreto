@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 
 class GroupButton extends StatelessWidget {
   const GroupButton({super.key});
@@ -19,7 +19,7 @@ class GroupButton extends StatelessWidget {
             Column(
               spacing: 10,
               children: [
-                MyButton(
+                MyGradientButton(
                   title: 'Criar grupo',
                   icon: Icons.create,
                   subTitle: Text(
@@ -35,7 +35,7 @@ class GroupButton extends StatelessWidget {
             Column(
               spacing: 10,
               children: [
-                MyButton(
+                MyGradientButton(
                   title: "Recuperar grupo",
                   icon: Icons.group,
                   subTitle: Text(

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_appbar.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/update_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
@@ -217,7 +217,7 @@ class _EditGroup extends State<EditGroup> {
                         addressController: locationController,
                         onTapDateTime: _pickDateTime,
                       ),
-                      MyButton(
+                      MyGradientButton(
                         onTap: () {
                           _onSubmit();
                         },

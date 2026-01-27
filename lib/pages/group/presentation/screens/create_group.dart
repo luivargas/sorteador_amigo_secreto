@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_appbar.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/create_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
@@ -31,23 +31,15 @@ class _FormGroupBody extends State<CreateGroup> {
     if (!isValid) return;
 
     _formKey.currentState?.save();
-    final email = emailController.text.trim();
-    final name = nameController.text.trim();
-    final groupName = groupNameController.text.trim();
-    final idd = phoneController.value.countryCode.trim();
-    final phone = phoneController.value.international.trim().replaceFirst(
-      '+$idd',
-      '',
-    );
+
     final entity = CreateGroupEntity(
-      name: groupName,
-      
+      name: groupNameController.text,
+
       admin: CreateParticipantEntity(
-        name: name,
-        email: email,
-        phone: phone,
-        idd: idd, 
-        groupCode: '', 
+        name: nameController.text,
+        email: emailController.text,
+        phone: phoneController.value.international,
+        idd: phoneController.value.countryCode,
       ),
     );
     context.read<GroupCubit>().create(entity);
@@ -78,7 +70,11 @@ class _FormGroupBody extends State<CreateGroup> {
           },
           builder: (context, state) {
             if (state.isLoading == true) {
-              return Center(child: CircularProgressIndicator(color: myProgressIndicator.color,));
+              return Center(
+                child: CircularProgressIndicator(
+                  color: myProgressIndicator.color,
+                ),
+              );
             }
             return ConstrainedBox(
               constraints: BoxConstraints(
@@ -112,7 +108,7 @@ class _FormGroupBody extends State<CreateGroup> {
                           emailController: emailController,
                           phoneController: phoneController,
                         ),
-                        MyButton(
+                        MyGradientButton(
                           onTap: _onSubmit,
                           title: "Criar grupo",
                           icon: Icons.create,

@@ -47,7 +47,7 @@ class ParticipantCubit extends Cubit<ParticipantState> {
           state.copyWith(
             isLoading: false,
             error: f.message,
-            created: false,
+            showed: false,
           ),
         ),
       );

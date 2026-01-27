@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class GroupOptions extends StatelessWidget {
@@ -34,7 +34,7 @@ class GroupOptions extends StatelessWidget {
                 Column(
                   spacing: 10,
                   children: [
-                    MyButton(
+                    MyGradientButton(
                       title: "Compartilhar",
                       icon: Icons.share,
                       onTap: () {},
@@ -44,7 +44,7 @@ class GroupOptions extends StatelessWidget {
                 Column(
                   spacing: 10,
                   children: [
-                    MyButton(
+                    MyGradientButton(
                       title: "Arquivar",
                       icon: Icons.archive,
                       onTap: () {},

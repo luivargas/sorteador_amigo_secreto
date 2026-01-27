@@ -10,6 +10,7 @@ class ApiErrorMapper {
       if (data is Map<String, dynamic>) {
         return data['message'] ??
                data['errors'] ??
+               data['error'] ??
                data['detail'] ??
                'Erro inesperado no servidor';
       }
