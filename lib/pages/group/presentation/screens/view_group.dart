@@ -9,10 +9,10 @@ import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.da
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_options.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/view_group/view_group_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ViewGroup extends StatefulWidget {
   final int groupId;
@@ -27,6 +27,20 @@ class _ViewGroupBody extends State<ViewGroup> {
 
   dynamic group;
 
+  Future<void> _onShare() async {
+    final result = await SharePlus.instance.share(
+      ShareParams(
+        uri: Uri.parse('https://sorteador.com.br'),
+        title: 'Link do meu site',
+        subject: 'Link do meu site',
+      ),
+    );
+
+    if (result.status == ShareResultStatus.success) {
+      print('Thank you for sharing my website!');
+    }
+  }
+
   Future<void> _onRefresh() async {
     await context.read<GroupCubit>().show(widget.groupId);
   }
@@ -34,6 +48,7 @@ class _ViewGroupBody extends State<ViewGroup> {
   Future<void> _onSubmit(String code, int id) async {
     await context.read<GroupCubit>().raffle(code, id);
   }
+
 
   @override
   void dispose() {
@@ -48,12 +63,8 @@ class _ViewGroupBody extends State<ViewGroup> {
       appBar: MyAppBar(
         actions: [
           IconButton(
-            onPressed: () => showModalBottomSheet<void>(
-              backgroundColor: Theme.of(context).canvasColor,
-              context: context,
-              builder: (context) => GroupOptions(groupId: widget.groupId),
-            ),
-            icon: Icon(Icons.more_vert, size: 30),
+            onPressed: () => _onShare(),
+            icon: Icon(Icons.share, size: 30),
           ),
         ],
       ),
@@ -166,3 +177,4 @@ class _ViewGroupBody extends State<ViewGroup> {
     );
   }
 }
+

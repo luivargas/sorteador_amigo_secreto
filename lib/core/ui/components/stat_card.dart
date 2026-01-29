@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
+import 'package:sorteador_amigo_secreto/core/ui/alerts/dialog.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart' hide AlertType;
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
-/// Card de estatística
 class StatCard extends StatelessWidget {
   final String value;
   final String label;
@@ -19,12 +19,7 @@ class StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: SnackBarAction(label: "$label - $value", onPressed: () {}),
-            showCloseIcon: true,
-          ),
-        );
+        AppDialog.show(context: context, title: value, message: label);
       },
       child: Container(
         padding: EdgeInsets.all(28),

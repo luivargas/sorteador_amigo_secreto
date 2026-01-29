@@ -45,18 +45,18 @@ class ViewGroupCard extends StatelessWidget {
         spacing: 20,
         children: [
           StatCard(
-            value: eventDate,
-            label: eventTime,
+            value: 'Data do encontro',
+            label: '$eventDate - $eventTime',
             icon: Icons.calendar_month,
           ),
           StatCard(
-            value: 'R\$ $minGiftValue - R\$ $maxGiftValue',
-            label: 'Valor sugerido',
+            value: 'Valor sugerido',
+            label: 'R\$ $minGiftValue - R\$ $maxGiftValue',
             icon: Icons.monetization_on,
           ),
           StatCard(
-            value: eventLocation,
-            label: 'Local',
+            value: 'Local',
+            label: eventLocation,
             icon: Icons.location_on,
           ),
           StatCard(

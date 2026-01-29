@@ -10,13 +10,21 @@ class AppDialog {
   }) {
     return showDialog(
       context: context,
-      builder: (_) => AlertDialog(title: Text(title), content: Text(message),
-      actions: [
-        TextButton(onPressed: (){
-          Navigator.of(context).pop();
-          onConfirm?.call();
-        }, child: Text(confirmText))
-      ],
+      builder: (_) => AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        backgroundColor: Theme.of(context).canvasColor,
+        titleTextStyle: Theme.of(context).textTheme.titleSmall,
+        scrollable: true,
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              onConfirm?.call();
+            },
+            child: Text(confirmText),
+          ),
+        ],
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_navbar.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/test2.dart';
 import 'package:sorteador_amigo_secreto/pages/splash_screen/presentation/screens/access.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
@@ -69,6 +70,11 @@ final routes = GoRouter(
       path: '/test',
       builder: (BuildContext context, GoRouterState state) =>
           FlutterContactsExample(),
+    ),
+        GoRoute(
+      path: '/test2',
+      builder: (BuildContext context, GoRouterState state) =>
+          Teste2(),
     ),
         GoRoute(
       name: 'edit_group',
