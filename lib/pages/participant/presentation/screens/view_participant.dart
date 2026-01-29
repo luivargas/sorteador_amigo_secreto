@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_appbar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/update_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/view_participant_form_fields.dart';
-import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart' hide AlertType;
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart'
+    hide AlertType;
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
@@ -34,7 +37,7 @@ class _ViewParticipant extends State<ViewParticipant> {
 
   bool _prefilledOnce = false;
 
-  bool readOnly = true;
+  bool readOnly = false;
 
   Future<void> _onRefresh() async {
     await context.read<ParticipantCubit>().show(
@@ -43,65 +46,95 @@ class _ViewParticipant extends State<ViewParticipant> {
     );
   }
 
-  @override
-  void dispose() {
-    _refreshController.dispose();
-    nameController.dispose();
-    emailController.dispose();
-    phoneController.dispose();
-    super.dispose();
-  }
+  String? role;
 
   void _prefillFromApi(ParticipantState state) {
     if (_prefilledOnce) return;
-    if (state.participant == null) return;
-    final g = state.participant!;
+    if (state.showParti == null) return;
+    final g = state.showParti!;
 
     nameController.text = g.name;
     emailController.text = g.email ?? '';
-    final phone = g.phone ?? '';
-    phoneController.value = PhoneNumber(isoCode: IsoCode.BR, nsn: phone);
+    phoneController.value = PhoneNumber(
+      isoCode: IsoCode.AC,
+      nsn: g.phone ?? '',
+    );
     _prefilledOnce = true;
+    role = g.role;
   }
 
-  void _onSubmit() {
+  Future<void> _onSubmit() async {
     final formState = _validadeFormKey.currentState;
     if (formState == null || !formState.validate()) return;
+
+    setState(() {
+      readOnly = true;
+    });
+
+    final entity = UpdateParticipantEntity(
+      name: nameController.text,
+      email: emailController.text,
+      phone: phoneController.value.international,
+      idd: phoneController.value.countryCode,
+      role: role,
+    );
+    await context.read<ParticipantCubit>().update(
+      entity,
+      widget.userId,
+      widget.groupToken,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _validadeFormKey,
-      child: Scaffold(
-        appBar: MyAppBar(),
-        backgroundColor: Theme.of(context).canvasColor,
-        body: BlocConsumer<ParticipantCubit, ParticipantState>(
-          listener: (context, state) {
-            _prefillFromApi(state);
-            if (state.error != null){
-              AppAlert.show(context, message: state.error!, type: AlertType.error);
-            }
-          },
-          builder: (context, state) {
-            if (state.isLoading == true) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: myProgressIndicator.color,
-                ),
-              );
-            }
-            if (state.error != null) {
-              return SmartRefresher(
-                controller: _refreshController,
-                onRefresh: _onRefresh,
-                child: Center(child: Text("Tente novamente!")),
-              );
-            }
-            return SmartRefresher(
-              controller: _refreshController,
-              onRefresh: _onRefresh,
-              child: SingleChildScrollView(
+    return Scaffold(
+      appBar: MyAppBar(),
+      backgroundColor: Theme.of(context).canvasColor,
+      body: Form(
+        key: _validadeFormKey,
+        child: SmartRefresher(
+          controller: _refreshController,
+          onRefresh: _onRefresh,
+          child: BlocConsumer<ParticipantCubit, ParticipantState>(
+            listener: (context, state) {
+              _prefillFromApi(state);
+              if (state.error != null) {
+                AppAlert.show(
+                  context,
+                  message: state.error!,
+                  type: AlertType.error,
+                );
+                setState(() {
+                  readOnly = false;
+                });
+              }
+              if (state.updated == true) {
+                AppAlert.show(
+                  context,
+                  message:
+                      'Participante ${nameController.text} atualisado com sucesso!',
+                  type: AlertType.success,
+                );
+                if (context.mounted) {
+                  context.pop(true);
+                }
+              }
+            },
+            buildWhen: (previous, current) =>
+                previous.isLoading == true &&
+                previous.showed == false,
+            builder: (context, state) {
+              if (state.isLoading == true && state.showed == false) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: myProgressIndicator.color,
+                  ),
+                );
+              }
+              if (state.error != null) {
+                return Center(child: Text("Tente novamente!"));
+              }
+              return SingleChildScrollView(
                 child: Column(
                   children: [
                     Text(
@@ -151,36 +184,19 @@ class _ViewParticipant extends State<ViewParticipant> {
                                 readOnly: readOnly,
                                 phoneController: phoneController,
                                 emailController: emailController,
-                                participant: state.participant!,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        readOnly = !readOnly;
-                                      });
-                                    },
-                                    child: Row(
-                                      spacing: 5,
-                                      children: [
-                                        Icon(Icons.edit),
-                                        Text('Editar'),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                                participant: state.showParti,
                               ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(
                                   20,
-                                  0,
                                   20,
-                                  0,
+                                  20,
+                                  20,
                                 ),
                                 child: MyGradientButton(
-                                  onTap: _onSubmit,
+                                  onTap: () {
+                                    _onSubmit();
+                                  },
                                   title: "Salvar",
                                   icon: Icons.save,
                                 ),
@@ -192,9 +208,9 @@ class _ViewParticipant extends State<ViewParticipant> {
                     ),
                   ],
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/dialog.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_appbar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';

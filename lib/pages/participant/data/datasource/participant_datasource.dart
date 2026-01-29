@@ -68,17 +68,16 @@ class ParticipantDatasource extends ParticipantRepository {
   @override
   Future<ParticipantApiResult<UpdateParticipantModel>> update(
     UpdateParticipantEntity entity,
-    int id,
+    String id,
+    String token,
   ) async {
-    Response resp;
     try {
-      resp = await dio.put(
-        '$stageParticipantApiUrl/$id',
+      final resp = await dio.put(
+        "$stageParticipantApiUrl/$id",
         data: entity.toJson(),
-        options: Options(headers: {'Authorization': bearerToken}),
+        options: Options(headers: {'Access-key': token}),
       );
       final model = UpdateParticipantModel.fromJson(resp.data);
-
       return Success(model);
     } on DioException catch (e) {
       return Failure(

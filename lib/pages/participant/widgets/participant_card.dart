@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/show_parti_args.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
@@ -13,13 +14,14 @@ class ParticipantCard extends StatefulWidget {
   final String contact;
   final String id;
   final String groupToken;
+  final int groupId;
 
   const ParticipantCard({
     super.key,
     required this.contact,
     required this.name,
     required this.id,
-    required this.groupToken,
+    required this.groupToken, required this.groupId
   });
 
   @override
@@ -84,15 +86,17 @@ class _ParticipantCardState extends State<ParticipantCard> {
         children: [
           Expanded(
             child: InkWell(
-              onTap: () {
-                context.pushNamed(
+              onTap: () async {
+                final result = await context.pushNamed(
                   'view_parti',
                   extra: ShowParticipantArgs(
                     userId: widget.id,
-                    groupToken:
-                        widget.groupToken,
+                    groupToken: widget.groupToken,
                   ),
                 );
+                if (result == true && context.mounted) {
+                  context.read<GroupCubit>().show(widget.groupId);
+                }
               },
               child: Container(
                 decoration: BoxDecoration(

@@ -17,8 +17,7 @@ class ValidatorUtils {
     if (v == null || v.trim().isEmpty) {
       return 'Informe seu e-mail';
     }
-    final ok = RegexUtils.emailRegExp.hasMatch(v.trim());
-    return ok ? null : 'E-mail inválido';
+    return isValidEmail(v: v);
   }
 
   static String? giftValue({required String? min, required String? max}) {

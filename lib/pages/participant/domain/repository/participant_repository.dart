@@ -7,6 +7,6 @@ import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/update
 
 abstract class ParticipantRepository {
   Future<ParticipantApiResult<CreateParticipantModel>>create(CreateParticipantEntity entity, int id);
-  Future<ParticipantApiResult<UpdateParticipantModel>>update(UpdateParticipantEntity entity, int id);
+  Future<ParticipantApiResult<UpdateParticipantModel>>update(UpdateParticipantEntity entity, String id, String groupToken);
   Future<ParticipantApiResult<ShowParticipantModel>>show(String id, String token);
 }

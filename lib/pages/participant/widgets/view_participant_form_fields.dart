@@ -8,10 +8,10 @@ import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
 enum ParticipantRole { admin, participant, observer }
 
 class ViewParticipantFormFields extends StatefulWidget {
-  final ShowParticipantModel participant;
   final TextEditingController nameController;
   final TextEditingController emailController;
   final PhoneController phoneController;
+  final ShowParticipantModel? participant;
 
   final bool readOnly;
 
@@ -31,7 +31,7 @@ class ViewParticipantFormFields extends StatefulWidget {
 
 class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
   String? _emailValidator(String? v) {
-    ShowParticipantModel data = widget.participant;
+    ShowParticipantModel data = widget.participant!;
     if (data.role == ParticipantRole.admin) {
       return ValidatorUtils.emailValidator(v: v);
     }
@@ -51,6 +51,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
           children: [
             Text('Nome'),
             TextFormField(
+              autofocus: true,
               readOnly: widget.readOnly,
               validator: (_) =>
                   ValidatorUtils.nameValidator(v: widget.nameController.text),
@@ -79,7 +80,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
                 PhoneFormField(
                   enableInteractiveSelection: widget.readOnly,
                   controller: widget.phoneController,
-                  keyboardType: TextInputType.numberWithOptions(),
+                  keyboardType: TextInputType.phone,
                   countrySelectorNavigator: CountrySelectorNavigator.dialog(
                     backgroundColor: Theme.of(context).canvasColor,
                     titleStyle: myTheme.textTheme.titleSmall,

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_appbar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
@@ -105,7 +105,7 @@ class _ViewGroupBody extends State<ViewGroup> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ElevatedButton(
+                          TextButton.icon(
                             onPressed: () async {
                               final result = await context.pushNamed(
                                 'edit_group',
@@ -115,7 +115,7 @@ class _ViewGroupBody extends State<ViewGroup> {
                                 context.read<GroupCubit>().show(widget.groupId);
                               }
                             },
-                            child: Row(
+                            label: Row(
                               spacing: 7,
                               children: [Icon(Icons.edit), Text('Editar')],
                             ),

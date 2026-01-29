@@ -7,7 +7,8 @@ class ParticipantState {
   bool? created;
   bool? deleted;
   bool? showed;
-  ShowParticipantModel? participant;
+  bool? updated;
+  ShowParticipantModel? showParti;
 
   ParticipantState({
     this.showed,
@@ -15,7 +16,8 @@ class ParticipantState {
     this.created,
     this.deleted,
     this.isLoading,
-    this.participant,
+    this.showParti,
+    this.updated, 
   });
 
   ParticipantState copyWith({
@@ -24,7 +26,8 @@ class ParticipantState {
     bool? created,
     bool? deleted,
     bool? showed,
-    ShowParticipantModel? participant,
+    bool? updated,
+    ShowParticipantModel? showParti,
   }) {
     return ParticipantState(
       error: error,
@@ -32,7 +35,8 @@ class ParticipantState {
       deleted: deleted,
       isLoading: isLoading,
       showed: showed,
-      participant: participant
+      updated: updated,
+      showParti: showParti,
     );
   }
 }

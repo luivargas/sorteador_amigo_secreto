@@ -45,6 +45,7 @@ class ListParticipantsCard extends StatelessWidget {
                 name: f.name,
                 id: f.id,
                 groupToken: groupToken,
+                groupId: groupId,
               );
             },
           ),
@@ -91,7 +92,7 @@ class ListParticipantsCard extends StatelessWidget {
                 contact: p.email ?? p.phone ?? "",
                 name: p.name,
                 id: p.id,
-                groupToken: groupToken,
+                groupToken: groupToken, groupId: groupId,
               );
             },
           ),

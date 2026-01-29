@@ -89,7 +89,7 @@ final routes = GoRouter(
         final extra = state.extra as CreateParticipantArgs;
         final repo = getIt<ParticipantCubit>().participantUsecase;
         return BlocProvider<ParticipantCubit>(
-          create: (BuildContext context) => ParticipantCubit(repo),
+          create: (_) => ParticipantCubit(repo),
           child: CreateParticipant(groupId: extra.groupId, groupCode: extra.groupCode),
         );
       },
