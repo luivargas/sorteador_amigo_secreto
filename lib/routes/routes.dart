@@ -21,7 +21,7 @@ import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/v
 import 'package:sorteador_amigo_secreto/pages/splash_screen/presentation/screens/splash_screen.dart';
 
 final routes = GoRouter(
-  initialLocation: '/test',
+  initialLocation: '/nav_bar',
   routes: [
     GoRoute(
       path: '/home',

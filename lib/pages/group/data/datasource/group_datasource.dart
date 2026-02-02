@@ -92,6 +92,7 @@ class GroupDatasource extends GroupRepository {
         ),
       );
       final model = UpdateGroupModel.fromJson(resp.data);
+      await GroupDB().update(model, id);
       return Success(model);
     } on DioException catch (e) {
       return Failure(

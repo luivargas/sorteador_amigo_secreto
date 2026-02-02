@@ -3,6 +3,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/create_group_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/isar_group_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
+import 'package:sorteador_amigo_secreto/pages/group/data/model/update_group_model.dart';
 
 class GroupDB {
   late Future<Isar> db;
@@ -20,6 +21,19 @@ class GroupDB {
       ..token = result.token
       ..adminId = result.participants[0].id;
     return isar.writeTxnSync(() => isar.isarGroupModels.putSync(group));
+  }
+
+  Future<int> update(UpdateGroupModel result, int id) async {
+    final isar = await db;
+    final get = await isar.isarGroupModels.get(id);
+    final group = IsarGroupModel()
+      ..id = get!.id
+      ..name = result.name
+      ..shortCode = get.shortCode
+      ..code = get.code
+      ..token = get.token
+      ..adminId = get.adminId;
+    return isar.writeTxn(() => isar.isarGroupModels.put(group));
   }
 
   Future<bool> delete(int id) async {
