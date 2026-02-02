@@ -6,13 +6,10 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:file_selector/file_selector.dart'
-    hide XFile; // hides to test if share_plus exports XFile
-import 'package:flutter/foundation.dart';
+// hides to test if share_plus exports XFile
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart'
-    hide XFile; // hides to test if share_plus exports XFile
+// hides to test if share_plus exports XFile
 import 'package:share_plus/share_plus.dart';
 
 class Teste2 extends StatefulWidget {
