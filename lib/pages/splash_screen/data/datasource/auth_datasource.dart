@@ -1,14 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sorteador_amigo_secreto/core/network/contants.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_login_model.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_register_model.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_forgot_password_entity.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_get_user_entity.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_login_entity.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_logout_entity.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_register_entity.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/domain/repository/auth_repository.dart';
+import 'package:sorteador_amigo_secreto/pages/splash_screen/data/model/auth_login_model.dart';
+import 'package:sorteador_amigo_secreto/pages/splash_screen/data/model/auth_register_model.dart';
+import 'package:sorteador_amigo_secreto/pages/splash_screen/domain/entities/auth_get_user_entity.dart';
+import 'package:sorteador_amigo_secreto/pages/splash_screen/domain/entities/auth_login_entity.dart';
+import 'package:sorteador_amigo_secreto/pages/splash_screen/domain/entities/auth_logout_entity.dart';
+import 'package:sorteador_amigo_secreto/pages/splash_screen/domain/entities/auth_register_entity.dart';
+import 'package:sorteador_amigo_secreto/pages/splash_screen/domain/repository/auth_repository.dart';
 
 class AuthDatasource extends AuthRepository {
   final SharedPreferencesAsync asyncPrefs = SharedPreferencesAsync();
@@ -41,14 +40,6 @@ class AuthDatasource extends AuthRepository {
       options: Options(headers: {'Authorization': bearerToken}),
       data: entity.toJson(),
     );
-    final raw = response.data;
-    return raw;
-  }
-
-  @override
-  Future forgotPassword(AuthForgotPasswordEntity entity) async {
-    Response response;
-    response = await dio.post(forgotPasswordUrl, data: entity.toJson());
     final raw = response.data;
     return raw;
   }

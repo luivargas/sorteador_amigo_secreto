@@ -2,13 +2,13 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_forgot_password_entity.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_login_entity.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_logout_entity.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/auth_register_entity.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/domain/usecases/auth_usecases.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_state.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/status_auth_api.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/status_group_api.dart';
+import 'package:sorteador_amigo_secreto/pages/splash_screen/domain/entities/auth_login_entity.dart';
+import 'package:sorteador_amigo_secreto/pages/splash_screen/domain/entities/auth_logout_entity.dart';
+import 'package:sorteador_amigo_secreto/pages/splash_screen/domain/entities/auth_register_entity.dart';
+import 'package:sorteador_amigo_secreto/pages/splash_screen/domain/usecases/auth_usecases.dart';
+import 'package:sorteador_amigo_secreto/pages/splash_screen/presentation/cubit/auth_state.dart';
+
 
 extension CubitExt<T> on Cubit<T> {
   void safeEmit(T state) {
@@ -86,27 +86,6 @@ class AuthCubit extends Cubit<AuthState> {
       emit(state.copyWith(isLoading: false, isLogged: false));
     } catch (e) {
       emit(state.copyWith(error: e.toString(), isLoading: false));
-    }
-  }
-
-  Future<void> forgotPassword(AuthForgotPasswordEntity entity) async {
-    emit(state.copyWith(isLoading: true, error: null, resetPassword: false));
-    try {
-      await authUsecases.forgotPassword(entity);
-      emit(state.copyWith(isLoading: false, resetPassword: true));
-    } on DioException catch (e) {
-      final message = statusFallback(e.response?.statusCode);
-      emit(state.copyWith(isLoading: false, error: message));
-    } on HttpException catch (_) {
-      emit(state.copyWith(isLoading: false, error: 'Falha de conexão.'));
-    } catch (_) {
-      emit(
-        state.copyWith(
-          isLoading: false,
-          error:
-              'Não foi possível enviar o e-mail agora. Tente novamente mais tarde.',
-        ),
-      );
     }
   }
 }
