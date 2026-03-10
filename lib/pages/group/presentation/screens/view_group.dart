@@ -43,6 +43,7 @@ class _ViewGroupBody extends State<ViewGroup> {
 
   Future<void> _onRefresh() async {
     await context.read<GroupCubit>().show(widget.groupId);
+        _refreshController.refreshCompleted();
   }
 
   Future<void> _onSubmit(String code, int id) async {

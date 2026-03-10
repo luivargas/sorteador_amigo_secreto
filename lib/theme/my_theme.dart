@@ -88,4 +88,15 @@ ThemeData myTheme = ThemeData(
       },
     ),
   ),
+  iconTheme: IconThemeData(color: MyColors.sorteadorPurpple),
+  iconButtonTheme: IconButtonThemeData(
+    style: ButtonStyle(
+      iconColor: WidgetStateProperty<Color?>.fromMap(
+        <WidgetStatesConstraint, Color>{
+          WidgetState.any: MyColors.sorteadorOrange,
+        },
+      ),
+    ),
+  ),
+  listTileTheme: ListTileThemeData(iconColor: MyColors.sorteadorPurpple,)
 );

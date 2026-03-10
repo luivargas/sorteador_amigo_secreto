@@ -3,7 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_navbar.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/contact_page.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/test2.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/contacts.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/widgets/edit_contact_page.dart';
 import 'package:sorteador_amigo_secreto/pages/splash_screen/presentation/screens/access.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
@@ -16,7 +19,6 @@ import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/par
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/create_parti_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/show_parti_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/create_participant.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/teste.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/view_participant.dart';
 import 'package:sorteador_amigo_secreto/pages/splash_screen/presentation/screens/splash_screen.dart';
 
@@ -38,7 +40,7 @@ final routes = GoRouter(
         final repo = getIt<GroupCubit>().groupUsecases;
         return BlocProvider<GroupCubit>(
           create: (BuildContext context) => GroupCubit(repo),
-          child:  CreateGroup(),
+          child: CreateGroup(),
         );
       },
     ),
@@ -67,16 +69,30 @@ final routes = GoRouter(
       builder: (BuildContext context, GoRouterState state) => MyNavbar(),
     ),
     GoRoute(
-      path: '/test',
-      builder: (BuildContext context, GoRouterState state) =>
-          FlutterContactsExample(),
+      name: 'contacts',
+      path: '/contacts',
+      builder: (BuildContext context, GoRouterState state) => ContactListPage(),
+    ),
+    GoRoute(
+      name: 'contact_page',
+      path: '/contact_page/:id',
+      builder: (BuildContext context, GoRouterState state){
+        final id = state.pathParameters['id'];
+        return ContactPage(id: id!,);
+      } 
     ),
         GoRoute(
+      name: 'edit_contact_page',
+      path: '/edit_contact_page',
+      builder: (BuildContext context, GoRouterState state){
+        return EditContactPage();
+      } 
+    ),
+    GoRoute(
       path: '/test2',
-      builder: (BuildContext context, GoRouterState state) =>
-          Teste2(),
+      builder: (BuildContext context, GoRouterState state) => Teste2(),
     ),
-        GoRoute(
+    GoRoute(
       name: 'edit_group',
       path: '/edit_group',
       builder: (BuildContext context, GoRouterState state) {
@@ -96,7 +112,10 @@ final routes = GoRouter(
         final repo = getIt<ParticipantCubit>().participantUsecase;
         return BlocProvider<ParticipantCubit>(
           create: (_) => ParticipantCubit(repo),
-          child: CreateParticipant(groupId: extra.groupId, groupCode: extra.groupCode),
+          child: CreateParticipant(
+            groupId: extra.groupId,
+            groupCode: extra.groupCode,
+          ),
         );
       },
     ),
@@ -107,8 +126,12 @@ final routes = GoRouter(
         final extra = state.extra as ShowParticipantArgs;
         final repo = getIt<ParticipantCubit>().participantUsecase;
         return BlocProvider<ParticipantCubit>(
-          create: (_) => ParticipantCubit(repo)..show(extra.userId, extra.groupToken),
-          child: ViewParticipant(userId: extra.userId, groupToken: extra.groupToken),
+          create: (_) =>
+              ParticipantCubit(repo)..show(extra.userId, extra.groupToken),
+          child: ViewParticipant(
+            userId: extra.userId,
+            groupToken: extra.groupToken,
+          ),
         );
       },
     ),

@@ -193,12 +193,12 @@ class MyHomePageState extends State<Teste2> {
     );
   }
 
-  void _onDeleteImage(int position) {
-    setState(() {
-      imagePaths.removeAt(position);
-      imageNames.removeAt(position);
-    });
-  }
+  // void _onDeleteImage(int position) {
+  //   setState(() {
+  //     imagePaths.removeAt(position);
+  //     imageNames.removeAt(position);
+  //   });
+  // }
 
   // void _onSelectExcludedActivityType() async {
   //   final result = await Navigator.of(context).push(

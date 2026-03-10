@@ -9,7 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/create_parti_args.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/widgets/participant_card.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/widgets/participant_summary.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
@@ -40,7 +40,7 @@ class ListParticipantsCard extends StatelessWidget {
             itemCount: min(participantsList.length, 6),
             itemBuilder: (context, index) {
               final f = participantsList[index];
-              return ParticipantCard(
+              return ParticipantSummary(
                 contact: f.email ?? f.phone ?? "",
                 name: f.name,
                 id: f.id,
@@ -88,7 +88,7 @@ class ListParticipantsCard extends StatelessWidget {
             itemCount: participantsList.length,
             itemBuilder: (context, index) {
               final p = participantsList[index];
-              return ParticipantCard(
+              return ParticipantSummary(
                 contact: p.email ?? p.phone ?? "",
                 name: p.name,
                 id: p.id,
@@ -149,7 +149,7 @@ class ListParticipantsCard extends StatelessWidget {
                     IconButton(
                       onPressed: () async {
                         final result = await context.pushNamed(
-                          'create_part',
+                          'contacts',
                           extra: CreateParticipantArgs(
                             groupId: groupId,
                             groupCode: groupCode,
