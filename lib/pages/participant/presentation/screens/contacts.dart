@@ -9,6 +9,7 @@ import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/usecases/participant_usecase.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class ContactListPage extends StatefulWidget {
   final int groupId;
@@ -23,7 +24,7 @@ class ContactListPage extends StatefulWidget {
 }
 
 class _ContactListPageState extends State<ContactListPage> {
-  final TextEditingController _searchControler = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   final Set<Object> _selectedContacts = {};
   List<Contact>? _contacts;
   StreamSubscription? _sub;
@@ -39,7 +40,7 @@ class _ContactListPageState extends State<ContactListPage> {
   @override
   void dispose() {
     _sub?.cancel();
-    _searchControler.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -87,7 +88,7 @@ class _ContactListPageState extends State<ContactListPage> {
     if (!_isContactValid(c)) {
       AppAlert.show(
         context,
-        message: "Este contato precisa ter nome e telefone",
+        message: AppLocalizations.of(context)!.contactNotValid,
       );
       return;
     }
@@ -131,7 +132,7 @@ class _ContactListPageState extends State<ContactListPage> {
           if (context.mounted) {
             AppAlert.show(
               context,
-              message: 'Erro ao adicionar ${contact.displayName}: ${f.message}',
+              message: AppLocalizations.of(context)!.errorAddingContact(contact.displayName ?? '', f.message),
             );
           }
         },
@@ -148,27 +149,27 @@ class _ContactListPageState extends State<ContactListPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: Theme.of(context).canvasColor,
-    appBar: MyAppBar(title: 'Selecionar Participantes',subTitle: "Escolha os contatos para o sorteio",),
+    appBar: MyAppBar(title: AppLocalizations.of(context)!.contactsTitle, subTitle: AppLocalizations.of(context)!.contactsSubtitle),
     body: Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
       child: Column(
         spacing: 10,
         children: [
           TextField(
-            controller: _searchControler,
-            decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.search),
-              hintText: 'Buscar contatos',
+            controller: _searchController,
+            decoration: InputDecoration(
+              prefixIcon: const Icon(Icons.search),
+              hintText: AppLocalizations.of(context)!.searchContacts,
             ),
           ),
           Row(),
           Row(
             children: [
-              Text("Seus Contatos"),
+              Text(AppLocalizations.of(context)!.yourContacts),
             ],
           ),
           if (_denied)
-            const Center(child: Text("Permissão de contato não concedida"))
+            Center(child: Text(AppLocalizations.of(context)!.contactPermissionDenied))
           else if (_contacts == null)
             const Center(child: CircularProgressIndicator())
           else
@@ -237,7 +238,7 @@ class _ContactListPageState extends State<ContactListPage> {
             ),
           MyGradientButton(
             onTap: _onConfirm,
-            title: "Confirmar (${_selectedContacts.length})",
+            title: AppLocalizations.of(context)!.confirmButton(_selectedContacts.length),
             isLoading: _isCreating,
           ),
         ],

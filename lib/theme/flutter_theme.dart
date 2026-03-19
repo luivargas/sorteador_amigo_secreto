@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 /// Secret Santa Design System
 ///
@@ -492,18 +493,19 @@ class SecretSantaBadge extends StatelessWidget {
     Color borderColor;
     String text;
 
+    final l10n = AppLocalizations.of(context)!;
     switch (type) {
       case BadgeType.pending:
         bgColor = SecretSantaColors.warningBg;
         textColor = SecretSantaColors.warningText;
         borderColor = SecretSantaColors.warningBorder;
-        text = 'Aguardando Sorteio';
+        text = l10n.badgePending;
         break;
       case BadgeType.raffled:
         bgColor = SecretSantaColors.successBg;
         textColor = SecretSantaColors.successText;
         borderColor = SecretSantaColors.successBorder;
-        text = 'Sorteio Realizado';
+        text = l10n.badgeRaffled;
         break;
     }
 

@@ -48,7 +48,7 @@ class ParticipantDatasource extends ParticipantRepository {
     try {
       final resp = await dio.get(
         "$stageParticipantApiUrl/$id",
-        options: Options(headers: {'Access-key': token, }),
+        options: Options(headers: {'Access-Key': token}),
       );
       final model = ShowParticipantModel.fromJson(resp.data);
       return Success(model);
@@ -75,7 +75,7 @@ class ParticipantDatasource extends ParticipantRepository {
       final resp = await dio.put(
         "$stageParticipantApiUrl/$id",
         data: entity.toJson(),
-        options: Options(headers: {'Access-key': token}),
+        options: Options(headers: {'Access-Key': token}),
       );
       final model = UpdateParticipantModel.fromJson(resp.data);
       return Success(model);

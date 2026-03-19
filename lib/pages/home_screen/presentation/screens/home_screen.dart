@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_home_app_bar.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_card.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/database/group_db.dart';
@@ -70,9 +71,9 @@ class _HomeViewState extends State<_HomeView> {
                 onChanged: (value) {
                   context.read<HomeCubit>().onSearchChanged(value);
                 },
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.search),
-                  hintText: 'Buscar grupo',
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.search),
+                  hintText: AppLocalizations.of(context)!.searchGroup,
                 ),
               ),
             ),
@@ -117,7 +118,7 @@ class _HomeViewState extends State<_HomeView> {
                               return Padding(
                                 padding: const EdgeInsets.all(20),
                                 child: Text(
-                                  'Erro ao carregar grupos: $error',
+                                  AppLocalizations.of(context)!.errorLoadingGroups(error),
                                 ),
                               );
                             },
@@ -128,10 +129,10 @@ class _HomeViewState extends State<_HomeView> {
                             selector: (state) => state.filtered,
                             builder: (context, filtered) {
                               if (filtered.isEmpty) {
-                                return const Padding(
-                                  padding: EdgeInsets.all(24),
+                                return Padding(
+                                  padding: const EdgeInsets.all(24),
                                   child: Center(
-                                    child: Text('Nenhum grupo encontrado'),
+                                    child: Text(AppLocalizations.of(context)!.noGroupsFound),
                                   ),
                                 );
                               }

@@ -10,8 +10,8 @@ import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/create_participant_form_fields.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class CreateParticipant extends StatefulWidget {
   final int groupId;
@@ -27,7 +27,6 @@ class CreateParticipant extends StatefulWidget {
 }
 
 class _CreateParticipant extends State<CreateParticipant> {
-  Color activeColor = MyColors.sorteadorOrange;
   final GlobalKey<FormState> _createFormKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -36,7 +35,6 @@ class _CreateParticipant extends State<CreateParticipant> {
   );
 
   void _onSubmit() {
-    if (_createFormKey.currentState!.validate()) {}
     final isValid = _createFormKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
@@ -58,7 +56,7 @@ class _CreateParticipant extends State<CreateParticipant> {
     return Form(
       key: _createFormKey,
       child: Scaffold(
-        appBar: MyAppBar(title: '',),
+        appBar: MyAppBar(),
         backgroundColor: Theme.of(context).canvasColor,
         body: BlocConsumer<ParticipantCubit, ParticipantState>(
           listenWhen: (prev, curr) =>
@@ -67,9 +65,8 @@ class _CreateParticipant extends State<CreateParticipant> {
             if (state.created) {
               AppAlert.show(
                 context,
-                message:
-                    'Participante ${nameController.text} adicionado com sucesso!',
-                    type: AlertType.success
+                message: AppLocalizations.of(context)!.participantAddedSuccess(nameController.text),
+                type: AlertType.success,
               );
               if (context.mounted) {
                 context.pop(true);
@@ -79,7 +76,7 @@ class _CreateParticipant extends State<CreateParticipant> {
             if (state.error != null) {
               await AppDialog.show(
                 context: context,
-                title: 'Erro',
+                title: AppLocalizations.of(context)!.errorTitle,
                 message: state.error!,
               );
             }
@@ -101,7 +98,7 @@ class _CreateParticipant extends State<CreateParticipant> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Adicionar participante',
+                        AppLocalizations.of(context)!.addParticipantTitle,
                         style: myTheme.textTheme.titleSmall,
                       ),
                       CreateParticipantFormFields(
@@ -111,7 +108,7 @@ class _CreateParticipant extends State<CreateParticipant> {
                       ),
                       MyGradientButton(
                         onTap: _onSubmit,
-                        title: "Adicionar participante",
+                        title: AppLocalizations.of(context)!.addParticipantButton,
                         icon: Icons.create,
                         isLoading: state.isLoading,
                       ),

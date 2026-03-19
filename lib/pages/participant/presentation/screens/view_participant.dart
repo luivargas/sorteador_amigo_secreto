@@ -4,13 +4,14 @@ import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/loading_or_error.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/update_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/participant_card.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/view_participant_form_fields.dart';
-import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class ViewParticipant extends StatefulWidget {
   final String userId;
@@ -29,13 +30,15 @@ class _ViewParticipant extends State<ViewParticipant> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final PhoneController phoneController = PhoneController();
-  final GlobalKey<FormState> _validadeFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _validateFormKey = GlobalKey<FormState>();
 
   bool _prefilledOnce = false;
 
   bool readOnly = false;
 
   String? role;
+
+  String image = "./assets/logos/icons/Logo_9.png";
 
   void _prefillFromApi(ParticipantState state) {
     if (_prefilledOnce) return;
@@ -53,7 +56,7 @@ class _ViewParticipant extends State<ViewParticipant> {
   }
 
   Future<void> _onSubmit() async {
-    final formState = _validadeFormKey.currentState;
+    final formState = _validateFormKey.currentState;
     if (formState == null || !formState.validate()) return;
 
     setState(() {
@@ -77,10 +80,10 @@ class _ViewParticipant extends State<ViewParticipant> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: '',),
+      appBar: MyAppBar(),
       backgroundColor: Theme.of(context).canvasColor,
       body: Form(
-        key: _validadeFormKey,
+        key: _validateFormKey,
         child: BlocConsumer<ParticipantCubit, ParticipantState>(
           listener: (context, state) {
             _prefillFromApi(state);
@@ -97,8 +100,7 @@ class _ViewParticipant extends State<ViewParticipant> {
             if (state.updated) {
               AppAlert.show(
                 context,
-                message:
-                    'Participante ${nameController.text} atualisado com sucesso!',
+                message: AppLocalizations.of(context)!.participantUpdatedSuccess(nameController.text),
                 type: AlertType.success,
               );
               if (context.mounted) {
@@ -109,37 +111,30 @@ class _ViewParticipant extends State<ViewParticipant> {
           buildWhen: (previous, current) =>
               previous.isLoading && !previous.showed,
           builder: (context, state) {
-            if (state.isLoading && !state.showed) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: myProgressIndicator.color,
-                ),
-              );
-            }
-            if (state.error != null) {
-              return Center(child: Text("Tente novamente!"));
-            }
-            return SingleChildScrollView(
+            return LoadingOrError(
+              isLoading: state.isLoading && !state.showed,
+              error: state.error,
+              child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
                   children: [
                     Text(
-                      'Participante',
+                      AppLocalizations.of(context)!.participantTitle,
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: ParticipantCard(
                         image: Image.asset(
-                          "./assets/logos/icons/Logo_9.png",
+                          image,
                           scale: 20,
                         ),
                         button: MyGradientButton(
                           onTap: () {
                             _onSubmit();
                           },
-                          title: "Salvar",
+                          title: AppLocalizations.of(context)!.save,
                           icon: Icons.save,
                         ),
                         child: ViewParticipantFormFields(
@@ -154,6 +149,7 @@ class _ViewParticipant extends State<ViewParticipant> {
                   ],
                 ),
               ),
+            ),
             );
           },
         ),

@@ -42,7 +42,7 @@ class ParticipantCard extends StatelessWidget {
               ),
               child,
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 child: button,
               ),
             ],

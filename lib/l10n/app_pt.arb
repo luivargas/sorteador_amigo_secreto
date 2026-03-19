@@ -1,0 +1,122 @@
+{
+  "@@locale": "pt",
+
+  "refreshCompleted": "Atualizado!",
+  "refreshing": "Atualizando...",
+
+  "searchGroup": "Buscar grupo",
+  "errorLoadingGroups": "Erro ao carregar grupos: {error}",
+  "@errorLoadingGroups": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "noGroupsFound": "Nenhum grupo encontrado",
+
+  "createGroupTitle": "Crie seu grupo agora!",
+  "groupCreatedSuccess": "Grupo {name} criado com sucesso!",
+  "@groupCreatedSuccess": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "createGroupButton": "Criar grupo",
+
+  "edit": "Editar",
+  "errorTryAgain": "Erro: {error}, tente novamente",
+  "@errorTryAgain": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "notDefined": "Não definido",
+  "noDescription": "Sem descrição",
+  "drawButton": "Sortear",
+
+  "editGroupTitle": "Edição do grupo!",
+  "selectDate": "Selecione a data",
+  "cancel": "Cancelar",
+  "selectTime": "Selecione o horário",
+  "save": "Salvar",
+  "ok": "OK",
+
+  "yourName": "Seu nome",
+  "email": "E-mail",
+  "phoneField": "DDD + Celular",
+  "groupName": "Nome do Grupo",
+  "nameHint": "Ex: João da Silva",
+  "groupNameHint": "Ex: Amigo Secreto do Escritório",
+
+  "eventLocation": "Local do Evento",
+  "minGiftValue": "Valor Mínimo",
+  "maxGiftValue": "Valor Máximo",
+  "dateAndTime": "Data e Hora",
+  "groupDescription": "Descrição do Grupo",
+  "locationHint": "Escolha um local",
+  "minValueHint": "Ex: R$ 100,00",
+  "maxValueHint": "Ex: R$ 150,00",
+  "dateHint": "dd/mm/aaaa hh:mm",
+
+  "eventDate": "Data do encontro",
+  "suggestedValue": "Valor sugerido",
+  "location": "Local",
+  "description": "Descrição",
+
+  "addParticipantTitle": "Adicionar participante",
+  "participantAddedSuccess": "Participante {name} adicionado com sucesso!",
+  "@participantAddedSuccess": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "errorTitle": "Erro",
+  "participantTitle": "Participante",
+  "participantUpdatedSuccess": "Participante {name} atualizado com sucesso!",
+  "@participantUpdatedSuccess": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "name": "Nome",
+  "addParticipantButton": "Adicionar participante",
+
+  "participants": "Participantes ({count})",
+  "@participants": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "viewAll": "Ver todos",
+  "viewLess": "Ver menos",
+
+  "badgePending": "Aguardando Sorteio",
+  "badgeRaffled": "Sorteio Realizado",
+
+  "validatorInvalidEmail": "E-mail inválido",
+  "validatorRequired": "Campo obrigatório",
+  "validatorEnterEmail": "Informe seu e-mail",
+  "validatorFixValues": "Corrija os valores",
+
+  "accessFreeRaffle": "Sorteio Grátis",
+  "accessFast": "e Rápido!",
+  "accessWhatsapp": "Participe pelo WhatsApp!",
+  "accessHowItWorks": "Como funciona?",
+  "accessStep1Title": "Crie um grupo",
+  "accessStep1Desc": "Defina nome, valor e regras do sorteio",
+  "accessStep2Title": "Adicione participantes",
+  "accessStep2Desc": "Preencha nome, telefone e e-mail",
+  "accessStep3Title": "Realize o sorteio",
+  "accessStep3Desc": "O sistema sorteia automaticamente",
+  "accessStep4Title": "Receba os resultados",
+  "accessStep4Desc": "Cada participante recebe seu amigo secreto por email ou whatsapp (plano Premium)",
+
+  "contactNotValid": "Este contato precisa ter nome e telefone",
+  "contactsTitle": "Selecionar Participantes",
+  "contactsSubtitle": "Escolha os contatos para o sorteio",
+  "searchContacts": "Buscar contatos",
+  "yourContacts": "Seus Contatos",
+  "contactPermissionDenied": "Permissão de contato não concedida",
+  "confirmButton": "Confirmar ({count})",
+  "@confirmButton": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "errorAddingContact": "Erro ao adicionar {name}: {message}",
+  "@errorAddingContact": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "message": { "type": "String" }
+    }
+  },
+  "groupCode": "Código do grupo",
+  "groupCodeHint": "Coloque aqui o código do grupo",
+
+  "shareLinkTitle": "Link do meu site"
+}

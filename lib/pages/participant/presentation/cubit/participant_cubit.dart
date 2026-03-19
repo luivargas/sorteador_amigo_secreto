@@ -1,17 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sorteador_amigo_secreto/core/util/cubit_ext.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/update_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/usecases/participant_usecase.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
-
-extension CubitExt<T> on Cubit<T> {
-  void safeEmit(T state) {
-    if (!isClosed) {
-      // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-      emit(state);
-    }
-  }
-}
 
 class ParticipantCubit extends Cubit<ParticipantState> {
   final ParticipantUsecase participantUsecase;

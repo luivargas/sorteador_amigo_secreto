@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class Access extends StatefulWidget {
   const Access({super.key});
@@ -13,8 +14,9 @@ class Access extends StatefulWidget {
 class _Access extends State<Access> {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: MyAppBar(title: '',),
+      appBar: MyAppBar(),
       backgroundColor: Theme.of(context).canvasColor,
       body: Padding(
         padding: const EdgeInsets.only(right: 20.0, left: 20, top: 20),
@@ -37,10 +39,10 @@ class _Access extends State<Access> {
                       ),
                       children: [
                         TextSpan(
-                          text: 'Sorteio Grátis ',
-                          style: TextStyle(color: Colors.white),
+                          text: '${l10n.accessFreeRaffle} ',
+                          style: const TextStyle(color: Colors.white),
                         ),
-                        TextSpan(text: 'e Rápido!'),
+                        TextSpan(text: l10n.accessFast),
                       ],
                     ),
                   ),
@@ -53,8 +55,8 @@ class _Access extends State<Access> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.phone_iphone, color: Colors.white,),
-                        Text("Participe pelo WhatsApp!", style: TextStyle(color: Colors.white),),
+                        const Icon(Icons.phone_iphone, color: Colors.white),
+                        Text(l10n.accessWhatsapp, style: const TextStyle(color: Colors.white)),
                       ],
                     ),
                   ),
@@ -66,7 +68,7 @@ class _Access extends State<Access> {
               child: DefaultTextStyle.merge(
                 textAlign: TextAlign.center,
                 child: Text(
-                  'Como funciona?',
+                  l10n.accessHowItWorks,
                   style: myTheme.textTheme.titleMedium,
                 ),
               ),
@@ -91,7 +93,7 @@ class _Access extends State<Access> {
                               ),
                               width: 65,
                               height: 65,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   '1',
                                   style: TextStyle(
@@ -103,13 +105,13 @@ class _Access extends State<Access> {
                               ),
                             ),
                             Text(
-                              'Crie um grupo',
-                              style: TextStyle(
+                              l10n.accessStep1Title,
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 17,
                               ),
                             ),
-                            Text("Defina nome, valor e regras do sorteio"),
+                            Text(l10n.accessStep1Desc),
                           ],
                         ),
                       ),
@@ -124,7 +126,7 @@ class _Access extends State<Access> {
                               ),
                               width: 65,
                               height: 65,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   '2',
                                   style: TextStyle(
@@ -136,13 +138,13 @@ class _Access extends State<Access> {
                               ),
                             ),
                             Text(
-                              'Adicione participantes',
-                              style: TextStyle(
+                              l10n.accessStep2Title,
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 17,
                               ),
                             ),
-                            Text("Defina nome, valor e regras do sorteio"),
+                            Text(l10n.accessStep2Desc),
                           ],
                         ),
                       ),
@@ -162,7 +164,7 @@ class _Access extends State<Access> {
                               ),
                               width: 65,
                               height: 65,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   '3',
                                   style: TextStyle(
@@ -174,13 +176,13 @@ class _Access extends State<Access> {
                               ),
                             ),
                             Text(
-                              'Realize o sorteio',
-                              style: TextStyle(
+                              l10n.accessStep3Title,
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 17,
                               ),
                             ),
-                            Text("O sistema sorteia automaticamente"),
+                            Text(l10n.accessStep3Desc),
                           ],
                         ),
                       ),
@@ -195,7 +197,7 @@ class _Access extends State<Access> {
                               ),
                               width: 65,
                               height: 65,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   '4',
                                   style: TextStyle(
@@ -207,15 +209,13 @@ class _Access extends State<Access> {
                               ),
                             ),
                             Text(
-                              'Receba os resultados',
-                              style: TextStyle(
+                              l10n.accessStep4Title,
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 17,
                               ),
                             ),
-                            Text(
-                              "Cada participante recebe seu amigo secreto por email ou whatsapp (plano Premium)",
-                            ),
+                            Text(l10n.accessStep4Desc),
                           ],
                         ),
                       ),
@@ -224,7 +224,6 @@ class _Access extends State<Access> {
                 ],
               ),
             ),
-            
           ],
         ),
       ),

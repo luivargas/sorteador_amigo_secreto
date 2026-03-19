@@ -1,0 +1,259 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Italian (`it`).
+class AppLocalizationsIt extends AppLocalizations {
+  AppLocalizationsIt([String locale = 'it']) : super(locale);
+
+  @override
+  String get refreshCompleted => 'Aggiornato!';
+
+  @override
+  String get refreshing => 'Aggiornamento...';
+
+  @override
+  String get searchGroup => 'Cerca gruppo';
+
+  @override
+  String errorLoadingGroups(String error) {
+    return 'Errore nel caricamento dei gruppi: $error';
+  }
+
+  @override
+  String get noGroupsFound => 'Nessun gruppo trovato';
+
+  @override
+  String get createGroupTitle => 'Crea il tuo gruppo adesso!';
+
+  @override
+  String groupCreatedSuccess(String name) {
+    return 'Gruppo $name creato con successo!';
+  }
+
+  @override
+  String get createGroupButton => 'Crea gruppo';
+
+  @override
+  String get edit => 'Modifica';
+
+  @override
+  String errorTryAgain(String error) {
+    return 'Errore: $error, riprova';
+  }
+
+  @override
+  String get notDefined => 'Non definito';
+
+  @override
+  String get noDescription => 'Senza descrizione';
+
+  @override
+  String get drawButton => 'Sorteggia';
+
+  @override
+  String get editGroupTitle => 'Modifica del gruppo!';
+
+  @override
+  String get selectDate => 'Seleziona la data';
+
+  @override
+  String get cancel => 'Annulla';
+
+  @override
+  String get selectTime => 'Seleziona l\'orario';
+
+  @override
+  String get save => 'Salva';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get yourName => 'Il tuo nome';
+
+  @override
+  String get email => 'E-mail';
+
+  @override
+  String get phoneField => 'Prefisso + Cellulare';
+
+  @override
+  String get groupName => 'Nome del Gruppo';
+
+  @override
+  String get nameHint => 'Es: Mario Rossi';
+
+  @override
+  String get groupNameHint => 'Es: Amico Segreto dell\'Ufficio';
+
+  @override
+  String get eventLocation => 'Luogo dell\'Evento';
+
+  @override
+  String get minGiftValue => 'Valore Minimo';
+
+  @override
+  String get maxGiftValue => 'Valore Massimo';
+
+  @override
+  String get dateAndTime => 'Data e Ora';
+
+  @override
+  String get groupDescription => 'Descrizione del Gruppo';
+
+  @override
+  String get locationHint => 'Scegli un luogo';
+
+  @override
+  String get minValueHint => 'Es: € 100,00';
+
+  @override
+  String get maxValueHint => 'Es: € 150,00';
+
+  @override
+  String get dateHint => 'gg/mm/aaaa hh:mm';
+
+  @override
+  String get eventDate => 'Data dell\'incontro';
+
+  @override
+  String get suggestedValue => 'Valore suggerito';
+
+  @override
+  String get location => 'Luogo';
+
+  @override
+  String get description => 'Descrizione';
+
+  @override
+  String get addParticipantTitle => 'Aggiungi partecipante';
+
+  @override
+  String participantAddedSuccess(String name) {
+    return 'Partecipante $name aggiunto con successo!';
+  }
+
+  @override
+  String get errorTitle => 'Errore';
+
+  @override
+  String get participantTitle => 'Partecipante';
+
+  @override
+  String participantUpdatedSuccess(String name) {
+    return 'Partecipante $name aggiornato con successo!';
+  }
+
+  @override
+  String get name => 'Nome';
+
+  @override
+  String get addParticipantButton => 'Aggiungi partecipante';
+
+  @override
+  String participants(int count) {
+    return 'Partecipanti ($count)';
+  }
+
+  @override
+  String get viewAll => 'Vedi tutti';
+
+  @override
+  String get viewLess => 'Vedi meno';
+
+  @override
+  String get badgePending => 'Sorteggio In Attesa';
+
+  @override
+  String get badgeRaffled => 'Sorteggio Effettuato';
+
+  @override
+  String get validatorInvalidEmail => 'E-mail non valida';
+
+  @override
+  String get validatorRequired => 'Campo obbligatorio';
+
+  @override
+  String get validatorEnterEmail => 'Inserisci la tua e-mail';
+
+  @override
+  String get validatorFixValues => 'Correggi i valori';
+
+  @override
+  String get accessFreeRaffle => 'Sorteggio Gratuito';
+
+  @override
+  String get accessFast => 'e Veloce!';
+
+  @override
+  String get accessWhatsapp => 'Partecipa su WhatsApp!';
+
+  @override
+  String get accessHowItWorks => 'Come funziona?';
+
+  @override
+  String get accessStep1Title => 'Crea un gruppo';
+
+  @override
+  String get accessStep1Desc => 'Definisci nome, valore e regole del sorteggio';
+
+  @override
+  String get accessStep2Title => 'Aggiungi partecipanti';
+
+  @override
+  String get accessStep2Desc => 'Compila nome, telefono e e-mail';
+
+  @override
+  String get accessStep3Title => 'Effettua il sorteggio';
+
+  @override
+  String get accessStep3Desc => 'Il sistema sorteggia automaticamente';
+
+  @override
+  String get accessStep4Title => 'Ricevi i risultati';
+
+  @override
+  String get accessStep4Desc =>
+      'Ogni partecipante riceve il suo amico segreto via email o WhatsApp (piano Premium)';
+
+  @override
+  String get contactNotValid => 'Questo contatto deve avere nome e telefono';
+
+  @override
+  String get contactsTitle => 'Seleziona Partecipanti';
+
+  @override
+  String get contactsSubtitle => 'Scegli i contatti per il sorteggio';
+
+  @override
+  String get searchContacts => 'Cerca contatti';
+
+  @override
+  String get yourContacts => 'I Tuoi Contatti';
+
+  @override
+  String get contactPermissionDenied =>
+      'Autorizzazione ai contatti non concessa';
+
+  @override
+  String confirmButton(int count) {
+    return 'Conferma ($count)';
+  }
+
+  @override
+  String errorAddingContact(String name, String message) {
+    return 'Errore nell\'aggiungere $name: $message';
+  }
+
+  @override
+  String get groupCode => 'Codice del gruppo';
+
+  @override
+  String get groupCodeHint => 'Inserisci qui il codice del gruppo';
+
+  @override
+  String get shareLinkTitle => 'Link del mio sito';
+}

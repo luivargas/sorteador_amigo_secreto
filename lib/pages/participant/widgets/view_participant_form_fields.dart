@@ -4,6 +4,7 @@ import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 enum ParticipantRole { admin, participant, observer }
 
@@ -30,42 +31,43 @@ class ViewParticipantFormFields extends StatefulWidget {
 }
 
 class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
-  String? _emailValidator(String? v) {
+  String? _emailValidator(BuildContext context, String? v) {
     ShowParticipantModel data = widget.participant!;
     if (data.role == ParticipantRole.admin) {
-      return ValidatorUtils.emailValidator(v: v);
+      return ValidatorUtils.emailValidator(context: context, v: v);
     }
     if (data.role != ParticipantRole.admin && v != null) {
-      return ValidatorUtils.isValidEmail(v: v);
+      return ValidatorUtils.isValidEmail(context: context, v: v);
     }
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 10,
           children: [
-            Text('Nome'),
+            Text(l10n.name),
             TextFormField(
               autofocus: true,
               readOnly: widget.readOnly,
               validator: (_) =>
-                  ValidatorUtils.nameValidator(v: widget.nameController.text),
+                  ValidatorUtils.nameValidator(context: context, v: widget.nameController.text),
               controller: widget.nameController,
               decoration: const InputDecoration(
                 hintText: 'Ex: Simba',
                 prefixIcon: Icon(Icons.abc),
               ),
             ),
-            Text('E-mail'),
+            Text(l10n.email),
             TextFormField(
               readOnly: widget.readOnly,
               keyboardType: TextInputType.emailAddress,
-              validator: _emailValidator,
+              validator: (v) => _emailValidator(context, v),
               controller: widget.emailController,
               decoration: const InputDecoration(
                 hintText: 'Ex: simba@disney.com',
@@ -76,7 +78,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 10,
               children: [
-                Text('DDD + Celular'),
+                Text(l10n.phoneField),
                 PhoneFormField(
                   enableInteractiveSelection: widget.readOnly,
                   controller: widget.phoneController,

@@ -1,0 +1,122 @@
+{
+  "@@locale": "es",
+
+  "refreshCompleted": "¡Actualizado!",
+  "refreshing": "Actualizando...",
+
+  "searchGroup": "Buscar grupo",
+  "errorLoadingGroups": "Error al cargar grupos: {error}",
+  "@errorLoadingGroups": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "noGroupsFound": "Ningún grupo encontrado",
+
+  "createGroupTitle": "¡Crea tu grupo ahora!",
+  "groupCreatedSuccess": "¡Grupo {name} creado con éxito!",
+  "@groupCreatedSuccess": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "createGroupButton": "Crear grupo",
+
+  "edit": "Editar",
+  "errorTryAgain": "Error: {error}, inténtalo de nuevo",
+  "@errorTryAgain": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "notDefined": "No definido",
+  "noDescription": "Sin descripción",
+  "drawButton": "Sortear",
+
+  "editGroupTitle": "¡Edición del grupo!",
+  "selectDate": "Selecciona la fecha",
+  "cancel": "Cancelar",
+  "selectTime": "Selecciona la hora",
+  "save": "Guardar",
+  "ok": "OK",
+
+  "yourName": "Tu nombre",
+  "email": "Correo electrónico",
+  "phoneField": "Código + Teléfono",
+  "groupName": "Nombre del Grupo",
+  "nameHint": "Ej: Juan García",
+  "groupNameHint": "Ej: Amigo Secreto de la Oficina",
+
+  "eventLocation": "Lugar del Evento",
+  "minGiftValue": "Valor Mínimo",
+  "maxGiftValue": "Valor Máximo",
+  "dateAndTime": "Fecha y Hora",
+  "groupDescription": "Descripción del Grupo",
+  "locationHint": "Elige un lugar",
+  "minValueHint": "Ej: $ 100,00",
+  "maxValueHint": "Ej: $ 150,00",
+  "dateHint": "dd/mm/aaaa hh:mm",
+
+  "eventDate": "Fecha del encuentro",
+  "suggestedValue": "Valor sugerido",
+  "location": "Lugar",
+  "description": "Descripción",
+
+  "addParticipantTitle": "Agregar participante",
+  "participantAddedSuccess": "¡Participante {name} agregado con éxito!",
+  "@participantAddedSuccess": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "errorTitle": "Error",
+  "participantTitle": "Participante",
+  "participantUpdatedSuccess": "¡Participante {name} actualizado con éxito!",
+  "@participantUpdatedSuccess": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "name": "Nombre",
+  "addParticipantButton": "Agregar participante",
+
+  "participants": "Participantes ({count})",
+  "@participants": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "viewAll": "Ver todos",
+  "viewLess": "Ver menos",
+
+  "badgePending": "Sorteo Pendiente",
+  "badgeRaffled": "Sorteo Realizado",
+
+  "validatorInvalidEmail": "Correo electrónico inválido",
+  "validatorRequired": "Campo obligatorio",
+  "validatorEnterEmail": "Ingresa tu correo electrónico",
+  "validatorFixValues": "Corrige los valores",
+
+  "accessFreeRaffle": "Sorteo Gratis",
+  "accessFast": "¡y Rápido!",
+  "accessWhatsapp": "¡Participa por WhatsApp!",
+  "accessHowItWorks": "¿Cómo funciona?",
+  "accessStep1Title": "Crea un grupo",
+  "accessStep1Desc": "Define el nombre, valor y reglas del sorteo",
+  "accessStep2Title": "Agrega participantes",
+  "accessStep2Desc": "Completa nombre, teléfono y correo electrónico",
+  "accessStep3Title": "Realiza el sorteo",
+  "accessStep3Desc": "El sistema sortea automáticamente",
+  "accessStep4Title": "Recibe los resultados",
+  "accessStep4Desc": "Cada participante recibe su amigo secreto por correo o WhatsApp (plan Premium)",
+
+  "contactNotValid": "Este contacto debe tener nombre y teléfono",
+  "contactsTitle": "Seleccionar Participantes",
+  "contactsSubtitle": "Elige los contactos para el sorteo",
+  "searchContacts": "Buscar contactos",
+  "yourContacts": "Tus Contactos",
+  "contactPermissionDenied": "Permiso de contacto no concedido",
+  "confirmButton": "Confirmar ({count})",
+  "@confirmButton": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "errorAddingContact": "Error al agregar {name}: {message}",
+  "@errorAddingContact": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "message": { "type": "String" }
+    }
+  },
+  "groupCode": "Código del grupo",
+  "groupCodeHint": "Ingresa aquí el código del grupo",
+
+  "shareLinkTitle": "Link de mi sitio"
+}

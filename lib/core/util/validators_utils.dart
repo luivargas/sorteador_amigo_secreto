@@ -1,26 +1,28 @@
+import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/util/regex_utils.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class ValidatorUtils {
-  static String? isValidEmail({required String? v}) {
+  static String? isValidEmail({required BuildContext context, required String? v}) {
     final ok = RegexUtils.emailRegExp.hasMatch(v ?? "");
-    return ok ? null : 'E-mail inválido';
+    return ok ? null : AppLocalizations.of(context)!.validatorInvalidEmail;
   }
 
-  static String? nameValidator({required String v}) {
+  static String? nameValidator({required BuildContext context, required String v}) {
     if (v.isEmpty) {
-      return "Campo obrigatório";
+      return AppLocalizations.of(context)!.validatorRequired;
     }
     return null;
   }
 
-  static String? emailValidator({required String? v}) {
+  static String? emailValidator({required BuildContext context, required String? v}) {
     if (v == null || v.trim().isEmpty) {
-      return 'Informe seu e-mail';
+      return AppLocalizations.of(context)!.validatorEnterEmail;
     }
-    return isValidEmail(v: v);
+    return isValidEmail(context: context, v: v);
   }
 
-  static String? giftValue({required String? min, required String? max}) {
+  static String? giftValue({required BuildContext context, required String? min, required String? max}) {
     if (min == '' && max == '') {
       return null;
     }
@@ -32,7 +34,7 @@ class ValidatorUtils {
         max!.replaceAll(",", ".").replaceFirst("R\$", "").trim(),
       );
       if (minGiftValue > maxGiftValue) {
-        return 'Corrija os valores';
+        return AppLocalizations.of(context)!.validatorFixValues;
       }
     }
     return null;

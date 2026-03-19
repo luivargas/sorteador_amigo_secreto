@@ -10,6 +10,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_sta
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/create_form_group/group_form_field.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class CreateGroup extends StatefulWidget {
   const CreateGroup({super.key});
@@ -51,7 +52,7 @@ class _FormGroupBody extends State<CreateGroup> {
       key: _formKey,
       child: Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
-        appBar: MyAppBar(title: 'Crie seu grupo agora!',),
+        appBar: MyAppBar(title: AppLocalizations.of(context)!.createGroupTitle),
         body: BlocConsumer<GroupCubit, GroupState>(
           listenWhen: (previous, current) =>
               previous.isLoading &&
@@ -61,7 +62,7 @@ class _FormGroupBody extends State<CreateGroup> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  "Grupo ${groupNameController.text} criado com sucesso!",
+                  AppLocalizations.of(context)!.groupCreatedSuccess(groupNameController.text),
                 ),
                 showCloseIcon: true,
               ),
@@ -99,7 +100,7 @@ class _FormGroupBody extends State<CreateGroup> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Crie seu grupo agora!',
+                          AppLocalizations.of(context)!.createGroupTitle,
                           style: myTheme.textTheme.titleSmall,
                         ),
                         GroupFormFields(
@@ -110,7 +111,7 @@ class _FormGroupBody extends State<CreateGroup> {
                         ),
                         MyGradientButton(
                           onTap: _onSubmit,
-                          title: "Criar grupo",
+                          title: AppLocalizations.of(context)!.createGroupButton,
                           icon: Icons.create,
                         ),
                       ],

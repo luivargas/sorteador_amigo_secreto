@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class CreateParticipantFormFields extends StatefulWidget {
   final TextEditingController nameController;
@@ -24,23 +25,24 @@ class _CreateParticipantFormFields extends State<CreateParticipantFormFields> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 10,
           children: [
-            Text('Nome'),
+            Text(l10n.name),
             TextFormField(
               validator: (_) =>
-                  ValidatorUtils.nameValidator(v: widget.nameController.text),
+                  ValidatorUtils.nameValidator(context: context, v: widget.nameController.text),
               controller: widget.nameController,
               decoration: const InputDecoration(
                 hintText: 'Ex: Simba',
                 prefixIcon: Icon(Icons.abc),
               ),
             ),
-            Text('E-mail'),
+            Text(l10n.email),
             TextFormField(
               keyboardType: TextInputType.emailAddress,
               controller: widget.emailController,
@@ -53,7 +55,7 @@ class _CreateParticipantFormFields extends State<CreateParticipantFormFields> {
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 10,
               children: [
-                Text('DDD + Celular'),
+                Text(l10n.phoneField),
                 PhoneFormField(
                   controller: widget.phoneController,
                   keyboardType: TextInputType.numberWithOptions(),

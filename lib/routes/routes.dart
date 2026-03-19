@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_navbar.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/contact_page.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/test2.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/contacts.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/edit_contact_page.dart';
 import 'package:sorteador_amigo_secreto/pages/splash_screen/presentation/screens/access.dart';
@@ -93,10 +92,6 @@ final routes = GoRouter(
       builder: (BuildContext context, GoRouterState state){
         return EditContactPage();
       } 
-    ),
-    GoRoute(
-      path: '/test2',
-      builder: (BuildContext context, GoRouterState state) => Teste2(),
     ),
     GoRoute(
       name: 'edit_group',

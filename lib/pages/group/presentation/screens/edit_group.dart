@@ -5,12 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/loading_or_error.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/update_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/edit_group/edit_group_field.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class EditGroup extends StatefulWidget {
   final int? groupId;
@@ -84,15 +86,15 @@ class _EditGroup extends State<EditGroup> {
     final now = DateTime.now();
 
     // 1) Data
+    final l10n = AppLocalizations.of(context)!;
     var pickedDate = await showDatePicker(
       context: context,
       initialDate: _selectedDateTime ?? now,
       firstDate: DateTime(now.year - 100),
       lastDate: DateTime(now.year + 5),
-      locale: const Locale('pt', 'BR'),
-      helpText: 'Selecione a data',
-      cancelText: 'Cancelar',
-      confirmText: 'OK',
+      helpText: l10n.selectDate,
+      cancelText: l10n.cancel,
+      confirmText: l10n.ok,
     );
 
     if (pickedDate == null) return;
@@ -104,9 +106,9 @@ class _EditGroup extends State<EditGroup> {
       initialTime: _selectedDateTime == null
           ? TimeOfDay.fromDateTime(now)
           : TimeOfDay.fromDateTime(_selectedDateTime!),
-      helpText: 'Selecione o horário',
-      cancelText: 'Cancelar',
-      confirmText: 'OK',
+      helpText: l10n.selectTime,
+      cancelText: l10n.cancel,
+      confirmText: l10n.ok,
     );
     if (pickedTime == null) return;
 
@@ -169,7 +171,7 @@ class _EditGroup extends State<EditGroup> {
     return Form(
       key: _editGroupKey,
       child: Scaffold(
-        appBar: MyAppBar(title: '',),
+        appBar: MyAppBar(),
         backgroundColor: Theme.of(context).canvasColor,
         body: BlocConsumer<GroupCubit, GroupState>(
           listener: (context, state) {
@@ -179,17 +181,10 @@ class _EditGroup extends State<EditGroup> {
             }
           },
           builder: (context, state) {
-          if (state.isLoading && state.group == null) {
-            return Center(
-              child: CircularProgressIndicator(
-                color: myProgressIndicator.color,
-              ),
-            );
-          }
-            if (state.error != null) {
-              return Center(child: Text('Tente novamente'));
-            }
-            return SingleChildScrollView(
+            return LoadingOrError(
+              isLoading: state.isLoading && state.group == null,
+              error: state.error,
+              child: SingleChildScrollView(
               child: Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).canvasColor,
@@ -205,7 +200,7 @@ class _EditGroup extends State<EditGroup> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Edição do grupo!',
+                        AppLocalizations.of(context)!.editGroupTitle,
                         style: myTheme.textTheme.titleSmall,
                       ),
                       EditGroupFields(
@@ -221,13 +216,14 @@ class _EditGroup extends State<EditGroup> {
                         onTap: () {
                           _onSubmit();
                         },
-                        title: "Salvar",
+                        title: AppLocalizations.of(context)!.save,
                         icon: Icons.save,
                       ),
                     ],
                   ),
                 ),
               ),
+            ),
             );
           },
         ),

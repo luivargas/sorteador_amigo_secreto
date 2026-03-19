@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class EditGroupFields extends StatefulWidget {
   final TextEditingController groupNameController;
@@ -32,6 +33,7 @@ class _EditGroupFields extends State<EditGroupFields> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       spacing: 10,
       children: [
@@ -39,15 +41,16 @@ class _EditGroupFields extends State<EditGroupFields> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 10,
           children: [
-            Text('Nome do Grupo'),
+            Text(l10n.groupName),
             TextFormField(
               validator: (_) => ValidatorUtils.nameValidator(
+                context: context,
                 v: widget.groupNameController.text,
               ),
               controller: widget.groupNameController,
-              decoration: const InputDecoration(
-                hintText: 'Ex: Amigo Secreto do Escritório',
-                prefixIcon: Icon(Icons.group),
+              decoration: InputDecoration(
+                hintText: l10n.groupNameHint,
+                prefixIcon: const Icon(Icons.group),
               ),
             ),
           ],
@@ -56,12 +59,12 @@ class _EditGroupFields extends State<EditGroupFields> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 10,
           children: [
-            Text('Local do Evento'),
+            Text(l10n.eventLocation),
             TextFormField(
               controller: widget.addressController,
-              decoration: const InputDecoration(
-                hintText: 'Escolha um local',
-                prefixIcon: Icon(Icons.place),
+              decoration: InputDecoration(
+                hintText: l10n.locationHint,
+                prefixIcon: const Icon(Icons.place),
               ),
             ),
           ],
@@ -74,7 +77,7 @@ class _EditGroupFields extends State<EditGroupFields> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 10,
                 children: [
-                  Text('Valor Mínimo'),
+                  Text(l10n.minGiftValue),
                   TextFormField(
                     keyboardType: TextInputType.numberWithOptions(),
                     inputFormatters: [
@@ -82,9 +85,9 @@ class _EditGroupFields extends State<EditGroupFields> {
                       CentavosInputFormatter(casasDecimais: 2, moeda: true),
                     ],
                     controller: widget.minGiftValueController,
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.attach_money),
-                      hintText: 'Ex: R\$ 100,00',
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.attach_money),
+                      hintText: l10n.minValueHint,
                     ),
                   ),
                 ],
@@ -95,9 +98,10 @@ class _EditGroupFields extends State<EditGroupFields> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 10,
                 children: [
-                  Text('Valor Máximo'),
+                  Text(l10n.maxGiftValue),
                   TextFormField(
                     validator: (_) => ValidatorUtils.giftValue(
+                      context: context,
                       min: widget.minGiftValueController.text,
                       max: widget.maxGiftValueController.text,
                     ),
@@ -107,9 +111,9 @@ class _EditGroupFields extends State<EditGroupFields> {
                       CentavosInputFormatter(casasDecimais: 2, moeda: true),
                     ],
                     controller: widget.maxGiftValueController,
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.attach_money),
-                      hintText: 'Ex: R\$ 150,00',
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.attach_money),
+                      hintText: l10n.maxValueHint,
                     ),
                   ),
                 ],
@@ -121,13 +125,13 @@ class _EditGroupFields extends State<EditGroupFields> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 10,
           children: [
-            Text('Date e Hora'),
+            Text(l10n.dateAndTime),
             TextFormField(
               controller: widget.dateTimeController,
               readOnly: true,
-              decoration: const InputDecoration(
-                hintText: 'dd/mm/aaaa hh:mm',
-                prefixIcon: Icon(Icons.event),
+              decoration: InputDecoration(
+                hintText: l10n.dateHint,
+                prefixIcon: const Icon(Icons.event),
               ),
               onTap: widget.onTapDateTime,
             ),
@@ -137,7 +141,7 @@ class _EditGroupFields extends State<EditGroupFields> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 10,
           children: [
-            Text('Descrição do Grupo'),
+            Text(l10n.groupDescription),
             TextFormField(
               keyboardType: TextInputType.text,
               maxLines: 4,

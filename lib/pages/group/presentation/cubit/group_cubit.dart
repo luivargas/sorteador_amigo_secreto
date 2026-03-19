@@ -1,17 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sorteador_amigo_secreto/core/util/cubit_ext.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/create_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/update_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/usecases/group_usecases.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
-
-extension CubitExt<T> on Cubit<T> {
-  void safeEmit(T state) {
-    if (!isClosed) {
-      // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-      emit(state);
-    }
-  }
-}
 
 class GroupCubit extends Cubit<GroupState> {
   final GroupUsecases groupUsecases;

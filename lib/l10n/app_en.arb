@@ -1,0 +1,122 @@
+{
+  "@@locale": "en",
+
+  "refreshCompleted": "Updated!",
+  "refreshing": "Updating...",
+
+  "searchGroup": "Search group",
+  "errorLoadingGroups": "Error loading groups: {error}",
+  "@errorLoadingGroups": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "noGroupsFound": "No groups found",
+
+  "createGroupTitle": "Create your group now!",
+  "groupCreatedSuccess": "Group {name} created successfully!",
+  "@groupCreatedSuccess": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "createGroupButton": "Create group",
+
+  "edit": "Edit",
+  "errorTryAgain": "Error: {error}, please try again",
+  "@errorTryAgain": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "notDefined": "Not defined",
+  "noDescription": "No description",
+  "drawButton": "Draw",
+
+  "editGroupTitle": "Edit group!",
+  "selectDate": "Select date",
+  "cancel": "Cancel",
+  "selectTime": "Select time",
+  "save": "Save",
+  "ok": "OK",
+
+  "yourName": "Your name",
+  "email": "E-mail",
+  "phoneField": "Phone",
+  "groupName": "Group Name",
+  "nameHint": "Ex: John Smith",
+  "groupNameHint": "Ex: Office Secret Santa",
+
+  "eventLocation": "Event Location",
+  "minGiftValue": "Minimum Value",
+  "maxGiftValue": "Maximum Value",
+  "dateAndTime": "Date and Time",
+  "groupDescription": "Group Description",
+  "locationHint": "Choose a location",
+  "minValueHint": "Ex: $ 100.00",
+  "maxValueHint": "Ex: $ 150.00",
+  "dateHint": "mm/dd/yyyy hh:mm",
+
+  "eventDate": "Event date",
+  "suggestedValue": "Suggested value",
+  "location": "Location",
+  "description": "Description",
+
+  "addParticipantTitle": "Add participant",
+  "participantAddedSuccess": "Participant {name} added successfully!",
+  "@participantAddedSuccess": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "errorTitle": "Error",
+  "participantTitle": "Participant",
+  "participantUpdatedSuccess": "Participant {name} updated successfully!",
+  "@participantUpdatedSuccess": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "name": "Name",
+  "addParticipantButton": "Add participant",
+
+  "participants": "Participants ({count})",
+  "@participants": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "viewAll": "View all",
+  "viewLess": "View less",
+
+  "badgePending": "Awaiting Draw",
+  "badgeRaffled": "Draw Complete",
+
+  "validatorInvalidEmail": "Invalid e-mail",
+  "validatorRequired": "Required field",
+  "validatorEnterEmail": "Enter your e-mail",
+  "validatorFixValues": "Fix the values",
+
+  "accessFreeRaffle": "Free Raffle",
+  "accessFast": "and Fast!",
+  "accessWhatsapp": "Join via WhatsApp!",
+  "accessHowItWorks": "How it works?",
+  "accessStep1Title": "Create a group",
+  "accessStep1Desc": "Set name, value and rules",
+  "accessStep2Title": "Add participants",
+  "accessStep2Desc": "Fill in name, phone and e-mail",
+  "accessStep3Title": "Run the draw",
+  "accessStep3Desc": "The system draws automatically",
+  "accessStep4Title": "Receive the results",
+  "accessStep4Desc": "Each participant receives their secret friend by email or WhatsApp (Premium plan)",
+
+  "contactNotValid": "This contact must have a name and phone",
+  "contactsTitle": "Select Participants",
+  "contactsSubtitle": "Choose contacts for the draw",
+  "searchContacts": "Search contacts",
+  "yourContacts": "Your Contacts",
+  "contactPermissionDenied": "Contact permission not granted",
+  "confirmButton": "Confirm ({count})",
+  "@confirmButton": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "errorAddingContact": "Error adding {name}: {message}",
+  "@errorAddingContact": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "message": { "type": "String" }
+    }
+  },
+  "groupCode": "Group code",
+  "groupCodeHint": "Enter the group code here",
+
+  "shareLinkTitle": "My site link"
+}

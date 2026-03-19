@@ -12,6 +12,7 @@ import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigatio
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/participant_summary.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class ListParticipantsCard extends StatelessWidget {
   final int groupId;
@@ -61,7 +62,7 @@ class ListParticipantsCard extends StatelessWidget {
                   if (participantsList.length > 6) {
                     return Expanded(
                       child: ElevatedButton.icon(
-                        label: Text('Ver todos '),
+                        label: Text(AppLocalizations.of(context)!.viewAll),
                         onPressed: () {
                           controller.toggle();
                         },
@@ -107,7 +108,7 @@ class ListParticipantsCard extends StatelessWidget {
                   )!;
                   return Expanded(
                     child: ElevatedButton.icon(
-                      label: Text('Ver menos'),
+                      label: Text(AppLocalizations.of(context)!.viewLess),
                       onPressed: () {
                         controller.toggle();
                       },
@@ -141,8 +142,8 @@ class ListParticipantsCard extends StatelessWidget {
                   Icon(Icons.group, color: MyColors.sorteadorPurpple),
                   Expanded(
                     child: Text(
-                      'Participantes (${participantsList.length})',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      AppLocalizations.of(context)!.participants(participantsList.length),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                   if (type == BadgeType.pending) ...[

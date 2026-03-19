@@ -3,6 +3,7 @@ import 'package:sorteador_amigo_secreto/core/ui/components/stat_card.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/list_participants_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class ViewGroupCard extends StatelessWidget {
   final int groupId;
@@ -45,22 +46,22 @@ class ViewGroupCard extends StatelessWidget {
         spacing: 20,
         children: [
           StatCard(
-            value: 'Data do encontro',
+            value: AppLocalizations.of(context)!.eventDate,
             label: '$eventDate - $eventTime',
             icon: Icons.calendar_month,
           ),
           StatCard(
-            value: 'Valor sugerido',
+            value: AppLocalizations.of(context)!.suggestedValue,
             label: 'R\$ $minGiftValue - R\$ $maxGiftValue',
             icon: Icons.monetization_on,
           ),
           StatCard(
-            value: 'Local',
+            value: AppLocalizations.of(context)!.location,
             label: eventLocation,
             icon: Icons.location_on,
           ),
           StatCard(
-            value: 'Descrição',
+            value: AppLocalizations.of(context)!.description,
             label: groupDescription,
             icon: Icons.description,
           ),

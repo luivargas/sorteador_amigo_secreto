@@ -14,6 +14,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/view_gr
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class ViewGroup extends StatefulWidget {
   final int groupId;
@@ -29,17 +30,15 @@ class _ViewGroupBody extends State<ViewGroup> {
   ShowGroupModel? group;
 
   Future<void> _onShare() async {
-    final result = await SharePlus.instance.share(
+    final title = AppLocalizations.of(context)!.shareLinkTitle;
+    await SharePlus.instance.share(
       ShareParams(
         uri: Uri.parse('https://sorteador.com.br'),
-        title: 'Link do meu site',
-        subject: 'Link do meu site',
+        title: title,
+        subject: title,
       ),
     );
 
-    if (result.status == ShareResultStatus.success) {
-      print('Thank you for sharing my website!');
-    }
   }
 
   Future<void> _onRefresh() async {
@@ -89,7 +88,7 @@ class _ViewGroupBody extends State<ViewGroup> {
             return SmartRefresher(
               controller: _refreshController,
               onRefresh: _onRefresh,
-              child: Text('Erro: ${state.error}, tente novamente'),
+              child: Text(AppLocalizations.of(context)!.errorTryAgain(state.error!)),
             );
           }
           if (state.group != null) {
@@ -134,7 +133,7 @@ class _ViewGroupBody extends State<ViewGroup> {
                             },
                             label: Row(
                               spacing: 7,
-                              children: [Icon(Icons.edit), Text('Editar')],
+                              children: [Icon(Icons.edit), Text(AppLocalizations.of(context)!.edit)],
                             ),
                           ),
                         ],
@@ -144,14 +143,14 @@ class _ViewGroupBody extends State<ViewGroup> {
                         padding: const EdgeInsets.only(top: 10.0),
                         child: ViewGroupCard(
                           type: type,
-                          eventLocation: g.location ?? "Não definido",
+                          eventLocation: g.location ?? AppLocalizations.of(context)!.notDefined,
                           minGiftValue: g.minGiftValue ?? "00,00",
                           maxGiftValue: g.maxGiftValue ?? "00,00",
                           eventDate:
                               g.drawDate?.split(' ').first ?? "00/00/0000",
                           eventTime: g.drawDate?.split(' ').last ?? "00:00",
                           groupDescription:
-                              g.description ?? "Sem descrição",
+                              g.description ?? AppLocalizations.of(context)!.noDescription,
                           participants: g.participants.length,
                           participantsList: g.participants,
                           groupId: widget.groupId,
@@ -167,7 +166,7 @@ class _ViewGroupBody extends State<ViewGroup> {
                             onTap: () {
                               _onSubmit(g.code, widget.groupId);
                             },
-                            title: "Sortear",
+                            title: AppLocalizations.of(context)!.drawButton,
                             icon: Icons.draw,
                           ),
                         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class EnterGroupBody extends StatefulWidget {
   final TextEditingController codeFieldController;
@@ -25,14 +26,14 @@ class _EnterGroupBodyState extends State<EnterGroupBody> {
             spacing: 10,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Código do grupo'),
+              Text(AppLocalizations.of(context)!.groupCode),
               TextFormField(
                 controller: widget.codeFieldController,
                 validator: widget.validator,
-                decoration: const InputDecoration(
-                  hintText: 'Coloque aqui o código do grupo',
-                  prefixIcon: Icon(Icons.code),
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.groupCodeHint,
+                  prefixIcon: const Icon(Icons.code),
+                  border: const OutlineInputBorder(),
                 ),
               ),
             ],
