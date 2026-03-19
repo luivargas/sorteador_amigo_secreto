@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
+import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
@@ -25,7 +26,7 @@ class ViewGroup extends StatefulWidget {
 class _ViewGroupBody extends State<ViewGroup> {
   final RefreshController _refreshController = RefreshController();
 
-  dynamic group;
+  ShowGroupModel? group;
 
   Future<void> _onShare() async {
     final result = await SharePlus.instance.share(
@@ -67,17 +68,17 @@ class _ViewGroupBody extends State<ViewGroup> {
             onPressed: () => _onShare(),
             icon: Icon(Icons.share, size: 30),
           ),
-        ],
+        ], title: '',
       ),
       backgroundColor: Theme.of(context).canvasColor,
       body: BlocConsumer<GroupCubit, GroupState>(
         listenWhen: (previous, current) =>
-            previous.isLoading == true &&
-            current.isLoading == false &&
-            current.raffled == true,
+            previous.isLoading &&
+            !current.isLoading &&
+            current.raffled,
         listener: (context, state) => _onRefresh(),
         builder: (context, state) {
-          while (state.isLoading == true && state.group == null) {
+          if (state.isLoading && state.group == null) {
             return Center(
               child: CircularProgressIndicator(
                 color: myProgressIndicator.color,
@@ -93,7 +94,11 @@ class _ViewGroupBody extends State<ViewGroup> {
           }
           if (state.group != null) {
             group = state.group!;
-          } else {}
+          }
+          if (group == null) {
+            return const SizedBox.shrink();
+          }
+          final g = group!;
           return SmartRefresher(
             controller: _refreshController,
             onRefresh: _onRefresh,
@@ -106,11 +111,11 @@ class _ViewGroupBody extends State<ViewGroup> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        group.name,
+                        g.name,
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                       SecretSantaBadge(
-                        type: group.raffledAt == null
+                        type: g.raffledAt == null
                             ? type = BadgeType.pending
                             : type = BadgeType.raffled,
                       ),
@@ -139,28 +144,28 @@ class _ViewGroupBody extends State<ViewGroup> {
                         padding: const EdgeInsets.only(top: 10.0),
                         child: ViewGroupCard(
                           type: type,
-                          eventLocation: group.location ?? "Não definido",
-                          minGiftValue: group.minGiftValue ?? "00,00",
-                          maxGiftValue: group.maxGiftValue ?? "00,00",
+                          eventLocation: g.location ?? "Não definido",
+                          minGiftValue: g.minGiftValue ?? "00,00",
+                          maxGiftValue: g.maxGiftValue ?? "00,00",
                           eventDate:
-                              group.drawDate?.split(' ').first ?? "00/00/0000",
-                          eventTime: group.drawDate?.split(' ').last ?? "00:00",
+                              g.drawDate?.split(' ').first ?? "00/00/0000",
+                          eventTime: g.drawDate?.split(' ').last ?? "00:00",
                           groupDescription:
-                              group.description ?? "Sem descrição",
-                          participants: group.participants.length,
-                          participantsList: group.participants,
+                              g.description ?? "Sem descrição",
+                          participants: g.participants.length,
+                          participantsList: g.participants,
                           groupId: widget.groupId,
-                          groupToken: group.token,
-                          groupCode: group.code,
+                          groupToken: g.token,
+                          groupCode: g.code,
                         ),
                       ),
-                      if (group.raffledAt == null &&
-                          group.participants.length >= 2) ...[
+                      if (g.raffledAt == null &&
+                          g.participants.length >= 2) ...[
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0, bottom: 40),
                           child: MyGradientButton(
                             onTap: () {
-                              _onSubmit(group.code, widget.groupId);
+                              _onSubmit(g.code, widget.groupId);
                             },
                             title: "Sortear",
                             icon: Icons.draw,

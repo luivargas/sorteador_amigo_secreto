@@ -1,42 +1,52 @@
-
+import 'package:equatable/equatable.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 
-class ParticipantState {
-  bool? isLoading;
-  String? error;
-  bool? created;
-  bool? deleted;
-  bool? showed;
-  bool? updated;
-  ShowParticipantModel? showParti;
+class ParticipantState extends Equatable {
+  final bool isLoading;
+  final bool created;
+  final bool updated;
+  final bool showed;
+  final String? error;
+  final ShowParticipantModel? showParti;
 
-  ParticipantState({
-    this.showed,
+  const ParticipantState({
+    required this.isLoading,
+    required this.created,
+    required this.updated,
+    required this.showed,
     this.error,
-    this.created,
-    this.deleted,
-    this.isLoading,
     this.showParti,
-    this.updated, 
   });
+
+  factory ParticipantState.initial() {
+    return const ParticipantState(
+      isLoading: false,
+      created: false,
+      updated: false,
+      showed: false,
+    );
+  }
 
   ParticipantState copyWith({
     bool? isLoading,
-    String? error,
     bool? created,
-    bool? deleted,
-    bool? showed,
     bool? updated,
+    bool? showed,
+    String? error,
     ShowParticipantModel? showParti,
+    bool clearError = false,
+    bool clearShowParti = false,
   }) {
     return ParticipantState(
-      error: error,
-      created: created,
-      deleted: deleted,
-      isLoading: isLoading,
-      showed: showed,
-      updated: updated,
-      showParti: showParti,
+      isLoading: isLoading ?? this.isLoading,
+      created: created ?? this.created,
+      updated: updated ?? this.updated,
+      showed: showed ?? this.showed,
+      error: clearError ? null : (error ?? this.error),
+      showParti: clearShowParti ? null : (showParti ?? this.showParti),
     );
   }
+
+  @override
+  List<Object?> get props => [isLoading, created, updated, showed, error, showParti];
 }

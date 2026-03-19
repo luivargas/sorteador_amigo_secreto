@@ -4,19 +4,31 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
+import 'package:sorteador_amigo_secreto/injector/injector.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/domain/usecases/participant_usecase.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class ContactListPage extends StatefulWidget {
-  const ContactListPage({super.key});
+  final int groupId;
+  final String groupCode;
+  const ContactListPage({
+    super.key,
+    required this.groupId,
+    required this.groupCode,
+  });
   @override
   State<ContactListPage> createState() => _ContactListPageState();
 }
 
 class _ContactListPageState extends State<ContactListPage> {
-  final Set<String> _selectedContacts = {};
+  final TextEditingController _searchControler = TextEditingController();
+  final Set<Object> _selectedContacts = {};
   List<Contact>? _contacts;
   StreamSubscription? _sub;
   bool _denied = false;
+  bool _isCreating = false;
 
   @override
   void initState() {
@@ -27,6 +39,7 @@ class _ContactListPageState extends State<ContactListPage> {
   @override
   void dispose() {
     _sub?.cancel();
+    _searchControler.dispose();
     super.dispose();
   }
 
@@ -36,7 +49,8 @@ class _ContactListPageState extends State<ContactListPage> {
 
   bool _hasEmail(Contact c) => c.emails.isNotEmpty;
 
-  bool _isContactValid(Contact c) => _hasName(c) && (_hasPhone(c) || _hasEmail(c));
+  bool _isContactValid(Contact c) =>
+      _hasName(c) && (_hasPhone(c) || _hasEmail(c));
 
   Future<void> _loadContacts() async {
     final s = await FlutterContacts.permissions.request(
@@ -87,46 +101,98 @@ class _ContactListPageState extends State<ContactListPage> {
     });
   }
 
+  Future<void> _onConfirm() async {
+    if (_selectedContacts.isEmpty || _contacts == null) return;
+
+    setState(() => _isCreating = true);
+
+    // Filtra os contatos completos a partir dos IDs selecionados
+    final selected = _contacts!.where((c) => _selectedContacts.contains(c.id)).toList();
+    final usecase = getIt<ParticipantUsecase>();
+    bool hasError = false;
+
+    for (final contact in selected) {
+      final phone = contact.phones.isNotEmpty ? contact.phones.first.number : null;
+      final email = contact.emails.isNotEmpty ? contact.emails.first.address : null;
+
+      final entity = CreateParticipantEntity(
+        name: contact.displayName ?? '',
+        email: email,
+        phone: phone,
+        role: 'participant',
+        groupCode: widget.groupCode,
+      );
+
+      final result = await usecase.create(entity, widget.groupId);
+      result.when(
+        success: (_) {},
+        failure: (f) {
+          hasError = true;
+          if (context.mounted) {
+            AppAlert.show(
+              context,
+              message: 'Erro ao adicionar ${contact.displayName}: ${f.message}',
+            );
+          }
+        },
+      );
+    }
+
+    setState(() => _isCreating = false);
+
+    if (!hasError && context.mounted) {
+      context.pop(true);
+    }
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: Theme.of(context).canvasColor,
-    appBar: MyAppBar(),
+    appBar: MyAppBar(title: 'Selecionar Participantes',subTitle: "Escolha os contatos para o sorteio",),
     body: Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 40),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
       child: Column(
         spacing: 10,
         children: [
-          Text(
-            "Lista de Contatos",
-            style: Theme.of(context).textTheme.titleSmall,
+          TextField(
+            controller: _searchControler,
+            decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.search),
+              hintText: 'Buscar contatos',
+            ),
           ),
-          Text("Selecionados: ${_selectedContacts.length}"),
+          Row(),
+          Row(
+            children: [
+              Text("Seus Contatos"),
+            ],
+          ),
           if (_denied)
             const Center(child: Text("Permissão de contato não concedida"))
           else if (_contacts == null)
             const Center(child: CircularProgressIndicator())
           else
             Expanded(
-              child: ListView.builder(
-                itemCount: _contacts!.length,
-                itemBuilder: (_, i) {
-                  final c = _contacts![i];
-              
-                  final hasName = _hasName(c);
-                  final hasPhone = _hasPhone(c);
-                  final hasEmail = _hasEmail(c);
-                  final isValid = _isContactValid(c);
-                  final selected = _selectedContacts.contains(c.id);
-              
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: Column(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  border: Border.all(color: MyColors.sorteadorOrange),
+                ),
+                child: ListView.builder(
+                  itemCount: _contacts!.length,
+                  itemBuilder: (_, i) {
+                    final c = _contacts![i];
+
+                    final hasName = _hasName(c);
+                    final hasPhone = _hasPhone(c);
+                    final hasEmail = _hasEmail(c);
+                    final isValid = _isContactValid(c);
+                    final selected = _selectedContacts.contains(c.id);
+
+                    return Column(
                       children: [
                         ListTile(
-                          tileColor: selected
-                              ? MyColors.sorteadorOrange
-                              : null,
-                                      
                           leading: CircleAvatar(
                             backgroundImage: c.photo?.thumbnail != null
                                 ? MemoryImage(c.photo!.thumbnail!)
@@ -138,44 +204,45 @@ class _ContactListPageState extends State<ContactListPage> {
                           title: Text(
                             c.displayName ?? '',
                             style: TextStyle(
-                              color: selected ? Colors.white : (isValid ? null : Colors.red),
+                              color: selected
+                                  ? MyColors.sorteadorGrey
+                                  : (isValid ? null : Colors.red),
                               fontWeight: isValid
                                   ? FontWeight.normal
                                   : FontWeight.bold,
                             ),
                           ),
                           subtitle: !isValid
-                             ? Text("${[
-                              if(!hasName) "Nome",
-                              if(!hasPhone && !hasEmail) "Telefone",
-                             ].join(", ")} Obrigatório", style: const TextStyle(color: Colors.red),)
-                             :null,
+                              ? Text(
+                                  "${[if (!hasName) "Nome", if (!hasPhone && !hasEmail) "Telefone"].join(", ")} Obrigatório",
+                                  style: const TextStyle(color: Colors.red),
+                                )
+                              : null,
                           trailing: GestureDetector(
                             onTap: () => _toggleSelection(c),
                             child: Icon(
                               selected
                                   ? Icons.check_circle
                                   : Icons.radio_button_unchecked,
-                              color: _selectedContacts.contains(c.id)
-                                  ? Colors.white
-                                  : MyColors.sorteadorOrange,
+                              color: MyColors.sorteadorOrange,
                             ),
                           ),
                           onTap: () => context.push('/contact_page/${c.id}'),
                         ),
                       ],
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
+          MyGradientButton(
+            onTap: _onConfirm,
+            title: "Confirmar (${_selectedContacts.length})",
+            isLoading: _isCreating,
+          ),
         ],
       ),
     ),
-
-    floatingActionButton: FloatingActionButton(
-      child: const Icon(Icons.add),
-      onPressed: () => context.push('/edit_contact_page'),
-    ),
+    // => context.push('/edit_contact_page'),
   );
 }

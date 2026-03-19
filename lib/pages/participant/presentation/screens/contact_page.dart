@@ -54,7 +54,7 @@ class _ContactPage extends State<ContactPage> {
                   ),
                 ),
               ),
-          ],
+          ], title: '',
         ),
         body: c == null
             ? Center(child: CircularProgressIndicator())

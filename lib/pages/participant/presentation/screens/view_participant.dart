@@ -77,7 +77,7 @@ class _ViewParticipant extends State<ViewParticipant> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(),
+      appBar: MyAppBar(title: '',),
       backgroundColor: Theme.of(context).canvasColor,
       body: Form(
         key: _validadeFormKey,
@@ -94,7 +94,7 @@ class _ViewParticipant extends State<ViewParticipant> {
                 readOnly = false;
               });
             }
-            if (state.updated == true) {
+            if (state.updated) {
               AppAlert.show(
                 context,
                 message:
@@ -107,9 +107,9 @@ class _ViewParticipant extends State<ViewParticipant> {
             }
           },
           buildWhen: (previous, current) =>
-              previous.isLoading == true && previous.showed == false,
+              previous.isLoading && !previous.showed,
           builder: (context, state) {
-            if (state.isLoading == true && state.showed == false) {
+            if (state.isLoading && !state.showed) {
               return Center(
                 child: CircularProgressIndicator(
                   color: myProgressIndicator.color,

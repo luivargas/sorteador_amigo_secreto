@@ -71,7 +71,13 @@ final routes = GoRouter(
     GoRoute(
       name: 'contacts',
       path: '/contacts',
-      builder: (BuildContext context, GoRouterState state) => ContactListPage(),
+      builder: (BuildContext context, GoRouterState state) {
+        final extra = state.extra as CreateParticipantArgs;
+        return ContactListPage(
+          groupId: extra.groupId,
+          groupCode: extra.groupCode,
+        );
+      },
     ),
     GoRoute(
       name: 'contact_page',

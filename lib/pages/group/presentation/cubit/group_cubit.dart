@@ -15,11 +15,11 @@ extension CubitExt<T> on Cubit<T> {
 
 class GroupCubit extends Cubit<GroupState> {
   final GroupUsecases groupUsecases;
-  GroupCubit(this.groupUsecases) : super(GroupState());
+  GroupCubit(this.groupUsecases) : super(GroupState.initial());
 
   Future<void> create(CreateGroupEntity entity) async {
     if (isClosed) return;
-    safeEmit(state.copyWith(isLoading: true, error: null));
+    safeEmit(state.copyWith(isLoading: true, clearError: true));
     try {
       final result = await groupUsecases.create(entity);
       result.when(
@@ -39,7 +39,7 @@ class GroupCubit extends Cubit<GroupState> {
 
   Future<void> delete(int id) async {
     if (isClosed) return;
-    safeEmit(state.copyWith(isLoading: true, error: null));
+    safeEmit(state.copyWith(isLoading: true, clearError: true));
     try {
       await groupUsecases.delete(id);
       // fazer um ternario com retorno do result.
@@ -50,7 +50,7 @@ class GroupCubit extends Cubit<GroupState> {
   }
 
   Future<void> show(int id) async {
-    safeEmit(state.copyWith(isLoading: true, error: null, group: null));
+    safeEmit(state.copyWith(isLoading: true, clearError: true, clearGroup: true));
     try {
       final result = await groupUsecases.show(id);
       result.when(
@@ -60,7 +60,7 @@ class GroupCubit extends Cubit<GroupState> {
           state.copyWith(
             isLoading: false,
             error: f.message,
-            group: null
+            clearGroup: true,
           ),
         ),
       );
@@ -70,7 +70,7 @@ class GroupCubit extends Cubit<GroupState> {
   }
 
   Future<void> update(UpdateGroupEntity entity, int id) async {
-    safeEmit(state.copyWith(isLoading: true, error: null, updated: false));
+    safeEmit(state.copyWith(isLoading: true, clearError: true, updated: false));
     try {
       final result = await groupUsecases.update(entity, id);
       result.when(
@@ -85,13 +85,13 @@ class GroupCubit extends Cubit<GroupState> {
       );
     } catch (e) {
       emit(
-        state.copyWith(error: e.toString(), isLoading: false, showed: false),
+        state.copyWith(error: e.toString(), isLoading: false),
       );
     }
   }
 
   Future<void> raffle(String code, int id) async {
-    safeEmit(state.copyWith(isLoading: true, error: null, raffled: false));
+    safeEmit(state.copyWith(isLoading: true, clearError: true, raffled: false));
     try {
       final result = await groupUsecases.raffle(code, id);
       result.when(
@@ -107,7 +107,7 @@ class GroupCubit extends Cubit<GroupState> {
         ),
       );
     } catch (e) {
-      state.copyWith(error: e.toString(), isLoading: false, raffled: false);
+      emit(state.copyWith(error: e.toString(), isLoading: false, raffled: false));
     }
   }
 }

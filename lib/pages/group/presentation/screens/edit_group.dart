@@ -169,17 +169,17 @@ class _EditGroup extends State<EditGroup> {
     return Form(
       key: _editGroupKey,
       child: Scaffold(
-        appBar: MyAppBar(),
+        appBar: MyAppBar(title: '',),
         backgroundColor: Theme.of(context).canvasColor,
         body: BlocConsumer<GroupCubit, GroupState>(
           listener: (context, state) {
             _prefillFromApi(state);
-            if (state.updated == true) {
+            if (state.updated) {
               context.pop(true);
             }
           },
           builder: (context, state) {
-          while (state.isLoading == true && state.group == null) {
+          if (state.isLoading && state.group == null) {
             return Center(
               child: CircularProgressIndicator(
                 color: myProgressIndicator.color,

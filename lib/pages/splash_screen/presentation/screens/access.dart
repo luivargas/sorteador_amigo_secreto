@@ -14,7 +14,7 @@ class _Access extends State<Access> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(),
+      appBar: MyAppBar(title: '',),
       backgroundColor: Theme.of(context).canvasColor,
       body: Padding(
         padding: const EdgeInsets.only(right: 20.0, left: 20, top: 20),

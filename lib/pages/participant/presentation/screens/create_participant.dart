@@ -58,13 +58,13 @@ class _CreateParticipant extends State<CreateParticipant> {
     return Form(
       key: _createFormKey,
       child: Scaffold(
-        appBar: MyAppBar(),
+        appBar: MyAppBar(title: '',),
         backgroundColor: Theme.of(context).canvasColor,
         body: BlocConsumer<ParticipantCubit, ParticipantState>(
           listenWhen: (prev, curr) =>
-              prev.isLoading == true && curr.isLoading == false,
+              prev.isLoading && !curr.isLoading,
           listener: (context, state) async {
-            if (state.created == true) {
+            if (state.created) {
               AppAlert.show(
                 context,
                 message:
@@ -113,7 +113,7 @@ class _CreateParticipant extends State<CreateParticipant> {
                         onTap: _onSubmit,
                         title: "Adicionar participante",
                         icon: Icons.create,
-                        isLoading: state.isLoading == true,
+                        isLoading: state.isLoading,
                       ),
                     ],
                   ),

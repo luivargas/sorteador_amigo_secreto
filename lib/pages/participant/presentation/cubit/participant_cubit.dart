@@ -15,11 +15,11 @@ extension CubitExt<T> on Cubit<T> {
 
 class ParticipantCubit extends Cubit<ParticipantState> {
   final ParticipantUsecase participantUsecase;
-  ParticipantCubit(this.participantUsecase) : super(ParticipantState());
+  ParticipantCubit(this.participantUsecase) : super(ParticipantState.initial());
 
-  Future<void> create(CreateParticipantEntity entity, id) async {
+  Future<void> create(CreateParticipantEntity entity, int id) async {
     if (isClosed) return;
-    safeEmit(state.copyWith(isLoading: true, error: null, created: false));
+    safeEmit(state.copyWith(isLoading: true, clearError: true, created: false));
     try {
       final result = await participantUsecase.create(entity, id);
       result.when(
@@ -40,7 +40,7 @@ class ParticipantCubit extends Cubit<ParticipantState> {
     safeEmit(
       state.copyWith(
         isLoading: true,
-        error: null,
+        clearError: true,
         showed: false,
       ),
     );
@@ -69,7 +69,7 @@ class ParticipantCubit extends Cubit<ParticipantState> {
     safeEmit(
       state.copyWith(
         isLoading: true,
-        error: null,
+        clearError: true,
         updated: false,
       ),
     );
@@ -77,7 +77,7 @@ class ParticipantCubit extends Cubit<ParticipantState> {
       final result = await participantUsecase.update(entity, id, groupToken);
       result.when(
         success: (s) => emit(
-          state.copyWith(isLoading: false, updated: true,),
+          state.copyWith(isLoading: false, updated: true),
         ),
         failure: (f) => emit(
           state.copyWith(isLoading: false, error: f.message, updated: false),

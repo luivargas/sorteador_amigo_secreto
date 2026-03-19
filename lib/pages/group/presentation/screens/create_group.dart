@@ -51,12 +51,12 @@ class _FormGroupBody extends State<CreateGroup> {
       key: _formKey,
       child: Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
-        appBar: MyAppBar(),
+        appBar: MyAppBar(title: '',),
         body: BlocConsumer<GroupCubit, GroupState>(
           listenWhen: (previous, current) =>
-              previous.isLoading == true &&
-              current.isLoading == false &&
-              current.created == true,
+              previous.isLoading &&
+              !current.isLoading &&
+              current.created,
           listener: (context, state) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -69,7 +69,7 @@ class _FormGroupBody extends State<CreateGroup> {
             context.pop(true);
           },
           builder: (context, state) {
-            if (state.isLoading == true) {
+            if (state.isLoading) {
               return Center(
                 child: CircularProgressIndicator(
                   color: myProgressIndicator.color,

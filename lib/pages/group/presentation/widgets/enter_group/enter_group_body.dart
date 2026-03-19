@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class EnterGroupBody extends StatefulWidget {
   final TextEditingController codeFieldController;
-  final dynamic validator;
+  final FormFieldValidator<String>? validator;
   const EnterGroupBody({
     super.key,
     required this.codeFieldController,

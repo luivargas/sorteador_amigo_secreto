@@ -33,7 +33,7 @@ class _EnterGroup extends State<EnterGroup> {
       key: formKey,
       child: Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
-        appBar: MyAppBar(),
+        appBar: MyAppBar(title: '',),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 0),

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
-import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart'; 
 
 class EditContactPage extends StatefulWidget {
   final Contact? contact;
@@ -50,7 +50,7 @@ class _EditContactPageState extends State<EditContactPage> {
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: Theme.of(context).canvasColor,
     appBar: MyAppBar(
-      actions: [IconButton(icon: const Icon(Icons.save), onPressed: _save)],
+      actions: [IconButton(icon: const Icon(Icons.save), onPressed: _save)], title: "",
     ),
     body: Padding(
       padding: const EdgeInsets.all(20),

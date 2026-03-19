@@ -5,14 +5,14 @@ class MyGradientButton extends StatelessWidget {
   final VoidCallback onTap;
   final String title;
   final Text? subTitle;
-  final IconData icon;
+  final IconData? icon;
   final bool isLoading;
   const MyGradientButton({
     super.key,
     required this.onTap,
     required this.title,
     this.subTitle,
-    required this.icon,
+    this.icon,
     this.isLoading = false,
   });
 
@@ -45,24 +45,22 @@ class MyGradientButton extends StatelessWidget {
                 : Row(
                     spacing: 10,
                     children: [
-                      Icon(icon, color: Colors.white),
                       Expanded(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               title,
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 16,
                                 color: Colors.white,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w900,
                               ),
                             ),
                             if (subTitle != null) ...[subTitle!],
                           ],
                         ),
                       ),
-                      Icon(Icons.arrow_forward_ios, color: Colors.white),
                     ],
                   ),
           ),
