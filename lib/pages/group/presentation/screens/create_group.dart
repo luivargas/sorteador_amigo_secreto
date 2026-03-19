@@ -51,7 +51,7 @@ class _FormGroupBody extends State<CreateGroup> {
       key: _formKey,
       child: Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
-        appBar: MyAppBar(title: '',),
+        appBar: MyAppBar(title: 'Crie seu grupo agora!',),
         body: BlocConsumer<GroupCubit, GroupState>(
           listenWhen: (previous, current) =>
               previous.isLoading &&
