@@ -118,5 +118,14 @@
   "groupCode": "Código del grupo",
   "groupCodeHint": "Ingresa aquí el código del grupo",
 
-  "shareLinkTitle": "Link de mi sitio"
+  "shareLinkTitle": "Link de mi sitio",
+
+  "selectedLabel": "Seleccionados",
+  "selectedCount": "{count} seleccionados",
+  "@selectedCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "noParticipantsSelected": "Ningún participante seleccionado",
+  "fieldRequired": "Obligatorio",
+  "phone": "Teléfono"
 }

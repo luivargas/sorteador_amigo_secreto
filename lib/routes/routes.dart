@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_navbar.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/contact_page.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/contacts.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/contacts_list_page.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/edit_contact_page.dart';
 import 'package:sorteador_amigo_secreto/pages/splash_screen/presentation/screens/access.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';

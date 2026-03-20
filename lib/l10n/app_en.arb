@@ -118,5 +118,14 @@
   "groupCode": "Group code",
   "groupCodeHint": "Enter the group code here",
 
-  "shareLinkTitle": "My site link"
+  "shareLinkTitle": "My site link",
+
+  "selectedLabel": "Selected",
+  "selectedCount": "{count} selected",
+  "@selectedCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "noParticipantsSelected": "No participant selected",
+  "fieldRequired": "Required",
+  "phone": "Phone"
 }

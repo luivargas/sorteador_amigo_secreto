@@ -256,4 +256,21 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get shareLinkTitle => 'Link del mio sito';
+
+  @override
+  String get selectedLabel => 'Selezionati';
+
+  @override
+  String selectedCount(int count) {
+    return '$count selezionati';
+  }
+
+  @override
+  String get noParticipantsSelected => 'Nessun partecipante selezionato';
+
+  @override
+  String get fieldRequired => 'Obbligatorio';
+
+  @override
+  String get phone => 'Telefono';
 }

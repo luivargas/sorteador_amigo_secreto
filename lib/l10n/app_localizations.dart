@@ -563,6 +563,36 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Link do meu site'**
   String get shareLinkTitle;
+
+  /// No description provided for @selectedLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Selecionados'**
+  String get selectedLabel;
+
+  /// No description provided for @selectedCount.
+  ///
+  /// In pt, this message translates to:
+  /// **'{count} selecionados'**
+  String selectedCount(int count);
+
+  /// No description provided for @noParticipantsSelected.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nenhum participante selecionado'**
+  String get noParticipantsSelected;
+
+  /// No description provided for @fieldRequired.
+  ///
+  /// In pt, this message translates to:
+  /// **'Obrigatório'**
+  String get fieldRequired;
+
+  /// No description provided for @phone.
+  ///
+  /// In pt, this message translates to:
+  /// **'Telefone'**
+  String get phone;
 }
 
 class _AppLocalizationsDelegate
