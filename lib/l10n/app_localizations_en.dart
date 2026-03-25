@@ -28,8 +28,8 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get createGroupTitle => 'Create your group now!';
 
-    @override
-  String get createGroupSubtitle => 'Tip: choose a name everyone will recognize.';
+  @override
+  String get createGroupSubtitle => 'Fill in the details below';
 
   @override
   String groupCreatedSuccess(String name) {

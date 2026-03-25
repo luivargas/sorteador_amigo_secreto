@@ -5,15 +5,17 @@ class AuthState extends Equatable {
   final bool isLoading;
   final bool validated;
   final bool requested;
+  final bool sessionChecked;
   final String? error;
   final AuthModel? groups;
 
   const AuthState({
     required this.isLoading,
     required this.validated,
+    required this.requested,
+    required this.sessionChecked,
     this.error,
     this.groups,
-    required this.requested,
   });
 
   factory AuthState.initial() {
@@ -21,6 +23,7 @@ class AuthState extends Equatable {
       isLoading: false,
       validated: false,
       requested: false,
+      sessionChecked: false,
     );
   }
 
@@ -28,6 +31,7 @@ class AuthState extends Equatable {
     bool? isLoading,
     bool? validated,
     bool? requested,
+    bool? sessionChecked,
     String? error,
     AuthModel? groups,
     bool clearError = false,
@@ -37,6 +41,7 @@ class AuthState extends Equatable {
       isLoading: isLoading ?? this.isLoading,
       validated: validated ?? this.validated,
       requested: requested ?? this.requested,
+      sessionChecked: sessionChecked ?? this.sessionChecked,
       error: clearError ? null : (error ?? this.error),
       groups: clearGroups ? null : (groups ?? this.groups),
     );
@@ -47,6 +52,7 @@ class AuthState extends Equatable {
     isLoading,
     validated,
     requested,
+    sessionChecked,
     error,
     groups,
   ];

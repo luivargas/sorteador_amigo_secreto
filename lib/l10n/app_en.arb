@@ -12,6 +12,7 @@
   "noGroupsFound": "No groups found",
 
   "createGroupTitle": "Create your group now!",
+  "createGroupSubtitle": "Fill in the details below",
   "groupCreatedSuccess": "Group {name} created successfully!",
   "@groupCreatedSuccess": {
     "placeholders": { "name": { "type": "String" } }
