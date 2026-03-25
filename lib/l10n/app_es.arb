@@ -127,5 +127,10 @@
   },
   "noParticipantsSelected": "Ningún participante seleccionado",
   "fieldRequired": "Obligatorio",
-  "phone": "Teléfono"
+  "phone": "Teléfono",
+  "selectPhone": "Selecciona el teléfono",
+  "countryLabel": "País",
+  "selectEmail": "Selecciona el correo electrónico",
+  "select": "Seleccionar",
+  "retry": "Intentar de nuevo"
 }

@@ -275,4 +275,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get phone => 'Phone';
+
+  @override
+  String get selectPhone => 'Select phone';
+
+  @override
+  String get countryLabel => 'Country';
+
+  @override
+  String get selectEmail => 'Select e-mail';
+
+  @override
+  String get select => 'Select';
+
+  @override
+  String get retry => 'Try again';
 }

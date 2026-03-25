@@ -69,8 +69,6 @@ class _ContactListState extends State<ContactList> {
   }
   
 
-  /// Tenta extrair o IsoCode do número normalizado (E.164, ex: +5511999999999).
-  /// Retorna null se o número não tiver o prefixo +.
   IsoCode? _isoCodeFromPhone(Phone phone) {
     final normalized = phone.normalizedNumber;
     if (normalized == null || !normalized.startsWith('+')) return null;
@@ -150,7 +148,6 @@ class _ContactListState extends State<ContactList> {
       final phone = c.phones.isNotEmpty ? c.phones.first : null;
       IsoCode? isoCode = phone != null ? _isoCodeFromPhone(phone) : null;
 
-      // DDI não detectável no número → pede ao usuário para escolher o país
       if (phone != null && isoCode == null) {
         if (!mounted) return;
         isoCode = await MyPhoneFormField.showCountrySelector(context);
@@ -239,7 +236,6 @@ class _ContactListState extends State<ContactList> {
                     groupValue: chosenPhone,
                     onChanged: (v) => setSheetState(() {
                       chosenPhone = v;
-                      // Tenta re-detectar o DDI ao trocar de telefone
                       final match = c.phones.firstWhere(
                         (p) => p.number == v,
                         orElse: () => c.phones.first,

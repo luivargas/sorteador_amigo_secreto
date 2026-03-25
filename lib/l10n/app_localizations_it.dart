@@ -276,4 +276,19 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get phone => 'Telefono';
+
+  @override
+  String get selectPhone => 'Seleziona il telefono';
+
+  @override
+  String get countryLabel => 'Paese';
+
+  @override
+  String get selectEmail => 'Seleziona l\'e-mail';
+
+  @override
+  String get select => 'Seleziona';
+
+  @override
+  String get retry => 'Riprova';
 }

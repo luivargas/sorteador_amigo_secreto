@@ -599,6 +599,36 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Telefone'**
   String get phone;
+
+  /// No description provided for @selectPhone.
+  ///
+  /// In pt, this message translates to:
+  /// **'Selecione o telefone'**
+  String get selectPhone;
+
+  /// No description provided for @countryLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'País'**
+  String get countryLabel;
+
+  /// No description provided for @selectEmail.
+  ///
+  /// In pt, this message translates to:
+  /// **'Selecione o e-mail'**
+  String get selectEmail;
+
+  /// No description provided for @select.
+  ///
+  /// In pt, this message translates to:
+  /// **'Selecionar'**
+  String get select;
+
+  /// No description provided for @retry.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tentar novamente'**
+  String get retry;
 }
 
 class _AppLocalizationsDelegate
