@@ -14,14 +14,15 @@ class ParticipantSummary extends StatefulWidget {
   final String contact;
   final String id;
   final String groupToken;
-  final int groupId;
+  final String groupCode;
 
   const ParticipantSummary({
     super.key,
     required this.contact,
     required this.name,
     required this.id,
-    required this.groupToken, required this.groupId
+    required this.groupToken,
+    required this.groupCode,
   });
 
   @override
@@ -90,12 +91,12 @@ class _ParticipantSummaryState extends State<ParticipantSummary> {
                 final result = await context.pushNamed(
                   'view_parti',
                   extra: ShowParticipantArgs(
-                    userId: widget.id,
+                    partId: widget.id,
                     groupToken: widget.groupToken,
                   ),
                 );
                 if (result == true && context.mounted) {
-                  context.read<GroupCubit>().show(widget.groupId);
+                  context.read<GroupCubit>().show(widget.groupCode, widget.groupToken);
                 }
               },
               child: Container(

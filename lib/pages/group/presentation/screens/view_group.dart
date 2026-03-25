@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
+import 'package:sorteador_amigo_secreto/core/network/base_url.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
@@ -17,8 +18,9 @@ import 'package:share_plus/share_plus.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class ViewGroup extends StatefulWidget {
-  final int groupId;
-  const ViewGroup({super.key, required this.groupId});
+  final String code;
+  final String token;
+  const ViewGroup({super.key, required this.code, required this.token});
 
   @override
   State<ViewGroup> createState() => _ViewGroupBody();
@@ -29,11 +31,11 @@ class _ViewGroupBody extends State<ViewGroup> {
 
   ShowGroupModel? group;
 
-  Future<void> _onShare() async {
+  Future<void> _onShare(ShowGroupModel? g) async {
     final title = AppLocalizations.of(context)!.shareLinkTitle;
     await SharePlus.instance.share(
       ShareParams(
-        uri: Uri.parse('https://sorteador.com.br'),
+        uri: Uri.parse("$stgBaseUrl/grupo/${g?.code}/entrar"),
         title: title,
         subject: title,
       ),
@@ -42,12 +44,12 @@ class _ViewGroupBody extends State<ViewGroup> {
   }
 
   Future<void> _onRefresh() async {
-    await context.read<GroupCubit>().show(widget.groupId);
-        _refreshController.refreshCompleted();
+    await context.read<GroupCubit>().show(widget.code, widget.token);
+    _refreshController.refreshCompleted();
   }
 
-  Future<void> _onSubmit(String code, int id) async {
-    await context.read<GroupCubit>().raffle(code, id);
+  Future<void> _onSubmit(String code) async {
+    await context.read<GroupCubit>().raffle(code, widget.token);
   }
 
 
@@ -64,10 +66,10 @@ class _ViewGroupBody extends State<ViewGroup> {
       appBar: MyAppBar(
         actions: [
           IconButton(
-            onPressed: () => _onShare(),
+            onPressed: () => _onShare(group),
             icon: Icon(Icons.share, size: 30),
           ),
-        ], title: '',
+        ]
       ),
       backgroundColor: Theme.of(context).canvasColor,
       body: BlocConsumer<GroupCubit, GroupState>(
@@ -125,10 +127,10 @@ class _ViewGroupBody extends State<ViewGroup> {
                             onPressed: () async {
                               final result = await context.pushNamed(
                                 'edit_group',
-                                extra: ShowGroupArgs(groupId: widget.groupId),
+                                extra: ShowGroupArgs(code: widget.code, token: widget.token),
                               );
                               if (result == true) {
-                                context.read<GroupCubit>().show(widget.groupId);
+                                context.read<GroupCubit>().show(widget.code, widget.token);
                               }
                             },
                             label: Row(
@@ -153,7 +155,6 @@ class _ViewGroupBody extends State<ViewGroup> {
                               g.description ?? AppLocalizations.of(context)!.noDescription,
                           participants: g.participants.length,
                           participantsList: g.participants,
-                          groupId: widget.groupId,
                           groupToken: g.token,
                           groupCode: g.code,
                         ),
@@ -164,7 +165,7 @@ class _ViewGroupBody extends State<ViewGroup> {
                           padding: const EdgeInsets.only(top: 20.0, bottom: 40),
                           child: MyGradientButton(
                             onTap: () {
-                              _onSubmit(g.code, widget.groupId);
+                              _onSubmit(g.code);
                             },
                             title: AppLocalizations.of(context)!.drawButton,
                             icon: Icons.draw,

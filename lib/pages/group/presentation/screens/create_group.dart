@@ -52,7 +52,7 @@ class _FormGroupBody extends State<CreateGroup> {
       key: _formKey,
       child: Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
-        appBar: MyAppBar(title: AppLocalizations.of(context)!.createGroupTitle),
+        appBar: MyAppBar(title: AppLocalizations.of(context)!.createGroupTitle, subTitle: AppLocalizations.of(context)!.createGroupSubtitle,),
         body: BlocConsumer<GroupCubit, GroupState>(
           listenWhen: (previous, current) =>
               previous.isLoading &&
@@ -77,46 +77,25 @@ class _FormGroupBody extends State<CreateGroup> {
                 ),
               );
             }
-            return ConstrainedBox(
-              constraints: BoxConstraints(
-                minWidth: 300,
-                maxWidth: 600,
-                minHeight: 400,
-                maxHeight: 900,
-              ),
-              child: SingleChildScrollView(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).canvasColor,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 40),
+                child: Column(
+                  spacing: 20,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GroupFormFields(
+                      groupNameController: groupNameController,
+                      nameController: nameController,
+                      emailController: emailController,
+                      phoneController: phoneController,
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 40),
-                    child: Column(
-                      spacing: 20,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.createGroupTitle,
-                          style: myTheme.textTheme.titleSmall,
-                        ),
-                        GroupFormFields(
-                          groupNameController: groupNameController,
-                          nameController: nameController,
-                          emailController: emailController,
-                          phoneController: phoneController,
-                        ),
-                        MyGradientButton(
-                          onTap: _onSubmit,
-                          title: AppLocalizations.of(context)!.createGroupButton,
-                          icon: Icons.create,
-                        ),
-                      ],
+                    MyGradientButton(
+                      onTap: _onSubmit,
+                      title: AppLocalizations.of(context)!.createGroupButton,
+                      icon: Icons.create,
                     ),
-                  ),
+                  ],
                 ),
               ),
             );

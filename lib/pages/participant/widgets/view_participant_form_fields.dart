@@ -1,8 +1,11 @@
-// ignore_for_file: unrelated_type_equality_checks
 import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/network/contants.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/labeled_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_email_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_name_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
-import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
@@ -13,7 +16,6 @@ class ViewParticipantFormFields extends StatefulWidget {
   final TextEditingController emailController;
   final PhoneController phoneController;
   final ShowParticipantModel? participant;
-
   final bool readOnly;
 
   const ViewParticipantFormFields({
@@ -32,11 +34,15 @@ class ViewParticipantFormFields extends StatefulWidget {
 
 class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
   String? _emailValidator(BuildContext context, String? v) {
-    ShowParticipantModel data = widget.participant!;
-    if (data.role == ParticipantRole.admin) {
+    // Guard: dados ainda não carregados, sem validação
+    final data = widget.participant;
+    if (data == null) return null;
+
+    // Compara role como String (valor retornado pela API)
+    if (data.role == 'admin') {
       return ValidatorUtils.emailValidator(context: context, v: v);
     }
-    if (data.role != ParticipantRole.admin && v != null) {
+    if (v != null && v.isNotEmpty) {
       return ValidatorUtils.isValidEmail(context: context, v: v);
     }
     return null;
@@ -46,59 +52,42 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 10,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 10,
-          children: [
-            Text(l10n.name),
-            TextFormField(
-              autofocus: true,
-              readOnly: widget.readOnly,
-              validator: (_) =>
-                  ValidatorUtils.nameValidator(context: context, v: widget.nameController.text),
-              controller: widget.nameController,
-              decoration: const InputDecoration(
-                hintText: 'Ex: Simba',
-                prefixIcon: Icon(Icons.abc),
-              ),
-            ),
-            Text(l10n.email),
-            TextFormField(
-              readOnly: widget.readOnly,
-              keyboardType: TextInputType.emailAddress,
-              validator: (v) => _emailValidator(context, v),
-              controller: widget.emailController,
-              decoration: const InputDecoration(
-                hintText: 'Ex: simba@disney.com',
-                prefixIcon: Icon(Icons.email),
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 10,
-              children: [
-                Text(l10n.phoneField),
-                PhoneFormField(
-                  enableInteractiveSelection: widget.readOnly,
-                  controller: widget.phoneController,
-                  keyboardType: TextInputType.phone,
-                  countrySelectorNavigator: CountrySelectorNavigator.dialog(
-                    backgroundColor: Theme.of(context).canvasColor,
-                    titleStyle: myTheme.textTheme.titleSmall,
-                    searchBoxTextStyle: myTheme.inputDecorationTheme.labelStyle,
-                  ),
-                  validator: PhoneValidator.compose([
-                    PhoneValidator.validMobile(context),
-                  ]),
-                  enabled: !widget.readOnly,
-                  isCountrySelectionEnabled: true,
-                  isCountryButtonPersistent: true,
-                  countryButtonStyle: CountryButtonStyle(),
-                ),
-              ],
-            ),
-          ],
+        LabeledField(
+          label: l10n.name,
+          child: MyNameFormField(
+            controller: widget.nameController,
+            hintText: 'Ex: Simba',
+            textInputAction: TextInputAction.next,
+            readOnly: widget.readOnly,
+            autofocus: true,
+          ),
+        ),
+        LabeledField(
+          label: l10n.email,
+          child: MyEmailFormField(
+            controller: widget.emailController,
+            textInputAction: TextInputAction.next,
+            readOnly: widget.readOnly,
+            validator: (v) => _emailValidator(context, v),
+          ),
+        ),
+        LabeledField(
+          label: l10n.phoneField,
+          child: MyPhoneFormField(
+            controller: widget.phoneController,
+            textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.phone,
+            enableInteractiveSelection: widget.readOnly,
+            enabled: !widget.readOnly,
+            favorites: favoriteIsoList,
+            navigatorHeight: 400,
+            validator: PhoneValidator.compose([
+              PhoneValidator.validMobile(context),
+            ]),
+          ),
         ),
       ],
     );

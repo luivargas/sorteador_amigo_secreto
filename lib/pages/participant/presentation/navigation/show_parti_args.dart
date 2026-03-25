@@ -1,6 +1,6 @@
 class ShowParticipantArgs {
-  final String userId;
+  final String partId;
   final String groupToken;
 
-  const ShowParticipantArgs({required this.userId, required this.groupToken});
+  const ShowParticipantArgs({required this.partId, required this.groupToken});
 }

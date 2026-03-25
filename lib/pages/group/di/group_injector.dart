@@ -6,6 +6,6 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cub
 
 void groupInjectors() {
   getIt.registerLazySingleton<GroupRepository>(() => GroupDatasource());
-  getIt.registerFactory(() => GroupUsecases(getIt<GroupRepository>()));
+  getIt.registerLazySingleton(() => GroupUsecases(getIt<GroupRepository>()));
   getIt.registerFactory(() => GroupCubit(getIt<GroupUsecases>()));
 }

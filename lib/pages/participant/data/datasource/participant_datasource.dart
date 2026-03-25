@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/database/group_db.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/datasource/api_error_mapper.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/data/datasource/participant_api_result.dart';
+import 'package:sorteador_amigo_secreto/core/network/api_result.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/create_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/update_participant_model.dart';
@@ -14,16 +13,15 @@ class ParticipantDatasource extends ParticipantRepository {
   final dio = Dio(BaseOptions(headers: {'Accept': 'application/json'}));
 
   @override
-  Future<ParticipantApiResult<CreateParticipantModel>> create(
+  Future<ApiResult<CreateParticipantModel>> create(
     CreateParticipantEntity entity,
-    int groupId,
+    String groupToken,
   ) async {
     try {
-      final token = await GroupDB().getAccesKeyById(groupId);
       final resp = await dio.post(
         stageParticipantApiUrl,
         data: entity.toJson(),
-        options: Options(headers: {'Access-Key': token}),
+        options: Options(headers: {'Access-Key': groupToken}),
       );
       final model = CreateParticipantModel.fromJson(resp.data);
       return Success(model);
@@ -41,13 +39,10 @@ class ParticipantDatasource extends ParticipantRepository {
   }
 
   @override
-  Future<ParticipantApiResult<ShowParticipantModel>> show(
-    String id,
-    String token,
-  ) async {
+  Future<ApiResult<ShowParticipantModel>> show(String id, String token) async {
     try {
       final resp = await dio.get(
-        "$stageParticipantApiUrl/$id",
+        '$stageParticipantApiUrl/$id',
         options: Options(headers: {'Access-Key': token}),
       );
       final model = ShowParticipantModel.fromJson(resp.data);
@@ -66,14 +61,14 @@ class ParticipantDatasource extends ParticipantRepository {
   }
 
   @override
-  Future<ParticipantApiResult<UpdateParticipantModel>> update(
+  Future<ApiResult<UpdateParticipantModel>> update(
     UpdateParticipantEntity entity,
     String id,
     String token,
   ) async {
     try {
       final resp = await dio.put(
-        "$stageParticipantApiUrl/$id",
+        '$stageParticipantApiUrl/$id',
         data: entity.toJson(),
         options: Options(headers: {'Access-Key': token}),
       );

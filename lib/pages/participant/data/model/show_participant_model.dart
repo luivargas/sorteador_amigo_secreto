@@ -2,6 +2,7 @@ class ShowParticipantModel {
   final String id;
   final String name;
   final String? email;
+  final String? idd;
   final String? phone;
   final bool? isParticipant;
   final bool? isDependent;
@@ -34,7 +35,7 @@ class ShowParticipantModel {
     this.wishList,
     this.preferences,
     this.size,
-    this.dislike,
+    this.dislike, this.idd,
   });
 
   factory ShowParticipantModel.fromJson(Map<String, dynamic> json) {
@@ -42,6 +43,7 @@ class ShowParticipantModel {
       id: json['id'],
       name: json['name'],
       email: json['email'],
+      idd: json['idd'],
       phone: json['phone'],
       isParticipant: json['is_participant'],
       isDependent: json['is_dependent'],

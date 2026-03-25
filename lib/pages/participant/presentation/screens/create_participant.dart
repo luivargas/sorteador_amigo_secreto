@@ -14,11 +14,11 @@ import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class CreateParticipant extends StatefulWidget {
-  final int groupId;
+  final String groupToken;
   final String groupCode;
   const CreateParticipant({
     super.key,
-    required this.groupId,
+    required this.groupToken,
     required this.groupCode,
   });
 
@@ -34,7 +34,7 @@ class _CreateParticipant extends State<CreateParticipant> {
     initialValue: PhoneNumber(isoCode: IsoCode.BR, nsn: ''),
   );
 
-  void _onSubmit() {
+  Future<void> _onSubmit() async {
     final isValid = _createFormKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
@@ -48,7 +48,7 @@ class _CreateParticipant extends State<CreateParticipant> {
       role: "participant",
       groupCode: widget.groupCode,
     );
-    context.read<ParticipantCubit>().create(entity, widget.groupId);
+    await context.read<ParticipantCubit>().create(entity, widget.groupToken);
   }
 
   @override

@@ -15,8 +15,9 @@ import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class EditGroup extends StatefulWidget {
-  final int? groupId;
-  const EditGroup({super.key, required this.groupId});
+  final String code;
+  final String token;
+  const EditGroup({super.key, required this.code, required this.token});
 
   @override
   State<EditGroup> createState() => _EditGroup();
@@ -163,7 +164,7 @@ class _EditGroup extends State<EditGroup> {
       location: location,
       drawDate: date,
     );
-    context.read<GroupCubit>().update(entity, widget.groupId!);
+    context.read<GroupCubit>().update(entity, widget.code, widget.token);
   }
 
   @override

@@ -1,5 +1,5 @@
-sealed class ParticipantApiResult<T> {
-  const ParticipantApiResult();
+sealed class ApiResult<T> {
+  const ApiResult();
   R when<R>({
     required R Function(T data) success,
     required R Function(ApiError e) failure,
@@ -8,12 +8,12 @@ sealed class ParticipantApiResult<T> {
       : failure((this as Failure<T>).error);
 }
 
-final class Success<T> extends ParticipantApiResult<T> {
+final class Success<T> extends ApiResult<T> {
   final T data;
   const Success(this.data);
 }
 
-final class Failure<T> extends ParticipantApiResult<T> {
+final class Failure<T> extends ApiResult<T> {
   final ApiError error;
   const Failure(this.error);
 }

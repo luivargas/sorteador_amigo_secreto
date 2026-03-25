@@ -3,8 +3,7 @@ import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.da
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class GroupOptions extends StatelessWidget {
-  final int groupId;
-  const GroupOptions({super.key, required this.groupId});
+  const GroupOptions({super.key});
 
   @override
   Widget build(BuildContext context) {

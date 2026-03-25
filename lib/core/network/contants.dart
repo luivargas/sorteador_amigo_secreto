@@ -1,3 +1,5 @@
+import 'package:phone_form_field/phone_form_field.dart';
+
 const String loginUrl = 'https://auth.stg.sorteador.net/api/auth/login';
 const String registerUrl = 'https://auth.stg.sorteador.net/api/auth/register';
 const String logoutUrl = 'https://auth.stg.sorteador.net/api/auth/logout';
@@ -10,3 +12,5 @@ final String stageGroupApiUrl = 'https://api.stg.amigosecreto.org/api/groups';
 final String stageParticipantApiUrl ='https://api.stg.amigosecreto.org/api/participants';
 final String bearerToken = '';
 final String logo = './assets/logos/full/logo_amigo_secreto.png';
+final String contactDefaultPhoto = './assets/logos/icons/Logo_9.png';
+final List<IsoCode> favoriteIsoList = [IsoCode.BR];

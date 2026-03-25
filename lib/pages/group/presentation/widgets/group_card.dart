@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:sorteador_amigo_secreto/injector/injector.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
+import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/cubit/home_cubit.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class GroupCard extends StatefulWidget {
   final String groupName;
-  final int groupId;
+  final String groupToken;
+  final String groupCode;
   final int index;
 
   const GroupCard({
     super.key,
     required this.groupName,
-    required this.groupId,
+    required this.groupToken,
+    required this.groupCode,
     required this.index,
   });
 
@@ -21,22 +23,18 @@ class GroupCard extends StatefulWidget {
 }
 
 class _GroupCardState extends State<GroupCard> {
-  Future<void> _delete(BuildContext ctx, int id) async {
-    // ✅ fecha o Slidable desse item, se existir
+  Future<void> _delete(BuildContext ctx) async {
     Slidable.of(ctx)?.close();
-
-    await getIt<GroupCubit>().delete(id);
+    await context.read<HomeCubit>().deleteGroup(widget.groupToken, widget.groupCode);
   }
 
   Text _initials() {
     final text = widget.groupName.trim();
     final parts = text.split(' ').where((p) => p.isNotEmpty).toList();
-
     final first = parts.first[0].toUpperCase();
     final last = parts.length > 1 ? parts.last[0].toUpperCase() : '';
-
     return Text(
-      "$first$last",
+      '$first$last',
       style: const TextStyle(
         fontWeight: FontWeight.bold,
         color: Colors.white,
@@ -48,19 +46,19 @@ class _GroupCardState extends State<GroupCard> {
   @override
   Widget build(BuildContext context) {
     return Slidable(
-      key: ValueKey(widget.groupId),
+      key: ValueKey(widget.groupCode),
       startActionPane: ActionPane(
         motion: const ScrollMotion(),
         children: [
           CustomSlidableAction(
-            onPressed: (ctx) => _delete(ctx, widget.groupId),
+            onPressed: _delete,
             backgroundColor: const Color(0xFFFE4A49),
             foregroundColor: Colors.white,
-            child: Column(
+            child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Icon(Icons.delete),
-                Text("Excluir", overflow: TextOverflow.ellipsis),
+                Text('Excluir', overflow: TextOverflow.ellipsis),
               ],
             ),
           ),
@@ -73,14 +71,11 @@ class _GroupCardState extends State<GroupCard> {
           ),
         ],
       ),
-
-      // The end action pane is the one at the right or the bottom side.
       endActionPane: ActionPane(
         motion: const ScrollMotion(),
         dismissible: DismissiblePane(onDismissed: () {}),
         children: [
           SlidableAction(
-            // An action can be bigger than the others.
             onPressed: (context) {},
             backgroundColor: const Color(0xFF7BC043),
             foregroundColor: Colors.white,
@@ -89,7 +84,6 @@ class _GroupCardState extends State<GroupCard> {
           ),
         ],
       ),
-
       child: Container(
         decoration: BoxDecoration(
           border: Border(top: BorderSide(color: Colors.grey.shade300)),
@@ -113,7 +107,7 @@ class _GroupCardState extends State<GroupCard> {
               Expanded(
                 child: Text(
                   widget.groupName,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 23,
                     color: MyColors.sorteadorOrange,

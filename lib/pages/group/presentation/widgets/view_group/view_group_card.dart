@@ -6,7 +6,6 @@ import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class ViewGroupCard extends StatelessWidget {
-  final int groupId;
   final String eventLocation;
   final String minGiftValue;
   final String maxGiftValue;
@@ -30,7 +29,6 @@ class ViewGroupCard extends StatelessWidget {
     required this.eventTime,
     required this.groupDescription,
     required this.participantsList,
-    required this.groupId,
     required this.groupToken,
     required this.groupCode,
   });
@@ -71,7 +69,6 @@ class ViewGroupCard extends StatelessWidget {
                 child: ListParticipantsCard(
                   type: type,
                   participantsList: participantsList,
-                  groupId: groupId,
                   groupToken: groupToken,
                   groupCode: groupCode,
                 ),

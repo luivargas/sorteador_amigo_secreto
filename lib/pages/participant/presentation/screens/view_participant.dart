@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/network/contants.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/loading_or_error.dart';
@@ -38,8 +39,6 @@ class _ViewParticipant extends State<ViewParticipant> {
 
   String? role;
 
-  String image = "./assets/logos/icons/Logo_9.png";
-
   void _prefillFromApi(ParticipantState state) {
     if (_prefilledOnce) return;
     if (state.showParti == null) return;
@@ -47,10 +46,11 @@ class _ViewParticipant extends State<ViewParticipant> {
 
     nameController.text = g.name;
     emailController.text = g.email ?? '';
-    phoneController.value = PhoneNumber(
-      isoCode: IsoCode.AC,
-      nsn: g.phone ?? '',
-    );
+    final rawPhone = g.phone ?? '';
+    final idd = g.idd ?? '';
+    phoneController.value = rawPhone.isNotEmpty
+        ? PhoneNumber.parse(rawPhone)
+        : const PhoneNumber(isoCode: IsoCode.BR, nsn: '');
     _prefilledOnce = true;
     role = g.role;
   }
@@ -109,11 +109,17 @@ class _ViewParticipant extends State<ViewParticipant> {
             }
           },
           buildWhen: (previous, current) =>
-              previous.isLoading && !previous.showed,
+              previous.isLoading != current.isLoading ||
+              previous.showed != current.showed ||
+              previous.error != current.error,
           builder: (context, state) {
             return LoadingOrError(
               isLoading: state.isLoading && !state.showed,
               error: state.error,
+              onRetry: () async => await context.read<ParticipantCubit>().show(
+                    widget.userId,
+                    widget.groupToken,
+                  ),
               child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(top: 20.0),
@@ -127,7 +133,7 @@ class _ViewParticipant extends State<ViewParticipant> {
                       padding: const EdgeInsets.all(20.0),
                       child: ParticipantCard(
                         image: Image.asset(
-                          image,
+                          contactDefaultPhoto,
                           scale: 20,
                         ),
                         button: MyGradientButton(

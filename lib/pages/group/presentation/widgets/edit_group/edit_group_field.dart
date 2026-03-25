@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:brasil_fields/brasil_fields.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/labeled_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_currency_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_name_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
@@ -29,125 +30,77 @@ class EditGroupFields extends StatefulWidget {
 }
 
 class _EditGroupFields extends State<EditGroupFields> {
-  String? usString;
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Column(
       spacing: 10,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 10,
-          children: [
-            Text(l10n.groupName),
-            TextFormField(
-              validator: (_) => ValidatorUtils.nameValidator(
-                context: context,
-                v: widget.groupNameController.text,
-              ),
-              controller: widget.groupNameController,
-              decoration: InputDecoration(
-                hintText: l10n.groupNameHint,
-                prefixIcon: const Icon(Icons.group),
-              ),
-            ),
-          ],
+        LabeledField(
+          label: l10n.groupName,
+          child: MyNameFormField(
+            controller: widget.groupNameController,
+            hintText: l10n.groupNameHint,
+            icon: Icons.group,
+          ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 10,
-          children: [
-            Text(l10n.eventLocation),
-            TextFormField(
-              controller: widget.addressController,
-              decoration: InputDecoration(
-                hintText: l10n.locationHint,
-                prefixIcon: const Icon(Icons.place),
-              ),
+        LabeledField(
+          label: l10n.eventLocation,
+          child: TextFormField(
+            controller: widget.addressController,
+            decoration: InputDecoration(
+              hintText: l10n.locationHint,
+              prefixIcon: const Icon(Icons.place),
             ),
-          ],
+          ),
         ),
         Row(
           spacing: 20,
           children: [
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 10,
-                children: [
-                  Text(l10n.minGiftValue),
-                  TextFormField(
-                    keyboardType: TextInputType.numberWithOptions(),
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      CentavosInputFormatter(casasDecimais: 2, moeda: true),
-                    ],
-                    controller: widget.minGiftValueController,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.attach_money),
-                      hintText: l10n.minValueHint,
-                    ),
-                  ),
-                ],
+              child: LabeledField(
+                label: l10n.minGiftValue,
+                child: MyCurrencyFormField(
+                  controller: widget.minGiftValueController,
+                  hintText: l10n.minValueHint,
+                ),
               ),
             ),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 10,
-                children: [
-                  Text(l10n.maxGiftValue),
-                  TextFormField(
-                    validator: (_) => ValidatorUtils.giftValue(
-                      context: context,
-                      min: widget.minGiftValueController.text,
-                      max: widget.maxGiftValueController.text,
-                    ),
-                    keyboardType: TextInputType.numberWithOptions(),
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      CentavosInputFormatter(casasDecimais: 2, moeda: true),
-                    ],
-                    controller: widget.maxGiftValueController,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.attach_money),
-                      hintText: l10n.maxValueHint,
-                    ),
+              child: LabeledField(
+                label: l10n.maxGiftValue,
+                child: MyCurrencyFormField(
+                  controller: widget.maxGiftValueController,
+                  hintText: l10n.maxValueHint,
+                  validator: (_) => ValidatorUtils.giftValue(
+                    context: context,
+                    min: widget.minGiftValueController.text,
+                    max: widget.maxGiftValueController.text,
                   ),
-                ],
+                ),
               ),
             ),
           ],
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 10,
-          children: [
-            Text(l10n.dateAndTime),
-            TextFormField(
-              controller: widget.dateTimeController,
-              readOnly: true,
-              decoration: InputDecoration(
-                hintText: l10n.dateHint,
-                prefixIcon: const Icon(Icons.event),
-              ),
-              onTap: widget.onTapDateTime,
+        LabeledField(
+          label: l10n.dateAndTime,
+          child: TextFormField(
+            controller: widget.dateTimeController,
+            readOnly: true,
+            decoration: InputDecoration(
+              hintText: l10n.dateHint,
+              prefixIcon: const Icon(Icons.event),
             ),
-          ],
+            onTap: widget.onTapDateTime,
+          ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 10,
-          children: [
-            Text(l10n.groupDescription),
-            TextFormField(
-              keyboardType: TextInputType.text,
-              maxLines: 4,
-              controller: widget.descriptionController,
-            ),
-          ],
+        LabeledField(
+          label: l10n.groupDescription,
+          child: TextFormField(
+            keyboardType: TextInputType.text,
+            maxLines: 4,
+            controller: widget.descriptionController,
+          ),
         ),
       ],
     );

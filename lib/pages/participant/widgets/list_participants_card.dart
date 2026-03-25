@@ -15,7 +15,6 @@ import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class ListParticipantsCard extends StatelessWidget {
-  final int groupId;
   final String groupToken;
   final String groupCode;
   final BadgeType type;
@@ -23,7 +22,6 @@ class ListParticipantsCard extends StatelessWidget {
   const ListParticipantsCard({
     super.key,
     required this.participantsList,
-    required this.groupId,
     required this.groupToken,
     required this.type,
     required this.groupCode,
@@ -46,7 +44,7 @@ class ListParticipantsCard extends StatelessWidget {
                 name: f.name,
                 id: f.id,
                 groupToken: groupToken,
-                groupId: groupId,
+                groupCode: groupCode,
               );
             },
           ),
@@ -93,7 +91,8 @@ class ListParticipantsCard extends StatelessWidget {
                 contact: p.email ?? p.phone ?? "",
                 name: p.name,
                 id: p.id,
-                groupToken: groupToken, groupId: groupId,
+                groupToken: groupToken,
+                groupCode: groupCode,
               );
             },
           ),
@@ -152,12 +151,12 @@ class ListParticipantsCard extends StatelessWidget {
                         final result = await context.pushNamed(
                           'contacts',
                           extra: CreateParticipantArgs(
-                            groupId: groupId,
+                            groupToken: groupToken,
                             groupCode: groupCode,
                           ),
                         );
                         if (result == true) {
-                          context.read<GroupCubit>().show(groupId);
+                          context.read<GroupCubit>().show(groupCode, groupToken);
                         }
                       },
                       icon: Icon(

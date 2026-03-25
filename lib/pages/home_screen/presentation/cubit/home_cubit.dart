@@ -1,56 +1,39 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/database/group_db.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/model/isar_group_model.dart';
+import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
+import 'package:sorteador_amigo_secreto/pages/group/domain/usecases/group_usecases.dart';
 import 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  final GroupDB _db;
+  final GroupUsecases _groupUsecases;
 
-  HomeCubit(this._db) : super(HomeState.initial());
+  HomeCubit(this._groupUsecases) : super(HomeState.initial());
 
-  Future<void> loadGroups() async {
+  void loadGroups(List<ShowGroupModel> groups) {
+    final filtered = _applyFilter(groups, state.search);
+    emit(state.copyWith(groups: groups, filtered: filtered, isLoading: false));
+  }
+
+  Future<void> deleteGroup(String token, String code) async {
     try {
-      emit(state.copyWith(isLoading: true, error: null));
-
-      final groups = await _db.getAllGroups();
-      final filtered = _applyFilter(groups, state.search);
-
-      emit(state.copyWith(
-        groups: groups,
-        filtered: filtered,
-        isLoading: false,
-      ));
+      await _groupUsecases.delete(token);
+      final updated = state.groups.where((g) => g.code != code).toList();
+      final filtered = _applyFilter(updated, state.search);
+      emit(state.copyWith(groups: updated, filtered: filtered));
     } catch (e) {
-      emit(state.copyWith(
-        isLoading: false,
-        error: e.toString(),
-      ));
+      emit(state.copyWith(error: e.toString()));
     }
   }
 
   void onSearchChanged(String value) {
     final newSearch = value.trim();
-
     if (newSearch == state.search) return;
-
     final filtered = _applyFilter(state.groups, newSearch);
-
-    emit(state.copyWith(
-      search: newSearch,
-      filtered: filtered,
-    ));
+    emit(state.copyWith(search: newSearch, filtered: filtered));
   }
 
-  List<IsarGroupModel> _applyFilter(
-    List<IsarGroupModel> list,
-    String query,
-  ) {
+  List<ShowGroupModel> _applyFilter(List<ShowGroupModel> list, String query) {
     final q = query.toLowerCase();
-
     if (q.isEmpty) return list;
-
-    return list
-        .where((g) => g.name.toLowerCase().contains(q))
-        .toList();
+    return list.where((g) => g.name.toLowerCase().contains(q)).toList();
   }
 }

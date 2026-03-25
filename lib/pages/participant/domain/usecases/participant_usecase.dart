@@ -1,4 +1,4 @@
-import 'package:sorteador_amigo_secreto/pages/participant/data/datasource/participant_api_result.dart';
+import 'package:sorteador_amigo_secreto/core/network/api_result.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/create_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/update_participant_model.dart';
@@ -9,14 +9,18 @@ import 'package:sorteador_amigo_secreto/pages/participant/domain/repository/part
 class ParticipantUsecase {
   final ParticipantRepository repository;
   ParticipantUsecase(this.repository);
-  Future<ParticipantApiResult<CreateParticipantModel>> create(
+
+  Future<ApiResult<CreateParticipantModel>> create(
     CreateParticipantEntity entity,
-    int groupId,
-  ) => repository.create(entity, groupId);
-  Future<ParticipantApiResult<UpdateParticipantModel>> update(
+    String groupToken,
+  ) => repository.create(entity, groupToken);
+
+  Future<ApiResult<UpdateParticipantModel>> update(
     UpdateParticipantEntity entity,
-    String id, String groupToken
+    String id,
+    String groupToken,
   ) => repository.update(entity, id, groupToken);
-  Future<ParticipantApiResult<ShowParticipantModel>> show(String id, String groupToken) =>
-      repository.show( id, groupToken);
+
+  Future<ApiResult<ShowParticipantModel>> show(String id, String groupToken) =>
+      repository.show(id, groupToken);
 }

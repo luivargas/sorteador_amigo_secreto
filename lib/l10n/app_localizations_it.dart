@@ -28,6 +28,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get createGroupTitle => 'Crea il tuo gruppo adesso!';
 
+    @override
+  String get createGroupSubtitle => 'Suggerimento: scegli un nome che tutti riconoscano.';
+
   @override
   String groupCreatedSuccess(String name) {
     return 'Gruppo $name creato con successo!';

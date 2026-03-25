@@ -138,6 +138,12 @@ abstract class AppLocalizations {
   /// **'Crie seu grupo agora!'**
   String get createGroupTitle;
 
+  /// No description provided for @createGroupTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Dica: escolha um nome que todos reconheçam.'**
+  String get createGroupSubtitle;
+
   /// No description provided for @groupCreatedSuccess.
   ///
   /// In pt, this message translates to:

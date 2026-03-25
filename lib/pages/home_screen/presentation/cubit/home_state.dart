@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/model/isar_group_model.dart';
+import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
 
 class HomeState extends Equatable {
-  final List<IsarGroupModel> groups;
-  final List<IsarGroupModel> filtered;
+  final List<ShowGroupModel> groups;
+  final List<ShowGroupModel> filtered;
   final String search;
   final bool isLoading;
   final String? error;
@@ -21,33 +21,28 @@ class HomeState extends Equatable {
       groups: [],
       filtered: [],
       search: '',
-      isLoading: true,
+      isLoading: false,
       error: null,
     );
   }
 
   HomeState copyWith({
-    List<IsarGroupModel>? groups,
-    List<IsarGroupModel>? filtered,
+    List<ShowGroupModel>? groups,
+    List<ShowGroupModel>? filtered,
     String? search,
     bool? isLoading,
     String? error,
+    bool clearError = false,
   }) {
     return HomeState(
       groups: groups ?? this.groups,
       filtered: filtered ?? this.filtered,
       search: search ?? this.search,
       isLoading: isLoading ?? this.isLoading,
-      error: error,
+      error: clearError ? null : (error ?? this.error),
     );
   }
 
   @override
-  List<Object?> get props => [
-        groups,
-        filtered,
-        search,
-        isLoading,
-        error,
-      ];
+  List<Object?> get props => [groups, filtered, search, isLoading, error];
 }

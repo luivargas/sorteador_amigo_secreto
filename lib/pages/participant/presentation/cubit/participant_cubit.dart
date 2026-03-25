@@ -9,33 +9,25 @@ class ParticipantCubit extends Cubit<ParticipantState> {
   final ParticipantUsecase participantUsecase;
   ParticipantCubit(this.participantUsecase) : super(ParticipantState.initial());
 
-  Future<void> create(CreateParticipantEntity entity, int id) async {
+  Future<void> create(CreateParticipantEntity entity, String groupToken) async {
     if (isClosed) return;
     safeEmit(state.copyWith(isLoading: true, clearError: true, created: false));
     try {
-      final result = await participantUsecase.create(entity, id);
+      final result = await participantUsecase.create(entity, groupToken);
       result.when(
-        success: (s) => emit(state.copyWith(isLoading: false, created: true)),
+        success: (_) => emit(state.copyWith(isLoading: false, created: true)),
         failure: (f) => emit(
           state.copyWith(isLoading: false, error: f.message, created: false),
         ),
       );
     } catch (e) {
-      emit(
-        state.copyWith(error: e.toString(), isLoading: false, created: false),
-      );
+      emit(state.copyWith(error: e.toString(), isLoading: false, created: false));
     }
   }
 
   Future<void> show(String id, String groupToken) async {
     if (isClosed) return;
-    safeEmit(
-      state.copyWith(
-        isLoading: true,
-        clearError: true,
-        showed: false,
-      ),
-    );
+    safeEmit(state.copyWith(isLoading: true, clearError: true, showed: false));
     try {
       final result = await participantUsecase.show(id, groupToken);
       result.when(
@@ -46,9 +38,7 @@ class ParticipantCubit extends Cubit<ParticipantState> {
         ),
       );
     } catch (e) {
-      emit(
-        state.copyWith(error: e.toString(), isLoading: false, showed: false),
-      );
+      emit(state.copyWith(error: e.toString(), isLoading: false, showed: false));
     }
   }
 
@@ -58,27 +48,17 @@ class ParticipantCubit extends Cubit<ParticipantState> {
     String groupToken,
   ) async {
     if (isClosed) return;
-    safeEmit(
-      state.copyWith(
-        isLoading: true,
-        clearError: true,
-        updated: false,
-      ),
-    );
+    safeEmit(state.copyWith(isLoading: true, clearError: true, updated: false));
     try {
       final result = await participantUsecase.update(entity, id, groupToken);
       result.when(
-        success: (s) => emit(
-          state.copyWith(isLoading: false, updated: true),
-        ),
+        success: (_) => emit(state.copyWith(isLoading: false, updated: true)),
         failure: (f) => emit(
           state.copyWith(isLoading: false, error: f.message, updated: false),
         ),
       );
     } catch (e) {
-      emit(
-        state.copyWith(error: e.toString(), isLoading: false, updated: false),
-      );
+      emit(state.copyWith(error: e.toString(), isLoading: false, updated: false));
     }
   }
 }

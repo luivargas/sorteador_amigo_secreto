@@ -3,30 +3,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_home_app_bar.dart';
+import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
+import 'package:sorteador_amigo_secreto/pages/group/domain/usecases/group_usecases.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_card.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/database/group_db.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/model/isar_group_model.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 import '../cubit/home_cubit.dart';
 import '../cubit/home_state.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final List<ShowGroupModel> groups;
+  const HomeScreen({super.key, required this.groups});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => HomeCubit(GroupDB())..loadGroups(),
-      child: const _HomeView(),
+      create: (_) => HomeCubit(getIt<GroupUsecases>())..loadGroups(groups),
+      child: _HomeView(groups: groups),
     );
   }
 }
 
 class _HomeView extends StatefulWidget {
-  const _HomeView();
+  final List<ShowGroupModel> groups;
+  const _HomeView({required this.groups});
 
   @override
   State<_HomeView> createState() => _HomeViewState();
@@ -37,7 +40,7 @@ class _HomeViewState extends State<_HomeView> {
   final TextEditingController _searchController = TextEditingController();
 
   Future<void> _onRefresh() async {
-    await context.read<HomeCubit>().loadGroups();
+    context.read<HomeCubit>().loadGroups(widget.groups);
     _refreshController.refreshCompleted();
   }
 
@@ -58,9 +61,7 @@ class _HomeViewState extends State<_HomeView> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: MyHomeAppBar(
-                reload: () {
-                  context.read<HomeCubit>().loadGroups();
-                },
+                reload: () => context.read<HomeCubit>().loadGroups(widget.groups),
               ),
             ),
 
@@ -88,17 +89,12 @@ class _HomeViewState extends State<_HomeView> {
                     SliverToBoxAdapter(
                       child: Column(
                         children: [
-                          /// ⏳ LOADING
                           BlocSelector<HomeCubit, HomeState, bool>(
                             selector: (state) => state.isLoading,
                             builder: (context, isLoading) {
-                              if (!isLoading) {
-                                return const SizedBox.shrink();
-                              }
-
+                              if (!isLoading) return const SizedBox.shrink();
                               return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 40),
+                                padding: const EdgeInsets.symmetric(vertical: 40),
                                 child: Center(
                                   child: CircularProgressIndicator(
                                     color: myProgressIndicator.color,
@@ -111,10 +107,7 @@ class _HomeViewState extends State<_HomeView> {
                           BlocSelector<HomeCubit, HomeState, String?>(
                             selector: (state) => state.error,
                             builder: (context, error) {
-                              if (error == null) {
-                                return const SizedBox.shrink();
-                              }
-
+                              if (error == null) return const SizedBox.shrink();
                               return Padding(
                                 padding: const EdgeInsets.all(20),
                                 child: Text(
@@ -124,42 +117,42 @@ class _HomeViewState extends State<_HomeView> {
                             },
                           ),
 
-                          BlocSelector<HomeCubit, HomeState,
-                              List<IsarGroupModel>>(
+                          BlocSelector<HomeCubit, HomeState, List<ShowGroupModel>>(
                             selector: (state) => state.filtered,
                             builder: (context, filtered) {
                               if (filtered.isEmpty) {
                                 return Padding(
                                   padding: const EdgeInsets.all(24),
                                   child: Center(
-                                    child: Text(AppLocalizations.of(context)!.noGroupsFound),
+                                    child: Text(
+                                      AppLocalizations.of(context)!.noGroupsFound,
+                                    ),
                                   ),
                                 );
                               }
 
                               return ListView.separated(
-                                physics:
-                                    const NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: filtered.length,
-                                separatorBuilder: (_, _) =>
-                                    const SizedBox.shrink(),
+                                separatorBuilder: (_, _) => const SizedBox.shrink(),
                                 itemBuilder: (context, index) {
                                   final g = filtered[index];
-
                                   return InkWell(
                                     onTap: () {
                                       context.pushNamed(
                                         'view_group',
                                         extra: ShowGroupArgs(
-                                          groupId: g.id,
+                                          code: g.code,
+                                          token: g.token,
                                         ),
                                       );
                                     },
                                     child: GroupCard(
                                       index: index,
                                       groupName: g.name,
-                                      groupId: g.id,
+                                      groupToken: g.token,
+                                      groupCode: g.code,
                                     ),
                                   );
                                 },

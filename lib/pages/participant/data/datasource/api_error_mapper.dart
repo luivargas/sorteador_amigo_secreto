@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 class ApiErrorMapper {
   static String map(DioException e) {
-    // 1. Erro vindo da API (HTTP 4xx / 5xx)
+    // Erro vindo da API (HTTP 4xx / 5xx)
     if (e.response != null) {
       final data = e.response!.data;
 
@@ -23,7 +23,7 @@ class ApiErrorMapper {
       return 'Erro inesperado no servidor';
     }
 
-    // 2. Erros de rede / Dio
+    // Erros de rede / Dio
     switch (e.type) {
       case DioExceptionType.connectionTimeout:
         return 'Tempo de conexão esgotado';
