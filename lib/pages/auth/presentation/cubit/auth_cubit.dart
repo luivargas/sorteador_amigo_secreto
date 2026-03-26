@@ -15,7 +15,6 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit(this.authUsecases, this.authDB, this.deviceData)
       : super(AuthState.initial());
 
-  /// Verifica se existe uma sessão válida no dispositivo consultando a API.
   Future<void> checkSession() async {
     safeEmit(state.copyWith(isLoading: true, clearError: true));
 
@@ -56,7 +55,6 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  /// Envia o e-mail para receber o token. Salva o e-mail localmente.
   Future<void> request(RequestToken entity) async {
     safeEmit(state.copyWith(isLoading: true, clearError: true));
     try {
@@ -65,7 +63,7 @@ class AuthCubit extends Cubit<AuthState> {
         success: (_) async {
           await authDB.saveEmail(entity.email);
           await authDB.saveDevice(deviceData);
-          safeEmit(state.copyWith(isLoading: false));
+          safeEmit(state.copyWith(isLoading: false, requested: true));
         },
         failure: (f) => safeEmit(
           state.copyWith(isLoading: false, error: f.message, clearGroups: true),

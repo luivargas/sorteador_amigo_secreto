@@ -1,5 +1,3 @@
-
-
 class RequestToken {
   final String email;
 

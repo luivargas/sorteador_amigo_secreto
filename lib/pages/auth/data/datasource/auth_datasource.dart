@@ -1,12 +1,10 @@
-import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:sorteador_amigo_secreto/core/network/base_url.dart';
-import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_model.dart';
+import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_group_model.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/request_token_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/validate_token_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/domain/repository/auth_repository.dart';
 import 'package:sorteador_amigo_secreto/core/network/api_result.dart';
-import 'package:sorteador_amigo_secreto/core/network/contants.dart';
 
 class AuthDatasource extends AuthRepository {
   final dio = Dio(BaseOptions(headers: {'Accept': 'application/json'}));
@@ -17,8 +15,7 @@ class AuthDatasource extends AuthRepository {
   ) async {
     Response resp;
     try {
-      resp = await dio.post(stageGroupApiUrl, data: entity.toJson());
-      print(resp);
+      resp = await dio.post(requestToken, data: entity.toJson());
       return Success(resp);
     } on DioException catch (e) {
       return Failure(
@@ -28,7 +25,7 @@ class AuthDatasource extends AuthRepository {
           raw: e.response?.data,
         ),
       );
-    } catch (_) {
+    } catch (e) {
       return Failure(
         ApiError('Erro inesperado', statusCode: e.hashCode, raw: e),
       );
@@ -36,13 +33,14 @@ class AuthDatasource extends AuthRepository {
   }
 
   @override
-  Future<ApiResult<AuthModel>> validate(ValidateToken entity) async {
+  Future<ApiResult<AuthGroupModel>> validate(ValidateToken entity) async {
+    print(entity.toJson());
     try {
-      final resp = await dio.get(
+      final resp = await dio.post(
         validadeToken,
+        data: entity.toJson(),
       );
-      final model = AuthModel.fromJson(resp.data);
-      print(model);
+      final model = AuthGroupModel.fromJson(resp.data);
       return Success(model);
     } on DioException catch (e) {
       return Failure(
@@ -52,7 +50,7 @@ class AuthDatasource extends AuthRepository {
           raw: e.response?.data,
         ),
       );
-    } catch (_) {
+    } catch (e) {
       return Failure(
         ApiError('Erro inesperado', statusCode: e.hashCode, raw: e),
       );

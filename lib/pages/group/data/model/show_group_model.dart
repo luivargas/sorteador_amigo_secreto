@@ -2,9 +2,8 @@ import 'package:intl/intl.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 
 class ShowGroupModel {
-  final int? isarId;
   final String code;
-  final String shortCode;
+  final String? shortCode;
   final String name;
   final String? drawDate;
   final String? location;
@@ -40,7 +39,7 @@ class ShowGroupModel {
     required this.name,
     this.whatsappEnabled,
     required this.token,
-    required this.participants, this.isarId,
+    required this.participants,
   });
 
   factory ShowGroupModel.fromJson(Map<String, dynamic> json) {

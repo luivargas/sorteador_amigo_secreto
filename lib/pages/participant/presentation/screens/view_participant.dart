@@ -47,7 +47,6 @@ class _ViewParticipant extends State<ViewParticipant> {
     nameController.text = g.name;
     emailController.text = g.email ?? '';
     final rawPhone = g.phone ?? '';
-    final idd = g.idd ?? '';
     phoneController.value = rawPhone.isNotEmpty
         ? PhoneNumber.parse(rawPhone)
         : const PhoneNumber(isoCode: IsoCode.BR, nsn: '');

@@ -10,7 +10,6 @@ class GroupCubit extends Cubit<GroupState> {
   GroupCubit(this.groupUsecases) : super(GroupState.initial());
 
   Future<void> create(CreateGroupEntity entity) async {
-    if (isClosed) return;
     safeEmit(state.copyWith(isLoading: true, clearError: true));
     try {
       final result = await groupUsecases.create(entity);
@@ -26,7 +25,6 @@ class GroupCubit extends Cubit<GroupState> {
   }
 
   Future<void> delete(String token) async {
-    if (isClosed) return;
     safeEmit(state.copyWith(isLoading: true, clearError: true));
     try {
       await groupUsecases.delete(token);

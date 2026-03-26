@@ -30,7 +30,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     if (hasText) {
       titleWidget = Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(title!, style: TextStyle(fontSize: 20)),
           if (subTitle != null)

@@ -15,6 +15,13 @@ class ValidatorUtils {
     return null;
   }
 
+    static String? tokenValidator({required BuildContext context, required String v}) {
+    if (v.isEmpty) {
+      return AppLocalizations.of(context)!.validatorRequired;
+    }
+    return null;
+  }
+
   static String? emailValidator({required BuildContext context, required String? v}) {
     if (v == null || v.trim().isEmpty) {
       return AppLocalizations.of(context)!.validatorEnterEmail;

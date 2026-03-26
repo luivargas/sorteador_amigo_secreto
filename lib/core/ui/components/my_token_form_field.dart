@@ -4,7 +4,7 @@ import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 /// Campo de nome com ícone, hint e validator padrão do app.
 /// O validador sempre exige que o campo não esteja vazio.
-class MyNameFormField extends StatelessWidget {
+class MyTokenFormField extends StatelessWidget {
   final TextEditingController controller;
   final String? hintText;
   final IconData icon;
@@ -12,11 +12,11 @@ class MyNameFormField extends StatelessWidget {
   final bool autofocus;
   final TextInputAction? textInputAction;
 
-  const MyNameFormField({
+  const MyTokenFormField({
     super.key,
     required this.controller,
     this.hintText,
-    this.icon = Icons.abc,
+    this.icon = Icons.code,
     this.readOnly = false,
     this.autofocus = false,
     this.textInputAction,
@@ -27,17 +27,22 @@ class MyNameFormField extends StatelessWidget {
     crossAxisAlignment: CrossAxisAlignment.start,
     spacing: 10,
     children: [
-      Text(AppLocalizations.of(context)!.name),
+      Text("Código de verificação"),
       TextFormField(
         controller: controller,
         textInputAction: textInputAction,
         readOnly: readOnly,
         autofocus: autofocus,
         validator: (_) =>
-            ValidatorUtils.nameValidator(context: context, v: controller.text),
+            ValidatorUtils.tokenValidator(context: context, v: controller.text),
         decoration: InputDecoration(
           hintText: hintText,
           prefixIcon: Icon(icon),
+          enabledBorder: readOnly ? OutlineInputBorder(
+            borderSide: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
+            borderRadius: BorderRadius.circular(12),
+          )
+          : null,
         ),
       ),
     ],
