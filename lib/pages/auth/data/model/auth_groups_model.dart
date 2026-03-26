@@ -1,5 +1,5 @@
 class AuthGroupModel {
-  final String? code;
+  final String code;
   final String name;
   final String type;
   final String? status;
@@ -14,11 +14,12 @@ class AuthGroupModel {
   });
 
   factory AuthGroupModel.fromJson(Map<String, dynamic> json) {
+
     return AuthGroupModel(
       code: json['code'],
       name: json['name'],
       status: json['status'],
-      token: json['token'],
+      token: json['access_key'],
       type: json['type'],
     );
   }

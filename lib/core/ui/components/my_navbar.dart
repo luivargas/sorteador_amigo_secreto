@@ -1,11 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
+import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/screens/home_screen.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class MyNavbar extends StatefulWidget {
-  const MyNavbar({super.key});
+  final List<AuthGroupModel> groups;
+  const MyNavbar({super.key, required this.groups});
 
   @override
   State<MyNavbar> createState() => _MyNavbarState();
@@ -85,7 +87,7 @@ class _MyNavbarState extends State<MyNavbar>
             controller: tabController,
             dragStartBehavior: DragStartBehavior.down,
             physics: const BouncingScrollPhysics(),
-            children: [HomeScreen(groups: [],)],
+            children: [HomeScreen(groups: widget.groups)],
           ),
           child: TabBar(
             dividerColor: Colors.transparent,

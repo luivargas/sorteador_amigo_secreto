@@ -5,7 +5,7 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_home_app_bar.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
+import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/usecases/group_usecases.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_card.dart';
@@ -15,7 +15,7 @@ import '../cubit/home_cubit.dart';
 import '../cubit/home_state.dart';
 
 class HomeScreen extends StatelessWidget {
-  final List<ShowGroupModel> groups;
+  final List<AuthGroupModel> groups;
   const HomeScreen({super.key, required this.groups});
 
   @override
@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
 }
 
 class _HomeView extends StatefulWidget {
-  final List<ShowGroupModel> groups;
+  final List<AuthGroupModel> groups;
   const _HomeView({required this.groups});
 
   @override
@@ -117,7 +117,7 @@ class _HomeViewState extends State<_HomeView> {
                             },
                           ),
 
-                          BlocSelector<HomeCubit, HomeState, List<ShowGroupModel>>(
+                          BlocSelector<HomeCubit, HomeState, List<AuthGroupModel>>(
                             selector: (state) => state.filtered,
                             builder: (context, filtered) {
                               if (filtered.isEmpty) {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/labeled_field.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_email_form_field.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_name_form_field.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_phone_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/labeled_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_email_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_name_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
@@ -44,10 +44,7 @@ class _GroupFormFields extends State<GroupFormFields> {
           label: l10n.email,
           child: MyEmailFormField(
             controller: widget.emailController,
-            validator: (_) => ValidatorUtils.emailValidator(
-              context: context,
-              v: widget.emailController.text,
-            ),
+            validator: (_) => ValidatorUtils.emailValidator(context: context, v: widget.emailController.text),
           ),
         ),
         LabeledField(

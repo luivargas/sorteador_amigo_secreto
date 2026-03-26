@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
+import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 
 class HomeState extends Equatable {
-  final List<ShowGroupModel> groups;
-  final List<ShowGroupModel> filtered;
+  final List<AuthGroupModel> groups;
+  final List<AuthGroupModel> filtered;
   final String search;
   final bool isLoading;
   final String? error;
@@ -27,8 +27,8 @@ class HomeState extends Equatable {
   }
 
   HomeState copyWith({
-    List<ShowGroupModel>? groups,
-    List<ShowGroupModel>? filtered,
+    List<AuthGroupModel>? groups,
+    List<AuthGroupModel>? filtered,
     String? search,
     bool? isLoading,
     String? error,

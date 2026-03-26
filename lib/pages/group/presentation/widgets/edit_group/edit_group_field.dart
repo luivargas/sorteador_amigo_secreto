@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/labeled_field.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_currency_form_field.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_name_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/labeled_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_currency_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_name_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 

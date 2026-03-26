@@ -74,8 +74,6 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  /// Valida o token informado pelo usuário.
-  /// O e-mail e as informações do dispositivo são lidos automaticamente do AuthDB/DeviceData.
   Future<void> validateToken(String token) async {
     final email = authDB.email;
     if (email == null) {

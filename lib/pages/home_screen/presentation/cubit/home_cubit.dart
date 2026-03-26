@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
+import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/usecases/group_usecases.dart';
 import 'home_state.dart';
 
@@ -8,7 +8,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   HomeCubit(this._groupUsecases) : super(HomeState.initial());
 
-  void loadGroups(List<ShowGroupModel> groups) {
+  void loadGroups(List<AuthGroupModel> groups) {
     final filtered = _applyFilter(groups, state.search);
     emit(state.copyWith(groups: groups, filtered: filtered, isLoading: false));
   }
@@ -31,7 +31,7 @@ class HomeCubit extends Cubit<HomeState> {
     emit(state.copyWith(search: newSearch, filtered: filtered));
   }
 
-  List<ShowGroupModel> _applyFilter(List<ShowGroupModel> list, String query) {
+  List<AuthGroupModel> _applyFilter(List<AuthGroupModel> list, String query) {
     final q = query.toLowerCase();
     if (q.isEmpty) return list;
     return list.where((g) => g.name.toLowerCase().contains(q)).toList();

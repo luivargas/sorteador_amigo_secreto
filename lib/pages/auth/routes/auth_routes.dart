@@ -7,40 +7,55 @@ import 'package:sorteador_amigo_secreto/pages/auth/presentation/screens/request_
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/screens/splash_screen.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/screens/validate_token_screen.dart';
 
+CustomTransitionPage<void> _fadePage({
+  required GoRouterState state,
+  required Widget child,
+}) {
+  return CustomTransitionPage<void>(
+    key: state.pageKey,
+    child: child,
+    transitionDuration: const Duration(milliseconds: 300),
+    transitionsBuilder: (context, animation, _, child) =>
+        FadeTransition(opacity: animation, child: child),
+  );
+}
+
 List<RouteBase> authRoutes = [
   GoRoute(
     name: 'splash',
     path: '/splash',
-    builder: (BuildContext context, GoRouterState state) {
-      return BlocProvider(
+    pageBuilder: (context, state) => _fadePage(
+      state: state,
+      child: BlocProvider(
         create: (_) {
           final cubit = getIt<AuthCubit>();
           WidgetsBinding.instance.addPostFrameCallback((_) => cubit.checkSession());
           return cubit;
         },
         child: SplashScreen(),
-      );
-    },
+      ),
+    ),
   ),
   GoRoute(
     name: 'request_token',
     path: '/request_token',
-    builder: (BuildContext context, GoRouterState state) {
-      return BlocProvider(
+    pageBuilder: (context, state) => _fadePage(
+      state: state,
+      child: BlocProvider(
         create: (_) => getIt<AuthCubit>(),
         child: RequestTokenScreen(),
-      );
-    },
+      ),
+    ),
   ),
   GoRoute(
     name: 'validate_token',
     path: '/validate_token',
-    builder: (BuildContext context, GoRouterState state) {
-      final email = state.extra as String;
-      return BlocProvider(
+    pageBuilder: (context, state) => _fadePage(
+      state: state,
+      child: BlocProvider(
         create: (_) => getIt<AuthCubit>(),
-        child: ValidateTokenScreen(email: email),
-      );
-    },
+        child: ValidateTokenScreen(email: state.extra as String),
+      ),
+    ),
   ),
 ];

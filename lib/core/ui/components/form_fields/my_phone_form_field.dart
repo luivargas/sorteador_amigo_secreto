@@ -41,27 +41,20 @@ class MyPhoneFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 10,
-      children: [
-        Text(AppLocalizations.of(context)!.phone),
-        PhoneFormField(
-          controller: controller,
-          validator: validator,
-          enabled: enabled,
-          enableInteractiveSelection: enableInteractiveSelection ?? true,
-          textInputAction: textInputAction,
-          keyboardType: keyboardType,
-          isCountrySelectionEnabled: true,
-          isCountryButtonPersistent: true,
-          countryButtonStyle: const CountryButtonStyle(),
-          countrySelectorNavigator: _buildNavigator(
-            context,
-            favorites: favorites,
-          ),
-        ),
-      ],
+    return PhoneFormField(
+      controller: controller,
+      validator: validator,
+      enabled: enabled,
+      enableInteractiveSelection: enableInteractiveSelection ?? true,
+      textInputAction: textInputAction,
+      keyboardType: keyboardType,
+      isCountrySelectionEnabled: true,
+      isCountryButtonPersistent: true,
+      countryButtonStyle: const CountryButtonStyle(),
+      countrySelectorNavigator: _buildNavigator(
+        context,
+        favorites: favorites,
+      ),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/network/contants.dart';
@@ -22,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
       listenWhen: (p, c) => !p.sessionChecked && c.sessionChecked,
       listener: (context, state) {
         if (state.validated) {
-          context.goNamed('nav_bar');
+          context.goNamed('nav_bar', extra: state.groups ?? []);
         }
         if (!state.validated) {
           context.goNamed('request_token');
@@ -37,10 +38,13 @@ class _SplashScreenState extends State<SplashScreen> {
               spacing: 20,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Center(child: Image.asset(iconLogo, scale: 15)),
-                  CircularProgressIndicator(
-                    color: MyColors.sorteadorOrange,
-                  ),
+                Center(child: Image.asset(iconLogo, scale: 15))
+                    .animate()
+                    .fadeIn(duration: 600.ms)
+                    .slideY(begin: -0.3, curve: Curves.easeOut),
+                CircularProgressIndicator(color: MyColors.sorteadorOrange)
+                    .animate()
+                    .fadeIn(delay: 400.ms, duration: 400.ms),
               ],
             );
           },
