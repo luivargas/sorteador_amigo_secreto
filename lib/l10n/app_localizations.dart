@@ -120,6 +120,12 @@ abstract class AppLocalizations {
   /// **'Buscar grupo'**
   String get searchGroup;
 
+  /// No description provided for @shareGroup.
+  ///
+  /// In pt, this message translates to:
+  /// **'Compartilhar'**
+  String get shareGroup;
+
   /// No description provided for @errorLoadingGroups.
   ///
   /// In pt, this message translates to:
@@ -629,6 +635,54 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Tentar novamente'**
   String get retry;
+
+  /// No description provided for @sessionExpired.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sessão expirada.'**
+  String get sessionExpired;
+
+  /// No description provided for @verificationTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Verificação de acesso'**
+  String get verificationTitle;
+
+  /// No description provided for @verificationSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Enviaremos um código para o seu e-mail'**
+  String get verificationSubtitle;
+
+  /// No description provided for @sendCodeButton.
+  ///
+  /// In pt, this message translates to:
+  /// **'Enviar código'**
+  String get sendCodeButton;
+
+  /// No description provided for @almostThereTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Quase lá!'**
+  String get almostThereTitle;
+
+  /// No description provided for @almostThereSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Digite o código que enviamos para o seu e-mail'**
+  String get almostThereSubtitle;
+
+  /// No description provided for @confirmCodeButton.
+  ///
+  /// In pt, this message translates to:
+  /// **'Confirmar código'**
+  String get confirmCodeButton;
+
+  /// No description provided for @noName.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sem nome'**
+  String get noName;
 }
 
 class _AppLocalizationsDelegate

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class MyNameFormField extends StatelessWidget {
   final TextEditingController controller;

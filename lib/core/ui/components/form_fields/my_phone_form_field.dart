@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class MyPhoneFormField extends StatelessWidget {
   final PhoneController controller;

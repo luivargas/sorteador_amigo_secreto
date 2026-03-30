@@ -5,6 +5,7 @@
   "refreshing": "Updating...",
 
   "searchGroup": "Search group",
+  "shareGroup": "Share",
   "errorLoadingGroups": "Error loading groups: {error}",
   "@errorLoadingGroups": {
     "placeholders": { "error": { "type": "String" } }
@@ -133,5 +134,16 @@
   "countryLabel": "Country",
   "selectEmail": "Select e-mail",
   "select": "Select",
-  "retry": "Try again"
+  "retry": "Try again",
+  "sessionExpired": "Session expired.",
+
+  "verificationTitle": "Access verification",
+  "verificationSubtitle": "We will send a code to your email",
+  "sendCodeButton": "Send code",
+
+  "almostThereTitle": "Almost there!",
+  "almostThereSubtitle": "Enter the code we sent to your email",
+  "confirmCodeButton": "Confirm code",
+
+  "noName": "No name"
 }

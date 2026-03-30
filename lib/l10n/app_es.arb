@@ -5,6 +5,7 @@
   "refreshing": "Actualizando...",
 
   "searchGroup": "Buscar grupo",
+  "shareGroup": "Compartir",
   "errorLoadingGroups": "Error al cargar grupos: {error}",
   "@errorLoadingGroups": {
     "placeholders": { "error": { "type": "String" } }
@@ -133,5 +134,16 @@
   "countryLabel": "País",
   "selectEmail": "Selecciona el correo electrónico",
   "select": "Seleccionar",
-  "retry": "Intentar de nuevo"
+  "retry": "Intentar de nuevo",
+  "sessionExpired": "Sesión expirada.",
+
+  "verificationTitle": "Verificación de acceso",
+  "verificationSubtitle": "Te enviaremos un código a tu correo electrónico",
+  "sendCodeButton": "Enviar código",
+
+  "almostThereTitle": "¡Casi listo!",
+  "almostThereSubtitle": "Ingresa el código que enviamos a tu correo electrónico",
+  "confirmCodeButton": "Confirmar código",
+
+  "noName": "Sin nombre"
 }

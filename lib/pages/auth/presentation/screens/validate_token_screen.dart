@@ -6,6 +6,7 @@ import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_email_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_token_form_field.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_state.dart';
 
@@ -50,8 +51,8 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
         child: Scaffold(
           backgroundColor: Theme.of(context).canvasColor,
           appBar: MyAppBar(
-            title: 'Quase lá!',
-            subTitle: 'Digite o código que enviamos para o seu e-mail',
+            title: AppLocalizations.of(context)!.almostThereTitle,
+            subTitle: AppLocalizations.of(context)!.almostThereSubtitle,
           ),
           body: SingleChildScrollView(
             child: Padding(
@@ -83,7 +84,7 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                         onTap: () {
                           state.isLoading ? null : _onSubmit();
                         },
-                        title: 'Confirmar código',
+                        title: AppLocalizations.of(context)!.confirmCodeButton,
                         isLoading: state.isLoading,
                       ).animate().fadeIn(delay: 300.ms, duration: 400.ms).slideX(begin: 0.2, curve: Curves.easeOut),
                     ],

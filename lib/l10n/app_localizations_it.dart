@@ -18,6 +18,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get searchGroup => 'Cerca gruppo';
 
   @override
+  String get shareGroup => 'Condividere';
+
+  @override
   String errorLoadingGroups(String error) {
     return 'Errore nel caricamento dei gruppi: $error';
   }
@@ -291,4 +294,29 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get retry => 'Riprova';
+
+  @override
+  String get sessionExpired => 'Sessione scaduta.';
+
+  @override
+  String get verificationTitle => 'Verifica di accesso';
+
+  @override
+  String get verificationSubtitle => 'Ti invieremo un codice alla tua email';
+
+  @override
+  String get sendCodeButton => 'Invia codice';
+
+  @override
+  String get almostThereTitle => 'Quasi fatto!';
+
+  @override
+  String get almostThereSubtitle =>
+      'Inserisci il codice che abbiamo inviato alla tua email';
+
+  @override
+  String get confirmCodeButton => 'Conferma codice';
+
+  @override
+  String get noName => 'Senza nome';
 }

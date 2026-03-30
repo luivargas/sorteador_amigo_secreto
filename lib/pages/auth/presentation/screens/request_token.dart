@@ -6,6 +6,7 @@ import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_email_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/request_token_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_state.dart';
@@ -47,8 +48,8 @@ class _EnterGroup extends State<RequestTokenScreen> {
         child: Scaffold(
           backgroundColor: Theme.of(context).canvasColor,
           appBar: MyAppBar(
-            title: 'Verificação de acesso',
-            subTitle: 'Enviaremos um código para o seu e-mail',
+            title: AppLocalizations.of(context)!.verificationTitle,
+            subTitle: AppLocalizations.of(context)!.verificationSubtitle,
           ),
           body: SingleChildScrollView(
             child: Padding(
@@ -65,7 +66,7 @@ class _EnterGroup extends State<RequestTokenScreen> {
                     builder: (BuildContext context, AuthState state) {
                       return MyGradientButton(
                         onTap: _onSubmit,
-                        title: 'Enviar código',
+                        title: AppLocalizations.of(context)!.sendCodeButton,
                         isLoading: state.isLoading,
                       );
                     },

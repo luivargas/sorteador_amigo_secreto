@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/cubit/home_cubit.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
@@ -67,7 +68,7 @@ class _GroupCardState extends State<GroupCard> {
             backgroundColor: const Color(0xFF21B7CA),
             foregroundColor: Colors.white,
             icon: Icons.share,
-            label: 'Compartilhar',
+            label: AppLocalizations.of(context)?.edit,
           ),
         ],
       ),

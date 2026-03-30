@@ -17,6 +17,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> checkSession() async {
     safeEmit(state.copyWith(isLoading: true, clearError: true));
+    await Future.delayed(const Duration(seconds: 2));
 
     if (!authDB.isAuthenticated) {
       safeEmit(state.copyWith(isLoading: false, sessionChecked: true));

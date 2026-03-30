@@ -64,7 +64,7 @@ class _ContactPage extends State<ContactPage> {
                       child: Column(
                         children: [
                           Text(
-                            c.displayName ?? "Sem nome",
+                            c.displayName ?? AppLocalizations.of(context)!.noName,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                           for (final p in c.phones)
