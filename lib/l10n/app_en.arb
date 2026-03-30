@@ -4,6 +4,9 @@
   "refreshCompleted": "Updated!",
   "refreshing": "Updating...",
 
+  "homeTitle": "My Groups",
+  "homeSubtitle": "Manage your secret santa groups",
+
   "searchGroup": "Search group",
   "shareGroup": "Share",
   "errorLoadingGroups": "Error loading groups: {error}",
@@ -29,7 +32,11 @@
   "noDescription": "No description",
   "drawButton": "Draw",
 
+  "viewGroupSubtitle": "Group details",
+
   "editGroupTitle": "Edit group!",
+  "editGroupSubtitle": "Update the group information",
+
   "selectDate": "Select date",
   "cancel": "Cancel",
   "selectTime": "Select time",
@@ -59,12 +66,16 @@
   "description": "Description",
 
   "addParticipantTitle": "Add participant",
+  "addParticipantSubtitle": "Add someone to the group",
+
   "participantAddedSuccess": "Participant {name} added successfully!",
   "@participantAddedSuccess": {
     "placeholders": { "name": { "type": "String" } }
   },
   "errorTitle": "Error",
   "participantTitle": "Participant",
+  "participantSubtitle": "View and edit the details",
+
   "participantUpdatedSuccess": "Participant {name} updated successfully!",
   "@participantUpdatedSuccess": {
     "placeholders": { "name": { "type": "String" } }
@@ -87,18 +98,17 @@
   "validatorEnterEmail": "Enter your e-mail",
   "validatorFixValues": "Fix the values",
 
-  "accessFreeRaffle": "Free Raffle",
-  "accessFast": "and Fast!",
-  "accessWhatsapp": "Join via WhatsApp!",
-  "accessHowItWorks": "How it works?",
-  "accessStep1Title": "Create a group",
-  "accessStep1Desc": "Set name, value and rules",
-  "accessStep2Title": "Add participants",
-  "accessStep2Desc": "Fill in name, phone and e-mail",
-  "accessStep3Title": "Run the draw",
-  "accessStep3Desc": "The system draws automatically",
-  "accessStep4Title": "Receive the results",
-  "accessStep4Desc": "Each participant receives their secret friend by email or WhatsApp (Premium plan)",
+  "onboardingTitle": "Free Raffle and Fast!",
+  "onboardingWhatsapp": "Join via WhatsApp!",
+  "onboardingHowItWorks": "How it works?",
+  "onboardingStep1Title": "Create a group",
+  "onboardingStep1Desc": "Set name, value and rules",
+  "onboardingStep2Title": "Add participants",
+  "onboardingStep2Desc": "Fill in name, phone and e-mail",
+  "onboardingStep3Title": "Run the draw",
+  "onboardingStep3Desc": "The system draws automatically",
+  "onboardingStep4Title": "Receive the results",
+  "onboardingStep4Desc": "Each participant receives their secret friend by email or WhatsApp (Premium plan)",
 
   "contactNotValid": "This contact must have a name and phone",
   "contactsTitle": "Select Participants",

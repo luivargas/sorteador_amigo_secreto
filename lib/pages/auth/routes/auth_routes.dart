@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_navbar.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
+import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/screens/request_token.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/screens/splash_screen.dart';
@@ -29,7 +31,9 @@ List<RouteBase> authRoutes = [
       child: BlocProvider(
         create: (_) {
           final cubit = getIt<AuthCubit>();
-          WidgetsBinding.instance.addPostFrameCallback((_) => cubit.checkSession());
+          WidgetsBinding.instance.addPostFrameCallback(
+            (_) => cubit.checkSession(),
+          );
           return cubit;
         },
         child: SplashScreen(),
@@ -57,5 +61,13 @@ List<RouteBase> authRoutes = [
         child: ValidateTokenScreen(email: state.extra as String),
       ),
     ),
+  ),
+  GoRoute(
+    path: '/nav_bar',
+    name: 'nav_bar',
+    pageBuilder: (context, state) {
+      final groups = (state.extra as List<AuthGroupModel>?) ?? [];
+      return _fadePage(state: state, child: MyNavbar(groups: groups));
+    },
   ),
 ];

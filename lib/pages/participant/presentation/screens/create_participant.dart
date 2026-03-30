@@ -56,8 +56,10 @@ class _CreateParticipant extends State<CreateParticipant> {
     return Form(
       key: _createFormKey,
       child: Scaffold(
-        appBar: MyAppBar(),
-        backgroundColor: Theme.of(context).canvasColor,
+        appBar: MyAppBar(
+          title: AppLocalizations.of(context)!.addParticipantTitle,
+          subTitle: AppLocalizations.of(context)!.addParticipantSubtitle,
+        ),
         body: BlocConsumer<ParticipantCubit, ParticipantState>(
           listenWhen: (prev, curr) =>
               prev.isLoading && !curr.isLoading,
@@ -97,10 +99,6 @@ class _CreateParticipant extends State<CreateParticipant> {
                     spacing: 20,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        AppLocalizations.of(context)!.addParticipantTitle,
-                        style: myTheme.textTheme.titleSmall,
-                      ),
                       CreateParticipantFormFields(
                         nameController: nameController,
                         emailController: emailController,

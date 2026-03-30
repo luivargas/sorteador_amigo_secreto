@@ -15,6 +15,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get refreshing => 'Actualizando...';
 
   @override
+  String get homeTitle => 'Mis Grupos';
+
+  @override
+  String get homeSubtitle => 'Gestiona tus grupos de amigo secreto';
+
+  @override
   String get searchGroup => 'Buscar grupo';
 
   @override
@@ -60,7 +66,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get drawButton => 'Sortear';
 
   @override
+  String get viewGroupSubtitle => 'Detalles del grupo';
+
+  @override
   String get editGroupTitle => '¡Edición del grupo!';
+
+  @override
+  String get editGroupSubtitle => 'Actualiza la información del grupo';
 
   @override
   String get selectDate => 'Selecciona la fecha';
@@ -138,6 +150,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get addParticipantTitle => 'Agregar participante';
 
   @override
+  String get addParticipantSubtitle => 'Agrega a alguien al grupo';
+
+  @override
   String participantAddedSuccess(String name) {
     return '¡Participante $name agregado con éxito!';
   }
@@ -147,6 +162,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get participantTitle => 'Participante';
+
+  @override
+  String get participantSubtitle => 'Ver y editar los datos';
 
   @override
   String participantUpdatedSuccess(String name) {
@@ -189,41 +207,39 @@ class AppLocalizationsEs extends AppLocalizations {
   String get validatorFixValues => 'Corrige los valores';
 
   @override
-  String get accessFreeRaffle => 'Sorteo Gratis';
+  String get onboardingTitle => 'Sorteo Gratis ¡y Rápido!';
 
   @override
-  String get accessFast => '¡y Rápido!';
+  String get onboardingWhatsapp => '¡Participa por WhatsApp!';
 
   @override
-  String get accessWhatsapp => '¡Participa por WhatsApp!';
+  String get onboardingHowItWorks => '¿Cómo funciona?';
 
   @override
-  String get accessHowItWorks => '¿Cómo funciona?';
+  String get onboardingStep1Title => 'Crea un grupo';
 
   @override
-  String get accessStep1Title => 'Crea un grupo';
+  String get onboardingStep1Desc =>
+      'Define el nombre, valor y reglas del sorteo';
 
   @override
-  String get accessStep1Desc => 'Define el nombre, valor y reglas del sorteo';
+  String get onboardingStep2Title => 'Agrega participantes';
 
   @override
-  String get accessStep2Title => 'Agrega participantes';
-
-  @override
-  String get accessStep2Desc =>
+  String get onboardingStep2Desc =>
       'Completa nombre, teléfono y correo electrónico';
 
   @override
-  String get accessStep3Title => 'Realiza el sorteo';
+  String get onboardingStep3Title => 'Realiza el sorteo';
 
   @override
-  String get accessStep3Desc => 'El sistema sortea automáticamente';
+  String get onboardingStep3Desc => 'El sistema sortea automáticamente';
 
   @override
-  String get accessStep4Title => 'Recibe los resultados';
+  String get onboardingStep4Title => 'Recibe los resultados';
 
   @override
-  String get accessStep4Desc =>
+  String get onboardingStep4Desc =>
       'Cada participante recibe su amigo secreto por correo o WhatsApp (plan Premium)';
 
   @override

@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/device/device_info.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/di/auth_injector.dart';
 import 'package:sorteador_amigo_secreto/pages/group/di/group_injector.dart';
-import 'package:sorteador_amigo_secreto/pages/home_screen/di/home_injector.dart';
+import 'package:sorteador_amigo_secreto/pages/nav_bar/di/home_injector.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/di/participant_injector.dart';
 
 final GetIt getIt = GetIt.instance;

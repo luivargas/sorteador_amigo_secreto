@@ -15,6 +15,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get refreshing => 'Updating...';
 
   @override
+  String get homeTitle => 'My Groups';
+
+  @override
+  String get homeSubtitle => 'Manage your secret santa groups';
+
+  @override
   String get searchGroup => 'Search group';
 
   @override
@@ -60,7 +66,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get drawButton => 'Draw';
 
   @override
+  String get viewGroupSubtitle => 'Group details';
+
+  @override
   String get editGroupTitle => 'Edit group!';
+
+  @override
+  String get editGroupSubtitle => 'Update the group information';
 
   @override
   String get selectDate => 'Select date';
@@ -138,6 +150,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addParticipantTitle => 'Add participant';
 
   @override
+  String get addParticipantSubtitle => 'Add someone to the group';
+
+  @override
   String participantAddedSuccess(String name) {
     return 'Participant $name added successfully!';
   }
@@ -147,6 +162,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get participantTitle => 'Participant';
+
+  @override
+  String get participantSubtitle => 'View and edit the details';
 
   @override
   String participantUpdatedSuccess(String name) {
@@ -189,40 +207,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get validatorFixValues => 'Fix the values';
 
   @override
-  String get accessFreeRaffle => 'Free Raffle';
+  String get onboardingTitle => 'Free Raffle and Fast!';
 
   @override
-  String get accessFast => 'and Fast!';
+  String get onboardingWhatsapp => 'Join via WhatsApp!';
 
   @override
-  String get accessWhatsapp => 'Join via WhatsApp!';
+  String get onboardingHowItWorks => 'How it works?';
 
   @override
-  String get accessHowItWorks => 'How it works?';
+  String get onboardingStep1Title => 'Create a group';
 
   @override
-  String get accessStep1Title => 'Create a group';
+  String get onboardingStep1Desc => 'Set name, value and rules';
 
   @override
-  String get accessStep1Desc => 'Set name, value and rules';
+  String get onboardingStep2Title => 'Add participants';
 
   @override
-  String get accessStep2Title => 'Add participants';
+  String get onboardingStep2Desc => 'Fill in name, phone and e-mail';
 
   @override
-  String get accessStep2Desc => 'Fill in name, phone and e-mail';
+  String get onboardingStep3Title => 'Run the draw';
 
   @override
-  String get accessStep3Title => 'Run the draw';
+  String get onboardingStep3Desc => 'The system draws automatically';
 
   @override
-  String get accessStep3Desc => 'The system draws automatically';
+  String get onboardingStep4Title => 'Receive the results';
 
   @override
-  String get accessStep4Title => 'Receive the results';
-
-  @override
-  String get accessStep4Desc =>
+  String get onboardingStep4Desc =>
       'Each participant receives their secret friend by email or WhatsApp (Premium plan)';
 
   @override

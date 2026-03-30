@@ -79,8 +79,10 @@ class _ViewParticipant extends State<ViewParticipant> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(),
-      backgroundColor: Theme.of(context).canvasColor,
+      appBar: MyAppBar(
+        title: AppLocalizations.of(context)!.participantTitle,
+        subTitle: AppLocalizations.of(context)!.participantSubtitle,
+      ),
       body: Form(
         key: _validateFormKey,
         child: BlocConsumer<ParticipantCubit, ParticipantState>(
@@ -124,10 +126,6 @@ class _ViewParticipant extends State<ViewParticipant> {
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
                   children: [
-                    Text(
-                      AppLocalizations.of(context)!.participantTitle,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: ParticipantCard(

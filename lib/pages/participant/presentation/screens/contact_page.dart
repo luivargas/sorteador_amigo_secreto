@@ -42,7 +42,6 @@ class _ContactPage extends State<ContactPage> {
       final c = snap.data;
       final photo = c?.photo?.fullSize ?? c?.photo?.thumbnail;
       return Scaffold(
-        backgroundColor: Theme.of(context).canvasColor,
         appBar: MyAppBar(),
         body: c == null
             ? Center(child: CircularProgressIndicator())

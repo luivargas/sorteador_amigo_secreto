@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
-import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/cubit/home_cubit.dart';
+import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/cubit/home_cubit.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class GroupCard extends StatefulWidget {
@@ -10,6 +10,7 @@ class GroupCard extends StatefulWidget {
   final String groupToken;
   final String groupCode;
   final int index;
+  final VoidCallback? onShare;
 
   const GroupCard({
     super.key,
@@ -17,6 +18,7 @@ class GroupCard extends StatefulWidget {
     required this.groupToken,
     required this.groupCode,
     required this.index,
+    this.onShare,
   });
 
   @override
@@ -64,11 +66,11 @@ class _GroupCardState extends State<GroupCard> {
             ),
           ),
           SlidableAction(
-            onPressed: (context) {},
+            onPressed: (_) => widget.onShare?.call(),
             backgroundColor: const Color(0xFF21B7CA),
             foregroundColor: Colors.white,
             icon: Icons.share,
-            label: AppLocalizations.of(context)?.edit,
+            label: "Share",
           ),
         ],
       ),

@@ -46,7 +46,6 @@ class _EnterGroup extends State<RequestTokenScreen> {
       child: Form(
         key: _formKey,
         child: Scaffold(
-          backgroundColor: Theme.of(context).canvasColor,
           appBar: MyAppBar(
             title: AppLocalizations.of(context)!.verificationTitle,
             subTitle: AppLocalizations.of(context)!.verificationSubtitle,

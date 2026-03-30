@@ -172,8 +172,10 @@ class _EditGroup extends State<EditGroup> {
     return Form(
       key: _editGroupKey,
       child: Scaffold(
-        appBar: MyAppBar(),
-        backgroundColor: Theme.of(context).canvasColor,
+        appBar: MyAppBar(
+          title: AppLocalizations.of(context)!.editGroupTitle,
+          subTitle: AppLocalizations.of(context)!.editGroupSubtitle,
+        ),
         body: BlocConsumer<GroupCubit, GroupState>(
           listener: (context, state) {
             _prefillFromApi(state);
@@ -200,10 +202,6 @@ class _EditGroup extends State<EditGroup> {
                     spacing: 20,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        AppLocalizations.of(context)!.editGroupTitle,
-                        style: myTheme.textTheme.titleSmall,
-                      ),
                       EditGroupFields(
                         groupNameController: groupNameController,
                         dateTimeController: dateTimeController,

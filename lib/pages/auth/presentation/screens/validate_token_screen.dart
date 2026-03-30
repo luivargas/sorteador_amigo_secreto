@@ -49,7 +49,6 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
       child: Form(
         key: _formKey,
         child: Scaffold(
-          backgroundColor: Theme.of(context).canvasColor,
           appBar: MyAppBar(
             title: AppLocalizations.of(context)!.almostThereTitle,
             subTitle: AppLocalizations.of(context)!.almostThereSubtitle,

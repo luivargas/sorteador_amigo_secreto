@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
-import 'package:sorteador_amigo_secreto/pages/home_screen/presentation/screens/home_screen.dart';
+import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/screens/home_screen.dart';
+import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/screens/onboarding.dart';
 
 CustomTransitionPage<void> _fadePage({
   required GoRouterState state,
@@ -24,4 +25,6 @@ List<RouteBase> homeRoutes = [
       child: HomeScreen(groups: (state.extra as List<AuthGroupModel>?) ?? []),
     ),
   ),
+
+  GoRoute(path: '/onboarding', name: 'onboarding', pageBuilder: (context, state) => _fadePage(state: state, child: Onboarding())),
 ];

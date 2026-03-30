@@ -6,6 +6,7 @@ ProgressIndicatorThemeData myProgressIndicator = ProgressIndicatorThemeData(
 );
 
 ThemeData myTheme = ThemeData(
+  scaffoldBackgroundColor: MyColors.sorteadorBackground,
   primaryColor: MyColors.sorteadorBackground,
   appBarTheme: AppBarTheme(backgroundColor: MyColors.sorteadorBackground),
   canvasColor: MyColors.sorteadorBackground,
@@ -40,6 +41,7 @@ ThemeData myTheme = ThemeData(
       fontWeight: FontWeight.w800,
     ),
     titleMedium: TextStyle(
+      height: 1.2,
       fontSize: 35,
       color: MyColors.sorteadorGrey,
       fontWeight: FontWeight.w800,

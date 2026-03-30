@@ -114,6 +114,18 @@ abstract class AppLocalizations {
   /// **'Atualizando...'**
   String get refreshing;
 
+  /// No description provided for @homeTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Meus Grupos'**
+  String get homeTitle;
+
+  /// No description provided for @homeSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Gerencie seus grupos de amigo secreto'**
+  String get homeSubtitle;
+
   /// No description provided for @searchGroup.
   ///
   /// In pt, this message translates to:
@@ -192,11 +204,23 @@ abstract class AppLocalizations {
   /// **'Sortear'**
   String get drawButton;
 
+  /// No description provided for @viewGroupSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Detalhes do grupo'**
+  String get viewGroupSubtitle;
+
   /// No description provided for @editGroupTitle.
   ///
   /// In pt, this message translates to:
   /// **'Edição do grupo!'**
   String get editGroupTitle;
+
+  /// No description provided for @editGroupSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Atualize as informações do grupo'**
+  String get editGroupSubtitle;
 
   /// No description provided for @selectDate.
   ///
@@ -348,6 +372,12 @@ abstract class AppLocalizations {
   /// **'Adicionar participante'**
   String get addParticipantTitle;
 
+  /// No description provided for @addParticipantSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Adicione alguém ao grupo'**
+  String get addParticipantSubtitle;
+
   /// No description provided for @participantAddedSuccess.
   ///
   /// In pt, this message translates to:
@@ -365,6 +395,12 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Participante'**
   String get participantTitle;
+
+  /// No description provided for @participantSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Veja e edite os dados'**
+  String get participantSubtitle;
 
   /// No description provided for @participantUpdatedSuccess.
   ///
@@ -438,77 +474,71 @@ abstract class AppLocalizations {
   /// **'Corrija os valores'**
   String get validatorFixValues;
 
-  /// No description provided for @accessFreeRaffle.
+  /// No description provided for @onboardingTitle.
   ///
   /// In pt, this message translates to:
-  /// **'Sorteio Grátis'**
-  String get accessFreeRaffle;
+  /// **'Sorteio Grátis e Rápido!'**
+  String get onboardingTitle;
 
-  /// No description provided for @accessFast.
-  ///
-  /// In pt, this message translates to:
-  /// **'e Rápido!'**
-  String get accessFast;
-
-  /// No description provided for @accessWhatsapp.
+  /// No description provided for @onboardingWhatsapp.
   ///
   /// In pt, this message translates to:
   /// **'Participe pelo WhatsApp!'**
-  String get accessWhatsapp;
+  String get onboardingWhatsapp;
 
-  /// No description provided for @accessHowItWorks.
+  /// No description provided for @onboardingHowItWorks.
   ///
   /// In pt, this message translates to:
   /// **'Como funciona?'**
-  String get accessHowItWorks;
+  String get onboardingHowItWorks;
 
-  /// No description provided for @accessStep1Title.
+  /// No description provided for @onboardingStep1Title.
   ///
   /// In pt, this message translates to:
   /// **'Crie um grupo'**
-  String get accessStep1Title;
+  String get onboardingStep1Title;
 
-  /// No description provided for @accessStep1Desc.
+  /// No description provided for @onboardingStep1Desc.
   ///
   /// In pt, this message translates to:
   /// **'Defina nome, valor e regras do sorteio'**
-  String get accessStep1Desc;
+  String get onboardingStep1Desc;
 
-  /// No description provided for @accessStep2Title.
+  /// No description provided for @onboardingStep2Title.
   ///
   /// In pt, this message translates to:
   /// **'Adicione participantes'**
-  String get accessStep2Title;
+  String get onboardingStep2Title;
 
-  /// No description provided for @accessStep2Desc.
+  /// No description provided for @onboardingStep2Desc.
   ///
   /// In pt, this message translates to:
   /// **'Preencha nome, telefone e e-mail'**
-  String get accessStep2Desc;
+  String get onboardingStep2Desc;
 
-  /// No description provided for @accessStep3Title.
+  /// No description provided for @onboardingStep3Title.
   ///
   /// In pt, this message translates to:
   /// **'Realize o sorteio'**
-  String get accessStep3Title;
+  String get onboardingStep3Title;
 
-  /// No description provided for @accessStep3Desc.
+  /// No description provided for @onboardingStep3Desc.
   ///
   /// In pt, this message translates to:
   /// **'O sistema sorteia automaticamente'**
-  String get accessStep3Desc;
+  String get onboardingStep3Desc;
 
-  /// No description provided for @accessStep4Title.
+  /// No description provided for @onboardingStep4Title.
   ///
   /// In pt, this message translates to:
   /// **'Receba os resultados'**
-  String get accessStep4Title;
+  String get onboardingStep4Title;
 
-  /// No description provided for @accessStep4Desc.
+  /// No description provided for @onboardingStep4Desc.
   ///
   /// In pt, this message translates to:
   /// **'Cada participante recebe seu amigo secreto por email ou whatsapp (plano Premium)'**
-  String get accessStep4Desc;
+  String get onboardingStep4Desc;
 
   /// No description provided for @contactNotValid.
   ///

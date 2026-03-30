@@ -4,6 +4,9 @@
   "refreshCompleted": "Aggiornato!",
   "refreshing": "Aggiornamento...",
 
+  "homeTitle": "I Miei Gruppi",
+  "homeSubtitle": "Gestisci i tuoi gruppi di amico segreto",
+
   "searchGroup": "Cerca gruppo",
   "shareGroup": "Condividere",
   "errorLoadingGroups": "Errore nel caricamento dei gruppi: {error}",
@@ -29,7 +32,11 @@
   "noDescription": "Senza descrizione",
   "drawButton": "Sorteggia",
 
+  "viewGroupSubtitle": "Dettagli del gruppo",
+
   "editGroupTitle": "Modifica del gruppo!",
+  "editGroupSubtitle": "Aggiorna le informazioni del gruppo",
+
   "selectDate": "Seleziona la data",
   "cancel": "Annulla",
   "selectTime": "Seleziona l'orario",
@@ -59,12 +66,16 @@
   "description": "Descrizione",
 
   "addParticipantTitle": "Aggiungi partecipante",
+  "addParticipantSubtitle": "Aggiungi qualcuno al gruppo",
+
   "participantAddedSuccess": "Partecipante {name} aggiunto con successo!",
   "@participantAddedSuccess": {
     "placeholders": { "name": { "type": "String" } }
   },
   "errorTitle": "Errore",
   "participantTitle": "Partecipante",
+  "participantSubtitle": "Visualizza e modifica i dati",
+
   "participantUpdatedSuccess": "Partecipante {name} aggiornato con successo!",
   "@participantUpdatedSuccess": {
     "placeholders": { "name": { "type": "String" } }
@@ -87,18 +98,17 @@
   "validatorEnterEmail": "Inserisci la tua e-mail",
   "validatorFixValues": "Correggi i valori",
 
-  "accessFreeRaffle": "Sorteggio Gratuito",
-  "accessFast": "e Veloce!",
-  "accessWhatsapp": "Partecipa su WhatsApp!",
-  "accessHowItWorks": "Come funziona?",
-  "accessStep1Title": "Crea un gruppo",
-  "accessStep1Desc": "Definisci nome, valore e regole del sorteggio",
-  "accessStep2Title": "Aggiungi partecipanti",
-  "accessStep2Desc": "Compila nome, telefono e e-mail",
-  "accessStep3Title": "Effettua il sorteggio",
-  "accessStep3Desc": "Il sistema sorteggia automaticamente",
-  "accessStep4Title": "Ricevi i risultati",
-  "accessStep4Desc": "Ogni partecipante riceve il suo amico segreto via email o WhatsApp (piano Premium)",
+  "onboardingTitle": "Sorteggio Gratuito e Veloce!",
+  "onboardingWhatsapp": "Partecipa su WhatsApp!",
+  "onboardingHowItWorks": "Come funziona?",
+  "onboardingStep1Title": "Crea un gruppo",
+  "onboardingStep1Desc": "Definisci nome, valore e regole del sorteggio",
+  "onboardingStep2Title": "Aggiungi partecipanti",
+  "onboardingStep2Desc": "Compila nome, telefono e e-mail",
+  "onboardingStep3Title": "Effettua il sorteggio",
+  "onboardingStep3Desc": "Il sistema sorteggia automaticamente",
+  "onboardingStep4Title": "Ricevi i risultati",
+  "onboardingStep4Desc": "Ogni partecipante riceve il suo amico segreto via email o WhatsApp (piano Premium)",
 
   "contactNotValid": "Questo contatto deve avere nome e telefono",
   "contactsTitle": "Seleziona Partecipanti",
@@ -137,7 +147,7 @@
   "retry": "Riprova",
   "sessionExpired": "Sessione scaduta.",
 
-  "verificationTitle": "Verifica di accesso",
+  "verificationTitle": "Verifica di onboardingo",
   "verificationSubtitle": "Ti invieremo un codice alla tua email",
   "sendCodeButton": "Invia codice",
 

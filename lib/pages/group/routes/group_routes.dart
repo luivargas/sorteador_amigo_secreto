@@ -26,7 +26,7 @@ List<RouteBase> groupRoutes = [
       final extra = state.extra as ShowGroupArgs;
       return BlocProvider(
         create: (_) => getIt<GroupCubit>()..show(extra.code, extra.token),
-        child: ViewGroup(code: extra.code, token: extra.token),
+        child: ViewGroup(code: extra.code, token: extra.token, name: extra.name),
       );
     },
   ),

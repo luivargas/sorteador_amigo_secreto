@@ -409,7 +409,6 @@ class _ContactListState extends State<ContactList> {
         [];
 
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
       appBar: MyAppBar(
         title: l10n.contactsTitle,
         subTitle: l10n.contactsSubtitle,

@@ -31,7 +31,6 @@ class _SplashScreenState extends State<SplashScreen> {
       },
       child: Scaffold(
         appBar: MyAppBar(),
-        backgroundColor: Theme.of(context).canvasColor,
         body: BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
             return Column(

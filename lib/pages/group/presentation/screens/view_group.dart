@@ -20,7 +20,8 @@ import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 class ViewGroup extends StatefulWidget {
   final String code;
   final String token;
-  const ViewGroup({super.key, required this.code, required this.token});
+  final String? name;
+  const ViewGroup({super.key, required this.code, required this.token, this.name});
 
   @override
   State<ViewGroup> createState() => _ViewGroupBody();
@@ -61,17 +62,23 @@ class _ViewGroupBody extends State<ViewGroup> {
 
   @override
   Widget build(BuildContext context) {
+    final groupName = context.select<GroupCubit, String?>(
+      (cubit) => cubit.state.group?.name,
+    ) ?? widget.name;
     BadgeType type;
     return Scaffold(
       appBar: MyAppBar(
+        title: groupName,
+        subTitle: groupName != null
+            ? AppLocalizations.of(context)!.viewGroupSubtitle
+            : null,
         actions: [
           IconButton(
             onPressed: () => _onShare(group),
             icon: Icon(Icons.share, size: 30),
           ),
-        ]
+        ],
       ),
-      backgroundColor: Theme.of(context).canvasColor,
       body: BlocConsumer<GroupCubit, GroupState>(
         listenWhen: (previous, current) =>
             previous.isLoading &&
@@ -111,10 +118,6 @@ class _ViewGroupBody extends State<ViewGroup> {
                     spacing: 10,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        g.name,
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
                       SecretSantaBadge(
                         type: g.raffledAt == null
                             ? type = BadgeType.pending

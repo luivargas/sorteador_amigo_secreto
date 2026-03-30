@@ -32,11 +32,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(title!, style: TextStyle(fontSize: 20)),
+          Text(title!, style: TextStyle(fontSize: 20, overflow: TextOverflow.ellipsis)),
           if (subTitle != null)
             Text(
               subTitle!,
-              style: TextStyle(fontWeight: FontWeight.w200, fontSize: 14),
+              style: TextStyle(fontWeight: FontWeight.w200, fontSize: 14, overflow: TextOverflow.ellipsis),
             ),
         ],
       );
