@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
-import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/widgets/onboarding_card.dart';
+import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/cubit/home_cubit.dart';
+import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/widgets/info_card.dart';
+import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/widgets/step_card.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class Onboarding extends StatefulWidget {
@@ -63,7 +67,7 @@ class _OnboardingState extends State<Onboarding> {
                                   "Organize seus grupos de Amigo Secreto, edite as informações dos grupos e adicione participantes de forma simples e rápida",
                                   style: TextStyle(
                                     color: MyColors.neutral100.withValues(
-                                      alpha: 0.70,
+                                      alpha: 0.7,
                                     ),
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -76,8 +80,23 @@ class _OnboardingState extends State<Onboarding> {
                                     children: [
                                       Expanded(
                                         child: FloatingActionButton(
-                                          onPressed: () {},
-                                          child: Text("Criar meu grupo agora"),
+                                          backgroundColor: MyColors.neutral100,
+                                          onPressed: () async {
+                                            final result = await context.push(
+                                              "/create_group",
+                                            );
+                                            if (!context.mounted) return;
+                                            if (result == true) {
+                                              () => context.read<HomeCubit>().refreshGroups();
+                                            }
+                                          },
+                                          child: Text(
+                                            "Criar meu grupo agora",
+                                            style: TextStyle(
+                                              color: MyColors.sorteadorOrange,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -133,7 +152,14 @@ class _OnboardingState extends State<Onboarding> {
                             'Com tudo preenchido realize o sorteio e veja os resultados.',
                         color: getColor(3),
                       ),
-                      _buildInfoCard(),
+                      InfoCard(
+                        title: 'Totalmente Gratuito',
+                        description:
+                            'Organize quantos grupos quiser sem pagar nada. A diversão é por nossa conta!',
+                        backgroundColor: MyColors.sorteadorPurpple,
+                        icon: Icons.volunteer_activism,
+                        iconBackgroundColor: MyColors.sorteadorOrange,
+                      ),
                     ],
                   ),
                 ],
@@ -145,80 +171,4 @@ class _OnboardingState extends State<Onboarding> {
       ),
     );
   }
-}
-
-Widget _buildInfoCard() {
-  return Container(
-    padding: const EdgeInsets.all(24),
-    decoration: BoxDecoration(
-      color: Colors.deepPurple,
-      borderRadius: BorderRadius.circular(16),
-    ),
-    clipBehavior: Clip.hardEdge,
-    child: Stack(
-      children: [
-        Positioned(
-          right: -32,
-          bottom: -32,
-          child: Container(
-            width: 128,
-            height: 128,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.black12,
-            ),
-          ),
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 8,
-                children: [
-                  const Text(
-                    'Totalmente Gratuito',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20,
-                      color: MyColors.neutral100,
-                    ),
-                  ),
-                  Text(
-                    'Organize quantos grupos quiser sem pagar nada. A diversão é por nossa conta!',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: MyColors.neutral100.withValues(alpha: 0.75),
-                      height: 1.5,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 16),
-            Container(
-              width: 72,
-              height: 72,
-              decoration: BoxDecoration(
-                color: MyColors.sorteadorOrange,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: const Icon(
-                Icons.volunteer_activism,
-                color: MyColors.neutral100,
-                size: 36,
-              ),
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
 }

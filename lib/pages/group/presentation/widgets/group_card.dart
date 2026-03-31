@@ -44,7 +44,7 @@ class _GroupCardState extends State<GroupCard> {
     return Container(
       padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
       decoration: BoxDecoration(
-        color: MyColors.neutral100,
+        color: MyColors.neutral50,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: MyColors.neutral200.withAlpha(150)),
         boxShadow: SecretSantaShadows.small,

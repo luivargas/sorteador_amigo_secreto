@@ -13,20 +13,20 @@ ThemeData myTheme = ThemeData(
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
     fillColor: Colors.white,
-    iconColor: MyColors.sorteadorLilac,
-    prefixIconColor: MyColors.sorteadorLilac,
-    labelStyle: TextStyle(color: MyColors.sorteadorOrange),
-    hintStyle: TextStyle(color: MyColors.sorteadorOrange),
+    iconColor: MyColors.sorteadorOrange.withValues(alpha: 0.5),
+    prefixIconColor: MyColors.sorteadorOrange.withValues(alpha: 0.5),
+    labelStyle: TextStyle(color: MyColors.sorteadorOrange.withValues(alpha: 0.5)),
+    hintStyle: TextStyle(color: MyColors.sorteadorOrange.withValues(alpha: 0.5)),
     border: OutlineInputBorder(
-      borderSide: BorderSide(color: MyColors.sorteadorOrange),
+      borderSide: BorderSide(color: MyColors.sorteadorOrange.withValues(alpha: 0.5)),
       borderRadius: BorderRadius.circular(15),
     ),
     enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: MyColors.sorteadorOrange),
+      borderSide: BorderSide(color: MyColors.sorteadorOrange.withValues(alpha: 0.5)),
       borderRadius: BorderRadius.circular(15),
     ),
     focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: MyColors.sorteadorOrange),
+      borderSide: BorderSide(color: MyColors.sorteadorOrange.withValues(alpha: 0.5)),
       borderRadius: BorderRadius.circular(15),
     ),
     disabledBorder: OutlineInputBorder(

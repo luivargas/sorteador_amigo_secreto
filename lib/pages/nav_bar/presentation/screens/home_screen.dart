@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
-import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_home_app_bar.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_card.dart';
+import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/widgets/home_card.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
@@ -42,6 +42,7 @@ class _HomeViewState extends State<_HomeView> {
 
   final List<Color> cardColors = [
     MyColors.sorteadorOrange,
+    MyColors.sorteadorLilac,
     MyColors.sorteadorPurpple,
   ];
 
@@ -70,12 +71,13 @@ class _HomeViewState extends State<_HomeView> {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 20,
           children: [
-            MyHomeAppBar(
-              reload: () => context.read<HomeCubit>().refreshGroups(),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: HomeCard(),
             ),
-
             TextField(
               controller: _searchController,
               onChanged: (value) {
@@ -86,7 +88,7 @@ class _HomeViewState extends State<_HomeView> {
                 hintText: l10n?.searchGroup,
               ),
             ),
-            Text(l10n!.homeTitle),
+            Text(l10n!.homeTitle, style: Theme.of(context).textTheme.titleSmall,),
 
             Expanded(
               child: SmartRefresher(
@@ -115,8 +117,8 @@ class _HomeViewState extends State<_HomeView> {
 
                               if (state.error != null) {
                                 final msg = state.error == 'sessionExpired'
-                                    ? l10n!.sessionExpired
-                                    : l10n!.errorLoadingGroups(state.error!);
+                                    ? l10n.sessionExpired
+                                    : l10n.errorLoadingGroups(state.error!);
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 20,
