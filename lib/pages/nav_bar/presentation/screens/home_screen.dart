@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:sorteador_amigo_secreto/core/network/base_url.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_home_app_bar.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
@@ -11,6 +9,7 @@ import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_card.dart';
+import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 import '../cubit/home_cubit.dart';
@@ -41,15 +40,13 @@ class _HomeViewState extends State<_HomeView> {
   final RefreshController _refreshController = RefreshController();
   final TextEditingController _searchController = TextEditingController();
 
-  Future<void> _onShare(String code) async {
-    final title = AppLocalizations.of(context)!.shareLinkTitle;
-    await SharePlus.instance.share(
-      ShareParams(
-        uri: Uri.parse("$stgBaseUrl/grupo/$code/entrar"),
-        title: title,
-        subject: title,
-      ),
-    );
+  final List<Color> cardColors = [
+    MyColors.sorteadorOrange,
+    MyColors.sorteadorPurpple,
+  ];
+
+  Color getColor(int index) {
+    return cardColors[index % cardColors.length];
   }
 
   Future<void> _onRefresh() async {
@@ -66,11 +63,10 @@ class _HomeViewState extends State<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
-      appBar: MyAppBar(
-        title: AppLocalizations.of(context)!.homeTitle,
-        subTitle: AppLocalizations.of(context)!.homeSubtitle,
-      ),
+      appBar: MyAppBar(),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -79,7 +75,7 @@ class _HomeViewState extends State<_HomeView> {
             MyHomeAppBar(
               reload: () => context.read<HomeCubit>().refreshGroups(),
             ),
-        
+
             TextField(
               controller: _searchController,
               onChanged: (value) {
@@ -87,10 +83,11 @@ class _HomeViewState extends State<_HomeView> {
               },
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
-                hintText: AppLocalizations.of(context)!.searchGroup,
+                hintText: l10n?.searchGroup,
               ),
             ),
-        
+            Text(l10n!.homeTitle),
+
             Expanded(
               child: SmartRefresher(
                 enablePullDown: true,
@@ -105,7 +102,9 @@ class _HomeViewState extends State<_HomeView> {
                             builder: (context, state) {
                               if (state.isLoading) {
                                 return Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 40),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 40,
+                                  ),
                                   child: Center(
                                     child: CircularProgressIndicator(
                                       color: myProgressIndicator.color,
@@ -113,34 +112,38 @@ class _HomeViewState extends State<_HomeView> {
                                   ),
                                 );
                               }
-        
+
                               if (state.error != null) {
-                                final l10n = AppLocalizations.of(context)!;
                                 final msg = state.error == 'sessionExpired'
-                                    ? l10n.sessionExpired
-                                    : l10n.errorLoadingGroups(state.error!);
+                                    ? l10n!.sessionExpired
+                                    : l10n!.errorLoadingGroups(state.error!);
                                 return Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                  ),
                                   child: Center(child: Text(msg)),
                                 );
                               }
-        
+
                               if (state.filtered.isEmpty) {
                                 return Padding(
                                   padding: const EdgeInsets.all(24),
                                   child: Center(
                                     child: Text(
-                                      AppLocalizations.of(context)!.noGroupsFound,
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.noGroupsFound,
                                     ),
                                   ),
                                 );
                               }
-        
+
                               return ListView.separated(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: state.filtered.length,
-                                separatorBuilder: (_, _) => const SizedBox.shrink(),
+                                separatorBuilder: (_, _) =>
+                                    const SizedBox.shrink(),
                                 itemBuilder: (context, index) {
                                   final g = state.filtered[index];
                                   return InkWell(
@@ -154,19 +157,23 @@ class _HomeViewState extends State<_HomeView> {
                                         ),
                                       );
                                     },
-                                    child: GroupCard(
-                                      index: index,
-                                      groupName: g.name,
-                                      groupToken: g.token,
-                                      groupCode: g.code,
-                                      onShare: () => _onShare(g.code),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(bottom: 20),
+                                      child: GroupCard(
+                                        index: index,
+                                        groupName: g.name,
+                                        groupToken: g.token,
+                                        groupCode: g.code,
+                                        isRaffled: g.isRaffled,
+                                        color: getColor(index),
+                                      ),
                                     ),
                                   );
                                 },
                               );
                             },
                           ),
-                          SizedBox(height: 100,)
+                          SizedBox(height: 100),
                         ],
                       ),
                     ),

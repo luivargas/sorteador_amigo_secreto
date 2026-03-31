@@ -17,7 +17,7 @@ CustomTransitionPage<void> _fadePage({
   );
 }
 
-List<RouteBase> homeRoutes = [
+List<RouteBase> navRoutes = [
   GoRoute(
     path: '/home',
     pageBuilder: (context, state) => _fadePage(
@@ -26,5 +26,10 @@ List<RouteBase> homeRoutes = [
     ),
   ),
 
-  GoRoute(path: '/onboarding', name: 'onboarding', pageBuilder: (context, state) => _fadePage(state: state, child: Onboarding())),
+  GoRoute(
+    path: '/onboarding',
+    name: 'onboarding',
+    pageBuilder: (context, state) =>
+        _fadePage(state: state, child: Onboarding()),
+  ),
 ];

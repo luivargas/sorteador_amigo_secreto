@@ -10,7 +10,6 @@ import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/create_participant_form_fields.dart';
-import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class CreateParticipant extends StatefulWidget {

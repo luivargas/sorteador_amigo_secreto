@@ -34,7 +34,7 @@ class StatCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(icon, size: 40, color: MyColors.sorteadorPurpple),
+                Icon(icon, size: 40, color: MyColors.sorteadorLilac),
                 Expanded(
                   child: Column(
                     children: [

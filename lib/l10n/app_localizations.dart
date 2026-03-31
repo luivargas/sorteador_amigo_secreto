@@ -180,6 +180,18 @@ abstract class AppLocalizations {
   /// **'Editar'**
   String get edit;
 
+  /// No description provided for @delete.
+  ///
+  /// In pt, this message translates to:
+  /// **'Excluir'**
+  String get delete;
+
+  /// No description provided for @archive.
+  ///
+  /// In pt, this message translates to:
+  /// **'Arquivar'**
+  String get archive;
+
   /// No description provided for @errorTryAgain.
   ///
   /// In pt, this message translates to:

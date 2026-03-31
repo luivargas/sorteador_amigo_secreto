@@ -13,8 +13,8 @@ ThemeData myTheme = ThemeData(
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
     fillColor: Colors.white,
-    iconColor: MyColors.sorteadorPurpple,
-    prefixIconColor: MyColors.sorteadorPurpple,
+    iconColor: MyColors.sorteadorLilac,
+    prefixIconColor: MyColors.sorteadorLilac,
     labelStyle: TextStyle(color: MyColors.sorteadorOrange),
     hintStyle: TextStyle(color: MyColors.sorteadorOrange),
     border: OutlineInputBorder(
@@ -90,7 +90,7 @@ ThemeData myTheme = ThemeData(
       },
     ),
   ),
-  iconTheme: IconThemeData(color: MyColors.sorteadorPurpple),
+  iconTheme: IconThemeData(color: MyColors.sorteadorLilac),
   iconButtonTheme: IconButtonThemeData(
     style: ButtonStyle(
       iconColor: WidgetStateProperty<Color?>.fromMap(
@@ -100,5 +100,5 @@ ThemeData myTheme = ThemeData(
       ),
     ),
   ),
-  listTileTheme: ListTileThemeData(iconColor: MyColors.sorteadorPurpple,)
+  listTileTheme: ListTileThemeData(iconColor: MyColors.sorteadorLilac,)
 );

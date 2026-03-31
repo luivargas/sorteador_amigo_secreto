@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 enum AlertType { success, error, warning, info }
 
@@ -20,12 +21,12 @@ class AppAlert {
         showCloseIcon: true,
         content: Row(
           children: [
-            Icon(icon, color: Colors.white),
+            Icon(icon, color: MyColors.neutral100),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
                 message,
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: MyColors.neutral100),
               ),
             ),
           ],

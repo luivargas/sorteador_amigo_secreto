@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 
@@ -24,7 +25,7 @@ class GroupButton extends StatelessWidget {
                   icon: Icons.create,
                   subTitle: Text(
                     'Crie um novo grupo do zero',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: MyColors.neutral100),
                   ),
                   onTap: () async {
                     context.push("/create_group");
@@ -40,7 +41,7 @@ class GroupButton extends StatelessWidget {
                   icon: Icons.group,
                   subTitle: Text(
                     'Receba todos os grupos que você criou ou participa.',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: MyColors.neutral100),
                   ),
                   onTap: () => context.push("/enter_group"),
                 ),

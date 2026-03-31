@@ -444,7 +444,7 @@ class _ContactListState extends State<ContactList> {
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
                             l10n.selectedCount(_selectedContacts.length),
-                            style: const TextStyle(color: Colors.white),
+                            style: const TextStyle(color: MyColors.neutral100),
                           ),
                         ),
                       ),
@@ -455,7 +455,7 @@ class _ContactListState extends State<ContactList> {
                   height: 80,
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: MyColors.neutral100,
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     border: Border.all(color: MyColors.sorteadorOrange),
                   ),
@@ -500,7 +500,7 @@ class _ContactListState extends State<ContactList> {
                                           child: const Icon(
                                             Icons.close,
                                             size: 14,
-                                            color: Colors.white,
+                                            color: MyColors.neutral100,
                                           ),
                                         ),
                                       ),
@@ -533,7 +533,7 @@ class _ContactListState extends State<ContactList> {
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: MyColors.neutral100,
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     border: Border.all(color: MyColors.sorteadorOrange),
                   ),

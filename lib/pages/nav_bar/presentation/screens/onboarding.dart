@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/widgets/onboarding_card.dart';
+import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -11,6 +12,15 @@ class Onboarding extends StatefulWidget {
 }
 
 class _OnboardingState extends State<Onboarding> {
+  final List<Color> cardColors = [
+    MyColors.sorteadorOrange,
+    MyColors.sorteadorPurpple,
+  ];
+
+  Color getColor(int index) {
+    return cardColors[index % cardColors.length];
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -22,7 +32,6 @@ class _OnboardingState extends State<Onboarding> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
           child: Column(
-            spacing: 40,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,45 +45,43 @@ class _OnboardingState extends State<Onboarding> {
                             padding: EdgeInsets.all(16),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16),
-                              gradient: LinearGradient(
-                                colors: [
-                                  Color(0xFF25D366),
-                                  Color(0xFF128C7E),
-                                ], // WhatsApp vibe
-                              ),
+                              gradient: MyColors.primaryGradient,
                             ),
                             child: Column(
                               spacing: 10,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  spacing: 10,
-                                  children: [
-                                    Icon(
-                                      Icons.workspace_premium,
-                                      color: Colors.white,
-                                    ),
-                                    Text(
-                                      "WhatsApp Premium",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
-                                ),
                                 Text(
-                                  "Receba seu amigo secreto direto no WhatsApp 📲",
+                                  "Crie seu Amigo Secreto em Segundos",
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: MyColors.neutral100,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                                 Text(
-                                  "Envie uma mensagem para o nós e receba seu resultado automaticamente.",
-                                  style: TextStyle(color: Colors.white70),
+                                  "Organize seus grupos de Amigo Secreto, edite as informações dos grupos e adicione participantes de forma simples e rápida",
+                                  style: TextStyle(
+                                    color: MyColors.neutral100.withValues(
+                                      alpha: 0.70,
+                                    ),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 30,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: FloatingActionButton(
+                                          onPressed: () {},
+                                          child: Text("Criar meu grupo agora"),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -83,13 +90,6 @@ class _OnboardingState extends State<Onboarding> {
                       ],
                     ),
                   ),
-                  Text(
-                    l10n.onboardingTitle,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  Text(
-                    'Crie seu grupo de amigo secreto em segundos! Preencha nome, e-mail e nome do grupo. Receba link e código para compartilhar no WhatsApp.',
-                  ),
                 ],
               ),
               Column(
@@ -97,43 +97,128 @@ class _OnboardingState extends State<Onboarding> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Como criar seu grupo!',
+                    'Como funciona?',
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                   Column(
                     spacing: 25,
                     children: [
-                      OnboardingCard(
+                      StepCard(
+                        step: "01",
                         icon: Icons.create,
-                        title: "1. Crie o seu grupo",
-                        subTitle: 'Preencha nome, e-mail e nome do grupo.',
+                        title: "Crie o seu grupo",
+                        description: 'Preencha nome, e-mail e nome do grupo.',
+                        color: getColor(0),
                       ),
-                      OnboardingCard(
+                      StepCard(
+                        step: "02",
                         icon: Icons.settings,
-                        title: "2. Preencha as informações",
-                        subTitle: 'Defina valor, data e regras do sorteio.',
+                        title: "Preencha as informações",
+                        description: 'Defina valor, data e regras do sorteio.',
+                        color: getColor(1),
                       ),
-                      OnboardingCard(
+                      StepCard(
+                        step: "03",
                         icon: Icons.group_add,
-                        title: "3. Adicione os participantes",
-                        subTitle:
+                        title: "Adicione os participantes",
+                        description:
                             'Inclua seus amigos ou compartilhe o convite.',
+                        color: getColor(2),
                       ),
-                      OnboardingCard(
+                      StepCard(
+                        step: "04",
                         icon: Icons.celebration,
-                        title: "4. Faça o sorteio",
-                        subTitle:
+                        title: "Faça o sorteio",
+                        description:
                             'Com tudo preenchido realize o sorteio e veja os resultados.',
+                        color: getColor(3),
                       ),
+                      _buildInfoCard(),
                     ],
                   ),
                 ],
               ),
-              SizedBox(height: 100,)
+              SizedBox(height: 100),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+Widget _buildInfoCard() {
+  return Container(
+    padding: const EdgeInsets.all(24),
+    decoration: BoxDecoration(
+      color: Colors.deepPurple,
+      borderRadius: BorderRadius.circular(16),
+    ),
+    clipBehavior: Clip.hardEdge,
+    child: Stack(
+      children: [
+        Positioned(
+          right: -32,
+          bottom: -32,
+          child: Container(
+            width: 128,
+            height: 128,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.black12,
+            ),
+          ),
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 8,
+                children: [
+                  const Text(
+                    'Totalmente Gratuito',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20,
+                      color: MyColors.neutral100,
+                    ),
+                  ),
+                  Text(
+                    'Organize quantos grupos quiser sem pagar nada. A diversão é por nossa conta!',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: MyColors.neutral100.withValues(alpha: 0.75),
+                      height: 1.5,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 16),
+            Container(
+              width: 72,
+              height: 72,
+              decoration: BoxDecoration(
+                color: MyColors.sorteadorOrange,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: const Icon(
+                Icons.volunteer_activism,
+                color: MyColors.neutral100,
+                size: 36,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
 }

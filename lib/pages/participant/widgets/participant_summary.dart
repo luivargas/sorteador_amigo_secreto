@@ -46,7 +46,7 @@ class _ParticipantSummaryState extends State<ParticipantSummary> {
         "$firstWord$lastWord",
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: Colors.white,
+          color: MyColors.neutral100,
           fontSize: 30,
         ),
       );
@@ -55,7 +55,7 @@ class _ParticipantSummaryState extends State<ParticipantSummary> {
       firstWord,
       style: TextStyle(
         fontWeight: FontWeight.bold,
-        color: Colors.white,
+        color: MyColors.neutral100,
         fontSize: 30,
       ),
     );
@@ -71,7 +71,7 @@ class _ParticipantSummaryState extends State<ParticipantSummary> {
           CustomSlidableAction(
             onPressed: (ctx) => _delete(ctx, widget.id),
             backgroundColor: const Color(0xFFFE4A49),
-            foregroundColor: Colors.white,
+            foregroundColor: MyColors.neutral100,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [

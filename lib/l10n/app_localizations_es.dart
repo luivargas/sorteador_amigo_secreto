@@ -52,6 +52,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get edit => 'Editar';
 
   @override
+  String get delete => 'Eliminar';
+
+  @override
+  String get archive => 'Archivar';
+
+  @override
   String errorTryAgain(String error) {
     return 'Error: $error, inténtalo de nuevo';
   }

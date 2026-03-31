@@ -159,31 +159,31 @@ class SecretSantaTextStyles {
 // ============================================================================
 
 class SecretSantaShadows {
-  static const List<BoxShadow> small = [
+  static List<BoxShadow> small = [
     BoxShadow(
-      color: Color.fromRGBO(17, 24, 39, 0.04),
+      color: SecretSantaColors.neutral900.withValues(alpha: 0.06),
       offset: Offset(0, 1),
       blurRadius: 3,
     ),
   ];
 
-  static const List<BoxShadow> medium = [
+  static List<BoxShadow> medium = [
     BoxShadow(
-      color: Color.fromRGBO(17, 24, 39, 0.06),
+      color: SecretSantaColors.neutral900.withValues(alpha: 0.06),
       offset: Offset(0, 14),
-      blurRadius: 40,
+      blurRadius: 8,
     ),
   ];
 
-  static const List<BoxShadow> large = [
+  static List<BoxShadow> large = [
     BoxShadow(
-      color: Color.fromRGBO(17, 24, 39, 0.08),
+      color: SecretSantaColors.neutral900.withValues(alpha: 0.06),
       offset: Offset(0, 20),
-      blurRadius: 60,
+      blurRadius: 15,
     ),
   ];
 
-  static const List<BoxShadow> button = [
+  static List<BoxShadow> button = [
     BoxShadow(
       color: Color.fromRGBO(249, 115, 22, 0.25),
       offset: Offset(0, 16),

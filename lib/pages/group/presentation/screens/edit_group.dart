@@ -11,7 +11,6 @@ import 'package:sorteador_amigo_secreto/pages/group/domain/entities/update_group
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/edit_group/edit_group_field.dart';
-import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class EditGroup extends StatefulWidget {

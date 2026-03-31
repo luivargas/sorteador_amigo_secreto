@@ -24,6 +24,8 @@
   "createGroupButton": "Crea gruppo",
 
   "edit": "Modifica",
+  "delete": "Elimina",
+  "archive": "Archivia",
   "errorTryAgain": "Errore: {error}, riprova",
   "@errorTryAgain": {
     "placeholders": { "error": { "type": "String" } }

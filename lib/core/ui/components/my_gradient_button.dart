@@ -38,7 +38,7 @@ class MyGradientButton extends StatelessWidget {
                       height: 24,
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
-                        color: Colors.white,
+                        color: MyColors.neutral100,
                       ),
                     ),
                   )
@@ -53,7 +53,7 @@ class MyGradientButton extends StatelessWidget {
                               title,
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: MyColors.neutral100,
                                 fontWeight: FontWeight.w900,
                               ),
                             ),

@@ -1,40 +1,85 @@
 import 'package:flutter/material.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
-class OnboardingCard extends StatelessWidget {
+class StepCard extends StatelessWidget {
+  final String step;
   final IconData icon;
   final String title;
-  final String subTitle;
-  const OnboardingCard({
+  final String description;
+  final Color color;
+  const StepCard({
     super.key,
+    required this.step,
     required this.icon,
     required this.title,
-    required this.subTitle,
+    required this.description, 
+    required this.color,
   });
+
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 20,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            gradient: MyColors.sorteadorGradient,
-            borderRadius: BorderRadius.all(Radius.circular(20)),
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: MyColors.neutral50,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: MyColors.neutral200.withAlpha(150),),
+        boxShadow: SecretSantaShadows.small
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 12,
+        children: [
+          Container(
+            width: 52,
+            height: 52,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Icon(icon, color: color, size: 28),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(icon, size: 25, color: Colors.white),
+          Row(
+            children: [
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 4,
+                  children: [
+                    Text(
+                      'PASSO $step',
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 2,
+                        color: color.withValues(alpha: 0.7),
+                      ),
+                    ),
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                        color: MyColors.neutral900,
+                      ),
+                    ),
+                    Text(
+                      description,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: MyColors.neutral600,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ),
-        Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [Text(title, style: TextStyle(fontWeight: FontWeight.bold),), Text(subTitle)],
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

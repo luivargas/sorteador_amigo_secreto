@@ -138,7 +138,7 @@ class ListParticipantsCard extends StatelessWidget {
               Row(
                 spacing: 5,
                 children: [
-                  Icon(Icons.group, color: MyColors.sorteadorPurpple),
+                  Icon(Icons.group, color: MyColors.sorteadorLilac),
                   Expanded(
                     child: Text(
                       AppLocalizations.of(context)!.participants(participantsList.length),
@@ -161,7 +161,7 @@ class ListParticipantsCard extends StatelessWidget {
                       },
                       icon: Icon(
                         Icons.add_circle_outline,
-                        color: MyColors.sorteadorPurpple,
+                        color: MyColors.sorteadorLilac,
                         size: 30,
                       ),
                     ),

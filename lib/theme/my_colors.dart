@@ -7,13 +7,14 @@ class MyColors {
   static Color sorteadorGreen = Color(0xFF22c55e);
   static Color sorteadorRed = Color(0xFFE11D48);
   static LinearGradient sorteadorGradient = LinearGradient(
-    colors: <Color>[Color(0xFFF97316), Color(0xFFd946ef)],
+    colors: <Color>[sorteadorOrange, sorteadorPurpple],
   );
     static LinearGradient sorteadorGradient2 = LinearGradient(
     colors: <Color>[Color(0xFFF97316), Color(0xFF333333)],
   );
   static Color sorteadorBackground = Color(0xFFFFF7ED);
-  static Color sorteadorPurpple = Color(0xFFd946ef);
+  static Color sorteadorLilac = Color(0xFFd946ef);
+  static Color sorteadorPurpple = Color(0xFF9121E0);
   static const Color neutral50 = Color(0xFFfafafa);
   static const Color neutral100 = Color(0xFFf5f5f5);
   static const Color neutral200 = Color(0xFFe5e5e5);
@@ -58,7 +59,7 @@ class MyColors {
   );
 
   static final LinearGradient avatarGradient = LinearGradient(
-    colors: [sorteadorOrange, sorteadorPurpple],
+    colors: [sorteadorOrange, sorteadorLilac],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );

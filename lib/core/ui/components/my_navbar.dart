@@ -18,7 +18,7 @@ class _MyNavbarState extends State<MyNavbar>
     with SingleTickerProviderStateMixin {
   late int currentPage;
   late TabController tabController;
-  final Color colors = Colors.white;
+  final Color colors = MyColors.neutral100;
 
   @override
   void initState() {
@@ -65,7 +65,7 @@ class _MyNavbarState extends State<MyNavbar>
         curve: Curves.decelerate,
         showIcon: true,
         width: 250,
-        barColor: MyColors.sorteadorOrange,
+        barColor: MyColors.sorteadorOrange.withAlpha(180),
         start: 2,
         end: 0,
         offset: 10,

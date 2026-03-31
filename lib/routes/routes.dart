@@ -11,7 +11,7 @@ final routes = GoRouter(
     ...groupRoutes,
     ...participantRoutes,
     ...authRoutes,
-    ...homeRoutes,
+    ...navRoutes,
     
   ],
 );
