@@ -1,3 +1,5 @@
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
+
 sealed class ApiResult<T> {
   const ApiResult();
   R when<R>({
@@ -19,8 +21,8 @@ final class Failure<T> extends ApiResult<T> {
 }
 
 class ApiError {
-  final String message;
+  final AppError error;
   final int? statusCode;
   final Object? raw;
-  const ApiError(this.message, {this.statusCode, this.raw});
+  const ApiError(this.error, {this.statusCode, this.raw});
 }

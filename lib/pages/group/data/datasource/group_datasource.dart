@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:sorteador_amigo_secreto/core/network/api_error_mapper.dart';
 import 'package:sorteador_amigo_secreto/core/network/api_result.dart';
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/create_group_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/update_group_model.dart';
@@ -20,13 +22,13 @@ class GroupDatasource extends GroupRepository {
     } on DioException catch (e) {
       return Failure(
         ApiError(
-          e.message ?? 'Erro inesperado',
+          ApiErrorMapper.map(e),
           statusCode: e.response?.statusCode,
           raw: e.response?.data,
         ),
       );
     } catch (e) {
-      return Failure(ApiError('Erro inesperado', raw: e));
+      return Failure(ApiError(AppError.unknow, raw: e));
     }
   }
 
@@ -52,13 +54,13 @@ class GroupDatasource extends GroupRepository {
     } on DioException catch (e) {
       return Failure(
         ApiError(
-          e.message ?? 'Erro inesperado',
+          ApiErrorMapper.map(e),
           statusCode: e.response?.statusCode,
           raw: e.response?.data,
         ),
       );
     } catch (e) {
-      return Failure(ApiError('Erro inesperado', raw: e));
+      return Failure(ApiError(AppError.unknow, raw: e));
     }
   }
 
@@ -79,13 +81,13 @@ class GroupDatasource extends GroupRepository {
     } on DioException catch (e) {
       return Failure(
         ApiError(
-          e.message ?? 'Erro inesperado',
+          ApiErrorMapper.map(e),
           statusCode: e.response?.statusCode,
           raw: e.response?.data,
         ),
       );
     } catch (e) {
-      return Failure(ApiError('Erro inesperado', raw: e));
+      return Failure(ApiError(AppError.unknow, raw: e));
     }
   }
 
@@ -100,13 +102,13 @@ class GroupDatasource extends GroupRepository {
     } on DioException catch (e) {
       return Failure(
         ApiError(
-          e.message ?? 'Erro inesperado',
+          ApiErrorMapper.map(e),
           statusCode: e.response?.statusCode,
           raw: e.response?.data,
         ),
       );
     } catch (e) {
-      return Failure(ApiError('Erro inesperado', raw: e));
+      return Failure(ApiError(AppError.unknow, raw: e));
     }
   }
 }

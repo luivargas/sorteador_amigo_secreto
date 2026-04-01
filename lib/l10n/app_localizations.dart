@@ -435,8 +435,14 @@ abstract class AppLocalizations {
   /// No description provided for @participants.
   ///
   /// In pt, this message translates to:
-  /// **'Participantes ({count})'**
-  String participants(int count);
+  /// **'Participantes'**
+  String get participants;
+
+  /// No description provided for @participantsSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'{count} pessoas cadastradas ao grupo'**
+  String participantsSubtitle(int count);
 
   /// No description provided for @viewAll.
   ///
@@ -725,6 +731,72 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Sem nome'**
   String get noName;
+
+  /// No description provided for @errorBadRequest.
+  ///
+  /// In pt, this message translates to:
+  /// **'Dados inválidos. Verifique as informações e tente novamente.'**
+  String get errorBadRequest;
+
+  /// No description provided for @errorUnauthorized.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sessão expirada. Faça login novamente.'**
+  String get errorUnauthorized;
+
+  /// No description provided for @errorForbidden.
+  ///
+  /// In pt, this message translates to:
+  /// **'Você não tem permissão para realizar esta ação.'**
+  String get errorForbidden;
+
+  /// No description provided for @errorNotFound.
+  ///
+  /// In pt, this message translates to:
+  /// **'O recurso solicitado não foi encontrado.'**
+  String get errorNotFound;
+
+  /// No description provided for @errorConflict.
+  ///
+  /// In pt, this message translates to:
+  /// **'Esta informação já existe.'**
+  String get errorConflict;
+
+  /// No description provided for @errorUnprocessable.
+  ///
+  /// In pt, this message translates to:
+  /// **'Dados inválidos. Verifique as informações e tente novamente.'**
+  String get errorUnprocessable;
+
+  /// No description provided for @errorTooManyRequests.
+  ///
+  /// In pt, this message translates to:
+  /// **'Muitas tentativas. Aguarde um momento e tente novamente.'**
+  String get errorTooManyRequests;
+
+  /// No description provided for @errorServer.
+  ///
+  /// In pt, this message translates to:
+  /// **'Erro no servidor. Tente novamente mais tarde.'**
+  String get errorServer;
+
+  /// No description provided for @errorTimeout.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tempo limite excedido. Verifique sua internet e tente novamente.'**
+  String get errorTimeout;
+
+  /// No description provided for @errorNoConnection.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sem conexão com a internet.'**
+  String get errorNoConnection;
+
+  /// No description provided for @errorUnknow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ocorreu um erro inesperado. Tente novamente.'**
+  String get errorUnknow;
 }
 
 class _AppLocalizationsDelegate

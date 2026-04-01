@@ -1,3 +1,4 @@
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -91,7 +92,7 @@ class _ViewParticipant extends State<ViewParticipant> {
             if (state.error != null) {
               AppAlert.show(
                 context,
-                message: state.error!,
+                message: state.error!.localize(context),
                 type: AlertType.error,
               );
               setState(() {

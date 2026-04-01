@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 
 class ParticipantState extends Equatable {
@@ -6,7 +7,7 @@ class ParticipantState extends Equatable {
   final bool created;
   final bool updated;
   final bool showed;
-  final String? error;
+  final AppError? error;
   final ShowParticipantModel? showParti;
 
   const ParticipantState({
@@ -32,7 +33,7 @@ class ParticipantState extends Equatable {
     bool? created,
     bool? updated,
     bool? showed,
-    String? error,
+    AppError? error,
     ShowParticipantModel? showParti,
     bool clearError = false,
     bool clearShowParti = false,

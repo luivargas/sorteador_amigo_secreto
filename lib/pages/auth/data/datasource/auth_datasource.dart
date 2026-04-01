@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:sorteador_amigo_secreto/core/network/api_error_mapper.dart';
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:sorteador_amigo_secreto/core/network/base_url.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 
@@ -19,17 +21,13 @@ class AuthDatasource extends AuthRepository {
       resp = await dio.post(requestToken, data: entity.toJson());
       return Success(resp);
     } on DioException catch (e) {
-      return Failure(
-        ApiError(
-          e.message ?? 'Erro inesperado',
-          statusCode: e.response?.statusCode,
-          raw: e.response?.data,
-        ),
-      );
+      return Failure(ApiError(
+        ApiErrorMapper.map(e),
+        statusCode: e.response?.statusCode,
+        raw: e.response?.data,
+      ));
     } catch (e) {
-      return Failure(
-        ApiError('Erro inesperado', statusCode: e.hashCode, raw: e),
-      );
+      return Failure(ApiError(AppError.unknow, raw: e));
     }
   }
 
@@ -45,17 +43,13 @@ class AuthDatasource extends AuthRepository {
           .toList();
       return Success(model);
     } on DioException catch (e) {
-      return Failure(
-        ApiError(
-          e.message ?? 'Erro inesperado',
-          statusCode: e.response?.statusCode,
-          raw: e.response?.data,
-        ),
-      );
+      return Failure(ApiError(
+        ApiErrorMapper.map(e),
+        statusCode: e.response?.statusCode,
+        raw: e.response?.data,
+      ));
     } catch (e) {
-      return Failure(
-        ApiError('Erro inesperado', statusCode: e.hashCode, raw: e),
-      );
+      return Failure(ApiError(AppError.unknow, raw: e));
     }
   }
 }

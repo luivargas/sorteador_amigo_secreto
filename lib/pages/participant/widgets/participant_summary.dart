@@ -63,92 +63,72 @@ class _ParticipantSummaryState extends State<ParticipantSummary> {
 
   @override
   Widget build(BuildContext context) {
-    return Slidable(
-      key: ValueKey(widget.id),
-      startActionPane: ActionPane(
-        motion: const ScrollMotion(),
-        children: [
-          CustomSlidableAction(
-            onPressed: (ctx) => _delete(ctx, widget.id),
-            backgroundColor: const Color(0xFFFE4A49),
-            foregroundColor: MyColors.neutral100,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(Icons.delete),
-                Text("Excluir", overflow: TextOverflow.ellipsis),
-              ],
-            ),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: InkWell(
-              onTap: () async {
-                final result = await context.pushNamed(
-                  'view_parti',
-                  extra: ShowParticipantArgs(
-                    partId: widget.id,
-                    groupToken: widget.groupToken,
-                  ),
-                );
-                if (result == true && context.mounted) {
-                  context.read<GroupCubit>().show(widget.groupCode, widget.groupToken);
-                }
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  border: BoxBorder.fromLTRB(
-                    top: BorderSide(color: Colors.grey.shade300),
-                  ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+          child: InkWell(
+            onTap: () async {
+              final result = await context.pushNamed(
+                'view_parti',
+                extra: ShowParticipantArgs(
+                  partId: widget.id,
+                  groupToken: widget.groupToken,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 16.0, bottom: 16),
-                  child: Row(
-                    spacing: 10,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: MyColors.sorteadorGradient,
-                            borderRadius: BorderRadius.circular(90),
+              );
+              if (result == true && context.mounted) {
+                context.read<GroupCubit>().show(widget.groupCode, widget.groupToken);
+              }
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                border: BoxBorder.fromLTRB(
+                  top: BorderSide(color: Colors.grey.shade300),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 16.0, bottom: 16),
+                child: Row(
+                  spacing: 10,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: MyColors.sorteadorGradient,
+                          borderRadius: BorderRadius.circular(90),
+                        ),
+                        width: 60,
+                        height: 60,
+                        child: Center(child: main()),
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.name,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          width: 60,
-                          height: 60,
-                          child: Center(child: main()),
-                        ),
+                          Text(
+                            widget.contact,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
                       ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.name,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Text(
-                              widget.contact,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Icon(Icons.arrow_forward_ios),
-                    ],
-                  ),
+                    ),
+                    Icon(Icons.arrow_forward_ios),
+                  ],
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

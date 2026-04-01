@@ -85,8 +85,9 @@
   "name": "Name",
   "addParticipantButton": "Add participant",
 
-  "participants": "Participants ({count})",
-  "@participants": {
+  "participants": "Participants",
+  "participantsSubtitle": "{count} people registered in the group",
+  "@participantsSubtitle": {
     "placeholders": { "count": { "type": "int" } }
   },
   "viewAll": "View all",
@@ -157,5 +158,17 @@
   "almostThereSubtitle": "Enter the code we sent to your email",
   "confirmCodeButton": "Confirm code",
 
-  "noName": "No name"
+  "noName": "No name",
+
+  "errorBadRequest": "Invalid data. Please check the information and try again.",
+  "errorUnauthorized": "Session expired. Please log in again.",
+  "errorForbidden": "You don't have permission to perform this action.",
+  "errorNotFound": "The requested resource was not found.",
+  "errorConflict": "This information already exists.",
+  "errorUnprocessable": "Invalid data. Please check the information and try again.",
+  "errorTooManyRequests": "Too many attempts. Please wait a moment and try again.",
+  "errorServer": "Server error. Please try again later.",
+  "errorTimeout": "Request timed out. Check your internet connection and try again.",
+  "errorNoConnection": "No internet connection.",
+  "errorUnknow": "An unexpected error occurred. Please try again."
 }

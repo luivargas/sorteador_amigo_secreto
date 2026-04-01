@@ -87,8 +87,8 @@ class _GroupCardState extends State<GroupCard> {
                     spacing: 5,
                     children: [
                       Icon(Icons.circle, color: widget.color, size: 10),
-                      Text( widget.isRaffled! ? l10n!.badgePending
-                        : l10n!.badgeRaffled,
+                      Text( widget.isRaffled! ? l10n!.badgeRaffled
+                        : l10n!.badgePending,
                         style: TextStyle(color: widget.color),
                       ),
                     ],

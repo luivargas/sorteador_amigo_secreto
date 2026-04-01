@@ -1,3 +1,4 @@
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,19 +59,18 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
               padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 0),
               child: BlocBuilder<AuthCubit, AuthState>(
                 builder: (context, state) {
-                  if (state.error != null) {
-                    Text(
-                      state.error!,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
-                      ),
-                      textAlign: TextAlign.center,
-                    );
-                  }
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     spacing: 20,
                     children: [
+                      if (state.error != null)
+                        Text(
+                          state.error!.localize(context),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       MyEmailFormField(
                         controller: _emailController,
                         readOnly: true,

@@ -5,9 +5,11 @@ import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/create_parti_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/show_parti_args.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/participants_list_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/contact_page.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/contacts_list.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/create_participant.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/participants_list_screen.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/view_participant.dart';
 
 List<RouteBase> participantRoutes = [
@@ -48,6 +50,19 @@ List<RouteBase> participantRoutes = [
           userId: extra.partId,
           groupToken: extra.groupToken,
         ),
+      );
+    },
+  ),
+  GoRoute(
+    name: 'participants_list',
+    path: '/participants_list',
+    builder: (BuildContext context, GoRouterState state) {
+      final extra = state.extra as ParticipantsListArgs;
+      return ParticipantsListScreen(
+        participants: extra.participants,
+        groupToken: extra.groupToken,
+        groupCode: extra.groupCode,
+        type: extra.type,
       );
     },
   ),

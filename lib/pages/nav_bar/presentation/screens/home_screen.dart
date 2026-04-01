@@ -1,3 +1,4 @@
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -42,7 +43,6 @@ class _HomeViewState extends State<_HomeView> {
 
   final List<Color> cardColors = [
     MyColors.sorteadorOrange,
-    MyColors.sorteadorLilac,
     MyColors.sorteadorPurpple,
   ];
 
@@ -74,10 +74,7 @@ class _HomeViewState extends State<_HomeView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 20,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: HomeCard(),
-            ),
+            HomeCard(),
             TextField(
               controller: _searchController,
               onChanged: (value) {
@@ -116,9 +113,9 @@ class _HomeViewState extends State<_HomeView> {
                               }
 
                               if (state.error != null) {
-                                final msg = state.error == 'sessionExpired'
+                                final msg = state.error == AppError.unauthorized
                                     ? l10n.sessionExpired
-                                    : l10n.errorLoadingGroups(state.error!);
+                                    : state.error!.localize(context);
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 20,
@@ -128,13 +125,27 @@ class _HomeViewState extends State<_HomeView> {
                               }
 
                               if (state.filtered.isEmpty) {
+                                final isSearching = state.search.isNotEmpty;
                                 return Padding(
                                   padding: const EdgeInsets.all(24),
                                   child: Center(
-                                    child: Text(
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.noGroupsFound,
+                                    child: Column(
+                                      spacing: 8,
+                                      children: [
+                                        Icon(
+                                          isSearching
+                                              ? Icons.search_off
+                                              : Icons.group_outlined,
+                                          size: 48,
+                                          color: Colors.grey,
+                                        ),
+                                        Text(
+                                          isSearching
+                                              ? '"${state.search}" — ${l10n.noGroupsFound.toLowerCase()}'
+                                              : l10n.noGroupsFound,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 );

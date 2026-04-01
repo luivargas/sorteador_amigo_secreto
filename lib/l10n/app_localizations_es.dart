@@ -184,8 +184,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get addParticipantButton => 'Agregar participante';
 
   @override
-  String participants(int count) {
-    return 'Participantes ($count)';
+  String get participants => 'Participantes';
+
+  @override
+  String participantsSubtitle(int count) {
+    return '$count personas registradas en el grupo';
   }
 
   @override
@@ -342,4 +345,42 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get noName => 'Sin nombre';
+
+  @override
+  String get errorBadRequest =>
+      'Datos inválidos. Verifica la información e intenta nuevamente.';
+
+  @override
+  String get errorUnauthorized => 'Sesión expirada. Inicia sesión nuevamente.';
+
+  @override
+  String get errorForbidden => 'No tienes permiso para realizar esta acción.';
+
+  @override
+  String get errorNotFound => 'El recurso solicitado no fue encontrado.';
+
+  @override
+  String get errorConflict => 'Esta información ya existe.';
+
+  @override
+  String get errorUnprocessable =>
+      'Datos inválidos. Verifica la información e intenta nuevamente.';
+
+  @override
+  String get errorTooManyRequests =>
+      'Demasiados intentos. Espera un momento e intenta nuevamente.';
+
+  @override
+  String get errorServer =>
+      'Error en el servidor. Intenta nuevamente más tarde.';
+
+  @override
+  String get errorTimeout =>
+      'Tiempo de espera agotado. Verifica tu conexión e intenta nuevamente.';
+
+  @override
+  String get errorNoConnection => 'Sin conexión a internet.';
+
+  @override
+  String get errorUnknow => 'Ocurrió un error inesperado. Intenta nuevamente.';
 }

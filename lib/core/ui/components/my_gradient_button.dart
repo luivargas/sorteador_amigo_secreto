@@ -43,23 +43,24 @@ class MyGradientButton extends StatelessWidget {
                     ),
                   )
                 : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     spacing: 10,
                     children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              title,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: MyColors.neutral100,
-                                fontWeight: FontWeight.w900,
-                              ),
+                      if (icon != null)
+                        Icon(icon, color: MyColors.neutral100, size: 20),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            title,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: MyColors.neutral100,
+                              fontWeight: FontWeight.w900,
                             ),
-                            if (subTitle != null) ...[subTitle!],
-                          ],
-                        ),
+                          ),
+                          if (subTitle != null) ...[subTitle!],
+                        ],
                       ),
                     ],
                   ),

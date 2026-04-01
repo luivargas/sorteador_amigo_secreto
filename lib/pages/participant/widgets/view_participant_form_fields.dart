@@ -8,6 +8,7 @@ import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 enum ParticipantRole { admin, participant, observer }
 
@@ -48,13 +49,57 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
     return null;
   }
 
+  String _roleLabel(String? role) {
+    switch (role) {
+      case 'admin':
+        return 'Administrador';
+      case 'participant':
+        return 'Participante';
+      default:
+        return role ?? 'Participante';
+    }
+  }
+
+  Color _roleColor(String? role) {
+    return role == 'admin' ? MyColors.sorteadorPurpple : MyColors.sorteadorOrange;
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final role = widget.participant?.role;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 10,
       children: [
+        if (role != null)
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: _roleColor(role).withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(999),
+              border: Border.all(color: _roleColor(role).withValues(alpha: 0.4)),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 6,
+              children: [
+                Icon(
+                  role == 'admin' ? Icons.shield_outlined : Icons.person_outline,
+                  size: 14,
+                  color: _roleColor(role),
+                ),
+                Text(
+                  _roleLabel(role),
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: _roleColor(role),
+                  ),
+                ),
+              ],
+            ),
+          ),
         LabeledField(
           label: l10n.name,
           child: MyNameFormField(
@@ -85,7 +130,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
             favorites: favoriteIsoList,
             navigatorHeight: 400,
             validator: PhoneValidator.compose([
-              PhoneValidator.validMobile(context),
+              PhoneValidator.valid(context),
             ]),
           ),
         ),

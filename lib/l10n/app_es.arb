@@ -85,8 +85,9 @@
   "name": "Nombre",
   "addParticipantButton": "Agregar participante",
 
-  "participants": "Participantes ({count})",
-  "@participants": {
+  "participants": "Participantes",
+  "participantsSubtitle": "{count} personas registradas en el grupo",
+  "@participantsSubtitle": {
     "placeholders": { "count": { "type": "int" } }
   },
   "viewAll": "Ver todos",
@@ -157,5 +158,17 @@
   "almostThereSubtitle": "Ingresa el código que enviamos a tu correo electrónico",
   "confirmCodeButton": "Confirmar código",
 
-  "noName": "Sin nombre"
+  "noName": "Sin nombre",
+
+  "errorBadRequest": "Datos inválidos. Verifica la información e intenta nuevamente.",
+  "errorUnauthorized": "Sesión expirada. Inicia sesión nuevamente.",
+  "errorForbidden": "No tienes permiso para realizar esta acción.",
+  "errorNotFound": "El recurso solicitado no fue encontrado.",
+  "errorConflict": "Esta información ya existe.",
+  "errorUnprocessable": "Datos inválidos. Verifica la información e intenta nuevamente.",
+  "errorTooManyRequests": "Demasiados intentos. Espera un momento e intenta nuevamente.",
+  "errorServer": "Error en el servidor. Intenta nuevamente más tarde.",
+  "errorTimeout": "Tiempo de espera agotado. Verifica tu conexión e intenta nuevamente.",
+  "errorNoConnection": "Sin conexión a internet.",
+  "errorUnknow": "Ocurrió un error inesperado. Intenta nuevamente."
 }

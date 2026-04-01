@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 
 class HomeState extends Equatable {
@@ -6,7 +7,7 @@ class HomeState extends Equatable {
   final List<AuthGroupModel> filtered;
   final String search;
   final bool isLoading;
-  final String? error;
+  final AppError? error;
 
   const HomeState({
     required this.groups,
@@ -31,7 +32,7 @@ class HomeState extends Equatable {
     List<AuthGroupModel>? filtered,
     String? search,
     bool? isLoading,
-    String? error,
+    AppError? error,
     bool clearError = false,
   }) {
     return HomeState(

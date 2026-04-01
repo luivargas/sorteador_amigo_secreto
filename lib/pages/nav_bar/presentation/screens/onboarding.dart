@@ -41,7 +41,7 @@ class _OnboardingState extends State<Onboarding> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 30),
+                    padding: const EdgeInsets.only(bottom: 30),
                     child: Row(
                       children: [
                         Expanded(

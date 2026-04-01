@@ -54,7 +54,7 @@ class _CreateParticipantFormFields extends State<CreateParticipantFormFields> {
             controller: widget.phoneController,
             textInputAction: TextInputAction.next,
             validator: PhoneValidator.compose([
-              PhoneValidator.validMobile(context),
+              PhoneValidator.valid(context),
             ]),
           ),
         ),

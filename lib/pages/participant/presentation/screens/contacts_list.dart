@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
@@ -381,7 +382,7 @@ class _ContactListState extends State<ContactList> {
         failure: (f) {
           errorMsg = l10nConfirm.errorAddingContact(
             contact.displayName ?? '',
-            f.message,
+            f.error.localize(context),
           );
         },
       );

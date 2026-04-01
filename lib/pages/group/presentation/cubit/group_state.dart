@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
 
 class GroupState extends Equatable {
@@ -7,7 +8,7 @@ class GroupState extends Equatable {
   final bool updated;
   final bool deleted;
   final bool raffled;
-  final String? error;
+  final AppError? error;
   final ShowGroupModel? group;
 
   const GroupState({
@@ -36,7 +37,7 @@ class GroupState extends Equatable {
     bool? updated,
     bool? deleted,
     bool? raffled,
-    String? error,
+    AppError? error,
     ShowGroupModel? group,
     bool clearError = false,
     bool clearGroup = false,

@@ -1,3 +1,4 @@
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -78,7 +79,7 @@ class _CreateParticipant extends State<CreateParticipant> {
               await AppDialog.show(
                 context: context,
                 title: AppLocalizations.of(context)!.errorTitle,
-                message: state.error!,
+                message: state.error!.localize(context),
               );
             }
           },

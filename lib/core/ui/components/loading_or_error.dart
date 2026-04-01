@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class LoadingOrError extends StatelessWidget {
   final bool isLoading;
-  final String? error;
+  final AppError? error;
   final Widget child;
   final VoidCallback? onRetry;
 
@@ -32,7 +33,7 @@ class LoadingOrError extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              l10n.errorTryAgain(error!),
+              error!.localize(context),
               textAlign: TextAlign.center,
             ),
             if (onRetry != null)

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 
 class AuthState extends Equatable {
@@ -6,7 +7,7 @@ class AuthState extends Equatable {
   final bool validated;
   final bool requested;
   final bool sessionChecked;
-  final String? error;
+  final AppError? error;
   final List<AuthGroupModel>? groups;
 
   const AuthState({
@@ -32,7 +33,7 @@ class AuthState extends Equatable {
     bool? validated,
     bool? requested,
     bool? sessionChecked,
-    String? error,
+    AppError? error,
     List<AuthGroupModel>? groups,
     bool clearError = false,
     bool clearGroups = false,

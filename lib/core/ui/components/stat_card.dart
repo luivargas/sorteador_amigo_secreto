@@ -1,68 +1,64 @@
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/core/ui/alerts/dialog.dart';
-import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart' hide AlertType;
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart'
+    hide AlertType;
 
 class StatCard extends StatelessWidget {
   final String value;
   final String label;
-  final IconData icon;
+  final String? subLabel; // informação secundária, ex: horário
+  final IconData? icon;
+  final Color iconColor;
+  final Color color;
 
   const StatCard({
     super.key,
     required this.value,
     required this.label,
-    required this.icon,
+    this.subLabel,
+    this.icon,
+    required this.iconColor,
+    required this.color,
   });
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        AppDialog.show(context: context, title: value, message: label);
-      },
-      child: Container(
-        padding: EdgeInsets.all(28),
-        decoration: BoxDecoration(
-          color: SecretSantaColors.neutral50,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: MyColors.sorteadorOrange, width: 1),
-          boxShadow: SecretSantaShadows.medium,
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: SecretSantaColors.neutral200.withValues(alpha: 0.8),
         ),
-        child: Column(
-          spacing: 12,
-          children: [
-            Row(
-              children: [
-                Icon(icon, size: 40, color: MyColors.sorteadorLilac),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Text(
-                        value,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w900,
-                          color: MyColors.sorteadorOrange,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Text(
-                        label,
-                        style: SecretSantaTextStyles.labelSmall.copyWith(
-                          color: SecretSantaColors.neutral600,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+        boxShadow: SecretSantaShadows.medium,
+      ),
+      child: Column(
+        spacing: 6,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, size: 24, color: iconColor),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: iconColor,
+              overflow: TextOverflow.ellipsis,
             ),
-          ],
-        ),
+          ),
+          Text(
+            label,
+            style: SecretSantaTextStyles.labelSmall.copyWith(
+              fontWeight: FontWeight.w700,
+              fontSize: 14,
+            ),
+          ),
+          if (subLabel != null)
+            Text(
+              subLabel!,
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+            ),
+        ],
       ),
     );
   }

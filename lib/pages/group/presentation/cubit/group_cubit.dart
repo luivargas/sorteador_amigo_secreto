@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:sorteador_amigo_secreto/core/util/cubit_ext.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/create_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/update_group_entity.dart';
@@ -16,11 +17,11 @@ class GroupCubit extends Cubit<GroupState> {
       result.when(
         success: (_) => emit(state.copyWith(isLoading: false, created: true)),
         failure: (f) => emit(
-          state.copyWith(isLoading: false, error: f.message, created: false),
+          state.copyWith(isLoading: false, error: f.error, created: false),
         ),
       );
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false));
+      emit(state.copyWith(error: AppError.unknow, isLoading: false));
     }
   }
 
@@ -30,7 +31,7 @@ class GroupCubit extends Cubit<GroupState> {
       await groupUsecases.delete(token);
       emit(state.copyWith(isLoading: false, deleted: true));
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false));
+      emit(state.copyWith(error: AppError.unknow, isLoading: false));
     }
   }
 
@@ -41,11 +42,11 @@ class GroupCubit extends Cubit<GroupState> {
       result.when(
         success: (s) => emit(state.copyWith(group: s, isLoading: false)),
         failure: (f) => emit(
-          state.copyWith(isLoading: false, error: f.message, clearGroup: true),
+          state.copyWith(isLoading: false, error: f.error, clearGroup: true),
         ),
       );
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false));
+      emit(state.copyWith(error: AppError.unknow, isLoading: false));
     }
   }
 
@@ -56,11 +57,11 @@ class GroupCubit extends Cubit<GroupState> {
       result.when(
         success: (_) => emit(state.copyWith(isLoading: false, updated: true)),
         failure: (f) => emit(
-          state.copyWith(isLoading: false, error: f.message, updated: false),
+          state.copyWith(isLoading: false, error: f.error, updated: false),
         ),
       );
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false));
+      emit(state.copyWith(error: AppError.unknow, isLoading: false));
     }
   }
 
@@ -71,11 +72,11 @@ class GroupCubit extends Cubit<GroupState> {
       result.when(
         success: (_) => emit(state.copyWith(raffled: true, isLoading: false)),
         failure: (f) => emit(
-          state.copyWith(isLoading: false, error: f.message, raffled: false),
+          state.copyWith(isLoading: false, error: f.error, raffled: false),
         ),
       );
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false, raffled: false));
+      emit(state.copyWith(error: AppError.unknow, isLoading: false, raffled: false));
     }
   }
 }

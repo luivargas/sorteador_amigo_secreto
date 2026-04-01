@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:sorteador_amigo_secreto/core/util/cubit_ext.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/update_participant_entity.dart';
@@ -17,11 +18,11 @@ class ParticipantCubit extends Cubit<ParticipantState> {
       result.when(
         success: (_) => emit(state.copyWith(isLoading: false, created: true)),
         failure: (f) => emit(
-          state.copyWith(isLoading: false, error: f.message, created: false),
+          state.copyWith(isLoading: false, error: f.error, created: false),
         ),
       );
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false, created: false));
+      emit(state.copyWith(error: AppError.unknow, isLoading: false, created: false));
     }
   }
 
@@ -34,11 +35,11 @@ class ParticipantCubit extends Cubit<ParticipantState> {
         success: (s) =>
             emit(state.copyWith(isLoading: false, showed: true, showParti: s)),
         failure: (f) => emit(
-          state.copyWith(isLoading: false, error: f.message, showed: false),
+          state.copyWith(isLoading: false, error: f.error, showed: false),
         ),
       );
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false, showed: false));
+      emit(state.copyWith(error: AppError.unknow, isLoading: false, showed: false));
     }
   }
 
@@ -54,11 +55,11 @@ class ParticipantCubit extends Cubit<ParticipantState> {
       result.when(
         success: (_) => emit(state.copyWith(isLoading: false, updated: true)),
         failure: (f) => emit(
-          state.copyWith(isLoading: false, error: f.message, updated: false),
+          state.copyWith(isLoading: false, error: f.error, updated: false),
         ),
       );
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false, updated: false));
+      emit(state.copyWith(error: AppError.unknow, isLoading: false, updated: false));
     }
   }
 }

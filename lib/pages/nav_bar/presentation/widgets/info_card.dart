@@ -34,7 +34,6 @@ class InfoCard extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       child: Stack(
         children: [
-          // decoração
           Positioned(
             right: -32,
             bottom: -32,

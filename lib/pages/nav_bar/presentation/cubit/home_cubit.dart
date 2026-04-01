@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/database/auth_db.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/device/device_info.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
@@ -31,7 +32,7 @@ class HomeCubit extends Cubit<HomeState> {
     final email = _authDB.email;
     final token = _authDB.token;
     if (email == null || token == null) {
-      emit(state.copyWith(isLoading: false, error: 'sessionExpired'));
+      emit(state.copyWith(isLoading: false, error: AppError.unauthorized));
       return;
     }
 
@@ -45,10 +46,10 @@ class HomeCubit extends Cubit<HomeState> {
       final result = await _authUsecases.validate(entity);
       result.when(
         success: (groups) => loadGroups(groups),
-        failure: (f) => emit(state.copyWith(isLoading: false, error: f.message)),
+        failure: (f) => emit(state.copyWith(isLoading: false, error: f.error)),
       );
     } catch (e) {
-      emit(state.copyWith(isLoading: false, error: e.toString()));
+      emit(state.copyWith(isLoading: false, error: AppError.unknow));
     }
   }
 
@@ -59,7 +60,7 @@ class HomeCubit extends Cubit<HomeState> {
       final filtered = _applyFilter(updated, state.search);
       emit(state.copyWith(groups: updated, filtered: filtered));
     } catch (e) {
-      emit(state.copyWith(error: e.toString()));
+      emit(state.copyWith(error: AppError.unknow));
     }
   }
 

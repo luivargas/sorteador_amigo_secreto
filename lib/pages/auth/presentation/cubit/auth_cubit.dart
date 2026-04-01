@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:sorteador_amigo_secreto/core/util/cubit_ext.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/database/auth_db.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/device/device_info.dart';
@@ -44,14 +45,14 @@ class AuthCubit extends Cubit<AuthState> {
         failure: (f) => safeEmit(
           state.copyWith(
             isLoading: false,
-            error: f.message,
+            error: f.error,
             sessionChecked: true,
           ),
         ),
       );
     } catch (e) {
       safeEmit(
-        state.copyWith(isLoading: false, error: e.toString(), sessionChecked: true),
+        state.copyWith(isLoading: false, error: AppError.unknow, sessionChecked: true),
       );
     }
   }
@@ -67,18 +68,18 @@ class AuthCubit extends Cubit<AuthState> {
           safeEmit(state.copyWith(isLoading: false, requested: true));
         },
         failure: (f) => safeEmit(
-          state.copyWith(isLoading: false, error: f.message, clearGroups: true),
+          state.copyWith(isLoading: false, error: f.error, clearGroups: true),
         ),
       );
     } catch (e) {
-      safeEmit(state.copyWith(error: e.toString(), isLoading: false));
+      safeEmit(state.copyWith(error: AppError.unknow, isLoading: false));
     }
   }
 
   Future<void> validateToken(String token) async {
     final email = authDB.email;
     if (email == null) {
-      safeEmit(state.copyWith(error: 'E-mail não encontrado. Tente novamente.', isLoading: false));
+      safeEmit(state.copyWith(error: AppError.unauthorized, isLoading: false));
       return;
     }
 
@@ -97,11 +98,11 @@ class AuthCubit extends Cubit<AuthState> {
           safeEmit(state.copyWith(isLoading: false, validated: true, groups: model));
         },
         failure: (f) => safeEmit(
-          state.copyWith(isLoading: false, error: f.message, validated: false),
+          state.copyWith(isLoading: false, error: f.error, validated: false),
         ),
       );
     } catch (e) {
-      safeEmit(state.copyWith(error: e.toString(), isLoading: false));
+      safeEmit(state.copyWith(error: AppError.unknow, isLoading: false));
     }
   }
 }

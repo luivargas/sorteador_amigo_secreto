@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/data/datasource/api_error_mapper.dart';
+import 'package:sorteador_amigo_secreto/core/network/api_error_mapper.dart';
 import 'package:sorteador_amigo_secreto/core/network/api_result.dart';
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/create_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/update_participant_model.dart';
@@ -34,7 +35,7 @@ class ParticipantDatasource extends ParticipantRepository {
         ),
       );
     } catch (e) {
-      return Failure(ApiError('Erro inesperado', raw: e));
+      return Failure(ApiError(AppError.unknow, raw: e));
     }
   }
 
@@ -56,7 +57,7 @@ class ParticipantDatasource extends ParticipantRepository {
         ),
       );
     } catch (e) {
-      return Failure(ApiError('Erro inesperado', raw: e));
+      return Failure(ApiError(AppError.unknow, raw: e));
     }
   }
 
@@ -83,7 +84,7 @@ class ParticipantDatasource extends ParticipantRepository {
         ),
       );
     } catch (e) {
-      return Failure(ApiError('Erro inesperado', raw: e));
+      return Failure(ApiError(AppError.unknow, raw: e));
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +7,7 @@ import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_email_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
+import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/request_token_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
@@ -38,11 +40,17 @@ class _EnterGroup extends State<RequestTokenScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
-      listenWhen: (p, c) => !p.requested && c.requested,
-      listener: (context, state) => context.pushNamed(
-        'validate_token',
-        extra: _emailController.text.trim(),
-      ),
+      listenWhen: (p, c) =>
+          (!p.requested && c.requested) ||
+          (p.error != c.error && c.error != null),
+      listener: (context, state) {
+        if (state.requested) {
+          context.pushNamed('validate_token', extra: _emailController.text.trim());
+        }
+        if (state.error != null) {
+          AppAlert.show(context, message: state.error!.localize(context), type: AlertType.error);
+        }
+      },
       child: Form(
         key: _formKey,
         child: Scaffold(

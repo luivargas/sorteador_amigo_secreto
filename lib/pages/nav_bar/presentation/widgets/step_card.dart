@@ -13,10 +13,9 @@ class StepCard extends StatelessWidget {
     required this.step,
     required this.icon,
     required this.title,
-    required this.description, 
+    required this.description,
     required this.color,
   });
-
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +24,10 @@ class StepCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: MyColors.neutral50,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: MyColors.neutral200.withAlpha(150),),
-        boxShadow: SecretSantaShadows.small
+        border: Border.all(
+          color: SecretSantaColors.neutral200.withValues(alpha: 0.8),
+        ),
+        boxShadow: SecretSantaShadows.small,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

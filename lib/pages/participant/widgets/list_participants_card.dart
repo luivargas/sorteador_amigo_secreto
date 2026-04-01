@@ -1,15 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:math';
-
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/create_parti_args.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/widgets/participant_summary.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/participants_list_args.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
@@ -19,6 +13,7 @@ class ListParticipantsCard extends StatelessWidget {
   final String groupCode;
   final BadgeType type;
   final List<ShowParticipantModel> participantsList;
+
   const ListParticipantsCard({
     super.key,
     required this.participantsList,
@@ -27,157 +22,183 @@ class ListParticipantsCard extends StatelessWidget {
     required this.groupCode,
   });
 
+  String _initials(String name) {
+    final parts = name.trim().split(' ');
+    if (parts.length == 1) return parts[0][0].toUpperCase();
+    return '${parts.first[0]}${parts.last[0]}'.toUpperCase();
+  }
+
+  void _goToList(BuildContext context) {
+    context.pushNamed(
+      'participants_list',
+      extra: ParticipantsListArgs(
+        participants: participantsList,
+        groupToken: groupToken,
+        groupCode: groupCode,
+        type: type,
+      ),
+    );
+  }
+
+  Widget _buildOverlappingAvatars() {
+    const maxVisible = 6;
+    const avatarSize = 44.0;
+    const step = 30.0;
+
+    final visibleList = participantsList.take(maxVisible).toList();
+    final extra = participantsList.length - maxVisible;
+    final itemCount = visibleList.length + (extra > 0 ? 1 : 0);
+    final totalWidth = avatarSize + (itemCount - 1) * step;
+
+    return SizedBox(
+      height: avatarSize,
+      width: totalWidth,
+      child: Stack(
+        children: [
+          ...visibleList.asMap().entries.map((entry) {
+            return Positioned(
+              left: entry.key * step,
+              child: _AvatarItem(
+                initials: _initials(entry.value.name),
+                index: entry.key,
+              ),
+            );
+          }),
+          if (extra > 0)
+            Positioned(
+              left: visibleList.length * step,
+              child: _ExtraAvatar(count: extra),
+            ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    buildCollapsed1() {
-      return Column(
-        children: [
-          ListView.separated(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            separatorBuilder: (_, _) => Container(),
-            itemCount: min(participantsList.length, 6),
-            itemBuilder: (context, index) {
-              final f = participantsList[index];
-              return ParticipantSummary(
-                contact: f.email ?? f.phone ?? "",
-                name: f.name,
-                id: f.id,
-                groupToken: groupToken,
-                groupCode: groupCode,
-              );
-            },
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Builder(
-                builder: (context) {
-                  var controller = ExpandableController.of(
-                    context,
-                    required: true,
-                  )!;
-                  if (participantsList.length > 6) {
-                    return Expanded(
-                      child: ElevatedButton.icon(
-                        label: Text(AppLocalizations.of(context)!.viewAll),
-                        onPressed: () {
-                          controller.toggle();
-                        },
-                        icon: Icon(Icons.keyboard_arrow_down, size: 30),
-                      ),
-                    );
-                  }
-                  return Container();
-                },
-              ),
-            ],
-          ),
-        ],
-      );
-    }
+    final l10n = AppLocalizations.of(context)!;
 
-    buildExpanded1() {
-      return Column(
-        children: [
-          ListView.separated(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            separatorBuilder: (_, _) => Container(),
-            itemCount: participantsList.length,
-            itemBuilder: (context, index) {
-              final p = participantsList[index];
-              return ParticipantSummary(
-                contact: p.email ?? p.phone ?? "",
-                name: p.name,
-                id: p.id,
-                groupToken: groupToken,
-                groupCode: groupCode,
-              );
-            },
+    return InkWell(
+      onTap: () => _goToList(context),
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        decoration: BoxDecoration(
+          color: SecretSantaColors.neutral50,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: SecretSantaColors.neutral200.withValues(alpha: 0.8),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Builder(
-                builder: (context) {
-                  var controller = ExpandableController.of(
-                    context,
-                    required: true,
-                  )!;
-                  return Expanded(
-                    child: ElevatedButton.icon(
-                      label: Text(AppLocalizations.of(context)!.viewLess),
-                      onPressed: () {
-                        controller.toggle();
-                      },
-                      icon: Icon(Icons.keyboard_arrow_up, size: 30),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ],
-      );
-    }
-
-    return ExpandableNotifier(
-      child: ScrollOnExpand(
-        child: Container(
-          padding: EdgeInsets.all(28),
-          decoration: BoxDecoration(
-            color: SecretSantaColors.neutral50,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: MyColors.sorteadorOrange, width: 1),
-            boxShadow: SecretSantaShadows.medium,
-          ),
-          child: Column(
-            spacing: 20,
-            children: [
-              Row(
-                spacing: 5,
-                children: [
-                  Icon(Icons.group, color: MyColors.sorteadorLilac),
-                  Expanded(
-                    child: Text(
-                      AppLocalizations.of(context)!.participants(participantsList.length),
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  if (type == BadgeType.pending) ...[
-                    IconButton(
-                      onPressed: () async {
-                        final result = await context.pushNamed(
-                          'contacts',
-                          extra: CreateParticipantArgs(
-                            groupToken: groupToken,
-                            groupCode: groupCode,
-                          ),
-                        );
-                        if (result == true) {
-                          context.read<GroupCubit>().show(groupCode, groupToken);
-                        }
-                      },
-                      icon: Icon(
-                        Icons.add_circle_outline,
-                        color: MyColors.sorteadorLilac,
-                        size: 30,
+          boxShadow: SecretSantaShadows.medium,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.participants,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
                       ),
+                    ),
+                    Text(
+                      l10n.participantsSubtitle(participantsList.length),
+                      style: const TextStyle(fontSize: 12),
                     ),
                   ],
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expandable(
-                    collapsed: buildCollapsed1(),
-                    expanded: buildExpanded1(),
-                  ),
-                ],
-              ),
-            ],
+                ),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: MyColors.sorteadorPurpple,
+                  size: 20,
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            if (participantsList.isEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text(
+                  l10n.noParticipantsSelected,
+                  style: TextStyle(color: MyColors.neutral400, fontSize: 13),
+                ),
+              )
+            else
+              _buildOverlappingAvatars(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+final List<Color> _cardColors = [
+  MyColors.sorteadorOrange,
+  MyColors.sorteadorPurpple,
+];
+
+Color _getColor(int index) => _cardColors[index % _cardColors.length];
+
+class _AvatarItem extends StatelessWidget {
+  final int index;
+  final String initials;
+
+  const _AvatarItem({required this.initials, required this.index});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 44,
+      height: 44,
+      decoration: BoxDecoration(
+        color: _getColor(index),
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 2),
+      ),
+      child: Center(
+        child: Text(
+          initials,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ExtraAvatar extends StatelessWidget {
+  final int count;
+
+  const _ExtraAvatar({required this.count});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 44,
+      height: 44,
+      decoration: BoxDecoration(
+        color: SecretSantaColors.neutral200,
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 2),
+      ),
+      child: Center(
+        child: Text(
+          '+$count',
+          style: TextStyle(
+            color: SecretSantaColors.neutral600,
+            fontWeight: FontWeight.bold,
+            fontSize: 13,
           ),
         ),
       ),
