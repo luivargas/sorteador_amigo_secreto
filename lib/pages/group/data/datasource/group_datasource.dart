@@ -28,7 +28,7 @@ class GroupDatasource extends GroupRepository {
         ),
       );
     } catch (e) {
-      return Failure(ApiError(AppError.unknow, raw: e));
+      return Failure(ApiError(AppError.unknown, raw: e));
     }
   }
 
@@ -60,7 +60,7 @@ class GroupDatasource extends GroupRepository {
         ),
       );
     } catch (e) {
-      return Failure(ApiError(AppError.unknow, raw: e));
+      return Failure(ApiError(AppError.unknown, raw: e));
     }
   }
 
@@ -87,7 +87,7 @@ class GroupDatasource extends GroupRepository {
         ),
       );
     } catch (e) {
-      return Failure(ApiError(AppError.unknow, raw: e));
+      return Failure(ApiError(AppError.unknown, raw: e));
     }
   }
 
@@ -108,7 +108,7 @@ class GroupDatasource extends GroupRepository {
         ),
       );
     } catch (e) {
-      return Failure(ApiError(AppError.unknow, raw: e));
+      return Failure(ApiError(AppError.unknown, raw: e));
     }
   }
 }

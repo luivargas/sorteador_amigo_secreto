@@ -116,7 +116,7 @@
   "contactNotValid": "Este contacto debe tener nombre y teléfono",
   "contactsTitle": "Seleccionar Participantes",
   "contactsSubtitle": "Elige los contactos para el sorteo",
-  "searchContacts": "Buscar contactos",
+  "searchParticipants": "Buscar participantes",
   "yourContacts": "Tus Contactos",
   "contactPermissionDenied": "Permiso de contacto no concedido",
   "confirmButton": "Confirmar ({count})",
@@ -170,5 +170,9 @@
   "errorServer": "Error en el servidor. Intenta nuevamente más tarde.",
   "errorTimeout": "Tiempo de espera agotado. Verifica tu conexión e intenta nuevamente.",
   "errorNoConnection": "Sin conexión a internet.",
-  "errorUnknow": "Ocurrió un error inesperado. Intenta nuevamente."
+  "errorUnknow": "Ocurrió un error inesperado. Intenta nuevamente.",
+  "statusConfirmed": "Confirmado",
+  "statusPending": "Pendiente",
+  "filterAll": "Todos",
+  "needMoreParticipants": "Agrega al menos 2 participantes para realizar el sorteo"
 }

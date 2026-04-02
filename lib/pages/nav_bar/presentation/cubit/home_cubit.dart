@@ -22,7 +22,7 @@ class HomeCubit extends Cubit<HomeState> {
   ) : super(HomeState.initial());
 
   void loadGroups(List<AuthGroupModel> groups) {
-    final filtered = _applyFilter(groups, state.search);
+    final filtered = _applyFilter(groups, state.search, state.filter);
     emit(state.copyWith(groups: groups, filtered: filtered, isLoading: false));
   }
 
@@ -49,7 +49,7 @@ class HomeCubit extends Cubit<HomeState> {
         failure: (f) => emit(state.copyWith(isLoading: false, error: f.error)),
       );
     } catch (e) {
-      emit(state.copyWith(isLoading: false, error: AppError.unknow));
+      emit(state.copyWith(isLoading: false, error: AppError.unknown));
     }
   }
 
@@ -57,23 +57,44 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       await _groupUsecases.delete(token);
       final updated = state.groups.where((g) => g.code != code).toList();
-      final filtered = _applyFilter(updated, state.search);
+      final filtered = _applyFilter(updated, state.search, state.filter);
       emit(state.copyWith(groups: updated, filtered: filtered));
     } catch (e) {
-      emit(state.copyWith(error: AppError.unknow));
+      emit(state.copyWith(error: AppError.unknown));
     }
   }
 
   void onSearchChanged(String value) {
     final newSearch = value.trim();
     if (newSearch == state.search) return;
-    final filtered = _applyFilter(state.groups, newSearch);
+    final filtered = _applyFilter(state.groups, newSearch, state.filter);
     emit(state.copyWith(search: newSearch, filtered: filtered));
   }
 
-  List<AuthGroupModel> _applyFilter(List<AuthGroupModel> list, String query) {
+  void onFilterChanged(GroupFilter filter) {
+    if (filter == state.filter) return;
+    final filtered = _applyFilter(state.groups, state.search, filter);
+    emit(state.copyWith(filter: filter, filtered: filtered));
+  }
+
+  List<AuthGroupModel> _applyFilter(
+    List<AuthGroupModel> list,
+    String query,
+    GroupFilter filter,
+  ) {
+    var result = list;
+
+    if (filter == GroupFilter.raffled) {
+      result = result.where((g) => g.isRaffled).toList();
+    } else if (filter == GroupFilter.pending) {
+      result = result.where((g) => !g.isRaffled).toList();
+    }
+
     final q = query.toLowerCase();
-    if (q.isEmpty) return list;
-    return list.where((g) => g.name.toLowerCase().contains(q)).toList();
+    if (q.isNotEmpty) {
+      result = result.where((g) => g.name.toLowerCase().contains(q)).toList();
+    }
+
+    return result;
   }
 }

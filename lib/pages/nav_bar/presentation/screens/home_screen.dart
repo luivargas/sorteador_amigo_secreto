@@ -4,12 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_search_bar.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_card.dart';
 import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/widgets/home_card.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
@@ -40,14 +42,27 @@ class _HomeView extends StatefulWidget {
 class _HomeViewState extends State<_HomeView> {
   final RefreshController _refreshController = RefreshController();
   final TextEditingController _searchController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  bool _searchBarElevated = false;
 
   final List<Color> cardColors = [
     MyColors.sorteadorOrange,
     MyColors.sorteadorPurpple,
   ];
 
-  Color getColor(int index) {
-    return cardColors[index % cardColors.length];
+  Color getColor(int index) => cardColors[index % cardColors.length];
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    final elevated = _scrollController.offset > 0;
+    if (elevated != _searchBarElevated) {
+      setState(() => _searchBarElevated = elevated);
+    }
   }
 
   Future<void> _onRefresh() async {
@@ -59,142 +74,251 @@ class _HomeViewState extends State<_HomeView> {
   void dispose() {
     _searchController.dispose();
     _refreshController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: MyAppBar(),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 20,
-          children: [
-            HomeCard(),
-            TextField(
-              controller: _searchController,
-              onChanged: (value) {
-                context.read<HomeCubit>().onSearchChanged(value);
-              },
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.search),
-                hintText: l10n?.searchGroup,
-              ),
-            ),
-            Text(l10n!.homeTitle, style: Theme.of(context).textTheme.titleSmall,),
+      body: Column(
+        children: [
+          // Barra de busca + filtros: fora do scroll, sem altura fixa
+          _SearchBar(
+            searchController: _searchController,
+            l10n: l10n,
+            elevated: _searchBarElevated,
+          ),
 
-            Expanded(
-              child: SmartRefresher(
-                enablePullDown: true,
-                controller: _refreshController,
-                onRefresh: _onRefresh,
-                child: CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Column(
-                        children: [
-                          BlocBuilder<HomeCubit, HomeState>(
-                            builder: (context, state) {
-                              if (state.isLoading) {
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 40,
-                                  ),
-                                  child: Center(
-                                    child: CircularProgressIndicator(
-                                      color: myProgressIndicator.color,
-                                    ),
-                                  ),
-                                );
-                              }
+          // Conteúdo rolável
+          Expanded(
+            child: SmartRefresher(
+              enablePullDown: true,
+              controller: _refreshController,
+              onRefresh: _onRefresh,
+              child: CustomScrollView(
+                controller: _scrollController,
+                slivers: [
+                  // HomeCard some quando o usuário rola para cima
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+                      child: HomeCard(),
+                    ),
+                  ),
 
-                              if (state.error != null) {
-                                final msg = state.error == AppError.unauthorized
-                                    ? l10n.sessionExpired
-                                    : state.error!.localize(context);
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 20,
-                                  ),
-                                  child: Center(child: Text(msg)),
-                                );
-                              }
-
-                              if (state.filtered.isEmpty) {
-                                final isSearching = state.search.isNotEmpty;
-                                return Padding(
-                                  padding: const EdgeInsets.all(24),
-                                  child: Center(
-                                    child: Column(
-                                      spacing: 8,
-                                      children: [
-                                        Icon(
-                                          isSearching
-                                              ? Icons.search_off
-                                              : Icons.group_outlined,
-                                          size: 48,
-                                          color: Colors.grey,
-                                        ),
-                                        Text(
-                                          isSearching
-                                              ? '"${state.search}" — ${l10n.noGroupsFound.toLowerCase()}'
-                                              : l10n.noGroupsFound,
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              }
-
-                              return ListView.separated(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: state.filtered.length,
-                                separatorBuilder: (_, _) =>
-                                    const SizedBox.shrink(),
-                                itemBuilder: (context, index) {
-                                  final g = state.filtered[index];
-                                  return InkWell(
-                                    onTap: () {
-                                      context.pushNamed(
-                                        'view_group',
-                                        extra: ShowGroupArgs(
-                                          code: g.code,
-                                          token: g.token,
-                                          name: g.name,
-                                        ),
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(bottom: 20),
-                                      child: GroupCard(
-                                        index: index,
-                                        groupName: g.name,
-                                        groupToken: g.token,
-                                        groupCode: g.code,
-                                        isRaffled: g.isRaffled,
-                                        color: getColor(index),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                          SizedBox(height: 100),
-                        ],
+                  // Título da lista
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
+                      child: Text(
+                        l10n.homeTitle,
+                        style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+
+                  // Conteúdo: loading, erro, vazio ou lista
+                  BlocBuilder<HomeCubit, HomeState>(
+                    builder: (context, state) {
+                      if (state.isLoading) {
+                        return SliverFillRemaining(
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: myProgressIndicator.color,
+                            ),
+                          ),
+                        );
+                      }
+
+                      if (state.error != null) {
+                        final msg = state.error == AppError.unauthorized
+                            ? l10n.sessionExpired
+                            : state.error!.localize(context);
+                        return SliverFillRemaining(
+                          child: Center(child: Text(msg)),
+                        );
+                      }
+
+                      if (state.filtered.isEmpty) {
+                        final isSearching = state.search.isNotEmpty;
+                        final isFiltering = state.filter != GroupFilter.all;
+                        return SliverFillRemaining(
+                          child: Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              spacing: 8,
+                              children: [
+                                Icon(
+                                  isSearching || isFiltering
+                                      ? Icons.search_off
+                                      : Icons.group_outlined,
+                                  size: 48,
+                                  color: Colors.grey,
+                                ),
+                                Text(
+                                  isSearching
+                                      ? '"${state.search}" — ${l10n.noGroupsFound.toLowerCase()}'
+                                      : l10n.noGroupsFound,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+
+                      return SliverPadding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
+                        sliver: SliverList.separated(
+                          itemCount: state.filtered.length,
+                          separatorBuilder: (_, _) =>
+                              const SizedBox(height: 12),
+                          itemBuilder: (context, index) {
+                            final g = state.filtered[index];
+                            return InkWell(
+                              onTap: () => context.pushNamed(
+                                'view_group',
+                                extra: ShowGroupArgs(
+                                  code: g.code,
+                                  token: g.token,
+                                  name: g.name,
+                                ),
+                              ),
+                              child: GroupCard(
+                                index: index,
+                                groupName: g.name,
+                                groupToken: g.token,
+                                groupCode: g.code,
+                                isRaffled: g.isRaffled,
+                                color: getColor(index),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SearchBar extends StatelessWidget {
+  final TextEditingController _searchController;
+  final AppLocalizations l10n;
+  final bool elevated;
+
+  const _SearchBar({
+    required TextEditingController searchController,
+    required this.l10n,
+    required this.elevated,
+  }) : _searchController = searchController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: elevated ? 3 : 0,
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 8,
+          children: [
+            MySearchBar(
+              controller: _searchController,
+              hintText: l10n.searchGroup,
+              onChanged: (v) => context.read<HomeCubit>().onSearchChanged(v),
+            ),
+            BlocBuilder<HomeCubit, HomeState>(
+              buildWhen: (prev, cur) => prev.filter != cur.filter,
+              builder: (context, state) {
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    spacing: 8,
+                    children: [
+                      _FilterChip(
+                        label: l10n.filterAll,
+                        selected: state.filter == GroupFilter.all,
+                        onSelected: () => context
+                            .read<HomeCubit>()
+                            .onFilterChanged(GroupFilter.all),
+                      ),
+                      _FilterChip(
+                        label: l10n.badgePending,
+                        selected: state.filter == GroupFilter.pending,
+                        onSelected: () => context
+                            .read<HomeCubit>()
+                            .onFilterChanged(GroupFilter.pending),
+                        color: MyColors.sorteadorOrange,
+                      ),
+                      _FilterChip(
+                        label: l10n.badgeRaffled,
+                        selected: state.filter == GroupFilter.raffled,
+                        onSelected: () => context
+                            .read<HomeCubit>()
+                            .onFilterChanged(GroupFilter.raffled),
+                        color: MyColors.sorteadorGreen,
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FilterChip extends StatelessWidget {
+  final String label;
+  final bool selected;
+  final VoidCallback onSelected;
+  final Color? color;
+
+  const _FilterChip({
+    required this.label,
+    required this.selected,
+    required this.onSelected,
+    this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final activeColor = color ?? MyColors.sorteadorPurpple;
+
+    return GestureDetector(
+      onTap: onSelected,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: selected ? activeColor : MyColors.neutral100,
+          borderRadius: BorderRadius.circular(999),
+          border: Border.all(
+            color: selected ? activeColor : SecretSantaColors.neutral200,
+          ),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w600,
+            color: selected ? Colors.white : MyColors.neutral600,
+          ),
         ),
       ),
     );

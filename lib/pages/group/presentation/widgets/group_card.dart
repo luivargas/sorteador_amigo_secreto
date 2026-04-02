@@ -7,7 +7,7 @@ class GroupCard extends StatefulWidget {
   final String groupName;
   final String groupToken;
   final String groupCode;
-  final bool? isRaffled;
+  final bool isRaffled;
   final int index;
   final Color color;
 
@@ -87,7 +87,7 @@ class _GroupCardState extends State<GroupCard> {
                     spacing: 5,
                     children: [
                       Icon(Icons.circle, color: widget.color, size: 10),
-                      Text( widget.isRaffled! ? l10n!.badgeRaffled
+                      Text( widget.isRaffled ? l10n!.badgeRaffled
                         : l10n!.badgePending,
                         style: TextStyle(color: widget.color),
                       ),

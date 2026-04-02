@@ -80,9 +80,7 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                           .fadeIn(delay: 150.ms, duration: 400.ms)
                           .slideX(begin: 0.2, curve: Curves.easeOut),
                       MyGradientButton(
-                        onTap: () {
-                          state.isLoading ? null : _onSubmit();
-                        },
+                        onTap: () => _onSubmit(),
                         title: AppLocalizations.of(context)!.confirmCodeButton,
                         isLoading: state.isLoading,
                       ).animate().fadeIn(delay: 300.ms, duration: 400.ms).slideX(begin: 0.2, curve: Curves.easeOut),

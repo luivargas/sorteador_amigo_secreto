@@ -22,7 +22,7 @@ class ApiErrorMapper {
       case DioExceptionType.connectionError:
         return AppError.noConnection;
       default:
-        return AppError.unknow;
+        return AppError.unknown;
     }
   }
 
@@ -48,7 +48,7 @@ class ApiErrorMapper {
       case 504:
         return AppError.serverError;
       default:
-        return AppError.unknow;
+        return AppError.unknown;
     }
   }
 }

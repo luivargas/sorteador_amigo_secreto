@@ -259,7 +259,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactsSubtitle => 'Choose contacts for the draw';
 
   @override
-  String get searchContacts => 'Search contacts';
+  String get searchParticipants => 'Search participants';
 
   @override
   String get yourContacts => 'Your Contacts';
@@ -379,4 +379,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorUnknow => 'An unexpected error occurred. Please try again.';
+
+  @override
+  String get statusConfirmed => 'Confirmed';
+
+  @override
+  String get statusPending => 'Pending';
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get needMoreParticipants =>
+      'Add at least 2 participants to start the draw';
 }

@@ -129,9 +129,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
             enabled: !widget.readOnly,
             favorites: favoriteIsoList,
             navigatorHeight: 400,
-            validator: PhoneValidator.compose([
-              PhoneValidator.valid(context),
-            ]),
+            validator: null
           ),
         ),
       ],

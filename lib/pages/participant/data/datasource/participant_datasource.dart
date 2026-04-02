@@ -35,7 +35,7 @@ class ParticipantDatasource extends ParticipantRepository {
         ),
       );
     } catch (e) {
-      return Failure(ApiError(AppError.unknow, raw: e));
+      return Failure(ApiError(AppError.unknown, raw: e));
     }
   }
 
@@ -57,7 +57,7 @@ class ParticipantDatasource extends ParticipantRepository {
         ),
       );
     } catch (e) {
-      return Failure(ApiError(AppError.unknow, raw: e));
+      return Failure(ApiError(AppError.unknown, raw: e));
     }
   }
 
@@ -84,7 +84,7 @@ class ParticipantDatasource extends ParticipantRepository {
         ),
       );
     } catch (e) {
-      return Failure(ApiError(AppError.unknow, raw: e));
+      return Failure(ApiError(AppError.unknown, raw: e));
     }
   }
 }

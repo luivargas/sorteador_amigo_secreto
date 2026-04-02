@@ -1,5 +1,4 @@
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
-// ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -101,7 +100,7 @@ class _ViewGroupBody extends State<ViewGroup> {
       ),
       body: BlocConsumer<GroupCubit, GroupState>(
         listenWhen: (previous, current) =>
-            previous.isLoading && !current.isLoading && current.raffled,
+            !previous.raffled && current.raffled,
         listener: (context, state) => _onRefresh(),
         builder: (context, state) {
           if (state.isLoading && state.group == null) {
@@ -146,14 +145,19 @@ class _ViewGroupBody extends State<ViewGroup> {
                   groupToken: g.token,
                   groupCode: g.code,
                 ),
-                if (g.raffledAt == null && g.participants.length >= 2) ...[
+                if (g.raffledAt == null) ...[
                   const SizedBox(height: 24),
-                  MyGradientButton(
-                    onTap: () => _onSubmit(g.code),
-                    title: AppLocalizations.of(context)!.drawButton,
-                    icon: Icons.draw,
-                  ),
-                ],
+                  if (g.participants.length >= 2)
+                    MyGradientButton(
+                      onTap: () => _onSubmit(g.code),
+                      title: AppLocalizations.of(context)!.drawButton,
+                      icon: Icons.draw,
+                    )
+                  else
+                    _NeedMoreParticipantsBanner(
+                      message: AppLocalizations.of(context)!.needMoreParticipants,
+                    ),
+                ]
               ],
             ),
           );
@@ -163,7 +167,6 @@ class _ViewGroupBody extends State<ViewGroup> {
   }
 }
 
-// Hero header com gradiente — substitui o badge solto + botão de editar inline
 class _GroupHeroHeader extends StatelessWidget {
   final String name;
   final BadgeType type;
@@ -200,12 +203,44 @@ class _GroupHeroHeader extends StatelessWidget {
           ),
           // Ícone decorativo semi-transparente no canto direito
           Positioned(
-            right: -16,
-            top: -8,
+            right: -20,
             child: Icon(
               Icons.group,
               size: 130,
               color: Colors.white.withValues(alpha: 0.08),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _NeedMoreParticipantsBanner extends StatelessWidget {
+  final String message;
+  const _NeedMoreParticipantsBanner({required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: MyColors.sorteadorOrange.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: MyColors.sorteadorOrange.withValues(alpha: 0.4)),
+      ),
+      child: Row(
+        spacing: 12,
+        children: [
+          Icon(Icons.info_outline, color: MyColors.sorteadorOrange),
+          Expanded(
+            child: Text(
+              message,
+              style: TextStyle(
+                color: MyColors.sorteadorOrange,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ],

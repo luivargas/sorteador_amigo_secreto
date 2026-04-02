@@ -27,7 +27,7 @@ class AuthDatasource extends AuthRepository {
         raw: e.response?.data,
       ));
     } catch (e) {
-      return Failure(ApiError(AppError.unknow, raw: e));
+      return Failure(ApiError(AppError.unknown, raw: e));
     }
   }
 
@@ -35,7 +35,7 @@ class AuthDatasource extends AuthRepository {
   Future<ApiResult<List<AuthGroupModel>>> validate(ValidateToken entity) async {
     try {
       final resp = await dio.post(
-        validadeToken,
+        validateToken,
         data: entity.toJson(),
       );
       final model = (resp.data['groups'] as List)
@@ -49,7 +49,7 @@ class AuthDatasource extends AuthRepository {
         raw: e.response?.data,
       ));
     } catch (e) {
-      return Failure(ApiError(AppError.unknow, raw: e));
+      return Failure(ApiError(AppError.unknown, raw: e));
     }
   }
 }

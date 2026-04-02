@@ -21,7 +21,7 @@ class GroupCubit extends Cubit<GroupState> {
         ),
       );
     } catch (e) {
-      emit(state.copyWith(error: AppError.unknow, isLoading: false));
+      emit(state.copyWith(error: AppError.unknown, isLoading: false));
     }
   }
 
@@ -31,7 +31,7 @@ class GroupCubit extends Cubit<GroupState> {
       await groupUsecases.delete(token);
       emit(state.copyWith(isLoading: false, deleted: true));
     } catch (e) {
-      emit(state.copyWith(error: AppError.unknow, isLoading: false));
+      emit(state.copyWith(error: AppError.unknown, isLoading: false));
     }
   }
 
@@ -46,7 +46,7 @@ class GroupCubit extends Cubit<GroupState> {
         ),
       );
     } catch (e) {
-      emit(state.copyWith(error: AppError.unknow, isLoading: false));
+      emit(state.copyWith(error: AppError.unknown, isLoading: false));
     }
   }
 
@@ -61,7 +61,7 @@ class GroupCubit extends Cubit<GroupState> {
         ),
       );
     } catch (e) {
-      emit(state.copyWith(error: AppError.unknow, isLoading: false));
+      emit(state.copyWith(error: AppError.unknown, isLoading: false));
     }
   }
 
@@ -76,7 +76,7 @@ class GroupCubit extends Cubit<GroupState> {
         ),
       );
     } catch (e) {
-      emit(state.copyWith(error: AppError.unknow, isLoading: false, raffled: false));
+      emit(state.copyWith(error: AppError.unknown, isLoading: false, raffled: false));
     }
   }
 }

@@ -116,7 +116,7 @@
   "contactNotValid": "This contact must have a name and phone",
   "contactsTitle": "Select Participants",
   "contactsSubtitle": "Choose contacts for the draw",
-  "searchContacts": "Search contacts",
+  "searchParticipants": "Search participants",
   "yourContacts": "Your Contacts",
   "contactPermissionDenied": "Contact permission not granted",
   "confirmButton": "Confirm ({count})",
@@ -170,5 +170,9 @@
   "errorServer": "Server error. Please try again later.",
   "errorTimeout": "Request timed out. Check your internet connection and try again.",
   "errorNoConnection": "No internet connection.",
-  "errorUnknow": "An unexpected error occurred. Please try again."
+  "errorUnknow": "An unexpected error occurred. Please try again.",
+  "statusConfirmed": "Confirmed",
+  "statusPending": "Pending",
+  "filterAll": "All",
+  "needMoreParticipants": "Add at least 2 participants to start the draw"
 }

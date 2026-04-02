@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/create_parti_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/show_parti_args.dart';
@@ -58,11 +59,13 @@ List<RouteBase> participantRoutes = [
     path: '/participants_list',
     builder: (BuildContext context, GoRouterState state) {
       final extra = state.extra as ParticipantsListArgs;
-      return ParticipantsListScreen(
-        participants: extra.participants,
-        groupToken: extra.groupToken,
-        groupCode: extra.groupCode,
-        type: extra.type,
+      return BlocProvider(
+        create: (_) => getIt<GroupCubit>()..show(extra.groupCode, extra.groupToken),
+        child: ParticipantsListScreen(
+          groupToken: extra.groupToken,
+          groupCode: extra.groupCode,
+          type: extra.type,
+        ),
       );
     },
   ),

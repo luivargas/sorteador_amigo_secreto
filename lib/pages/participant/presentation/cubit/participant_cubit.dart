@@ -22,7 +22,7 @@ class ParticipantCubit extends Cubit<ParticipantState> {
         ),
       );
     } catch (e) {
-      emit(state.copyWith(error: AppError.unknow, isLoading: false, created: false));
+      emit(state.copyWith(error: AppError.unknown, isLoading: false, created: false));
     }
   }
 
@@ -39,7 +39,7 @@ class ParticipantCubit extends Cubit<ParticipantState> {
         ),
       );
     } catch (e) {
-      emit(state.copyWith(error: AppError.unknow, isLoading: false, showed: false));
+      emit(state.copyWith(error: AppError.unknown, isLoading: false, showed: false));
     }
   }
 
@@ -59,7 +59,7 @@ class ParticipantCubit extends Cubit<ParticipantState> {
         ),
       );
     } catch (e) {
-      emit(state.copyWith(error: AppError.unknow, isLoading: false, updated: false));
+      emit(state.copyWith(error: AppError.unknown, isLoading: false, updated: false));
     }
   }
 }

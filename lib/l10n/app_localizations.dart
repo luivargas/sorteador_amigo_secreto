@@ -576,11 +576,11 @@ abstract class AppLocalizations {
   /// **'Escolha os contatos para o sorteio'**
   String get contactsSubtitle;
 
-  /// No description provided for @searchContacts.
+  /// No description provided for @searchParticipants.
   ///
   /// In pt, this message translates to:
-  /// **'Buscar contatos'**
-  String get searchContacts;
+  /// **'Buscar participantes'**
+  String get searchParticipants;
 
   /// No description provided for @yourContacts.
   ///
@@ -797,6 +797,30 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Ocorreu um erro inesperado. Tente novamente.'**
   String get errorUnknow;
+
+  /// No description provided for @statusConfirmed.
+  ///
+  /// In pt, this message translates to:
+  /// **'Confirmado'**
+  String get statusConfirmed;
+
+  /// No description provided for @statusPending.
+  ///
+  /// In pt, this message translates to:
+  /// **'Pendente'**
+  String get statusPending;
+
+  /// No description provided for @filterAll.
+  ///
+  /// In pt, this message translates to:
+  /// **'Todos'**
+  String get filterAll;
+
+  /// No description provided for @needMoreParticipants.
+  ///
+  /// In pt, this message translates to:
+  /// **'Adicione pelo menos 2 participantes para realizar o sorteio'**
+  String get needMoreParticipants;
 }
 
 class _AppLocalizationsDelegate

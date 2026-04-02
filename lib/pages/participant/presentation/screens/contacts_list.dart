@@ -8,6 +8,7 @@ import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_search_bar.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/usecases/participant_usecase.dart';
@@ -36,7 +37,6 @@ class ContactList extends StatefulWidget {
 class _ContactListState extends State<ContactList> {
   final TextEditingController _searchController = TextEditingController();
 
-  /// Chave: id do contato. Valor: telefone e e-mail escolhidos.
   final Map<String, _ContactSelection> _selectedContacts = {};
 
   List<Contact>? _contacts;
@@ -68,7 +68,6 @@ class _ContactListState extends State<ContactList> {
     _searchController.dispose();
     super.dispose();
   }
-  
 
   IsoCode? _isoCodeFromPhone(Phone phone) {
     final normalized = phone.normalizedNumber;
@@ -358,7 +357,7 @@ class _ContactListState extends State<ContactList> {
     final l10nConfirm = AppLocalizations.of(context)!;
     bool anySuccess = false;
 
-    for (final contact in selected) { 
+    for (final contact in selected) {
       final selection = _selectedContacts[contact.id];
 
       final entity = CreateParticipantEntity(
@@ -419,12 +418,9 @@ class _ContactListState extends State<ContactList> {
         child: Column(
           spacing: 10,
           children: [
-            TextField(
+            MySearchBar(
               controller: _searchController,
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.search),
-                hintText: l10n.searchContacts,
-              ),
+              hintText: l10n.searchParticipants,
             ),
             Column(
               mainAxisSize: MainAxisSize.max,

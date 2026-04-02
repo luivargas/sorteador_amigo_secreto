@@ -116,7 +116,7 @@
   "contactNotValid": "Questo contatto deve avere nome e telefono",
   "contactsTitle": "Seleziona Partecipanti",
   "contactsSubtitle": "Scegli i contatti per il sorteggio",
-  "searchContacts": "Cerca contatti",
+  "searchParticipants": "Cerca partecipanti",
   "yourContacts": "I Tuoi Contatti",
   "contactPermissionDenied": "Autorizzazione ai contatti non concessa",
   "confirmButton": "Conferma ({count})",
@@ -170,5 +170,9 @@
   "errorServer": "Errore del server. Riprova più tardi.",
   "errorTimeout": "Tempo scaduto. Controlla la connessione e riprova.",
   "errorNoConnection": "Nessuna connessione a internet.",
-  "errorUnknow": "Si è verificato un errore imprevisto. Riprova."
+  "errorUnknow": "Si è verificato un errore imprevisto. Riprova.",
+  "statusConfirmed": "Confermato",
+  "statusPending": "In attesa",
+  "filterAll": "Tutti",
+  "needMoreParticipants": "Aggiungi almeno 2 partecipanti per effettuare il sorteggio"
 }

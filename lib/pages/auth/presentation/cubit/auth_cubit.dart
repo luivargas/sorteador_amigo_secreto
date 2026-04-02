@@ -18,7 +18,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> checkSession() async {
     safeEmit(state.copyWith(isLoading: true, clearError: true));
-    await Future.delayed(const Duration(seconds: 2));
 
     if (!authDB.isAuthenticated) {
       safeEmit(state.copyWith(isLoading: false, sessionChecked: true));
@@ -52,7 +51,7 @@ class AuthCubit extends Cubit<AuthState> {
       );
     } catch (e) {
       safeEmit(
-        state.copyWith(isLoading: false, error: AppError.unknow, sessionChecked: true),
+        state.copyWith(isLoading: false, error: AppError.unknown, sessionChecked: true),
       );
     }
   }
@@ -72,7 +71,7 @@ class AuthCubit extends Cubit<AuthState> {
         ),
       );
     } catch (e) {
-      safeEmit(state.copyWith(error: AppError.unknow, isLoading: false));
+      safeEmit(state.copyWith(error: AppError.unknown, isLoading: false));
     }
   }
 
@@ -102,7 +101,7 @@ class AuthCubit extends Cubit<AuthState> {
         ),
       );
     } catch (e) {
-      safeEmit(state.copyWith(error: AppError.unknow, isLoading: false));
+      safeEmit(state.copyWith(error: AppError.unknown, isLoading: false));
     }
   }
 }

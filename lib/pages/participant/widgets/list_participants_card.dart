@@ -1,7 +1,7 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/participants_list_args.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
@@ -28,16 +28,18 @@ class ListParticipantsCard extends StatelessWidget {
     return '${parts.first[0]}${parts.last[0]}'.toUpperCase();
   }
 
-  void _goToList(BuildContext context) {
-    context.pushNamed(
+  Future<void> _goToList(BuildContext context) async {
+    final result = await context.pushNamed(
       'participants_list',
       extra: ParticipantsListArgs(
-        participants: participantsList,
         groupToken: groupToken,
         groupCode: groupCode,
         type: type,
       ),
     );
+    if (result == true && context.mounted) {
+      context.read<GroupCubit>().show(groupCode, groupToken);
+    }
   }
 
   Widget _buildOverlappingAvatars() {

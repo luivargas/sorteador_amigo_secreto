@@ -260,7 +260,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get contactsSubtitle => 'Scegli i contatti per il sorteggio';
 
   @override
-  String get searchContacts => 'Cerca contatti';
+  String get searchParticipants => 'Cerca partecipanti';
 
   @override
   String get yourContacts => 'I Tuoi Contatti';
@@ -382,4 +382,17 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get errorUnknow => 'Si è verificato un errore imprevisto. Riprova.';
+
+  @override
+  String get statusConfirmed => 'Confermato';
+
+  @override
+  String get statusPending => 'In attesa';
+
+  @override
+  String get filterAll => 'Tutti';
+
+  @override
+  String get needMoreParticipants =>
+      'Aggiungi almeno 2 partecipanti per effettuare il sorteggio';
 }
