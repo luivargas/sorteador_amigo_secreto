@@ -68,7 +68,7 @@
   "description": "Descripción",
 
   "addParticipantTitle": "Agregar participante",
-  "addParticipantSubtitle": "Agrega a alguien al grupo",
+  "addParticipantSubtitle": "Completa los datos del nuevo participante de tu amigo secreto",
 
   "participantAddedSuccess": "¡Participante {name} agregado con éxito!",
   "@participantAddedSuccess": {
@@ -174,5 +174,41 @@
   "statusConfirmed": "Confirmado",
   "statusPending": "Pendiente",
   "filterAll": "Todos",
-  "needMoreParticipants": "Agrega al menos 2 participantes para realizar el sorteo"
+  "needMoreParticipants": "Agrega al menos 2 participantes para realizar el sorteo",
+
+  "filterTitle": "Filtros",
+  "filterRaffled": "Grupos ya sorteados",
+  "filterParticipating": "Grupos en los que participo",
+  "filterManaging": "Grupos que administro",
+  "filterClear": "Limpiar",
+  "filterApply": "Aplicar",
+  "groupOptionsTitle": "Opciones del grupo",
+  "createGroupDesc": "Crea un nuevo grupo desde cero",
+  "recoverGroup": "Recuperar grupo",
+  "recoverGroupDesc": "Recibe todos los grupos que creaste o en los que participas.",
+  "homeCardTitle": "Crea tu grupo ahora",
+  "homeCardDesc": "Invita amigos, define las reglas y deja que la magia ocurra.",
+  "getStarted": "Comenzar",
+  "stepLabel": "PASO {step}",
+  "@stepLabel": {
+    "placeholders": { "step": { "type": "String" } }
+  },
+  "quickAccess": "ACCESO RÁPIDO",
+  "importContacts": "Importar de Contactos",
+  "participantNameHint": "Ej: Simba",
+  "roleAdmin": "Administrador",
+  "roleParticipant": "Participante",
+  "createMyGroup": "Crear mi grupo ahora",
+  "onboardingHeroTitle": "Crea tu Amigo Secreto en Segundos",
+  "onboardingHeroDesc": "Organiza tus grupos de Amigo Secreto, edita la información de los grupos y agrega participantes de forma simple y rápida",
+  "onboardingFreeTitle": "Totalmente Gratuito",
+  "onboardingFreeDesc": "Organiza cuantos grupos quieras sin pagar nada. ¡La diversión corre por nuestra cuenta!",
+  "onboardingStep1AltTitle": "Crea tu grupo",
+  "onboardingStep1AltDesc": "Completa nombre, correo y nombre del grupo.",
+  "onboardingStep2AltTitle": "Completa la información",
+  "onboardingStep2AltDesc": "Define valor, fecha y reglas del sorteo.",
+  "onboardingStep3AltTitle": "Agrega participantes",
+  "onboardingStep3AltDesc": "Incluye a tus amigos o comparte la invitación.",
+  "onboardingStep4AltTitle": "Realiza el sorteo",
+  "onboardingStep4AltDesc": "Con todo completado realiza el sorteo y ve los resultados."
 }

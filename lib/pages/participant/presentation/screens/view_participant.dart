@@ -47,9 +47,13 @@ class _ViewParticipant extends State<ViewParticipant> {
 
     nameController.text = g.name;
     emailController.text = g.email ?? '';
+    final idd = g.idd ?? '';
     final rawPhone = g.phone ?? '';
-    phoneController.value = rawPhone.isNotEmpty
-        ? PhoneNumber.parse(rawPhone)
+    final fullPhone = idd.isNotEmpty && rawPhone.isNotEmpty
+        ? '+$idd$rawPhone'
+        : rawPhone;
+    phoneController.value = fullPhone.isNotEmpty
+        ? PhoneNumber.parse(fullPhone)
         : const PhoneNumber(isoCode: IsoCode.BR, nsn: '');
     _prefilledOnce = true;
     role = g.role;

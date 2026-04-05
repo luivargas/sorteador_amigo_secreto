@@ -18,7 +18,7 @@ class _MyNavbarState extends State<MyNavbar>
     with SingleTickerProviderStateMixin {
   late int currentPage;
   late TabController tabController;
-  final Color colors = MyColors.neutral100;
+  final Color colors = MyColors.neutral50;
 
   @override
   void initState() {

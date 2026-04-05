@@ -46,7 +46,7 @@ class MyPhoneFormField extends StatelessWidget {
       enabled: enabled,
       enableInteractiveSelection: enableInteractiveSelection ?? true,
       textInputAction: textInputAction,
-      keyboardType: keyboardType,
+      keyboardType: TextInputType.phone,
       isCountrySelectionEnabled: true,
       isCountryButtonPersistent: true,
       countryButtonStyle: const CountryButtonStyle(),

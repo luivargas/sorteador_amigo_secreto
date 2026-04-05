@@ -156,7 +156,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addParticipantTitle => 'Add participant';
 
   @override
-  String get addParticipantSubtitle => 'Add someone to the group';
+  String get addParticipantSubtitle =>
+      'Fill in the details of the new participant in your Secret Santa';
 
   @override
   String participantAddedSuccess(String name) {
@@ -392,4 +393,109 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get needMoreParticipants =>
       'Add at least 2 participants to start the draw';
+
+  @override
+  String get filterTitle => 'Filters';
+
+  @override
+  String get filterRaffled => 'Already raffled groups';
+
+  @override
+  String get filterParticipating => 'Groups I participate in';
+
+  @override
+  String get filterManaging => 'Groups I manage';
+
+  @override
+  String get filterClear => 'Clear';
+
+  @override
+  String get filterApply => 'Apply';
+
+  @override
+  String get groupOptionsTitle => 'Group options';
+
+  @override
+  String get createGroupDesc => 'Create a new group from scratch';
+
+  @override
+  String get recoverGroup => 'Recover group';
+
+  @override
+  String get recoverGroupDesc =>
+      'Get all the groups you created or participate in.';
+
+  @override
+  String get homeCardTitle => 'Create your group now';
+
+  @override
+  String get homeCardDesc =>
+      'Invite friends, set the rules and let the magic happen.';
+
+  @override
+  String get getStarted => 'Get started';
+
+  @override
+  String stepLabel(String step) {
+    return 'STEP $step';
+  }
+
+  @override
+  String get quickAccess => 'QUICK ACCESS';
+
+  @override
+  String get importContacts => 'Import from Contacts';
+
+  @override
+  String get participantNameHint => 'Ex: Simba';
+
+  @override
+  String get roleAdmin => 'Administrator';
+
+  @override
+  String get roleParticipant => 'Participant';
+
+  @override
+  String get createMyGroup => 'Create my group now';
+
+  @override
+  String get onboardingHeroTitle => 'Create your Secret Santa in Seconds';
+
+  @override
+  String get onboardingHeroDesc =>
+      'Organize your Secret Santa groups, edit group info and add participants simply and quickly';
+
+  @override
+  String get onboardingFreeTitle => 'Completely Free';
+
+  @override
+  String get onboardingFreeDesc =>
+      'Organize as many groups as you want without paying anything. The fun is on us!';
+
+  @override
+  String get onboardingStep1AltTitle => 'Create your group';
+
+  @override
+  String get onboardingStep1AltDesc =>
+      'Fill in your name, email and group name.';
+
+  @override
+  String get onboardingStep2AltTitle => 'Fill in the details';
+
+  @override
+  String get onboardingStep2AltDesc => 'Set the value, date and raffle rules.';
+
+  @override
+  String get onboardingStep3AltTitle => 'Add participants';
+
+  @override
+  String get onboardingStep3AltDesc =>
+      'Include your friends or share the invite.';
+
+  @override
+  String get onboardingStep4AltTitle => 'Run the draw';
+
+  @override
+  String get onboardingStep4AltDesc =>
+      'With everything filled in, run the draw and see the results.';
 }

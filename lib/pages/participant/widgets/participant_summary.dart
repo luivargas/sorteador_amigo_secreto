@@ -2,10 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/show_parti_args.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
@@ -30,10 +28,6 @@ class ParticipantSummary extends StatefulWidget {
 }
 
 class _ParticipantSummaryState extends State<ParticipantSummary> {
-  Future<void> _delete(BuildContext ctx, String id) async {
-    Slidable.of(ctx)?.close();
-    context.read<ParticipantCubit>();
-  }
 
   Text main() {
     String text = widget.name.trim();
@@ -46,7 +40,7 @@ class _ParticipantSummaryState extends State<ParticipantSummary> {
         "$firstWord$lastWord",
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: MyColors.neutral100,
+          color: MyColors.neutral50,
           fontSize: 30,
         ),
       );
@@ -55,7 +49,7 @@ class _ParticipantSummaryState extends State<ParticipantSummary> {
       firstWord,
       style: TextStyle(
         fontWeight: FontWeight.bold,
-        color: MyColors.neutral100,
+        color: MyColors.neutral50,
         fontSize: 30,
       ),
     );

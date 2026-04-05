@@ -387,7 +387,7 @@ abstract class AppLocalizations {
   /// No description provided for @addParticipantSubtitle.
   ///
   /// In pt, this message translates to:
-  /// **'Adicione alguém ao grupo'**
+  /// **'Preencha os dados do novo participante do seu amigo secreto'**
   String get addParticipantSubtitle;
 
   /// No description provided for @participantAddedSuccess.
@@ -821,6 +821,198 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Adicione pelo menos 2 participantes para realizar o sorteio'**
   String get needMoreParticipants;
+
+  /// No description provided for @filterTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Filtros'**
+  String get filterTitle;
+
+  /// No description provided for @filterRaffled.
+  ///
+  /// In pt, this message translates to:
+  /// **'Grupos já sorteados'**
+  String get filterRaffled;
+
+  /// No description provided for @filterParticipating.
+  ///
+  /// In pt, this message translates to:
+  /// **'Grupos que participo'**
+  String get filterParticipating;
+
+  /// No description provided for @filterManaging.
+  ///
+  /// In pt, this message translates to:
+  /// **'Grupos que administro'**
+  String get filterManaging;
+
+  /// No description provided for @filterClear.
+  ///
+  /// In pt, this message translates to:
+  /// **'Limpar'**
+  String get filterClear;
+
+  /// No description provided for @filterApply.
+  ///
+  /// In pt, this message translates to:
+  /// **'Aplicar'**
+  String get filterApply;
+
+  /// No description provided for @groupOptionsTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Opções do grupo'**
+  String get groupOptionsTitle;
+
+  /// No description provided for @createGroupDesc.
+  ///
+  /// In pt, this message translates to:
+  /// **'Crie um novo grupo do zero'**
+  String get createGroupDesc;
+
+  /// No description provided for @recoverGroup.
+  ///
+  /// In pt, this message translates to:
+  /// **'Recuperar grupo'**
+  String get recoverGroup;
+
+  /// No description provided for @recoverGroupDesc.
+  ///
+  /// In pt, this message translates to:
+  /// **'Receba todos os grupos que você criou ou participa.'**
+  String get recoverGroupDesc;
+
+  /// No description provided for @homeCardTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Crie seu grupo agora'**
+  String get homeCardTitle;
+
+  /// No description provided for @homeCardDesc.
+  ///
+  /// In pt, this message translates to:
+  /// **'Convide amigos, defina as regras e deixe a mágica acontecer.'**
+  String get homeCardDesc;
+
+  /// No description provided for @getStarted.
+  ///
+  /// In pt, this message translates to:
+  /// **'Começar'**
+  String get getStarted;
+
+  /// No description provided for @stepLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'PASSO {step}'**
+  String stepLabel(String step);
+
+  /// No description provided for @quickAccess.
+  ///
+  /// In pt, this message translates to:
+  /// **'ACESSO RÁPIDO'**
+  String get quickAccess;
+
+  /// No description provided for @importContacts.
+  ///
+  /// In pt, this message translates to:
+  /// **'Importar dos Contatos'**
+  String get importContacts;
+
+  /// No description provided for @participantNameHint.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ex: Simba'**
+  String get participantNameHint;
+
+  /// No description provided for @roleAdmin.
+  ///
+  /// In pt, this message translates to:
+  /// **'Administrador'**
+  String get roleAdmin;
+
+  /// No description provided for @roleParticipant.
+  ///
+  /// In pt, this message translates to:
+  /// **'Participante'**
+  String get roleParticipant;
+
+  /// No description provided for @createMyGroup.
+  ///
+  /// In pt, this message translates to:
+  /// **'Criar meu grupo agora'**
+  String get createMyGroup;
+
+  /// No description provided for @onboardingHeroTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Crie seu Amigo Secreto em Segundos'**
+  String get onboardingHeroTitle;
+
+  /// No description provided for @onboardingHeroDesc.
+  ///
+  /// In pt, this message translates to:
+  /// **'Organize seus grupos de Amigo Secreto, edite as informações dos grupos e adicione participantes de forma simples e rápida'**
+  String get onboardingHeroDesc;
+
+  /// No description provided for @onboardingFreeTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Totalmente Gratuito'**
+  String get onboardingFreeTitle;
+
+  /// No description provided for @onboardingFreeDesc.
+  ///
+  /// In pt, this message translates to:
+  /// **'Organize quantos grupos quiser sem pagar nada. A diversão é por nossa conta!'**
+  String get onboardingFreeDesc;
+
+  /// No description provided for @onboardingStep1AltTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Crie o seu grupo'**
+  String get onboardingStep1AltTitle;
+
+  /// No description provided for @onboardingStep1AltDesc.
+  ///
+  /// In pt, this message translates to:
+  /// **'Preencha nome, e-mail e nome do grupo.'**
+  String get onboardingStep1AltDesc;
+
+  /// No description provided for @onboardingStep2AltTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Preencha as informações'**
+  String get onboardingStep2AltTitle;
+
+  /// No description provided for @onboardingStep2AltDesc.
+  ///
+  /// In pt, this message translates to:
+  /// **'Defina valor, data e regras do sorteio.'**
+  String get onboardingStep2AltDesc;
+
+  /// No description provided for @onboardingStep3AltTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Adicione os participantes'**
+  String get onboardingStep3AltTitle;
+
+  /// No description provided for @onboardingStep3AltDesc.
+  ///
+  /// In pt, this message translates to:
+  /// **'Inclua seus amigos ou compartilhe o convite.'**
+  String get onboardingStep3AltDesc;
+
+  /// No description provided for @onboardingStep4AltTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Faça o sorteio'**
+  String get onboardingStep4AltTitle;
+
+  /// No description provided for @onboardingStep4AltDesc.
+  ///
+  /// In pt, this message translates to:
+  /// **'Com tudo preenchido realize o sorteio e veja os resultados.'**
+  String get onboardingStep4AltDesc;
 }
 
 class _AppLocalizationsDelegate

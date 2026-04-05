@@ -56,17 +56,17 @@ class _OnboardingState extends State<Onboarding> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Crie seu Amigo Secreto em Segundos",
-                                  style: TextStyle(
-                                    color: MyColors.neutral100,
+                                  l10n.onboardingHeroTitle,
+                                  style: const TextStyle(
+                                    color: MyColors.neutral50,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                                 Text(
-                                  "Organize seus grupos de Amigo Secreto, edite as informações dos grupos e adicione participantes de forma simples e rápida",
+                                  l10n.onboardingHeroDesc,
                                   style: TextStyle(
-                                    color: MyColors.neutral100.withValues(
+                                    color: MyColors.neutral50.withValues(
                                       alpha: 0.7,
                                     ),
                                     fontWeight: FontWeight.bold,
@@ -80,7 +80,7 @@ class _OnboardingState extends State<Onboarding> {
                                     children: [
                                       Expanded(
                                         child: FloatingActionButton(
-                                          backgroundColor: MyColors.neutral100,
+                                          backgroundColor: MyColors.neutral50,
                                           onPressed: () async {
                                             final result = await context.push(
                                               "/create_group",
@@ -91,7 +91,7 @@ class _OnboardingState extends State<Onboarding> {
                                             }
                                           },
                                           child: Text(
-                                            "Criar meu grupo agora",
+                                            l10n.createMyGroup,
                                             style: TextStyle(
                                               color: MyColors.sorteadorOrange,
                                               fontWeight: FontWeight.bold,
@@ -116,7 +116,7 @@ class _OnboardingState extends State<Onboarding> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Como funciona?',
+                    l10n.onboardingHowItWorks,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                   Column(
@@ -125,37 +125,34 @@ class _OnboardingState extends State<Onboarding> {
                       StepCard(
                         step: "01",
                         icon: Icons.create,
-                        title: "Crie o seu grupo",
-                        description: 'Preencha nome, e-mail e nome do grupo.',
+                        title: l10n.onboardingStep1AltTitle,
+                        description: l10n.onboardingStep1AltDesc,
                         color: getColor(0),
                       ),
                       StepCard(
                         step: "02",
                         icon: Icons.settings,
-                        title: "Preencha as informações",
-                        description: 'Defina valor, data e regras do sorteio.',
+                        title: l10n.onboardingStep2AltTitle,
+                        description: l10n.onboardingStep2AltDesc,
                         color: getColor(1),
                       ),
                       StepCard(
                         step: "03",
                         icon: Icons.group_add,
-                        title: "Adicione os participantes",
-                        description:
-                            'Inclua seus amigos ou compartilhe o convite.',
+                        title: l10n.onboardingStep3AltTitle,
+                        description: l10n.onboardingStep3AltDesc,
                         color: getColor(2),
                       ),
                       StepCard(
                         step: "04",
                         icon: Icons.celebration,
-                        title: "Faça o sorteio",
-                        description:
-                            'Com tudo preenchido realize o sorteio e veja os resultados.',
+                        title: l10n.onboardingStep4AltTitle,
+                        description: l10n.onboardingStep4AltDesc,
                         color: getColor(3),
                       ),
                       InfoCard(
-                        title: 'Totalmente Gratuito',
-                        description:
-                            'Organize quantos grupos quiser sem pagar nada. A diversão é por nossa conta!',
+                        title: l10n.onboardingFreeTitle,
+                        description: l10n.onboardingFreeDesc,
                         backgroundColor: MyColors.sorteadorPurpple,
                         icon: Icons.volunteer_activism,
                         iconBackgroundColor: MyColors.sorteadorOrange,

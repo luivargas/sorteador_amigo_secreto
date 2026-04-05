@@ -39,7 +39,9 @@ class _ParticipantsListScreenState extends State<ParticipantsListScreen> {
     super.dispose();
   }
 
-  List<ShowParticipantModel> _filtered(List<ShowParticipantModel> participants) {
+  List<ShowParticipantModel> _filtered(
+    List<ShowParticipantModel> participants,
+  ) {
     if (_query.isEmpty) return participants;
     final q = _query.toLowerCase();
     return participants.where((p) {
@@ -78,7 +80,7 @@ class _ParticipantsListScreenState extends State<ParticipantsListScreen> {
             ? FloatingActionButton(
                 onPressed: _onAddParticipant,
                 backgroundColor: MyColors.sorteadorOrange,
-                child: const Icon(Icons.person_add, color: Colors.white),
+                child: const Icon(Icons.person_add_alt_1, color: MyColors.neutral50),
               )
             : null,
         body: BlocBuilder<GroupCubit, GroupState>(
@@ -89,49 +91,53 @@ class _ParticipantsListScreenState extends State<ParticipantsListScreen> {
 
             final participants = _filtered(state.group?.participants ?? []);
 
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
-                  child: MySearchBar(
-                    controller: _searchController,
-                    hintText: l10n.searchParticipants,
-                    onChanged: (v) => setState(() => _query = v),
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal:  20.0),
+              child: Column(
+                children: [ 
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: MySearchBar(
+                      controller: _searchController,
+                      hintText: l10n.searchParticipants,
+                      onChanged: (v) => setState(() => _query = v),
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: participants.isEmpty
-                      ? Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.people_outline,
-                                size: 64,
-                                color: MyColors.neutral300,
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                l10n.noGroupsFound,
-                                style: TextStyle(color: MyColors.neutral500),
-                              ),
-                            ],
+                  Expanded(
+                    child: participants.isEmpty
+                        ? Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.people_outline,
+                                  size: 64,
+                                  color: MyColors.neutral300,
+                                ),
+                                const SizedBox(height: 12),
+                                Text(
+                                  l10n.noGroupsFound,
+                                  style: TextStyle(color: MyColors.neutral500),
+                                ),
+                              ],
+                            ),
+                          )
+                        : ListView.separated(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 0, 100),
+                            itemCount: participants.length,
+                            separatorBuilder: (_, _) =>
+                                const SizedBox(height: 12),
+                            itemBuilder: (context, index) {
+                              return _ParticipantListItem(
+                                participant: participants[index],
+                                groupToken: widget.groupToken,
+                                groupCode: widget.groupCode,
+                              );
+                            },
                           ),
-                        )
-                      : ListView.separated(
-                          padding: const EdgeInsets.fromLTRB(20, 8, 20, 100),
-                          itemCount: participants.length,
-                          separatorBuilder: (_, _) => const SizedBox(height: 12),
-                          itemBuilder: (context, index) {
-                            return _ParticipantListItem(
-                              participant: participants[index],
-                              groupToken: widget.groupToken,
-                              groupCode: widget.groupCode,
-                            );
-                          },
-                        ),
-                ),
-              ],
+                  ),
+                ],
+              ),
             );
           },
         ),

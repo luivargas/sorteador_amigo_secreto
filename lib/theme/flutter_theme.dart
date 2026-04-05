@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
-/// Secret Santa Design System
-///
-/// Este arquivo contém todo o design system baseado no site principal
-/// do Secret Santa, incluindo cores, tipografia, componentes e estilos.
-
-// ============================================================================
-// CORES
-// ============================================================================
 
 class SecretSantaColors {
   // Cores principais (gradientes)
@@ -415,7 +407,7 @@ class SecondaryButton extends StatelessWidget {
           color: SecretSantaColors.neutral200,
           width: 1,
         ),
-        backgroundColor: SecretSantaColors.neutral100,
+        backgroundColor: SecretSantaColors.neutral50,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -573,96 +565,96 @@ class GradientAvatar extends StatelessWidget {
 }
 
 /// Alert/Banner informativo
-class SecretSantaAlert extends StatelessWidget {
-  final String title;
-  final String message;
-  final AlertType type;
-  final IconData? icon;
+// class SecretSantaAlert extends StatelessWidget {
+//   final String title;
+//   final String message;
+//   final AlertType type;
+//   final IconData? icon;
 
-  const SecretSantaAlert({
-    super.key,
-    required this.title,
-    required this.message,
-    required this.type,
-    this.icon,
-  });
+//   const SecretSantaAlert({
+//     super.key,
+//     required this.title,
+//     required this.message,
+//     required this.type,
+//     this.icon,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    Color bgColor;
-    Color textColor;
-    Color borderColor;
-    IconData defaultIcon;
+//   @override
+//   Widget build(BuildContext context) {
+//     Color bgColor;
+//     Color textColor;
+//     Color borderColor;
+//     IconData defaultIcon;
 
-    switch (type) {
-      case AlertType.success:
-        bgColor = SecretSantaColors.successBg;
-        textColor = SecretSantaColors.successText;
-        borderColor = SecretSantaColors.successBorder;
-        defaultIcon = Icons.check_circle_outline;
-        break;
-      case AlertType.warning:
-        bgColor = SecretSantaColors.warningBg;
-        textColor = SecretSantaColors.warningText;
-        borderColor = SecretSantaColors.warningBorder;
-        defaultIcon = Icons.warning_amber_outlined;
-        break;
-      case AlertType.info:
-        bgColor = SecretSantaColors.infoBg;
-        textColor = SecretSantaColors.infoText;
-        borderColor = SecretSantaColors.infoBorder;
-        defaultIcon = Icons.info_outline;
-        break;
-    }
+//     switch (type) {
+//       case AlertType.success:
+//         bgColor = SecretSantaColors.successBg;
+//         textColor = SecretSantaColors.successText;
+//         borderColor = SecretSantaColors.successBorder;
+//         defaultIcon = Icons.check_circle_outline;
+//         break;
+//       case AlertType.warning:
+//         bgColor = SecretSantaColors.warningBg;
+//         textColor = SecretSantaColors.warningText;
+//         borderColor = SecretSantaColors.warningBorder;
+//         defaultIcon = Icons.warning_amber_outlined;
+//         break;
+//       case AlertType.info:
+//         bgColor = SecretSantaColors.infoBg;
+//         textColor = SecretSantaColors.infoText;
+//         borderColor = SecretSantaColors.infoBorder;
+//         defaultIcon = Icons.info_outline;
+//         break;
+//     }
 
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: borderColor, width: 1),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(
-            icon ?? defaultIcon,
-            color: textColor,
-            size: 24,
-          ),
-          SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: SecretSantaTextStyles.label.copyWith(
-                    color: textColor,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  message,
-                  style: SecretSantaTextStyles.bodySmall.copyWith(
-                    color: textColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+//     return Container(
+//       padding: EdgeInsets.all(16),
+//       decoration: BoxDecoration(
+//         color: bgColor,
+//         borderRadius: BorderRadius.circular(16),
+//         border: Border.all(color: borderColor, width: 1),
+//       ),
+//       child: Row(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Icon(
+//             icon ?? defaultIcon,
+//             color: textColor,
+//             size: 24,
+//           ),
+//           SizedBox(width: 16),
+//           Expanded(
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Text(
+//                   title,
+//                   style: SecretSantaTextStyles.label.copyWith(
+//                     color: textColor,
+//                     fontWeight: FontWeight.w700,
+//                   ),
+//                 ),
+//                 SizedBox(height: 4),
+//                 Text(
+//                   message,
+//                   style: SecretSantaTextStyles.bodySmall.copyWith(
+//                     color: textColor,
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
-enum AlertType {
-  success,
-  warning,
-  info,
-}
+// enum AlertType {
+//   success,
+//   warning,
+//   info,
+// }
 
 /// Input customizado
 class SecretSantaTextField extends StatelessWidget {

@@ -70,10 +70,17 @@ class _ContactListState extends State<ContactList> {
   }
 
   IsoCode? _isoCodeFromPhone(Phone phone) {
-    final normalized = phone.normalizedNumber;
-    if (normalized == null || !normalized.startsWith('+')) return null;
+    // Remove formatação do número bruto (espaços, traços, parênteses)
+    final raw = phone.number.replaceAll(RegExp(r'[\s\-\(\)\.]+'), '');
+
+    // Só confia no parse se o número bruto tiver prefixo internacional explícito.
+    // Se não tiver, o normalizedNumber pode adicionar um DDI errado (ex: +1
+    // para um DDD brasileiro como 11), então retornamos null para o usuário
+    // selecionar o país manualmente.
+    if (!raw.startsWith('+')) return null;
+
     try {
-      return PhoneNumber.parse(normalized).isoCode;
+      return PhoneNumber.parse(raw).isoCode;
     } catch (_) {
       return null;
     }
@@ -441,7 +448,7 @@ class _ContactListState extends State<ContactList> {
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
                             l10n.selectedCount(_selectedContacts.length),
-                            style: const TextStyle(color: MyColors.neutral100),
+                            style: const TextStyle(color: MyColors.neutral50),
                           ),
                         ),
                       ),
@@ -452,7 +459,7 @@ class _ContactListState extends State<ContactList> {
                   height: 80,
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
-                    color: MyColors.neutral100,
+                    color: MyColors.neutral50,
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     border: Border.all(color: MyColors.sorteadorOrange),
                   ),
@@ -497,7 +504,7 @@ class _ContactListState extends State<ContactList> {
                                           child: const Icon(
                                             Icons.close,
                                             size: 14,
-                                            color: MyColors.neutral100,
+                                            color: MyColors.neutral50,
                                           ),
                                         ),
                                       ),
@@ -530,7 +537,7 @@ class _ContactListState extends State<ContactList> {
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
-                    color: MyColors.neutral100,
+                    color: MyColors.neutral50,
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     border: Border.all(color: MyColors.sorteadorOrange),
                   ),

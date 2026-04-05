@@ -68,7 +68,7 @@
   "description": "Descrizione",
 
   "addParticipantTitle": "Aggiungi partecipante",
-  "addParticipantSubtitle": "Aggiungi qualcuno al gruppo",
+  "addParticipantSubtitle": "Compila i dati del nuovo partecipante del tuo amico segreto",
 
   "participantAddedSuccess": "Partecipante {name} aggiunto con successo!",
   "@participantAddedSuccess": {
@@ -174,5 +174,41 @@
   "statusConfirmed": "Confermato",
   "statusPending": "In attesa",
   "filterAll": "Tutti",
-  "needMoreParticipants": "Aggiungi almeno 2 partecipanti per effettuare il sorteggio"
+  "needMoreParticipants": "Aggiungi almeno 2 partecipanti per effettuare il sorteggio",
+
+  "filterTitle": "Filtri",
+  "filterRaffled": "Gruppi già sorteggiati",
+  "filterParticipating": "Gruppi a cui partecipo",
+  "filterManaging": "Gruppi che gestisco",
+  "filterClear": "Cancella",
+  "filterApply": "Applica",
+  "groupOptionsTitle": "Opzioni del gruppo",
+  "createGroupDesc": "Crea un nuovo gruppo da zero",
+  "recoverGroup": "Recupera gruppo",
+  "recoverGroupDesc": "Ricevi tutti i gruppi che hai creato o a cui partecipi.",
+  "homeCardTitle": "Crea il tuo gruppo ora",
+  "homeCardDesc": "Invita amici, definisci le regole e lascia che la magia accada.",
+  "getStarted": "Inizia",
+  "stepLabel": "PASSO {step}",
+  "@stepLabel": {
+    "placeholders": { "step": { "type": "String" } }
+  },
+  "quickAccess": "ACCESSO RAPIDO",
+  "importContacts": "Importa dai Contatti",
+  "participantNameHint": "Es: Simba",
+  "roleAdmin": "Amministratore",
+  "roleParticipant": "Partecipante",
+  "createMyGroup": "Crea il mio gruppo ora",
+  "onboardingHeroTitle": "Crea il tuo Amico Segreto in Secondi",
+  "onboardingHeroDesc": "Organizza i tuoi gruppi di Amico Segreto, modifica le informazioni dei gruppi e aggiungi partecipanti in modo semplice e veloce",
+  "onboardingFreeTitle": "Completamente Gratuito",
+  "onboardingFreeDesc": "Organizza quanti gruppi vuoi senza pagare nulla. Il divertimento è a nostro carico!",
+  "onboardingStep1AltTitle": "Crea il tuo gruppo",
+  "onboardingStep1AltDesc": "Compila nome, email e nome del gruppo.",
+  "onboardingStep2AltTitle": "Compila le informazioni",
+  "onboardingStep2AltDesc": "Definisci valore, data e regole del sorteggio.",
+  "onboardingStep3AltTitle": "Aggiungi partecipanti",
+  "onboardingStep3AltDesc": "Includi i tuoi amici o condividi l'invito.",
+  "onboardingStep4AltTitle": "Effettua il sorteggio",
+  "onboardingStep4AltDesc": "Con tutto compilato effettua il sorteggio e vedi i risultati."
 }

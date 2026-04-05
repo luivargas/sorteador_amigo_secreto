@@ -90,11 +90,13 @@ class _ViewGroupBody extends State<ViewGroup> {
           IconButton(
             onPressed: _onEdit,
             icon: const Icon(Icons.edit_outlined, size: 24),
+            color: MyColors.sorteadorOrange,
             tooltip: AppLocalizations.of(context)!.edit,
           ),
           IconButton(
             onPressed: () => _onShare(group),
             icon: const Icon(Icons.share_outlined, size: 24),
+            color: MyColors.sorteadorOrange,
           ),
         ],
       ),

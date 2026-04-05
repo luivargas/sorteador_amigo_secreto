@@ -21,6 +21,7 @@ class MyTokenFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextFormField(
+    keyboardType: TextInputType.number,
     controller: controller,
     textInputAction: textInputAction,
     readOnly: readOnly,

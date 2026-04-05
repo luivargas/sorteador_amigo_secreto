@@ -49,14 +49,14 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
     return null;
   }
 
-  String _roleLabel(String? role) {
+  String _roleLabel(String? role, AppLocalizations l10n) {
     switch (role) {
       case 'admin':
-        return 'Administrador';
+        return l10n.roleAdmin;
       case 'participant':
-        return 'Participante';
+        return l10n.roleParticipant;
       default:
-        return role ?? 'Participante';
+        return role ?? l10n.roleParticipant;
     }
   }
 
@@ -90,7 +90,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
                   color: _roleColor(role),
                 ),
                 Text(
-                  _roleLabel(role),
+                  _roleLabel(role, l10n),
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -104,7 +104,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
           label: l10n.name,
           child: MyNameFormField(
             controller: widget.nameController,
-            hintText: 'Ex: Simba',
+            hintText: l10n.participantNameHint,
             textInputAction: TextInputAction.next,
             readOnly: widget.readOnly,
             autofocus: true,

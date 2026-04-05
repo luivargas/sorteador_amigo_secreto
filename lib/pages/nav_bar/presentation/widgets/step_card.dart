@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
@@ -50,7 +51,7 @@ class StepCard extends StatelessWidget {
                   spacing: 4,
                   children: [
                     Text(
-                      'PASSO $step',
+                      AppLocalizations.of(context)!.stepLabel(step),
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w800,

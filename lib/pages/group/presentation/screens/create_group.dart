@@ -9,6 +9,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cub
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/create_form_group/group_form_field.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
+import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
@@ -27,7 +28,7 @@ class _FormGroupBody extends State<CreateGroup> {
   final PhoneController phoneController = PhoneController(
     initialValue: PhoneNumber(isoCode: IsoCode.BR, nsn: ''),
   );
-  void _onSubmit() {
+  void _onSubmit() async {
     final isValid = _formKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
@@ -43,25 +44,25 @@ class _FormGroupBody extends State<CreateGroup> {
         idd: phoneController.value.countryCode,
       ),
     );
-    context.read<GroupCubit>().create(entity);
+    await context.read<GroupCubit>().create(entity);
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Form(
       key: _formKey,
       child: Scaffold(
-        appBar: MyAppBar(title: AppLocalizations.of(context)!.createGroupTitle, subTitle: AppLocalizations.of(context)!.createGroupSubtitle,),
+        appBar: MyAppBar(),
         body: BlocConsumer<GroupCubit, GroupState>(
           listenWhen: (previous, current) =>
-              previous.isLoading &&
-              !current.isLoading &&
-              current.created,
+              previous.isLoading && !current.isLoading && current.created,
           listener: (context, state) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  AppLocalizations.of(context)!.groupCreatedSuccess(groupNameController.text),
+                  l10n.groupCreatedSuccess(groupNameController.text),
                 ),
                 showCloseIcon: true,
               ),
@@ -78,11 +79,39 @@ class _FormGroupBody extends State<CreateGroup> {
             }
             return SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 40),
+                padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 50),
                 child: Column(
-                  spacing: 20,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  spacing: 30,
                   children: [
+                    Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: MyColors.neutral50,
+                            border: Border.all(
+                              color: MyColors.sorteadorPurpple.withValues(
+                                alpha: 0.3,
+                              ),
+                            ),
+                            borderRadius: BorderRadius.circular(99),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Icon(Icons.group, size: 30),
+                          ),
+                        ),
+                        Text(
+                          l10n.createGroupTitle,
+                          style: Theme.of(context).textTheme.titleMedium,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          l10n.createGroupSubtitle,
+                          style: TextStyle(),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                     GroupFormFields(
                       groupNameController: groupNameController,
                       nameController: nameController,
@@ -92,7 +121,7 @@ class _FormGroupBody extends State<CreateGroup> {
                     MyGradientButton(
                       onTap: _onSubmit,
                       title: AppLocalizations.of(context)!.createGroupButton,
-                      icon: Icons.create,
+                      icon: Icons.save,
                     ),
                   ],
                 ),

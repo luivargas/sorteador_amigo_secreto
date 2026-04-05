@@ -91,7 +91,7 @@ class OnboardingRedesign extends StatelessWidget {
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: _primary,
-                        foregroundColor: MyColors.neutral100,
+                        foregroundColor: MyColors.neutral50,
                         padding: const EdgeInsets.symmetric(vertical: 18),
                         shape: const StadiumBorder(),
                         elevation: 8,
@@ -221,14 +221,14 @@ class OnboardingRedesign extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 20,
-                        color: MyColors.neutral100,
+                        color: MyColors.neutral50,
                       ),
                     ),
                     Text(
                       'Organize quantos grupos quiser sem pagar nada. A diversão é por nossa conta!',
                       style: TextStyle(
                         fontSize: 14,
-                        color: MyColors.neutral100.withValues(alpha: 0.75),
+                        color: MyColors.neutral50.withValues(alpha: 0.75),
                         height: 1.5,
                       ),
                     ),
@@ -250,7 +250,7 @@ class OnboardingRedesign extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: const Icon(Icons.volunteer_activism, color: MyColors.neutral100, size: 36),
+                child: const Icon(Icons.volunteer_activism, color: MyColors.neutral50, size: 36),
               ),
             ],
           ),
@@ -289,7 +289,7 @@ class OnboardingRedesign extends StatelessWidget {
   Widget _buildBottomNav() {
     return Container(
       decoration: BoxDecoration(
-        color: MyColors.neutral100,
+        color: MyColors.neutral50,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         boxShadow: [
           BoxShadow(
@@ -371,7 +371,7 @@ class _StepCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: MyColors.neutral100,
+        color: MyColors.neutral50,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: _outlineVariant),
         boxShadow: [
@@ -485,13 +485,13 @@ class _NavItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           spacing: 2,
           children: [
-            Icon(icon, color: MyColors.neutral100, size: 22),
+            Icon(icon, color: MyColors.neutral50, size: 22),
             Text(
               label.toUpperCase(),
               style: const TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.w600,
-                color: MyColors.neutral100,
+                color: MyColors.neutral50,
                 letterSpacing: 1,
               ),
             ),

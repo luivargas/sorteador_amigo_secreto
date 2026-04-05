@@ -24,11 +24,15 @@ class MyEmailFormField extends StatelessWidget {
     decoration: InputDecoration(
       hintText: 'Ex: simba@disney.com',
       prefixIcon: const Icon(Icons.email),
-      filled: readOnly,
-      fillColor: readOnly ? Theme.of(context).colorScheme.surfaceContainerHighest : null,
+      filled: true,
+      fillColor: readOnly
+          ? Theme.of(context).colorScheme.surfaceContainerHighest
+          : Theme.of(context).inputDecorationTheme.fillColor,
       enabledBorder: readOnly
           ? OutlineInputBorder(
-              borderSide: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.outlineVariant,
+              ),
               borderRadius: BorderRadius.circular(12),
             )
           : null,

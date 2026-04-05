@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
 
 class GroupOptions extends StatelessWidget {
@@ -7,6 +8,7 @@ class GroupOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
       child: SizedBox(
@@ -18,12 +20,12 @@ class GroupOptions extends StatelessWidget {
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [Icon(Icons.horizontal_rule, size: 45)], 
+              children: [Icon(Icons.horizontal_rule, size: 45)],
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 15.0),
               child: Text(
-                "Opções do grupo",
+                l10n.groupOptionsTitle,
                 style: myTheme.textTheme.titleSmall,
               ),
             ),
@@ -34,7 +36,7 @@ class GroupOptions extends StatelessWidget {
                   spacing: 10,
                   children: [
                     MyGradientButton(
-                      title: "Compartilhar",
+                      title: l10n.shareGroup,
                       icon: Icons.share,
                       onTap: () {},
                     ),
@@ -44,7 +46,7 @@ class GroupOptions extends StatelessWidget {
                   spacing: 10,
                   children: [
                     MyGradientButton(
-                      title: "Arquivar",
+                      title: l10n.archive,
                       icon: Icons.archive,
                       onTap: () {},
                     ),

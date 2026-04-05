@@ -21,12 +21,12 @@ class AppAlert {
         showCloseIcon: true,
         content: Row(
           children: [
-            Icon(icon, color: MyColors.neutral100),
+            Icon(icon, color: MyColors.neutral50),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
                 message,
-                style: const TextStyle(color: MyColors.neutral100),
+                style: const TextStyle(color: MyColors.neutral50),
               ),
             ),
           ],

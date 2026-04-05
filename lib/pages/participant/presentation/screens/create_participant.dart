@@ -8,10 +8,13 @@ import 'package:sorteador_amigo_secreto/core/ui/alerts/dialog.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/create_parti_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/create_participant_form_fields.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
+import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class CreateParticipant extends StatefulWidget {
   final String groupToken;
@@ -53,65 +56,146 @@ class _CreateParticipant extends State<CreateParticipant> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Form(
       key: _createFormKey,
       child: Scaffold(
-        appBar: MyAppBar(
-          title: AppLocalizations.of(context)!.addParticipantTitle,
-          subTitle: AppLocalizations.of(context)!.addParticipantSubtitle,
-        ),
+        appBar: MyAppBar(),
         body: BlocConsumer<ParticipantCubit, ParticipantState>(
-          listenWhen: (prev, curr) =>
-              prev.isLoading && !curr.isLoading,
+          listenWhen: (prev, curr) => prev.isLoading && !curr.isLoading,
           listener: (context, state) async {
             if (state.created) {
               AppAlert.show(
                 context,
-                message: AppLocalizations.of(context)!.participantAddedSuccess(nameController.text),
+                message: AppLocalizations.of(
+                  context,
+                )!.participantAddedSuccess(nameController.text),
                 type: AlertType.success,
               );
               if (context.mounted) {
                 context.pop(true);
               }
             }
-
             if (state.error != null) {
               await AppDialog.show(
                 context: context,
-                title: AppLocalizations.of(context)!.errorTitle,
+                title: l10n.errorTitle,
                 message: state.error!.localize(context),
               );
             }
           },
           builder: (context, state) {
-            return SingleChildScrollView(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).canvasColor,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 50),
-                  child: Column(
-                    spacing: 20,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CreateParticipantFormFields(
-                        nameController: nameController,
-                        emailController: emailController,
-                        phoneController: phoneController,
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: SingleChildScrollView(
+                child: Column(
+                  spacing: 30,
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: MyColors.neutral50,
+                            border: Border.all(
+                              color: MyColors.sorteadorPurpple.withValues(
+                                alpha: 0.3,
+                              ),
+                            ),
+                            borderRadius: BorderRadius.circular(99),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Icon(Icons.person_add_alt_1, size: 30),
+                          ),
+                        ),
+                        Text(
+                          l10n.addParticipantTitle,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        Text(
+                          l10n.addParticipantSubtitle,
+                          style: TextStyle(),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+
+                    InkWell(
+                      borderRadius: BorderRadius.circular(20),
+                      onTap: () => context.pushNamed(
+                        'contacts',
+                        extra: CreateParticipantArgs(
+                          groupToken: widget.groupToken,
+                          groupCode: widget.groupCode,
+                        ),
                       ),
-                      MyGradientButton(
-                        onTap: _onSubmit,
-                        title: AppLocalizations.of(context)!.addParticipantButton,
-                        icon: Icons.create,
-                        isLoading: state.isLoading,
+                      child: Container(
+                        padding: const EdgeInsets.all(3),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              MyColors.sorteadorPurpple,
+                              MyColors.sorteadorLilac,
+                              MyColors.sorteadorOrange,
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: MyColors.neutral50,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: SecretSantaShadows.medium,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Row(
+                              spacing: 15,
+                              children: [
+                                Icon(Icons.contact_page),
+                                Expanded(
+                                  child: Row(
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(l10n.quickAccess, style: TextStyle(color: MyColors.sorteadorPurpple, fontWeight: FontWeight.w600),),
+                                          Text(l10n.importContacts, style: const TextStyle(fontWeight: FontWeight.w600)),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Icon(Icons.arrow_forward_ios_rounded, color: MyColors.sorteadorOrange,),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+
+                    Column(
+                      spacing: 20,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CreateParticipantFormFields(
+                          nameController: nameController,
+                          emailController: emailController,
+                          phoneController: phoneController,
+                        ),
+                        MyGradientButton(
+                          onTap: _onSubmit,
+                          title: AppLocalizations.of(
+                            context,
+                          )!.addParticipantButton,
+                          icon: Icons.save,
+                          isLoading: state.isLoading,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             );

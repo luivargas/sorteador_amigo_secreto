@@ -16,7 +16,7 @@ class MySearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: MyColors.neutral100,
+        color: MyColors.neutral50,
         borderRadius: BorderRadius.circular(16),
       ),
       child: TextField(

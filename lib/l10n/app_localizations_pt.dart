@@ -156,7 +156,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get addParticipantTitle => 'Adicionar participante';
 
   @override
-  String get addParticipantSubtitle => 'Adicione alguém ao grupo';
+  String get addParticipantSubtitle =>
+      'Preencha os dados do novo participante do seu amigo secreto';
 
   @override
   String participantAddedSuccess(String name) {
@@ -393,4 +394,109 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get needMoreParticipants =>
       'Adicione pelo menos 2 participantes para realizar o sorteio';
+
+  @override
+  String get filterTitle => 'Filtros';
+
+  @override
+  String get filterRaffled => 'Grupos já sorteados';
+
+  @override
+  String get filterParticipating => 'Grupos que participo';
+
+  @override
+  String get filterManaging => 'Grupos que administro';
+
+  @override
+  String get filterClear => 'Limpar';
+
+  @override
+  String get filterApply => 'Aplicar';
+
+  @override
+  String get groupOptionsTitle => 'Opções do grupo';
+
+  @override
+  String get createGroupDesc => 'Crie um novo grupo do zero';
+
+  @override
+  String get recoverGroup => 'Recuperar grupo';
+
+  @override
+  String get recoverGroupDesc =>
+      'Receba todos os grupos que você criou ou participa.';
+
+  @override
+  String get homeCardTitle => 'Crie seu grupo agora';
+
+  @override
+  String get homeCardDesc =>
+      'Convide amigos, defina as regras e deixe a mágica acontecer.';
+
+  @override
+  String get getStarted => 'Começar';
+
+  @override
+  String stepLabel(String step) {
+    return 'PASSO $step';
+  }
+
+  @override
+  String get quickAccess => 'ACESSO RÁPIDO';
+
+  @override
+  String get importContacts => 'Importar dos Contatos';
+
+  @override
+  String get participantNameHint => 'Ex: Simba';
+
+  @override
+  String get roleAdmin => 'Administrador';
+
+  @override
+  String get roleParticipant => 'Participante';
+
+  @override
+  String get createMyGroup => 'Criar meu grupo agora';
+
+  @override
+  String get onboardingHeroTitle => 'Crie seu Amigo Secreto em Segundos';
+
+  @override
+  String get onboardingHeroDesc =>
+      'Organize seus grupos de Amigo Secreto, edite as informações dos grupos e adicione participantes de forma simples e rápida';
+
+  @override
+  String get onboardingFreeTitle => 'Totalmente Gratuito';
+
+  @override
+  String get onboardingFreeDesc =>
+      'Organize quantos grupos quiser sem pagar nada. A diversão é por nossa conta!';
+
+  @override
+  String get onboardingStep1AltTitle => 'Crie o seu grupo';
+
+  @override
+  String get onboardingStep1AltDesc => 'Preencha nome, e-mail e nome do grupo.';
+
+  @override
+  String get onboardingStep2AltTitle => 'Preencha as informações';
+
+  @override
+  String get onboardingStep2AltDesc =>
+      'Defina valor, data e regras do sorteio.';
+
+  @override
+  String get onboardingStep3AltTitle => 'Adicione os participantes';
+
+  @override
+  String get onboardingStep3AltDesc =>
+      'Inclua seus amigos ou compartilhe o convite.';
+
+  @override
+  String get onboardingStep4AltTitle => 'Faça o sorteio';
+
+  @override
+  String get onboardingStep4AltDesc =>
+      'Com tudo preenchido realize o sorteio e veja os resultados.';
 }

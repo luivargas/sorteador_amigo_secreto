@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/cubit/home_cubit.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
@@ -10,6 +11,7 @@ class HomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -45,17 +47,17 @@ class HomeCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Crie seu grupo agora',
-                  style: TextStyle(
+                  l10n.homeCardTitle,
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: MyColors.neutral100,
+                    color: MyColors.neutral50,
                   ),
                 ),
                 Text(
-                  'Convide amigos, defina as regras e deixe a mágica acontecer.',
+                  l10n.homeCardDesc,
                   style: TextStyle(
-                    color: MyColors.neutral100.withValues(alpha: 0.70),
+                    color: MyColors.neutral50.withValues(alpha: 0.70),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -76,7 +78,7 @@ class HomeCard extends StatelessWidget {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                color: MyColors.neutral100,
+                                color: MyColors.neutral50,
                                 borderRadius: BorderRadius.circular(100),
                               ),
                               child: Padding(
@@ -88,7 +90,7 @@ class HomeCard extends StatelessWidget {
                                   spacing: 10,
                                   children: [
                                     Text(
-                                      'Começar',
+                                      l10n.getStarted,
                                       style: TextStyle(
                                         color: MyColors.sorteadorPurpple,
                                         fontWeight: FontWeight.w600,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class FilterSheet extends StatefulWidget {
@@ -16,30 +17,31 @@ class _FilterSheetState extends State<FilterSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(
-            "Filtros",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          Text(
+            l10n.filterTitle,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SwitchListTile(
             activeThumbColor: activeColor,
-            title: const Text("Grupos já sorteados"),
+            title: Text(l10n.filterRaffled),
             value: showRaffled,
             onChanged: (val) => setState(() => showRaffled = val),
           ),
           SwitchListTile(
             activeThumbColor: activeColor,
-            title: const Text("Grupos que participo"),
+            title: Text(l10n.filterParticipating),
             value: participant,
             onChanged: (val) => setState(() => participant = val),
           ),
           SwitchListTile(
             activeThumbColor: activeColor,
-            title: const Text("Grupos que administro"),
+            title: Text(l10n.filterManaging),
             value: admin,
             onChanged: (val) => setState(() => admin = val),
           ),
@@ -55,7 +57,7 @@ class _FilterSheetState extends State<FilterSheet> {
                     admin = true;
                   });
                 },
-                child: const Text("Limpar"),
+                child: Text(l10n.filterClear),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -65,7 +67,7 @@ class _FilterSheetState extends State<FilterSheet> {
                     "adminOnly": admin,
                   });
                 },
-                child: const Text("Aplicar"),
+                child: Text(l10n.filterApply),
               ),
             ],
           ),

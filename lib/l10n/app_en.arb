@@ -68,7 +68,7 @@
   "description": "Description",
 
   "addParticipantTitle": "Add participant",
-  "addParticipantSubtitle": "Add someone to the group",
+  "addParticipantSubtitle": "Fill in the details of the new participant in your Secret Santa",
 
   "participantAddedSuccess": "Participant {name} added successfully!",
   "@participantAddedSuccess": {
@@ -174,5 +174,41 @@
   "statusConfirmed": "Confirmed",
   "statusPending": "Pending",
   "filterAll": "All",
-  "needMoreParticipants": "Add at least 2 participants to start the draw"
+  "needMoreParticipants": "Add at least 2 participants to start the draw",
+
+  "filterTitle": "Filters",
+  "filterRaffled": "Already raffled groups",
+  "filterParticipating": "Groups I participate in",
+  "filterManaging": "Groups I manage",
+  "filterClear": "Clear",
+  "filterApply": "Apply",
+  "groupOptionsTitle": "Group options",
+  "createGroupDesc": "Create a new group from scratch",
+  "recoverGroup": "Recover group",
+  "recoverGroupDesc": "Get all the groups you created or participate in.",
+  "homeCardTitle": "Create your group now",
+  "homeCardDesc": "Invite friends, set the rules and let the magic happen.",
+  "getStarted": "Get started",
+  "stepLabel": "STEP {step}",
+  "@stepLabel": {
+    "placeholders": { "step": { "type": "String" } }
+  },
+  "quickAccess": "QUICK ACCESS",
+  "importContacts": "Import from Contacts",
+  "participantNameHint": "Ex: Simba",
+  "roleAdmin": "Administrator",
+  "roleParticipant": "Participant",
+  "createMyGroup": "Create my group now",
+  "onboardingHeroTitle": "Create your Secret Santa in Seconds",
+  "onboardingHeroDesc": "Organize your Secret Santa groups, edit group info and add participants simply and quickly",
+  "onboardingFreeTitle": "Completely Free",
+  "onboardingFreeDesc": "Organize as many groups as you want without paying anything. The fun is on us!",
+  "onboardingStep1AltTitle": "Create your group",
+  "onboardingStep1AltDesc": "Fill in your name, email and group name.",
+  "onboardingStep2AltTitle": "Fill in the details",
+  "onboardingStep2AltDesc": "Set the value, date and raffle rules.",
+  "onboardingStep3AltTitle": "Add participants",
+  "onboardingStep3AltDesc": "Include your friends or share the invite.",
+  "onboardingStep4AltTitle": "Run the draw",
+  "onboardingStep4AltDesc": "With everything filled in, run the draw and see the results."
 }

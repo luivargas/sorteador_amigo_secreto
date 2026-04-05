@@ -261,7 +261,7 @@ class _SearchBar extends StatelessWidget {
                         onSelected: () => context
                             .read<HomeCubit>()
                             .onFilterChanged(GroupFilter.pending),
-                        color: MyColors.sorteadorOrange,
+                        color: MyColors.sorteadorLilac,
                       ),
                       _FilterChip(
                         label: l10n.badgeRaffled,
@@ -269,7 +269,7 @@ class _SearchBar extends StatelessWidget {
                         onSelected: () => context
                             .read<HomeCubit>()
                             .onFilterChanged(GroupFilter.raffled),
-                        color: MyColors.sorteadorGreen,
+                        color: MyColors.sorteadorOrange
                       ),
                     ],
                   ),
@@ -306,7 +306,7 @@ class _FilterChip extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: selected ? activeColor : MyColors.neutral100,
+          color: selected ? activeColor : MyColors.neutral50,
           borderRadius: BorderRadius.circular(999),
           border: Border.all(
             color: selected ? activeColor : SecretSantaColors.neutral200,

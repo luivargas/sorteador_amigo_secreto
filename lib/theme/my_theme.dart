@@ -12,7 +12,7 @@ ThemeData myTheme = ThemeData(
   canvasColor: MyColors.sorteadorBackground,
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
-    fillColor: Colors.white,
+    fillColor: MyColors.neutral50,
     iconColor: MyColors.sorteadorOrange.withValues(alpha: 0.5),
     prefixIconColor: MyColors.sorteadorOrange.withValues(alpha: 0.5),
     labelStyle: TextStyle(color: MyColors.sorteadorOrange.withValues(alpha: 0.5)),
@@ -41,10 +41,9 @@ ThemeData myTheme = ThemeData(
       fontWeight: FontWeight.w800,
     ),
     titleMedium: TextStyle(
-      height: 1.2,
       fontSize: 35,
       color: MyColors.sorteadorGrey,
-      fontWeight: FontWeight.w800,
+      fontWeight: FontWeight.w600,
     ),
     titleLarge: TextStyle(
       fontSize: 60,
@@ -95,7 +94,7 @@ ThemeData myTheme = ThemeData(
     style: ButtonStyle(
       iconColor: WidgetStateProperty<Color?>.fromMap(
         <WidgetStatesConstraint, Color>{
-          WidgetState.any: MyColors.sorteadorOrange,
+          WidgetState.any: MyColors.sorteadorPurpple,
         },
       ),
     ),
