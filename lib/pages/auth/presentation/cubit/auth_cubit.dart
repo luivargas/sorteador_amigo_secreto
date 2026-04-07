@@ -57,7 +57,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> request(RequestToken entity) async {
-    safeEmit(state.copyWith(isLoading: true, clearError: true));
+    safeEmit(state.copyWith(isLoading: true, clearError: true, requested: false));
     try {
       final result = await authUsecases.request(entity);
       result.when(

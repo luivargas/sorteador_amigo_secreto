@@ -4,7 +4,6 @@ import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
-import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_form_field.dart';
@@ -122,10 +121,7 @@ class _ContactListState extends State<ContactList> {
 
   Future<void> _toggleSelection(Contact c) async {
     if (!_isContactValid(c)) {
-      AppAlert.show(
-        context,
-        message: AppLocalizations.of(context)!.contactNotValid,
-      );
+      SecretSantaAlertTheme(message: AppLocalizations.of(context)!.contactNotValid, type: AlertType.warning,);
       return;
     }
 
@@ -390,7 +386,7 @@ class _ContactListState extends State<ContactList> {
       if (errorMsg != null) {
         if (!context.mounted) break;
         // ignore: use_build_context_synchronously
-        AppAlert.show(context, message: errorMsg!);
+        SecretSantaAlertTheme(message: errorMsg!, type: AlertType.warning,);
       }
     }
 
@@ -519,7 +515,7 @@ class _ContactListState extends State<ContactList> {
                                         color: selected
                                             ? SecretSantaColors.neutral50
                                             : (isValid ? null : Colors.red),
-                                        fontWeight: FontWeight.bold
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     _buildSubtitle(
@@ -528,7 +524,7 @@ class _ContactListState extends State<ContactList> {
                                       hasEmail,
                                       isValid,
                                       c,
-                                      selected
+                                      selected,
                                     ),
                                   ],
                                 ),
@@ -538,7 +534,9 @@ class _ContactListState extends State<ContactList> {
                                 selected
                                     ? Icons.check_circle
                                     : Icons.radio_button_unchecked,
-                                color: selected ? SecretSantaColors.neutral50 : getColor(i),
+                                color: selected
+                                    ? SecretSantaColors.neutral50
+                                    : getColor(i),
                               ),
                             ],
                           ),
@@ -566,7 +564,7 @@ class _ContactListState extends State<ContactList> {
     bool hasEmail,
     bool isValid,
     Contact c,
-    bool selected
+    bool selected,
   ) {
     if (!isValid) {
       return Text(
@@ -574,13 +572,14 @@ class _ContactListState extends State<ContactList> {
         style: const TextStyle(color: Colors.red),
       );
     }
-    return Text((hasPhone) ? c.phones.first.number : c.emails.first.address, style: TextStyle(
-                                        color: selected
-                                            ? SecretSantaColors.neutral50
-                                            : (isValid ? null : Colors.red),
-                                        fontWeight: isValid
-                                            ? FontWeight.normal
-                                            : FontWeight.bold,
-                                      ),);
+    return Text(
+      (hasPhone) ? c.phones.first.number : c.emails.first.address,
+      style: TextStyle(
+        color: selected
+            ? SecretSantaColors.neutral50
+            : (isValid ? null : Colors.red),
+        fontWeight: isValid ? FontWeight.normal : FontWeight.bold,
+      ),
+    );
   }
 }

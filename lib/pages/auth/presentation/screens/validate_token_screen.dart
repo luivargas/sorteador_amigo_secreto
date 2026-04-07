@@ -1,5 +1,6 @@
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -95,34 +96,16 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                           .animate()
                           .fadeIn(duration: 400.ms)
                           .slideX(begin: 0.2, curve: Curves.easeOut),
-                      PinInput(
+                      PinInputFormField(
                             keyboardType: TextInputType.number,
                             pinController: _tokenController,
                             length: 6,
-                            builder: (context, cells) {
-                              return Row(
+                            pinBuilder: (context, cells) {
+                              return MaterialPinRow(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: cells.map((cell) {
-                                  return Container(
-                                    width: 40,
-                                    height: 45,
-                                    margin: EdgeInsets.symmetric(horizontal: 8),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      shape: BoxShape.rectangle,
-                                      color: cell.isFocused
-                                          ? SecretSantaColors.accent
-                                          : SecretSantaColors.neutral200,
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        cell.character ?? '',
-                                        style: TextStyle(fontSize: 24),
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
+                                    MainAxisAlignment.spaceEvenly,
+                                cells: cells,
+                                theme: MaterialPinTheme().resolve(context),
                               );
                             },
                             onCompleted: (value) async {
@@ -132,6 +115,18 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                           .animate()
                           .fadeIn(delay: 150.ms, duration: 400.ms)
                           .slideX(begin: 0.2, curve: Curves.easeOut),
+                      TextButton.icon(
+                        onPressed: () async {
+                          final data = await Clipboard.getData(Clipboard.kTextPlain);
+                          final text = data?.text?.trim() ?? '';
+                          if (text.length == 6) {
+                            _tokenController.text = text;
+                            await _onSubmit(text);
+                          }
+                        },
+                        icon: const Icon(Icons.content_paste),
+                        label: Text(l10n.pasteCode),
+                      ),
                     ],
                   );
                 },

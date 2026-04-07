@@ -726,6 +726,12 @@ abstract class AppLocalizations {
   /// **'Digite o código de 6 dígitos que enviamos para o seu e-mail'**
   String get almostThereSubtitle;
 
+  /// No description provided for @pasteCode.
+  ///
+  /// In pt, this message translates to:
+  /// **'Colar código'**
+  String get pasteCode;
+
   /// No description provided for @confirmCodeButton.
   ///
   /// In pt, this message translates to:

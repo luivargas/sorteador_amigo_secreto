@@ -343,6 +343,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Enter the 6-digit code we sent to your email';
 
   @override
+  String get pasteCode => 'Paste code';
+
+  @override
   String get confirmCodeButton => 'Confirm code';
 
   @override

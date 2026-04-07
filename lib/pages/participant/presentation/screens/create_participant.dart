@@ -65,22 +65,20 @@ class _CreateParticipant extends State<CreateParticipant> {
           listenWhen: (prev, curr) => prev.isLoading && !curr.isLoading,
           listener: (context, state) async {
             if (state.created) {
-              AppAlert.show(
-                context,
-                message: AppLocalizations.of(
-                  context,
-                )!.participantAddedSuccess(nameController.text),
-                type: AlertType.success,
+              SecretSantaAlert.show(
+                message: l10n.participantAddedSuccess(nameController.text),
+                type: AlertType.success, context: context
               );
+              await Future.delayed(const Duration(milliseconds: 600));
               if (context.mounted) {
                 context.pop(true);
               }
             }
             if (state.error != null) {
-              await AppDialog.show(
+              SecretSantaAlert.show(
                 context: context,
                 title: l10n.errorTitle,
-                message: state.error!.localize(context),
+                message: state.error!.localize(context), type: AlertType.warning,
               );
             }
           },
@@ -182,9 +180,7 @@ class _CreateParticipant extends State<CreateParticipant> {
                           padding: const EdgeInsets.only(bottom: 30.0),
                           child: MyGradientButton(
                             onTap: _onSubmit,
-                            title: AppLocalizations.of(
-                              context,
-                            )!.addParticipantButton,
+                            title: l10n.addParticipantButton,
                             icon: Icons.save,
                             isLoading: state.isLoading,
                           ),

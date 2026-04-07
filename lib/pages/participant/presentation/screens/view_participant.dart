@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/network/contants.dart';
-import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/loading_or_error.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
@@ -14,6 +13,7 @@ import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/par
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/participant_card.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/view_participant_form_fields.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class ViewParticipant extends StatefulWidget {
   final String userId;
@@ -96,18 +96,16 @@ class _ViewParticipant extends State<ViewParticipant> {
           listener: (context, state) {
             _prefillFromApi(state);
             if (state.error != null) {
-              AppAlert.show(
-                context,
+              SecretSantaAlertTheme(
                 message: state.error!.localize(context),
-                type: AlertType.error,
+                type: AlertType.warning,
               );
               setState(() {
                 readOnly = false;
               });
             }
             if (state.updated) {
-              AppAlert.show(
-                context,
+              SecretSantaAlertTheme(
                 message: l10n.participantUpdatedSuccess(nameController.text),
                 type: AlertType.success,
               );

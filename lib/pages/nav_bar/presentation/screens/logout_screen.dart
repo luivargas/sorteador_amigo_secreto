@@ -19,9 +19,12 @@ class _LogoutScreenState extends State<LogoutScreen> {
 
   Future<void> _onLogout() async {
     setState(() => _isLoading = true);
-    await getIt<AuthDB>().clear();
+    await Future.wait([
+      getIt<AuthDB>().clear(),
+      Future.delayed(const Duration(seconds: 2)),
+    ]);
     if (!mounted) return;
-    context.goNamed('splash');
+    context.goNamed('request_token');
   }
 
   @override

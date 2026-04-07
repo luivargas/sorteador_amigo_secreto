@@ -8,7 +8,6 @@ import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_email_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
-import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/request_token_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
@@ -55,10 +54,9 @@ class _EnterGroup extends State<RequestTokenScreen> {
           );
         }
         if (state.error != null) {
-          AppAlert.show(
-            context,
+          SecretSantaAlertTheme(
             message: state.error!.localize(context),
-            type: AlertType.error,
+            type: AlertType.warning,
           );
         }
       },

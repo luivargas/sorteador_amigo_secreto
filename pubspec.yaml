@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.1  
   cupertino_icons: ^1.0.8
   flutter_slidable: ^4.0.1
   responsive_builder: ^0.7.1
@@ -50,7 +51,6 @@ dependencies:
   flutter_contacts: ^2.0.0
   permission_handler: ^12.0.1
   share_plus: ^12.0.1
-  image_picker: ^1.2.1
   file_selector: ^1.1.0
   equatable: ^2.0.0
   device_info_plus: ^12.3.0
@@ -72,6 +72,11 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_icons:                                                                                                        
+    android: true
+    ios: true                                                                                                           
+    image_path: "./assets/logos/icons/AppIcon.png"
 
 # The following section is specific to Flutter packages.
 flutter:
@@ -96,6 +101,7 @@ flutter:
     - ./assets/logos/icons/Logo_8.png
     - ./assets/logos/icons/Logo_9.png
     - ./assets/logos/icons/Logo_10.png
+    - ./assets/logos/icons/AppIcon.png
 
     
 

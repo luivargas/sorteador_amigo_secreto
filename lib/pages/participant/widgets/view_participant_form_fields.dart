@@ -122,7 +122,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
           label: l10n.phoneField,
           child: MyPhoneFormField(
             controller: widget.phoneController,
-            textInputAction: TextInputAction.next,
+            textInputAction: TextInputAction.done,
             keyboardType: TextInputType.phone,
             enableInteractiveSelection: widget.readOnly,
             enabled: !widget.readOnly,

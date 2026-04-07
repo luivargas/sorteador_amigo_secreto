@@ -542,7 +542,6 @@ class SecretSantaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       decoration: BoxDecoration(
         color: color,
@@ -556,7 +555,7 @@ class SecretSantaCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(24),
-        child: child
+        child: child,
       ),
     );
   }
@@ -648,96 +647,90 @@ class GradientAvatar extends StatelessWidget {
 }
 
 /// Alert/Banner informativo
-// class SecretSantaAlert extends StatelessWidget {
-//   final String title;
-//   final String message;
-//   final AlertType type;
-//   final IconData? icon;
+class SecretSantaAlertTheme extends StatelessWidget {
+  final String? title;
+  final String message;
+  final AlertType type;
+  final IconData? icon;
 
-//   const SecretSantaAlert({
-//     super.key,
-//     required this.title,
-//     required this.message,
-//     required this.type,
-//     this.icon,
-//   });
+  const SecretSantaAlertTheme({
+    super.key,
+    this.title,
+    required this.message,
+    required this.type,
+    this.icon,
+  });
 
-//   @override
-//   Widget build(BuildContext context) {
-//     Color bgColor;
-//     Color textColor;
-//     Color borderColor;
-//     IconData defaultIcon;
+  @override
+  Widget build(BuildContext context) {
+    Color bgColor;
+    Color textColor;
+    Color borderColor;
+    IconData defaultIcon;
 
-//     switch (type) {
-//       case AlertType.success:
-//         bgColor = SecretSantaColors.successBg;
-//         textColor = SecretSantaColors.successText;
-//         borderColor = SecretSantaColors.successBorder;
-//         defaultIcon = Icons.check_circle_outline;
-//         break;
-//       case AlertType.warning:
-//         bgColor = SecretSantaColors.warningBg;
-//         textColor = SecretSantaColors.warningText;
-//         borderColor = SecretSantaColors.warningBorder;
-//         defaultIcon = Icons.warning_amber_outlined;
-//         break;
-//       case AlertType.info:
-//         bgColor = SecretSantaColors.infoBg;
-//         textColor = SecretSantaColors.infoText;
-//         borderColor = SecretSantaColors.infoBorder;
-//         defaultIcon = Icons.info_outline;
-//         break;
-//     }
+    switch (type) {
+      case AlertType.success:
+        bgColor = SecretSantaColors.successBg;
+        textColor = SecretSantaColors.successText;
+        borderColor = SecretSantaColors.successBorder;
+        defaultIcon = Icons.check_circle_outline;
+        break;
+      case AlertType.warning:
+        bgColor = SecretSantaColors.warningBg;
+        textColor = SecretSantaColors.warningText;
+        borderColor = SecretSantaColors.warningBorder;
+        defaultIcon = Icons.warning_amber_outlined;
+        break;
+      case AlertType.info:
+        bgColor = SecretSantaColors.infoBg;
+        textColor = SecretSantaColors.infoText;
+        borderColor = SecretSantaColors.infoBorder;
+        defaultIcon = Icons.info_outline;
+        break;
+    }
 
-//     return Container(
-//       padding: EdgeInsets.all(16),
-//       decoration: BoxDecoration(
-//         color: bgColor,
-//         borderRadius: BorderRadius.circular(16),
-//         border: Border.all(color: borderColor, width: 1),
-//       ),
-//       child: Row(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Icon(
-//             icon ?? defaultIcon,
-//             color: textColor,
-//             size: 24,
-//           ),
-//           SizedBox(width: 16),
-//           Expanded(
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Text(
-//                   title,
-//                   style: SecretSantaTextStyles.label.copyWith(
-//                     color: textColor,
-//                     fontWeight: FontWeight.w700,
-//                   ),
-//                 ),
-//                 SizedBox(height: 4),
-//                 Text(
-//                   message,
-//                   style: SecretSantaTextStyles.bodySmall.copyWith(
-//                     color: textColor,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+    return Container(
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: borderColor, width: 1),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon ?? defaultIcon, color: textColor, size: 24),
+          SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (title != null) ...[
+                  Text(
+                    title!,
+                    style: SecretSantaTextStyles.label.copyWith(
+                      color: textColor,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                ],
+                Text(
+                  message,
+                  style: SecretSantaTextStyles.bodySmall.copyWith(
+                    color: textColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
-// enum AlertType {
-//   success,
-//   warning,
-//   info,
-// }
+enum AlertType { success, warning, info }
 
 /// Input customizado
 class SecretSantaTextField extends StatelessWidget {

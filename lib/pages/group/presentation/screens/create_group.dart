@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/create_group_entity.dart';
@@ -57,16 +58,14 @@ class _FormGroupBody extends State<CreateGroup> {
         body: BlocConsumer<GroupCubit, GroupState>(
           listenWhen: (previous, current) =>
               previous.isLoading && !current.isLoading && current.created,
-          listener: (context, state) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  l10n.groupCreatedSuccess(groupNameController.text),
-                ),
-                showCloseIcon: true,
-              ),
+          listener: (context, state) async{
+            SecretSantaAlert.show(
+              message: l10n.groupCreatedSuccess(groupNameController.text),
+              type: AlertType.success, context: context,
             );
-            context.pop(true);
+            if (context.mounted) {
+              context.pop(true);
+            }
           },
           builder: (context, state) {
             if (state.isLoading) {
@@ -119,7 +118,7 @@ class _FormGroupBody extends State<CreateGroup> {
                     ),
                     MyGradientButton(
                       onTap: _onSubmit,
-                      title: AppLocalizations.of(context)!.createGroupButton,
+                      title: l10n.createGroupButton,
                       icon: Icons.save,
                     ),
                   ],

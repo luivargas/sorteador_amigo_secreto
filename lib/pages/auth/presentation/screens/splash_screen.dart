@@ -16,17 +16,36 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  bool _timerDone = false;
+  AuthState? _pendingState;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 4), () {
+      if (!mounted) return;
+      setState(() => _timerDone = true);
+      if (_pendingState != null) _navigate(_pendingState!);
+    });
+  }
+
+  void _navigate(AuthState state) {
+    if (state.validated) {
+      context.goNamed('nav_bar', extra: state.groups ?? []);
+    } else {
+      context.goNamed('request_token');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listenWhen: (p, c) => !p.sessionChecked && c.sessionChecked,
       listener: (context, state) {
-        if (state.validated) {
-          context.goNamed('nav_bar', extra: state.groups ?? []);
-        }
-        if (!state.validated) {
-          context.goNamed('request_token');
+        if (_timerDone) {
+          _navigate(state);
+        } else {
+          _pendingState = state;
         }
       },
       child: Scaffold(

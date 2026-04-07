@@ -7,11 +7,17 @@ import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:flutter/services.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Injector.init();
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((_) {
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {

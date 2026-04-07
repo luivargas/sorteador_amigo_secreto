@@ -157,6 +157,7 @@
 
   "almostThereTitle": "Check your email",
   "almostThereSubtitle": "Enter the 6-digit code we sent to your email",
+  "pasteCode": "Paste code",
   "confirmCodeButton": "Confirm code",
 
   "noName": "No name",
