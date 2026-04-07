@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class MyGradientButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -23,7 +23,7 @@ class MyGradientButton extends StatelessWidget {
       borderRadius: BorderRadius.all(Radius.circular(20)),
       child: Container(
         decoration: BoxDecoration(
-          gradient: MyColors.sorteadorGradient,
+          gradient: SecretSantaColors.primaryGradient,
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         child: Padding(
@@ -38,7 +38,7 @@ class MyGradientButton extends StatelessWidget {
                       height: 24,
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
-                        color: MyColors.neutral50,
+                        color: SecretSantaColors.neutral50,
                       ),
                     ),
                   )
@@ -47,7 +47,7 @@ class MyGradientButton extends StatelessWidget {
                     spacing: 10,
                     children: [
                       if (icon != null)
-                        Icon(icon, color: MyColors.neutral50, size: 20),
+                        Icon(icon, color: SecretSantaColors.neutral50, size: 20),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -55,7 +55,7 @@ class MyGradientButton extends StatelessWidget {
                             title,
                             style: TextStyle(
                               fontSize: 16,
-                              color: MyColors.neutral50,
+                              color: SecretSantaColors.neutral50,
                               fontWeight: FontWeight.w900,
                             ),
                           ),

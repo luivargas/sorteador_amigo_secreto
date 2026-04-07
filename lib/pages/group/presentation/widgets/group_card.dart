@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class GroupCard extends StatefulWidget {
   final String groupName;
@@ -28,9 +27,9 @@ class GroupCard extends StatefulWidget {
 class _GroupCardState extends State<GroupCard> {
   Text _initials(Color color) {
     final text = widget.groupName.trim();
-    final parts = text.split(' ').where((p) => p.isNotEmpty).toList();
-    final first = parts.first[0].toUpperCase();
-    final last = parts.length > 1 ? parts.last[0].toUpperCase() : '';
+    final avatar = text.split(' ').where((p) => p.isNotEmpty).toList();
+    final first = avatar.first[0].toUpperCase();
+    final last = avatar.length > 1 ? avatar.last[0].toUpperCase() : '';
     return Text(
       '$first$last',
       style: TextStyle(fontWeight: FontWeight.bold, color: color, fontSize: 25),
@@ -44,9 +43,9 @@ class _GroupCardState extends State<GroupCard> {
     return Container(
       padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
       decoration: BoxDecoration(
-        color: MyColors.neutral50,
+        color: SecretSantaColors.neutral50,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: MyColors.neutral200.withAlpha(150)),
+        border: Border.all(color: SecretSantaColors.neutral200.withAlpha(150)),
         boxShadow: SecretSantaShadows.small,
       ),
       child: Padding(
@@ -68,27 +67,19 @@ class _GroupCardState extends State<GroupCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          widget.groupName,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Icon(Icons.chevron_right, color: widget.color),
-                    ],
+                  Text(
+                    widget.groupName,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    overflow: TextOverflow.ellipsis,
                   ),
                   Row(
                     spacing: 5,
                     children: [
                       Icon(Icons.circle, color: widget.color, size: 10),
-                      Text( widget.isRaffled ? l10n!.badgeRaffled
-                        : l10n!.badgePending,
+                      Text(
+                        widget.isRaffled
+                            ? l10n!.badgeRaffled
+                            : l10n!.badgePending,
                         style: TextStyle(color: widget.color),
                       ),
                     ],
@@ -96,6 +87,7 @@ class _GroupCardState extends State<GroupCard> {
                 ],
               ),
             ),
+            Icon(Icons.chevron_right, color: widget.color),
           ],
         ),
       ),

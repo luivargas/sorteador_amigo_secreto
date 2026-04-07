@@ -7,7 +7,6 @@ import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/par
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/create_parti_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/show_parti_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/participants_list_args.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/contact_page.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/contacts_list.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/create_participant.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/participants_list_screen.dart';
@@ -67,14 +66,6 @@ List<RouteBase> participantRoutes = [
           type: extra.type,
         ),
       );
-    },
-  ),
-  GoRoute(
-    name: 'contact_page',
-    path: '/contact_page/:id',
-    builder: (BuildContext context, GoRouterState state) {
-      final id = state.pathParameters['id'];
-      return ContactPage(id: id!);
     },
   ),
 ];

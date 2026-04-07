@@ -13,8 +13,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_sta
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/view_group/view_group_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
-import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
+
 import 'package:share_plus/share_plus.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -90,13 +89,13 @@ class _ViewGroupBody extends State<ViewGroup> {
           IconButton(
             onPressed: _onEdit,
             icon: const Icon(Icons.edit_outlined, size: 24),
-            color: MyColors.sorteadorOrange,
+            color: SecretSantaColors.accent,
             tooltip: AppLocalizations.of(context)!.edit,
           ),
           IconButton(
             onPressed: () => _onShare(group),
             icon: const Icon(Icons.share_outlined, size: 24),
-            color: MyColors.sorteadorOrange,
+            color: SecretSantaColors.accent,
           ),
         ],
       ),
@@ -107,7 +106,7 @@ class _ViewGroupBody extends State<ViewGroup> {
         builder: (context, state) {
           if (state.isLoading && state.group == null) {
             return Center(
-              child: CircularProgressIndicator(color: myProgressIndicator.color),
+              child: CircularProgressIndicator(color: SecretSantaColors.accent),
             );
           }
           if (state.error != null) {
@@ -185,7 +184,7 @@ class _GroupHeroHeader extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.fromLTRB(24, 24, 100, 24),
             decoration: BoxDecoration(
-              gradient: MyColors.primaryGradient,
+              gradient: SecretSantaColors.primaryGradient,
               borderRadius: BorderRadius.circular(24),
               boxShadow: SecretSantaShadows.button,
             ),
@@ -228,19 +227,19 @@ class _NeedMoreParticipantsBanner extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: MyColors.sorteadorOrange.withValues(alpha: 0.1),
+        color: SecretSantaColors.accent.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: MyColors.sorteadorOrange.withValues(alpha: 0.4)),
+        border: Border.all(color: SecretSantaColors.accent.withValues(alpha: 0.4)),
       ),
       child: Row(
         spacing: 12,
         children: [
-          Icon(Icons.info_outline, color: MyColors.sorteadorOrange),
+          Icon(Icons.info_outline, color: SecretSantaColors.accent),
           Expanded(
             child: Text(
               message,
               style: TextStyle(
-                color: MyColors.sorteadorOrange,
+                color: SecretSantaColors.accent,
                 fontWeight: FontWeight.w500,
               ),
             ),

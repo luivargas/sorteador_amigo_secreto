@@ -1,3 +1,4 @@
+
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -12,6 +13,7 @@ import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/request_token_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_state.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class RequestTokenScreen extends StatefulWidget {
   const RequestTokenScreen({super.key});
@@ -39,25 +41,31 @@ class _EnterGroup extends State<RequestTokenScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return BlocListener<AuthCubit, AuthState>(
       listenWhen: (p, c) =>
           (!p.requested && c.requested) ||
           (p.error != c.error && c.error != null),
       listener: (context, state) {
         if (state.requested) {
-          context.pushNamed('validate_token', extra: _emailController.text.trim());
+          context.pushNamed(
+            'validate_token',
+            extra: _emailController.text.trim(),
+          );
         }
         if (state.error != null) {
-          AppAlert.show(context, message: state.error!.localize(context), type: AlertType.error);
+          AppAlert.show(
+            context,
+            message: state.error!.localize(context),
+            type: AlertType.error,
+          );
         }
       },
       child: Form(
         key: _formKey,
         child: Scaffold(
-          appBar: MyAppBar(
-            title: AppLocalizations.of(context)!.verificationTitle,
-            subTitle: AppLocalizations.of(context)!.verificationSubtitle,
-          ),
+          appBar: MyAppBar(),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 0),
@@ -65,19 +73,36 @@ class _EnterGroup extends State<RequestTokenScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 20,
                 children: [
+                  Column(
+                    spacing: 10,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(l10n.verificationTitle, style: SecretSantaTextStyles.h1,),
+                      Text(l10n.verificationSubtitle),
+                    ],
+                  ),
                   MyEmailFormField(
-                    controller: _emailController,
-                    validator: (_) => ValidatorUtils.emailValidator(context: context, v: _emailController.text),
-                  ).animate().fadeIn(duration: 400.ms).slideX(begin: 0.2, curve: Curves.easeOut),
+                        controller: _emailController,
+                        validator: (_) => ValidatorUtils.emailValidator(
+                          context: context,
+                          v: _emailController.text,
+                        ),
+                      )
+                      .animate()
+                      .fadeIn(duration: 400.ms)
+                      .slideX(begin: 0.2, curve: Curves.easeOut),
                   BlocBuilder<AuthCubit, AuthState>(
-                    builder: (BuildContext context, AuthState state) {
-                      return MyGradientButton(
-                        onTap: _onSubmit,
-                        title: AppLocalizations.of(context)!.sendCodeButton,
-                        isLoading: state.isLoading,
-                      );
-                    },
-                  ).animate().fadeIn(delay: 150.ms, duration: 400.ms).slideX(begin: 0.2, curve: Curves.easeOut),
+                        builder: (BuildContext context, AuthState state) {
+                          return MyGradientButton(
+                            onTap: _onSubmit,
+                            title: AppLocalizations.of(context)!.sendCodeButton,
+                            isLoading: state.isLoading,
+                          );
+                        },
+                      )
+                      .animate()
+                      .fadeIn(delay: 150.ms, duration: 400.ms)
+                      .slideX(begin: 0.2, curve: Curves.easeOut),
                 ],
               ),
             ),

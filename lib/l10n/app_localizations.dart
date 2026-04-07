@@ -564,6 +564,12 @@ abstract class AppLocalizations {
   /// **'Este contato precisa ter nome e telefone'**
   String get contactNotValid;
 
+  /// No description provided for @contactList.
+  ///
+  /// In pt, this message translates to:
+  /// **'LISTA DE CONTATOS'**
+  String get contactList;
+
   /// No description provided for @contactsTitle.
   ///
   /// In pt, this message translates to:
@@ -699,7 +705,7 @@ abstract class AppLocalizations {
   /// No description provided for @verificationSubtitle.
   ///
   /// In pt, this message translates to:
-  /// **'Enviaremos um código para o seu e-mail'**
+  /// **'Digite seu e-mail e receba o código de acesso do seu Amigo Secreto'**
   String get verificationSubtitle;
 
   /// No description provided for @sendCodeButton.
@@ -711,13 +717,13 @@ abstract class AppLocalizations {
   /// No description provided for @almostThereTitle.
   ///
   /// In pt, this message translates to:
-  /// **'Quase lá!'**
+  /// **'Verifique o seu e-mail'**
   String get almostThereTitle;
 
   /// No description provided for @almostThereSubtitle.
   ///
   /// In pt, this message translates to:
-  /// **'Digite o código que enviamos para o seu e-mail'**
+  /// **'Digite o código de 6 dígitos que enviamos para o seu e-mail'**
   String get almostThereSubtitle;
 
   /// No description provided for @confirmCodeButton.
@@ -1013,6 +1019,36 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Com tudo preenchido realize o sorteio e veja os resultados.'**
   String get onboardingStep4AltDesc;
+
+  /// No description provided for @logoutLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'CONFIRMAÇÃO DE ACESSO'**
+  String get logoutLabel;
+
+  /// No description provided for @logoutTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Deseja realmente sair?'**
+  String get logoutTitle;
+
+  /// No description provided for @logoutSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Você será desconectado do aplicativo e precisará dos seus dados para entrar novamente.'**
+  String get logoutSubtitle;
+
+  /// No description provided for @logoutButton.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sair da conta'**
+  String get logoutButton;
+
+  /// No description provided for @logoutBack.
+  ///
+  /// In pt, this message translates to:
+  /// **'Voltar para o app'**
+  String get logoutBack;
 }
 
 class _AppLocalizationsDelegate

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class MyEmailFormField extends StatelessWidget {
   final TextEditingController controller;
@@ -26,12 +27,12 @@ class MyEmailFormField extends StatelessWidget {
       prefixIcon: const Icon(Icons.email),
       filled: true,
       fillColor: readOnly
-          ? Theme.of(context).colorScheme.surfaceContainerHighest
-          : Theme.of(context).inputDecorationTheme.fillColor,
+          ? SecretSantaColors.neutral200
+          : SecretSantaColors.neutral50,
       enabledBorder: readOnly
           ? OutlineInputBorder(
               borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.outlineVariant,
+                color: SecretSantaColors.neutral300,
               ),
               borderRadius: BorderRadius.circular(12),
             )

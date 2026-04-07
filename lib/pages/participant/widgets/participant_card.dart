@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class ParticipantCard extends StatelessWidget {
   final Widget child;
@@ -23,7 +22,7 @@ class ParticipantCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: SecretSantaColors.neutral50,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: MyColors.sorteadorOrange, width: 1),
+          border: Border.all(color: SecretSantaColors.accent, width: 1),
           boxShadow: SecretSantaShadows.medium,
         ),
         child: Padding(
@@ -35,8 +34,8 @@ class ParticipantCard extends StatelessWidget {
                 width: 120,
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(100)),
-                  color: Theme.of(context).canvasColor,
-                  border: Border.all(color: MyColors.sorteadorOrange, width: 1),
+                  color: SecretSantaColors.background,
+                  border: Border.all(color: SecretSantaColors.accent, width: 1),
                 ),
                 child: image,
               ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/network/contants.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class MyPhoneFormField extends StatelessWidget {
   final PhoneController controller;
@@ -8,7 +10,6 @@ class MyPhoneFormField extends StatelessWidget {
   final bool? enableInteractiveSelection;
   final TextInputAction? textInputAction;
   final TextInputType keyboardType;
-  final List<IsoCode> favorites;
   final double? navigatorHeight;
 
   const MyPhoneFormField({
@@ -19,20 +20,18 @@ class MyPhoneFormField extends StatelessWidget {
     this.enableInteractiveSelection,
     this.textInputAction,
     this.keyboardType = const TextInputType.numberWithOptions(),
-    this.favorites = const [],
     this.navigatorHeight,
   });
 
-  static CountrySelectorNavigator _buildNavigator(
-    BuildContext context, {
-    List<IsoCode> favorites = const [],
-  }) => CountrySelectorNavigator.dialog(
-    backgroundColor: Theme.of(context).canvasColor,
-    titleStyle: Theme.of(context).textTheme.titleSmall,
-    searchBoxTextStyle: Theme.of(context).inputDecorationTheme.labelStyle,
-    favorites: favorites.isEmpty ? null : favorites,
-    height: 400,
-  );
+  static CountrySelectorNavigator _buildNavigator(BuildContext context) =>
+      CountrySelectorNavigator.dialog(
+        backgroundColor: SecretSantaColors.background,
+        titleStyle: SecretSantaTextStyles.h4,
+        searchBoxTextStyle: SecretSantaTextStyles.body.copyWith(
+          color: SecretSantaColors.accent.withValues(alpha: 0.5),
+        ),
+        favorites: favoriteIsoList,
+      );
 
   /// Abre o seletor de país de forma independente, sem PhoneFormField.
   static Future<IsoCode?> showCountrySelector(BuildContext context) =>
@@ -50,10 +49,7 @@ class MyPhoneFormField extends StatelessWidget {
       isCountrySelectionEnabled: true,
       isCountryButtonPersistent: true,
       countryButtonStyle: const CountryButtonStyle(),
-      countrySelectorNavigator: _buildNavigator(
-        context,
-        favorites: favorites,
-      ),
+      countrySelectorNavigator: _buildNavigator(context),
     );
   }
 }

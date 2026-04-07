@@ -6,7 +6,6 @@ class AuthDB {
   static const _keyToken = 'auth_token';
   static const _keyDeviceName = 'device_name';
   static const _keyDeviceModel = 'device_model';
-  static const _keyDeviceId = 'device_id';
 
   final SharedPreferencesWithCache prefs;
 
@@ -27,16 +26,12 @@ class AuthDB {
     return DeviceData(
       name: name,
       model: model,
-      deviceId: prefs.getString(_keyDeviceId),
     );
   }
 
   Future<void> saveDevice(DeviceData data) async {
     await prefs.setString(_keyDeviceName, data.name);
     await prefs.setString(_keyDeviceModel, data.model);
-    if (data.deviceId != null) {
-      await prefs.setString(_keyDeviceId, data.deviceId!);
-    }
   }
 
 
@@ -47,6 +42,5 @@ class AuthDB {
     await prefs.remove(_keyToken);
     await prefs.remove(_keyDeviceName);
     await prefs.remove(_keyDeviceModel);
-    await prefs.remove(_keyDeviceId);
   }
 }

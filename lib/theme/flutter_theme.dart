@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
-
 class SecretSantaColors {
   // Cores principais (gradientes)
-  static const Color accent = Color(0xFFf97316); // orange
-  static const Color accent2 = Color(0xFFd946ef); // fuchsia
-  static const Color accent3 = Color(0xFF22c55e); // emerald
-  static const Color accent4 = Color(0xFF60a5fa); // blue
+  static const Color accent = Color(0xFFf97316);
+  static const Color accent2 = Color(0xFF9121E0);
+  static const Color accent3 = Color(0xFFd946ef);
 
   // Escala neutral
   static const Color neutral50 = Color(0xFFfafafa);
@@ -40,15 +38,21 @@ class SecretSantaColors {
   static const Color infoBorder = Color(0xFF93c5fd);
   static const Color infoText = Color(0xFF1e3a8a);
 
+  // Cores da marca
+  static const Color background = Color(0xFFFFF7ED);
+  static const Color grey = Color(0xFF333333);
+  static const Color green = Color(0xFF22c55e);
+  static const Color red = Color(0xFFE11D48);
+
   // Gradientes
   static const LinearGradient primaryGradient = LinearGradient(
-    colors: [accent, accent2],
+    colors: [accent2, accent3, accent],
     begin: Alignment.centerLeft,
     end: Alignment.centerRight,
   );
 
   static const LinearGradient successGradient = LinearGradient(
-    colors: [accent3, Color(0xFF16a34a)],
+    colors: [accent2, green],
     begin: Alignment.centerLeft,
     end: Alignment.centerRight,
   );
@@ -68,14 +72,14 @@ class SecretSantaTextStyles {
   // Headings
   static const TextStyle h1 = TextStyle(
     fontSize: 40,
-    fontWeight: FontWeight.w900,
+    fontWeight: FontWeight.w800,
     height: 1.1,
     letterSpacing: -0.5,
   );
 
   static const TextStyle h2 = TextStyle(
     fontSize: 32,
-    fontWeight: FontWeight.w900,
+    fontWeight: FontWeight.w800,
     height: 1.1,
     letterSpacing: -0.5,
   );
@@ -132,6 +136,22 @@ class SecretSantaTextStyles {
     height: 1.2,
   );
 
+  // Títulos da app
+  static const TextStyle titleSmall = h4;
+
+  static const TextStyle titleMedium = TextStyle(
+    fontSize: 35,
+    color: SecretSantaColors.grey,
+    fontWeight: FontWeight.w700,
+  );
+
+  static const TextStyle titleLarge = TextStyle(
+    fontSize: 45,
+    wordSpacing: 10,
+    color: SecretSantaColors.grey,
+    fontWeight: FontWeight.w700,
+  );
+
   // Button
   static const TextStyle button = TextStyle(
     fontSize: 16,
@@ -153,8 +173,8 @@ class SecretSantaTextStyles {
 class SecretSantaShadows {
   static List<BoxShadow> small = [
     BoxShadow(
-      color: SecretSantaColors.neutral900.withValues(alpha: 0.06),
-      offset: Offset(0, 1),
+      color: SecretSantaColors.neutral900.withValues(alpha: 0.1),
+      offset: Offset(0, 4),
       blurRadius: 3,
     ),
   ];
@@ -201,6 +221,19 @@ class SecretSantaTheme {
     return ThemeData(
       useMaterial3: true,
 
+      // Background
+      scaffoldBackgroundColor: SecretSantaColors.background,
+      primaryColor: SecretSantaColors.background,
+      canvasColor: SecretSantaColors.background,
+
+      // AppBar
+      appBarTheme: AppBarTheme(backgroundColor: SecretSantaColors.background),
+
+      // Progress indicator
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        color: SecretSantaColors.accent,
+      ),
+
       // Cores
       colorScheme: ColorScheme.light(
         primary: SecretSantaColors.accent,
@@ -243,52 +276,118 @@ class SecretSantaTheme {
         labelMedium: SecretSantaTextStyles.labelSmall.copyWith(
           color: SecretSantaColors.neutral600,
         ),
+        titleSmall: SecretSantaTextStyles.titleSmall,
+        titleMedium: SecretSantaTextStyles.titleMedium,
+        titleLarge: SecretSantaTextStyles.titleLarge,
       ),
 
       // Inputs
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: Colors.white,
+        fillColor: SecretSantaColors.neutral50,
+        iconColor: SecretSantaColors.accent.withValues(alpha: 0.5),
+        prefixIconColor: SecretSantaColors.accent.withValues(alpha: 0.5),
+        labelStyle: TextStyle(
+          color: SecretSantaColors.accent.withValues(alpha: 0.5),
+        ),
+        hintStyle: TextStyle(
+          color: SecretSantaColors.accent.withValues(alpha: 0.5),
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: SecretSantaColors.neutral200,
+            color: SecretSantaColors.accent.withValues(alpha: 0.5),
             width: 1,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: SecretSantaColors.neutral200,
+            color: SecretSantaColors.accent.withValues(alpha: 0.5),
             width: 1,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: SecretSantaColors.accent,
+            color: SecretSantaColors.accent.withValues(alpha: 0.5),
             width: 1,
           ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(
-            color: SecretSantaColors.error,
-            width: 1,
-          ),
+          borderSide: BorderSide(color: SecretSantaColors.error, width: 1),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: SecretSantaColors.neutral700, width: 1),
         ),
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
+
+      // Botão elevado
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          textStyle: WidgetStateProperty<TextStyle?>.fromMap(
+            <WidgetStatesConstraint, TextStyle?>{
+              WidgetState.any: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            },
+          ),
+          backgroundColor: WidgetStateProperty<Color>.fromMap(
+            <WidgetStatesConstraint, Color>{
+              WidgetState.any: SecretSantaColors.accent,
+            },
+          ),
+          foregroundColor: WidgetStateProperty<Color>.fromMap(
+            <WidgetStatesConstraint, Color>{WidgetState.any: Colors.white},
+          ),
+          minimumSize: WidgetStateProperty<Size?>.fromMap(
+            <WidgetStatesConstraint, Size?>{WidgetState.any: Size(0, 50)},
+          ),
+          iconSize: WidgetStateProperty<double?>.fromMap(
+            <WidgetStatesConstraint, double?>{WidgetState.any: 18.0},
+          ),
+        ),
+      ),
+
+      // Navigation bar
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: SecretSantaColors.accent,
+        labelTextStyle: WidgetStateProperty<TextStyle?>.fromMap(
+          <WidgetStatesConstraint, TextStyle?>{
+            WidgetState.any: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          },
+        ),
+      ),
+
+      // Ícones
+      iconTheme: IconThemeData(color: SecretSantaColors.accent2),
+      iconButtonTheme: IconButtonThemeData(
+        style: ButtonStyle(
+          iconColor: WidgetStateProperty<Color?>.fromMap(
+            <WidgetStatesConstraint, Color>{
+              WidgetState.any: SecretSantaColors.accent2,
+            },
+          ),
+        ),
+      ),
+
+      // ListTile
+      listTileTheme: ListTileThemeData(iconColor: SecretSantaColors.accent2),
 
       // Cards
       cardTheme: CardThemeData(
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
-          side: BorderSide(
-            color: SecretSantaColors.neutral200,
-            width: 1,
-          ),
+          side: BorderSide(color: SecretSantaColors.neutral200, width: 1),
         ),
         shadowColor: Color.fromRGBO(17, 24, 39, 0.06),
       ),
@@ -362,10 +461,11 @@ class GradientButton extends StatelessWidget {
                 else
                   Text(
                     text,
-                    style: (isLarge
-                            ? SecretSantaTextStyles.buttonLarge
-                            : SecretSantaTextStyles.button)
-                        .copyWith(color: Colors.white),
+                    style:
+                        (isLarge
+                                ? SecretSantaTextStyles.buttonLarge
+                                : SecretSantaTextStyles.button)
+                            .copyWith(color: Colors.white),
                   ),
               ],
             ),
@@ -400,13 +500,8 @@ class SecondaryButton extends StatelessWidget {
           horizontal: isSmall ? 16 : 28,
           vertical: isSmall ? 8 : 14,
         ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        side: BorderSide(
-          color: SecretSantaColors.neutral200,
-          width: 1,
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        side: BorderSide(color: SecretSantaColors.neutral200, width: 1),
         backgroundColor: SecretSantaColors.neutral50,
       ),
       child: Row(
@@ -418,10 +513,11 @@ class SecondaryButton extends StatelessWidget {
           ],
           Text(
             text,
-            style: (isSmall
-                    ? SecretSantaTextStyles.bodySmall
-                    : SecretSantaTextStyles.button)
-                .copyWith(color: SecretSantaColors.neutral900),
+            style:
+                (isSmall
+                        ? SecretSantaTextStyles.bodySmall
+                        : SecretSantaTextStyles.button)
+                    .copyWith(color: SecretSantaColors.neutral900),
           ),
         ],
       ),
@@ -434,36 +530,33 @@ class SecretSantaCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? padding;
   final VoidCallback? onTap;
+  final Color? color;
 
   const SecretSantaCard({
     super.key,
     required this.child,
     this.padding,
     this.onTap,
+    this.color,
   });
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: color,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: SecretSantaColors.neutral200,
+          color: SecretSantaColors.neutral200.withValues(alpha: 0.5),
           width: 1,
         ),
-        boxShadow: SecretSantaShadows.medium,
+        boxShadow: SecretSantaShadows.small,
       ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(24),
-          child: Padding(
-            padding: padding ?? EdgeInsets.all(24),
-            child: child,
-          ),
-        ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(24),
+        child: child
       ),
     );
   }
@@ -473,10 +566,7 @@ class SecretSantaCard extends StatelessWidget {
 class SecretSantaBadge extends StatelessWidget {
   final BadgeType type;
 
-  const SecretSantaBadge({
-    super.key,
-    required this.type,
-  });
+  const SecretSantaBadge({super.key, required this.type});
 
   @override
   Widget build(BuildContext context) {
@@ -516,21 +606,14 @@ class SecretSantaBadge extends StatelessWidget {
   }
 }
 
-enum BadgeType {
-  pending,
-  raffled,
-}
+enum BadgeType { pending, raffled }
 
 /// Avatar circular com gradiente
 class GradientAvatar extends StatelessWidget {
   final String initials;
   final double size;
 
-  const GradientAvatar({
-    super.key,
-    required this.initials,
-    this.size = 48,
-  });
+  const GradientAvatar({super.key, required this.initials, this.size = 48});
 
   @override
   Widget build(BuildContext context) {
@@ -546,7 +629,7 @@ class GradientAvatar extends StatelessWidget {
                   color: Color.fromRGBO(249, 115, 22, 0.3),
                   offset: Offset(0, 20),
                   blurRadius: 60,
-                )
+                ),
               ]
             : null,
       ),
@@ -708,8 +791,6 @@ class SecretSantaTextField extends StatelessWidget {
     );
   }
 }
-
-
 
 // ============================================================================
 // ESPAÇAMENTOS PADRÃO

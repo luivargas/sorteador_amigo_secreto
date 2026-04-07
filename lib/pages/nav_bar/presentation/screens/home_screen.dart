@@ -12,8 +12,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_card.dart';
 import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/widgets/home_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
-import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
+
 
 import '../cubit/home_cubit.dart';
 import '../cubit/home_state.dart';
@@ -46,10 +45,9 @@ class _HomeViewState extends State<_HomeView> {
   bool _searchBarElevated = false;
 
   final List<Color> cardColors = [
-    MyColors.sorteadorOrange,
-    MyColors.sorteadorPurpple,
+    SecretSantaColors.accent,
+    SecretSantaColors.accent2,
   ];
-
   Color getColor(int index) => cardColors[index % cardColors.length];
 
   @override
@@ -86,14 +84,12 @@ class _HomeViewState extends State<_HomeView> {
       appBar: MyAppBar(),
       body: Column(
         children: [
-          // Barra de busca + filtros: fora do scroll, sem altura fixa
           _SearchBar(
             searchController: _searchController,
             l10n: l10n,
             elevated: _searchBarElevated,
           ),
 
-          // Conteúdo rolável
           Expanded(
             child: SmartRefresher(
               enablePullDown: true,
@@ -102,7 +98,6 @@ class _HomeViewState extends State<_HomeView> {
               child: CustomScrollView(
                 controller: _scrollController,
                 slivers: [
-                  // HomeCard some quando o usuário rola para cima
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
@@ -110,25 +105,23 @@ class _HomeViewState extends State<_HomeView> {
                     ),
                   ),
 
-                  // Título da lista
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
                       child: Text(
                         l10n.homeTitle,
-                        style: Theme.of(context).textTheme.titleSmall,
+                        style: SecretSantaTextStyles.titleSmall,
                       ),
                     ),
                   ),
 
-                  // Conteúdo: loading, erro, vazio ou lista
                   BlocBuilder<HomeCubit, HomeState>(
                     builder: (context, state) {
                       if (state.isLoading) {
                         return SliverFillRemaining(
                           child: Center(
                             child: CircularProgressIndicator(
-                              color: myProgressIndicator.color,
+                              color: SecretSantaColors.accent,
                             ),
                           ),
                         );
@@ -227,7 +220,7 @@ class _SearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       elevation: elevated ? 3 : 0,
-      color: Theme.of(context).scaffoldBackgroundColor,
+      color: SecretSantaColors.background,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
         child: Column(
@@ -261,7 +254,7 @@ class _SearchBar extends StatelessWidget {
                         onSelected: () => context
                             .read<HomeCubit>()
                             .onFilterChanged(GroupFilter.pending),
-                        color: MyColors.sorteadorLilac,
+                        color: SecretSantaColors.accent3,
                       ),
                       _FilterChip(
                         label: l10n.badgeRaffled,
@@ -269,7 +262,7 @@ class _SearchBar extends StatelessWidget {
                         onSelected: () => context
                             .read<HomeCubit>()
                             .onFilterChanged(GroupFilter.raffled),
-                        color: MyColors.sorteadorOrange
+                        color: SecretSantaColors.accent
                       ),
                     ],
                   ),
@@ -298,7 +291,7 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final activeColor = color ?? MyColors.sorteadorPurpple;
+    final activeColor = color ?? SecretSantaColors.accent2;
 
     return GestureDetector(
       onTap: onSelected,
@@ -306,7 +299,7 @@ class _FilterChip extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: selected ? activeColor : MyColors.neutral50,
+          color: selected ? activeColor : SecretSantaColors.neutral50,
           borderRadius: BorderRadius.circular(999),
           border: Border.all(
             color: selected ? activeColor : SecretSantaColors.neutral200,
@@ -317,7 +310,7 @@ class _FilterChip extends StatelessWidget {
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: selected ? Colors.white : MyColors.neutral600,
+            color: selected ? Colors.white : SecretSantaColors.neutral600,
           ),
         ),
       ),

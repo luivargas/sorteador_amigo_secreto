@@ -114,6 +114,7 @@
   "onboardingStep4Desc": "Each participant receives their secret friend by email or WhatsApp (Premium plan)",
 
   "contactNotValid": "This contact must have a name and phone",
+    "contactList": "CONTACT LIST",
   "contactsTitle": "Select Participants",
   "contactsSubtitle": "Choose contacts for the draw",
   "searchParticipants": "Search participants",
@@ -151,11 +152,11 @@
   "sessionExpired": "Session expired.",
 
   "verificationTitle": "Access verification",
-  "verificationSubtitle": "We will send a code to your email",
+  "verificationSubtitle": "Enter your email and receive your Secret Santa access code",
   "sendCodeButton": "Send code",
 
-  "almostThereTitle": "Almost there!",
-  "almostThereSubtitle": "Enter the code we sent to your email",
+  "almostThereTitle": "Check your email",
+  "almostThereSubtitle": "Enter the 6-digit code we sent to your email",
   "confirmCodeButton": "Confirm code",
 
   "noName": "No name",
@@ -210,5 +211,11 @@
   "onboardingStep3AltTitle": "Add participants",
   "onboardingStep3AltDesc": "Include your friends or share the invite.",
   "onboardingStep4AltTitle": "Run the draw",
-  "onboardingStep4AltDesc": "With everything filled in, run the draw and see the results."
+  "onboardingStep4AltDesc": "With everything filled in, run the draw and see the results.",
+
+  "logoutLabel": "ACCESS CONFIRMATION",
+  "logoutTitle": "Do you really want to sign out?",
+  "logoutSubtitle": "You will be disconnected from the app and will need your credentials to sign in again.",
+  "logoutButton": "Sign out",
+  "logoutBack": "Back to app"
 }

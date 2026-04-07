@@ -6,7 +6,7 @@ import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/cubit/home_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/widgets/info_card.dart';
 import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/widgets/step_card.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -17,8 +17,8 @@ class Onboarding extends StatefulWidget {
 
 class _OnboardingState extends State<Onboarding> {
   final List<Color> cardColors = [
-    MyColors.sorteadorOrange,
-    MyColors.sorteadorPurpple,
+    SecretSantaColors.accent,
+    SecretSantaColors.accent2,
   ];
 
   Color getColor(int index) {
@@ -31,7 +31,7 @@ class _OnboardingState extends State<Onboarding> {
 
     return Scaffold(
       appBar: MyAppBar(),
-      backgroundColor: Theme.of(context).canvasColor,
+      backgroundColor: SecretSantaColors.background,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
@@ -49,7 +49,7 @@ class _OnboardingState extends State<Onboarding> {
                             padding: EdgeInsets.all(16),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16),
-                              gradient: MyColors.primaryGradient,
+                              gradient: SecretSantaColors.primaryGradient,
                             ),
                             child: Column(
                               spacing: 10,
@@ -58,7 +58,7 @@ class _OnboardingState extends State<Onboarding> {
                                 Text(
                                   l10n.onboardingHeroTitle,
                                   style: const TextStyle(
-                                    color: MyColors.neutral50,
+                                    color: SecretSantaColors.neutral50,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -66,7 +66,7 @@ class _OnboardingState extends State<Onboarding> {
                                 Text(
                                   l10n.onboardingHeroDesc,
                                   style: TextStyle(
-                                    color: MyColors.neutral50.withValues(
+                                    color: SecretSantaColors.neutral50.withValues(
                                       alpha: 0.7,
                                     ),
                                     fontWeight: FontWeight.bold,
@@ -80,7 +80,7 @@ class _OnboardingState extends State<Onboarding> {
                                     children: [
                                       Expanded(
                                         child: FloatingActionButton(
-                                          backgroundColor: MyColors.neutral50,
+                                          backgroundColor: SecretSantaColors.neutral50,
                                           onPressed: () async {
                                             final result = await context.push(
                                               "/create_group",
@@ -93,7 +93,7 @@ class _OnboardingState extends State<Onboarding> {
                                           child: Text(
                                             l10n.createMyGroup,
                                             style: TextStyle(
-                                              color: MyColors.sorteadorOrange,
+                                              color: SecretSantaColors.accent,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -117,7 +117,7 @@ class _OnboardingState extends State<Onboarding> {
                 children: [
                   Text(
                     l10n.onboardingHowItWorks,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: SecretSantaTextStyles.titleSmall,
                   ),
                   Column(
                     spacing: 25,
@@ -153,9 +153,9 @@ class _OnboardingState extends State<Onboarding> {
                       InfoCard(
                         title: l10n.onboardingFreeTitle,
                         description: l10n.onboardingFreeDesc,
-                        backgroundColor: MyColors.sorteadorPurpple,
+                        backgroundColor: SecretSantaColors.accent2,
                         icon: Icons.volunteer_activism,
-                        iconBackgroundColor: MyColors.sorteadorOrange,
+                        iconBackgroundColor: SecretSantaColors.accent,
                       ),
                     ],
                   ),

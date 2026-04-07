@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class MyTokenFormField extends StatelessWidget {
   final TextEditingController controller;
@@ -32,7 +33,7 @@ class MyTokenFormField extends StatelessWidget {
       hintText: hintText,
       prefixIcon: Icon(icon),
       enabledBorder: readOnly ? OutlineInputBorder(
-        borderSide: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
+        borderSide: BorderSide(color: SecretSantaColors.neutral300),
         borderRadius: BorderRadius.circular(12),
       )
       : null,

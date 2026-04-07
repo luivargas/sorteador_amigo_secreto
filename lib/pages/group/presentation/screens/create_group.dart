@@ -9,8 +9,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cub
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/create_form_group/group_form_field.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
-import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class CreateGroup extends StatefulWidget {
@@ -73,7 +72,7 @@ class _FormGroupBody extends State<CreateGroup> {
             if (state.isLoading) {
               return Center(
                 child: CircularProgressIndicator(
-                  color: myProgressIndicator.color,
+                  color: SecretSantaColors.accent,
                 ),
               );
             }
@@ -87,9 +86,9 @@ class _FormGroupBody extends State<CreateGroup> {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            color: MyColors.neutral50,
+                            color: SecretSantaColors.neutral50,
                             border: Border.all(
-                              color: MyColors.sorteadorPurpple.withValues(
+                              color: SecretSantaColors.accent2.withValues(
                                 alpha: 0.3,
                               ),
                             ),
@@ -102,7 +101,7 @@ class _FormGroupBody extends State<CreateGroup> {
                         ),
                         Text(
                           l10n.createGroupTitle,
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: SecretSantaTextStyles.titleMedium,
                           textAlign: TextAlign.center,
                         ),
                         Text(

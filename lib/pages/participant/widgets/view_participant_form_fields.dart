@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
-import 'package:sorteador_amigo_secreto/core/network/contants.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/labeled_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_email_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_name_form_field.dart';
@@ -8,7 +7,7 @@ import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 enum ParticipantRole { admin, participant, observer }
 
@@ -61,7 +60,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
   }
 
   Color _roleColor(String? role) {
-    return role == 'admin' ? MyColors.sorteadorPurpple : MyColors.sorteadorOrange;
+    return role == 'admin' ? SecretSantaColors.accent2 : SecretSantaColors.accent;
   }
 
   @override
@@ -127,7 +126,6 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
             keyboardType: TextInputType.phone,
             enableInteractiveSelection: widget.readOnly,
             enabled: !widget.readOnly,
-            favorites: favoriteIsoList,
             navigatorHeight: 400,
             validator: null
           ),

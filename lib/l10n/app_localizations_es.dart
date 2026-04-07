@@ -256,6 +256,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get contactNotValid => 'Este contacto debe tener nombre y teléfono';
 
   @override
+  String get contactList => 'LISTA DE CONTATOS';
+
+  @override
   String get contactsTitle => 'Seleccionar Participantes';
 
   @override
@@ -329,17 +332,17 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get verificationSubtitle =>
-      'Te enviaremos un código a tu correo electrónico';
+      'Ingresa tu correo y recibe el código de acceso de tu Amigo Secreto';
 
   @override
   String get sendCodeButton => 'Enviar código';
 
   @override
-  String get almostThereTitle => '¡Casi listo!';
+  String get almostThereTitle => 'Revisa tu correo electrónico';
 
   @override
   String get almostThereSubtitle =>
-      'Ingresa el código que enviamos a tu correo electrónico';
+      'Ingresa el código de 6 dígitos que enviamos a tu correo';
 
   @override
   String get confirmCodeButton => 'Confirmar código';
@@ -503,4 +506,20 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get onboardingStep4AltDesc =>
       'Con todo completado realiza el sorteo y ve los resultados.';
+
+  @override
+  String get logoutLabel => 'CONFIRMACIÓN DE ACCESO';
+
+  @override
+  String get logoutTitle => '¿Realmente deseas salir?';
+
+  @override
+  String get logoutSubtitle =>
+      'Serás desconectado de la aplicación y necesitarás tus datos para ingresar nuevamente.';
+
+  @override
+  String get logoutButton => 'Cerrar sesión';
+
+  @override
+  String get logoutBack => 'Volver a la app';
 }

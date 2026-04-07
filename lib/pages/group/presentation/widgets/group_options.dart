@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
-import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class GroupOptions extends StatelessWidget {
   const GroupOptions({super.key});
@@ -26,7 +26,7 @@ class GroupOptions extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 15.0),
               child: Text(
                 l10n.groupOptionsTitle,
-                style: myTheme.textTheme.titleSmall,
+                style: SecretSantaTextStyles.titleSmall,
               ),
             ),
             Column(

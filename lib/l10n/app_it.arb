@@ -114,6 +114,7 @@
   "onboardingStep4Desc": "Ogni partecipante riceve il suo amico segreto via email o WhatsApp (piano Premium)",
 
   "contactNotValid": "Questo contatto deve avere nome e telefono",
+  "contactList": "ELENCO CONTATTI",
   "contactsTitle": "Seleziona Partecipanti",
   "contactsSubtitle": "Scegli i contatti per il sorteggio",
   "searchParticipants": "Cerca partecipanti",
@@ -151,11 +152,11 @@
   "sessionExpired": "Sessione scaduta.",
 
   "verificationTitle": "Verifica di onboardingo",
-  "verificationSubtitle": "Ti invieremo un codice alla tua email",
+  "verificationSubtitle": "Inserisci la tua email e ricevi il codice di accesso del tuo Amico Segreto",
   "sendCodeButton": "Invia codice",
 
-  "almostThereTitle": "Quasi fatto!",
-  "almostThereSubtitle": "Inserisci il codice che abbiamo inviato alla tua email",
+  "almostThereTitle": "Controlla la tua email",
+  "almostThereSubtitle": "Inserisci il codice a 6 cifre che abbiamo inviato alla tua email",
   "confirmCodeButton": "Conferma codice",
 
   "noName": "Senza nome",
@@ -210,5 +211,11 @@
   "onboardingStep3AltTitle": "Aggiungi partecipanti",
   "onboardingStep3AltDesc": "Includi i tuoi amici o condividi l'invito.",
   "onboardingStep4AltTitle": "Effettua il sorteggio",
-  "onboardingStep4AltDesc": "Con tutto compilato effettua il sorteggio e vedi i risultati."
+  "onboardingStep4AltDesc": "Con tutto compilato effettua il sorteggio e vedi i risultati.",
+
+  "logoutLabel": "CONFERMA ACCESSO",
+  "logoutTitle": "Vuoi davvero uscire?",
+  "logoutSubtitle": "Verrai disconnesso dall'app e dovrai reinserire i tuoi dati per accedere di nuovo.",
+  "logoutButton": "Esci dall'account",
+  "logoutBack": "Torna all'app"
 }

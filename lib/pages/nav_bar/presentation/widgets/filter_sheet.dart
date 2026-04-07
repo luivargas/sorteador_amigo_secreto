@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class FilterSheet extends StatefulWidget {
   const FilterSheet({super.key});
@@ -13,7 +13,7 @@ class _FilterSheetState extends State<FilterSheet> {
   bool participant = true;
   bool showRaffled = true;
   bool admin = true;
-  Color activeColor = MyColors.sorteadorOrange;
+  Color activeColor = SecretSantaColors.accent;
 
   @override
   Widget build(BuildContext context) {

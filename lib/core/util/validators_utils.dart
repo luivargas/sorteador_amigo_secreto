@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/models/properties/phone.dart';
+import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/util/regex_utils.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class ValidatorUtils {
+
   static String? isValidEmail({required BuildContext context, required String? v}) {
     final ok = RegexUtils.emailRegExp.hasMatch(v ?? "");
     return ok ? null : AppLocalizations.of(context)!.validatorInvalidEmail;
@@ -45,5 +48,16 @@ class ValidatorUtils {
       }
     }
     return null;
+  }
+
+    static IsoCode? isoCodeFromPhone(Phone phone) {
+    final raw = phone.number.replaceAll(RegExp(r'[\s\-\(\)\.]+'), '');
+    if (!raw.startsWith('+')) return null;
+
+    try {
+      return PhoneNumber.parse(raw).isoCode;
+    } catch (_) {
+      return null;
+    }
   }
 }

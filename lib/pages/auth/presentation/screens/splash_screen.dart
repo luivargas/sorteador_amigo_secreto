@@ -6,7 +6,7 @@ import 'package:sorteador_amigo_secreto/core/network/contants.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_state.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     .animate()
                     .fadeIn(duration: 600.ms)
                     .slideY(begin: -0.3, curve: Curves.easeOut),
-                CircularProgressIndicator(color: MyColors.sorteadorOrange)
+                CircularProgressIndicator(color: SecretSantaColors.accent)
                     .animate()
                     .fadeIn(delay: 400.ms, duration: 400.ms),
               ],

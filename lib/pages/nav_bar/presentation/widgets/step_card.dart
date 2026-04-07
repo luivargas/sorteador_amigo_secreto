@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class StepCard extends StatelessWidget {
   final String step;
@@ -23,7 +22,7 @@ class StepCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: MyColors.neutral50,
+        color: SecretSantaColors.neutral50,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: SecretSantaColors.neutral200.withValues(alpha: 0.8),
@@ -64,14 +63,14 @@ class StepCard extends StatelessWidget {
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 15,
-                        color: MyColors.neutral900,
+                        color: SecretSantaColors.neutral900,
                       ),
                     ),
                     Text(
                       description,
                       style: const TextStyle(
                         fontSize: 12,
-                        color: MyColors.neutral600,
+                        color: SecretSantaColors.neutral600,
                         height: 1.5,
                       ),
                     ),

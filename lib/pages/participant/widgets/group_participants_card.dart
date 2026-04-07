@@ -5,16 +5,15 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cub
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/participants_list_args.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
-class ListParticipantsCard extends StatelessWidget {
+class GroupParticipantsCard extends StatelessWidget {
   final String groupToken;
   final String groupCode;
   final BadgeType type;
   final List<ShowParticipantModel> participantsList;
 
-  const ListParticipantsCard({
+  const GroupParticipantsCard({
     super.key,
     required this.participantsList,
     required this.groupToken,
@@ -119,7 +118,7 @@ class ListParticipantsCard extends StatelessWidget {
                 ),
                 Icon(
                   Icons.arrow_forward_ios,
-                  color: MyColors.sorteadorPurpple,
+                  color: SecretSantaColors.accent2,
                   size: 20,
                 ),
               ],
@@ -130,7 +129,7 @@ class ListParticipantsCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
                   l10n.noParticipantsSelected,
-                  style: TextStyle(color: MyColors.neutral400, fontSize: 13),
+                  style: TextStyle(color: SecretSantaColors.neutral400, fontSize: 13),
                 ),
               )
             else
@@ -143,8 +142,8 @@ class ListParticipantsCard extends StatelessWidget {
 }
 
 final List<Color> _cardColors = [
-  MyColors.sorteadorOrange,
-  MyColors.sorteadorPurpple,
+  SecretSantaColors.accent,
+  SecretSantaColors.accent2,
 ];
 
 Color _getColor(int index) => _cardColors[index % _cardColors.length];

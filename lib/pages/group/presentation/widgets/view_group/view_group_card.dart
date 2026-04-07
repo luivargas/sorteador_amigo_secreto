@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/stat_card.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/widgets/list_participants_card.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/widgets/group_participants_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class ViewGroupCard extends StatelessWidget {
   final String eventLocation;
@@ -51,8 +50,8 @@ class ViewGroupCard extends StatelessWidget {
                 label: eventDate,
                 subLabel: eventTime,
                 icon: Icons.calendar_today_outlined,
-                iconColor: MyColors.sorteadorOrange,
-                color: MyColors.neutral50,
+                iconColor: SecretSantaColors.accent,
+                color: SecretSantaColors.neutral50,
               ),
             ),
             Expanded(
@@ -60,8 +59,8 @@ class ViewGroupCard extends StatelessWidget {
                 value: l10n.suggestedValue,
                 label: 'R\$ $minGiftValue\nR\$ $maxGiftValue',
                 icon: Icons.payments_outlined,
-                iconColor: MyColors.sorteadorOrange,
-                color: MyColors.neutral50,
+                iconColor: SecretSantaColors.accent,
+                color: SecretSantaColors.neutral50,
               ),
             ),
           ],
@@ -70,7 +69,7 @@ class ViewGroupCard extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           decoration: BoxDecoration(
-            color: MyColors.neutral50,
+            color: SecretSantaColors.neutral50,
             border: Border.all(
               color: SecretSantaColors.neutral200.withValues(alpha: 0.8),
             ),
@@ -84,12 +83,12 @@ class ViewGroupCard extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: MyColors.sorteadorPurpple.withValues(alpha: 0.1),
+                  color: SecretSantaColors.accent2.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   Icons.place_outlined,
-                  color: MyColors.sorteadorPurpple,
+                  color: SecretSantaColors.accent2,
                   size: 24,
                 ),
               ),
@@ -103,7 +102,7 @@ class ViewGroupCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: MyColors.neutral500,
+                        color: SecretSantaColors.neutral500,
                       ),
                     ),
                     Text(
@@ -141,7 +140,7 @@ class ViewGroupCard extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.notes_outlined,
-                    color: MyColors.sorteadorOrange,
+                    color: SecretSantaColors.accent,
                     size: 16,
                   ),
                   Text(
@@ -149,7 +148,7 @@ class ViewGroupCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: MyColors.sorteadorOrange,
+                      color: SecretSantaColors.accent,
                     ),
                   ),
                 ],
@@ -165,7 +164,7 @@ class ViewGroupCard extends StatelessWidget {
             ],
           ),
         ),
-        ListParticipantsCard(
+        GroupParticipantsCard(
           type: type,
           participantsList: participantsList,
           groupToken: groupToken,

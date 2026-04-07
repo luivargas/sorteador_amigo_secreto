@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
-
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 class MySearchBar extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
@@ -16,7 +15,7 @@ class MySearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: MyColors.neutral50,
+        color: SecretSantaColors.neutral50,
         borderRadius: BorderRadius.circular(16),
       ),
       child: TextField(

@@ -5,11 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_email_form_field.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_token_form_field.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_state.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class ValidateTokenScreen extends StatefulWidget {
   final String email;
@@ -22,16 +22,15 @@ class ValidateTokenScreen extends StatefulWidget {
 
 class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _tokenController = TextEditingController();
+  final PinInputController _tokenController = PinInputController();
   late final TextEditingController _emailController = TextEditingController(
     text: widget.email,
   );
 
-  Future<void> _onSubmit() async {
+  Future<void> _onSubmit(String token) async {
     if (!_formKey.currentState!.validate()) return;
     _formKey.currentState?.save();
-
-    await context.read<AuthCubit>().validateToken(_tokenController.text.trim());
+    await context.read<AuthCubit>().validateToken(token.trim());
   }
 
   @override
@@ -43,6 +42,8 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return BlocListener<AuthCubit, AuthState>(
       listenWhen: (p, c) => !p.validated && c.validated,
       listener: (context, state) =>
@@ -50,10 +51,7 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
       child: Form(
         key: _formKey,
         child: Scaffold(
-          appBar: MyAppBar(
-            title: AppLocalizations.of(context)!.almostThereTitle,
-            subTitle: AppLocalizations.of(context)!.almostThereSubtitle,
-          ),
+          appBar: MyAppBar(),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 0),
@@ -63,27 +61,77 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     spacing: 20,
                     children: [
+                      SecretSantaCard(
+                        color: SecretSantaColors.neutral50,
+                        child: Padding(
+                          padding: const EdgeInsets.all(30),
+                          child: Icon(Icons.email, size: 100),
+                        ),
+                      ),
                       if (state.error != null)
                         Text(
                           state.error!.localize(context),
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.error,
-                          ),
+                          style: TextStyle(color: SecretSantaColors.error),
                           textAlign: TextAlign.center,
                         ),
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.almostThereTitle,
+                            style: SecretSantaTextStyles.h1,
+                          ),
+                          Text(
+                            l10n.almostThereSubtitle,
+                            style: SecretSantaTextStyles.bodySmall,
+                          ),
+                        ],
+                      ),
                       MyEmailFormField(
-                        controller: _emailController,
-                        readOnly: true,
-                      ).animate().fadeIn(duration: 400.ms).slideX(begin: 0.2, curve: Curves.easeOut),
-                      MyTokenFormField(controller: _tokenController)
+                            controller: _emailController,
+                            readOnly: true,
+                          )
+                          .animate()
+                          .fadeIn(duration: 400.ms)
+                          .slideX(begin: 0.2, curve: Curves.easeOut),
+                      PinInput(
+                            keyboardType: TextInputType.number,
+                            pinController: _tokenController,
+                            length: 6,
+                            builder: (context, cells) {
+                              return Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: cells.map((cell) {
+                                  return Container(
+                                    width: 40,
+                                    height: 45,
+                                    margin: EdgeInsets.symmetric(horizontal: 8),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      shape: BoxShape.rectangle,
+                                      color: cell.isFocused
+                                          ? SecretSantaColors.accent
+                                          : SecretSantaColors.neutral200,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        cell.character ?? '',
+                                        style: TextStyle(fontSize: 24),
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              );
+                            },
+                            onCompleted: (value) async {
+                              await _onSubmit(value);
+                            },
+                          )
                           .animate()
                           .fadeIn(delay: 150.ms, duration: 400.ms)
                           .slideX(begin: 0.2, curve: Curves.easeOut),
-                      MyGradientButton(
-                        onTap: () => _onSubmit(),
-                        title: AppLocalizations.of(context)!.confirmCodeButton,
-                        isLoading: state.isLoading,
-                      ).animate().fadeIn(delay: 300.ms, duration: 400.ms).slideX(begin: 0.2, curve: Curves.easeOut),
                     ],
                   );
                 },

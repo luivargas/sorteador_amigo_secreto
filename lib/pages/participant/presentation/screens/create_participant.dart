@@ -14,7 +14,6 @@ import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/par
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/create_participant_form_fields.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class CreateParticipant extends StatefulWidget {
   final String groupToken;
@@ -96,9 +95,9 @@ class _CreateParticipant extends State<CreateParticipant> {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            color: MyColors.neutral50,
+                            color: SecretSantaColors.neutral50,
                             border: Border.all(
-                              color: MyColors.sorteadorPurpple.withValues(
+                              color: SecretSantaColors.accent2.withValues(
                                 alpha: 0.3,
                               ),
                             ),
@@ -111,7 +110,7 @@ class _CreateParticipant extends State<CreateParticipant> {
                         ),
                         Text(
                           l10n.addParticipantTitle,
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: SecretSantaTextStyles.titleMedium,
                         ),
                         Text(
                           l10n.addParticipantSubtitle,
@@ -133,18 +132,12 @@ class _CreateParticipant extends State<CreateParticipant> {
                       child: Container(
                         padding: const EdgeInsets.all(3),
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              MyColors.sorteadorPurpple,
-                              MyColors.sorteadorLilac,
-                              MyColors.sorteadorOrange,
-                            ],
-                          ),
+                          gradient: SecretSantaColors.primaryGradient,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: MyColors.neutral50,
+                            color: SecretSantaColors.neutral50,
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: SecretSantaShadows.medium,
                           ),
@@ -161,14 +154,14 @@ class _CreateParticipant extends State<CreateParticipant> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(l10n.quickAccess, style: TextStyle(color: MyColors.sorteadorPurpple, fontWeight: FontWeight.w600),),
+                                          Text(l10n.quickAccess, style: TextStyle(color: SecretSantaColors.accent2, fontWeight: FontWeight.w600),),
                                           Text(l10n.importContacts, style: const TextStyle(fontWeight: FontWeight.w600)),
                                         ],
                                       ),
                                     ],
                                   ),
                                 ),
-                                Icon(Icons.arrow_forward_ios_rounded, color: MyColors.sorteadorOrange,),
+                                Icon(Icons.arrow_forward_ios_rounded, color: SecretSantaColors.accent,),
                               ],
                             ),
                           ),
@@ -185,13 +178,16 @@ class _CreateParticipant extends State<CreateParticipant> {
                           emailController: emailController,
                           phoneController: phoneController,
                         ),
-                        MyGradientButton(
-                          onTap: _onSubmit,
-                          title: AppLocalizations.of(
-                            context,
-                          )!.addParticipantButton,
-                          icon: Icons.save,
-                          isLoading: state.isLoading,
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 30.0),
+                          child: MyGradientButton(
+                            onTap: _onSubmit,
+                            title: AppLocalizations.of(
+                              context,
+                            )!.addParticipantButton,
+                            icon: Icons.save,
+                            isLoading: state.isLoading,
+                          ),
                         ),
                       ],
                     ),

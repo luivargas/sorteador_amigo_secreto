@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class AppDialog {
   static Future<void> show({
@@ -13,8 +14,8 @@ class AppDialog {
       builder: (_) => AlertDialog(
         title: Text(title),
         content: Text(message),
-        backgroundColor: Theme.of(context).canvasColor,
-        titleTextStyle: Theme.of(context).textTheme.titleSmall,
+        backgroundColor: SecretSantaColors.background,
+        titleTextStyle: SecretSantaTextStyles.titleSmall,
         scrollable: true,
         actions: [
           TextButton(

@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/cubit/home_cubit.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 
 class HomeCard extends StatelessWidget {
   const HomeCard({super.key});
@@ -18,9 +17,9 @@ class HomeCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            MyColors.sorteadorPurpple,
-            MyColors.sorteadorLilac,
-            MyColors.sorteadorOrange,
+            SecretSantaColors.accent2,
+            SecretSantaColors.accent3,
+            SecretSantaColors.accent,
           ],
         ),
         borderRadius: BorderRadius.circular(16),
@@ -36,7 +35,7 @@ class HomeCard extends StatelessWidget {
               child: Icon(
                 Icons.card_giftcard,
                 size: 80,
-                color: MyColors.neutral50,
+                color: SecretSantaColors.neutral50,
               ),
             ),
           ),
@@ -51,13 +50,13 @@ class HomeCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: MyColors.neutral50,
+                    color: SecretSantaColors.neutral50,
                   ),
                 ),
                 Text(
                   l10n.homeCardDesc,
                   style: TextStyle(
-                    color: MyColors.neutral50.withValues(alpha: 0.70),
+                    color: SecretSantaColors.neutral50.withValues(alpha: 0.70),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -78,7 +77,7 @@ class HomeCard extends StatelessWidget {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                color: MyColors.neutral50,
+                                color: SecretSantaColors.neutral50,
                                 borderRadius: BorderRadius.circular(100),
                               ),
                               child: Padding(
@@ -92,13 +91,13 @@ class HomeCard extends StatelessWidget {
                                     Text(
                                       l10n.getStarted,
                                       style: TextStyle(
-                                        color: MyColors.sorteadorPurpple,
+                                        color: SecretSantaColors.accent2,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                     Icon(
                                       Icons.add_circle_rounded,
-                                      color: MyColors.sorteadorPurpple,
+                                      color: SecretSantaColors.accent2,
                                     ),
                                   ],
                                 ),

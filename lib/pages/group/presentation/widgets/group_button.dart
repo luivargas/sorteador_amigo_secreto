@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class GroupButton extends StatelessWidget {
   const GroupButton({super.key});
@@ -27,7 +27,7 @@ class GroupButton extends StatelessWidget {
                   icon: Icons.create,
                   subTitle: Text(
                     l10n.createGroupDesc,
-                    style: const TextStyle(color: MyColors.neutral50),
+                    style: const TextStyle(color: SecretSantaColors.neutral50),
                   ),
                   onTap: () async {
                     context.push("/create_group");
@@ -43,7 +43,7 @@ class GroupButton extends StatelessWidget {
                   icon: Icons.group,
                   subTitle: Text(
                     l10n.recoverGroupDesc,
-                    style: const TextStyle(color: MyColors.neutral50),
+                    style: const TextStyle(color: SecretSantaColors.neutral50),
                   ),
                   onTap: () => context.push("/enter_group"),
                 ),

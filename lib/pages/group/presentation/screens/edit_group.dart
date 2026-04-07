@@ -12,6 +12,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cub
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/edit_group/edit_group_field.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class EditGroup extends StatefulWidget {
   final String code;
@@ -172,8 +173,8 @@ class _EditGroup extends State<EditGroup> {
       key: _editGroupKey,
       child: Scaffold(
         appBar: MyAppBar(
-          title: AppLocalizations.of(context)!.editGroupTitle,
-          subTitle: AppLocalizations.of(context)!.editGroupSubtitle,
+          // title: AppLocalizations.of(context)!.editGroupTitle,
+          // subTitle: AppLocalizations.of(context)!.editGroupSubtitle,
         ),
         body: BlocConsumer<GroupCubit, GroupState>(
           listener: (context, state) {
@@ -189,7 +190,7 @@ class _EditGroup extends State<EditGroup> {
               child: SingleChildScrollView(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).canvasColor,
+                  color: SecretSantaColors.background,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),

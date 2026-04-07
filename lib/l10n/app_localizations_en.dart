@@ -254,6 +254,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactNotValid => 'This contact must have a name and phone';
 
   @override
+  String get contactList => 'CONTACT LIST';
+
+  @override
   String get contactsTitle => 'Select Participants';
 
   @override
@@ -326,16 +329,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get verificationTitle => 'Access verification';
 
   @override
-  String get verificationSubtitle => 'We will send a code to your email';
+  String get verificationSubtitle =>
+      'Enter your email and receive your Secret Santa access code';
 
   @override
   String get sendCodeButton => 'Send code';
 
   @override
-  String get almostThereTitle => 'Almost there!';
+  String get almostThereTitle => 'Check your email';
 
   @override
-  String get almostThereSubtitle => 'Enter the code we sent to your email';
+  String get almostThereSubtitle =>
+      'Enter the 6-digit code we sent to your email';
 
   @override
   String get confirmCodeButton => 'Confirm code';
@@ -498,4 +503,20 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get onboardingStep4AltDesc =>
       'With everything filled in, run the draw and see the results.';
+
+  @override
+  String get logoutLabel => 'ACCESS CONFIRMATION';
+
+  @override
+  String get logoutTitle => 'Do you really want to sign out?';
+
+  @override
+  String get logoutSubtitle =>
+      'You will be disconnected from the app and will need your credentials to sign in again.';
+
+  @override
+  String get logoutButton => 'Sign out';
+
+  @override
+  String get logoutBack => 'Back to app';
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
-import 'package:sorteador_amigo_secreto/theme/my_theme.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class LoadingOrError extends StatelessWidget {
   final bool isLoading;
@@ -23,7 +23,7 @@ class LoadingOrError extends StatelessWidget {
 
     if (isLoading) {
       return Center(
-        child: CircularProgressIndicator(color: myProgressIndicator.color),
+        child: CircularProgressIndicator(color: SecretSantaColors.accent),
       );
     }
 

@@ -114,6 +114,7 @@
   "onboardingStep4Desc": "Cada participante recibe su amigo secreto por correo o WhatsApp (plan Premium)",
 
   "contactNotValid": "Este contacto debe tener nombre y teléfono",
+    "contactList": "LISTA DE CONTATOS",
   "contactsTitle": "Seleccionar Participantes",
   "contactsSubtitle": "Elige los contactos para el sorteo",
   "searchParticipants": "Buscar participantes",
@@ -151,11 +152,11 @@
   "sessionExpired": "Sesión expirada.",
 
   "verificationTitle": "Verificación de acceso",
-  "verificationSubtitle": "Te enviaremos un código a tu correo electrónico",
+  "verificationSubtitle": "Ingresa tu correo y recibe el código de acceso de tu Amigo Secreto",
   "sendCodeButton": "Enviar código",
 
-  "almostThereTitle": "¡Casi listo!",
-  "almostThereSubtitle": "Ingresa el código que enviamos a tu correo electrónico",
+  "almostThereTitle": "Revisa tu correo electrónico",
+  "almostThereSubtitle": "Ingresa el código de 6 dígitos que enviamos a tu correo",
   "confirmCodeButton": "Confirmar código",
 
   "noName": "Sin nombre",
@@ -210,5 +211,11 @@
   "onboardingStep3AltTitle": "Agrega participantes",
   "onboardingStep3AltDesc": "Incluye a tus amigos o comparte la invitación.",
   "onboardingStep4AltTitle": "Realiza el sorteo",
-  "onboardingStep4AltDesc": "Con todo completado realiza el sorteo y ve los resultados."
+  "onboardingStep4AltDesc": "Con todo completado realiza el sorteo y ve los resultados.",
+
+  "logoutLabel": "CONFIRMACIÓN DE ACCESO",
+  "logoutTitle": "¿Realmente deseas salir?",
+  "logoutSubtitle": "Serás desconectado de la aplicación y necesitarás tus datos para ingresar nuevamente.",
+  "logoutButton": "Cerrar sesión",
+  "logoutBack": "Volver a la app"
 }

@@ -83,10 +83,12 @@ class _ViewParticipant extends State<ViewParticipant> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: MyAppBar(
-        title: AppLocalizations.of(context)!.participantTitle,
-        subTitle: AppLocalizations.of(context)!.participantSubtitle,
+        // title: l10n.participantTitle,
+        // subTitle: l10n.participantSubtitle,
       ),
       body: Form(
         key: _validateFormKey,
@@ -106,7 +108,7 @@ class _ViewParticipant extends State<ViewParticipant> {
             if (state.updated) {
               AppAlert.show(
                 context,
-                message: AppLocalizations.of(context)!.participantUpdatedSuccess(nameController.text),
+                message: l10n.participantUpdatedSuccess(nameController.text),
                 type: AlertType.success,
               );
               if (context.mounted) {
@@ -142,7 +144,7 @@ class _ViewParticipant extends State<ViewParticipant> {
                           onTap: () {
                             _onSubmit();
                           },
-                          title: AppLocalizations.of(context)!.save,
+                          title: l10n.save,
                           icon: Icons.save,
                         ),
                         child: ViewParticipantFormFields(

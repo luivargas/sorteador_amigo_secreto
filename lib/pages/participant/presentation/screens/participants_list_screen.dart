@@ -9,7 +9,6 @@ import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_partic
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/create_parti_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/show_parti_args.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/theme/my_colors.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class ParticipantsListScreen extends StatefulWidget {
@@ -79,8 +78,8 @@ class _ParticipantsListScreenState extends State<ParticipantsListScreen> {
         floatingActionButton: widget.type == BadgeType.pending
             ? FloatingActionButton(
                 onPressed: _onAddParticipant,
-                backgroundColor: MyColors.sorteadorOrange,
-                child: const Icon(Icons.person_add_alt_1, color: MyColors.neutral50),
+                backgroundColor: SecretSantaColors.accent,
+                child: const Icon(Icons.person_add_alt_1, color: SecretSantaColors.neutral50),
               )
             : null,
         body: BlocBuilder<GroupCubit, GroupState>(
@@ -112,12 +111,12 @@ class _ParticipantsListScreenState extends State<ParticipantsListScreen> {
                                 Icon(
                                   Icons.people_outline,
                                   size: 64,
-                                  color: MyColors.neutral300,
+                                  color: SecretSantaColors.neutral300,
                                 ),
                                 const SizedBox(height: 12),
                                 Text(
                                   l10n.noGroupsFound,
-                                  style: TextStyle(color: MyColors.neutral500),
+                                  style: TextStyle(color: SecretSantaColors.neutral500),
                                 ),
                               ],
                             ),
@@ -211,7 +210,7 @@ class _ParticipantListItem extends StatelessWidget {
                     height: 56,
                     decoration: BoxDecoration(
                       gradient: _isAdmin
-                          ? MyColors.sorteadorGradient
+                          ? SecretSantaColors.primaryGradient
                           : const LinearGradient(
                               colors: [Color(0xFF4241E3), Color(0xFF652FE7)],
                               begin: Alignment.topLeft,
@@ -238,7 +237,7 @@ class _ParticipantListItem extends StatelessWidget {
                         width: 14,
                         height: 14,
                         decoration: BoxDecoration(
-                          color: MyColors.sorteadorGreen,
+                          color: SecretSantaColors.green,
                           shape: BoxShape.circle,
                           border: Border.all(color: Colors.white, width: 2),
                         ),
@@ -266,7 +265,7 @@ class _ParticipantListItem extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w800,
-                          color: MyColors.sorteadorPurpple,
+                          color: SecretSantaColors.accent2,
                           letterSpacing: 1,
                         ),
                       )
@@ -275,7 +274,7 @@ class _ParticipantListItem extends StatelessWidget {
                         contact,
                         style: TextStyle(
                           fontSize: 13,
-                          color: MyColors.neutral500,
+                          color: SecretSantaColors.neutral500,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -302,7 +301,7 @@ class _StatusBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: isConfirmed ? MyColors.successBg : MyColors.neutral200,
+        color: isConfirmed ? SecretSantaColors.successBg : SecretSantaColors.neutral200,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
@@ -312,7 +311,7 @@ class _StatusBadge extends StatelessWidget {
         style: TextStyle(
           fontSize: 10,
           fontWeight: FontWeight.w800,
-          color: isConfirmed ? MyColors.successText : MyColors.neutral600,
+          color: isConfirmed ? SecretSantaColors.successText : SecretSantaColors.neutral600,
           letterSpacing: 0.5,
         ),
       ),
