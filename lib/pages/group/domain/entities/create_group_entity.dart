@@ -35,7 +35,7 @@ class CreateGroupEntity {
     "max_gift_value": maxGiftValue,
       "admin": {
         "name": admin.name,
-        "email": admin.email,
+        "email": admin.email?.toLowerCase(),
         "idd": admin.idd,
         "phone": admin.phone,
       },

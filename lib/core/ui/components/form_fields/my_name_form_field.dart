@@ -21,7 +21,8 @@ class MyNameFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextFormField(
-    keyboardType: TextInputType.name,
+    textCapitalization: TextCapitalization.sentences,
+    keyboardType: TextInputType.text,
     controller: controller,
     textInputAction: textInputAction,
     readOnly: readOnly,

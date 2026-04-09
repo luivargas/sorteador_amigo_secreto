@@ -119,6 +119,7 @@ class _HomeViewState extends State<_HomeView> {
                     builder: (context, state) {
                       if (state.isLoading) {
                         return SliverFillRemaining(
+                          hasScrollBody: false,
                           child: Center(
                             child: CircularProgressIndicator(
                               color: SecretSantaColors.accent,
@@ -132,6 +133,7 @@ class _HomeViewState extends State<_HomeView> {
                             ? l10n.sessionExpired
                             : state.error!.localize(context);
                         return SliverFillRemaining(
+                          hasScrollBody: false,
                           child: Center(child: Text(msg)),
                         );
                       }
@@ -140,26 +142,24 @@ class _HomeViewState extends State<_HomeView> {
                         final isSearching = state.search.isNotEmpty;
                         final isFiltering = state.filter != GroupFilter.all;
                         return SliverFillRemaining(
-                          child: Center(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              spacing: 8,
-                              children: [
-                                Icon(
-                                  isSearching || isFiltering
-                                      ? Icons.search_off
-                                      : Icons.group_outlined,
-                                  size: 48,
-                                  color: Colors.grey,
-                                ),
-                                Text(
-                                  isSearching
-                                      ? '"${state.search}" — ${l10n.noGroupsFound.toLowerCase()}'
-                                      : l10n.noGroupsFound,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
+                          hasScrollBody: false,
+                          child: Column(
+                            spacing: 8,
+                            children: [
+                              Icon(
+                                isSearching || isFiltering
+                                    ? Icons.search_off
+                                    : Icons.group_outlined,
+                                size: 48,
+                                color: Colors.grey,
+                              ),
+                              Text(
+                                isSearching
+                                    ? '"${state.search}" — ${l10n.noGroupsFound.toLowerCase()}'
+                                    : l10n.noGroupsFound,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
                         );
                       }

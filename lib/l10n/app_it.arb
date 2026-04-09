@@ -4,7 +4,7 @@
   "refreshCompleted": "Aggiornato!",
   "refreshing": "Aggiornamento...",
 
-  "homeTitle": "I Miei Gruppi",
+  "homeTitle": "I Tuoi Gruppi",
   "homeSubtitle": "Gestisci i tuoi gruppi di amico segreto",
 
   "searchGroup": "Cerca gruppo",
@@ -151,7 +151,7 @@
   "retry": "Riprova",
   "sessionExpired": "Sessione scaduta.",
 
-  "verificationTitle": "Verifica di onboardingo",
+  "verificationTitle": "Verifica di accesso",
   "verificationSubtitle": "Inserisci la tua email e ricevi il codice di accesso del tuo Amico Segreto",
   "sendCodeButton": "Invia codice",
 
@@ -180,8 +180,8 @@
 
   "filterTitle": "Filtri",
   "filterRaffled": "Gruppi già sorteggiati",
-  "filterParticipating": "Gruppi a cui partecipo",
-  "filterManaging": "Gruppi che gestisco",
+  "filterParticipating": "Gruppi a cui partecipi",
+  "filterManaging": "Gruppi che gestisci",
   "filterClear": "Cancella",
   "filterApply": "Applica",
   "groupOptionsTitle": "Opzioni del gruppo",
@@ -200,7 +200,7 @@
   "participantNameHint": "Es: Simba",
   "roleAdmin": "Amministratore",
   "roleParticipant": "Partecipante",
-  "createMyGroup": "Crea il mio gruppo ora",
+  "createMyGroup": "Crea il tuo gruppo ora",
   "onboardingHeroTitle": "Crea il tuo Amico Segreto in Secondi",
   "onboardingHeroDesc": "Organizza i tuoi gruppi di Amico Segreto, modifica le informazioni dei gruppi e aggiungi partecipanti in modo semplice e veloce",
   "onboardingFreeTitle": "Completamente Gratuito",

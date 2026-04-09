@@ -19,6 +19,7 @@ class MySearchBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: TextField(
+        textCapitalization: TextCapitalization.sentences,
         controller: controller,
         onChanged: onChanged,
         decoration: InputDecoration(

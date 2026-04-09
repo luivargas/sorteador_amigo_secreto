@@ -4,7 +4,7 @@
   "refreshCompleted": "Updated!",
   "refreshing": "Updating...",
 
-  "homeTitle": "My Groups",
+  "homeTitle": "Your Groups",
   "homeSubtitle": "Manage your secret santa groups",
 
   "searchGroup": "Search group",
@@ -180,8 +180,8 @@
 
   "filterTitle": "Filters",
   "filterRaffled": "Already raffled groups",
-  "filterParticipating": "Groups I participate in",
-  "filterManaging": "Groups I manage",
+  "filterParticipating": "Groups you participate in",
+  "filterManaging": "Groups you manage",
   "filterClear": "Clear",
   "filterApply": "Apply",
   "groupOptionsTitle": "Group options",
@@ -200,7 +200,7 @@
   "participantNameHint": "Ex: Simba",
   "roleAdmin": "Administrator",
   "roleParticipant": "Participant",
-  "createMyGroup": "Create my group now",
+  "createMyGroup": "Create your group now",
   "onboardingHeroTitle": "Create your Secret Santa in Seconds",
   "onboardingHeroDesc": "Organize your Secret Santa groups, edit group info and add participants simply and quickly",
   "onboardingFreeTitle": "Completely Free",

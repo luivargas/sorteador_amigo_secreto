@@ -42,6 +42,15 @@ class _GroupFormFields extends State<GroupFormFields> {
           spacing: 10,
           children: [
             LabeledField(
+              label: l10n.groupName,
+              child: MyNameFormField(
+                controller: widget.groupNameController,
+                hintText: l10n.groupNameHint,
+                icon: Icons.group,
+                textInputAction: TextInputAction.next,
+              ),
+            ),
+            LabeledField(
               label: l10n.yourName,
               child: MyNameFormField(
                 controller: widget.nameController,
@@ -64,15 +73,6 @@ class _GroupFormFields extends State<GroupFormFields> {
               label: l10n.phoneField,
               child: MyPhoneFormField(
                 controller: widget.phoneController,
-                textInputAction: TextInputAction.next,
-              ),
-            ),
-            LabeledField(
-              label: l10n.groupName,
-              child: MyNameFormField(
-                controller: widget.groupNameController,
-                hintText: l10n.groupNameHint,
-                icon: Icons.group,
                 textInputAction: TextInputAction.done,
               ),
             ),

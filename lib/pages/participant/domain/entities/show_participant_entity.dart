@@ -43,7 +43,7 @@ class ShowParticipantEntity {
   Map<String, dynamic> toJson() => {
     'id': id,
     'name': name,
-    'email': email,
+    'email': email?.toLowerCase(),
     'idd': idd,
     'phone': phone,
     'is_participant': isParticipant,

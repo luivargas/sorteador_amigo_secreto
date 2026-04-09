@@ -4,7 +4,7 @@
   "refreshCompleted": "Atualizado!",
   "refreshing": "Atualizando...",
 
-  "homeTitle": "Meus Grupos",
+  "homeTitle": "Seus Grupos",
   "homeSubtitle": "Gerencie seus grupos de amigo secreto",
 
   "searchGroup": "Buscar grupo",
@@ -180,8 +180,8 @@
 
   "filterTitle": "Filtros",
   "filterRaffled": "Grupos já sorteados",
-  "filterParticipating": "Grupos que participo",
-  "filterManaging": "Grupos que administro",
+  "filterParticipating": "Grupos que participa",
+  "filterManaging": "Grupos que administra",
   "filterClear": "Limpar",
   "filterApply": "Aplicar",
   "groupOptionsTitle": "Opções do grupo",
@@ -200,7 +200,7 @@
   "participantNameHint": "Ex: Simba",
   "roleAdmin": "Administrador",
   "roleParticipant": "Participante",
-  "createMyGroup": "Criar meu grupo agora",
+  "createMyGroup": "Crie seu grupo agora",
   "onboardingHeroTitle": "Crie seu Amigo Secreto em Segundos",
   "onboardingHeroDesc": "Organize seus grupos de Amigo Secreto, edite as informações dos grupos e adicione participantes de forma simples e rápida",
   "onboardingFreeTitle": "Totalmente Gratuito",

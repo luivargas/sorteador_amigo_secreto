@@ -15,7 +15,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get refreshing => 'Actualizando...';
 
   @override
-  String get homeTitle => 'Mis Grupos';
+  String get homeTitle => 'Tus Grupos';
 
   @override
   String get homeSubtitle => 'Gestiona tus grupos de amigo secreto';
@@ -256,7 +256,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get contactNotValid => 'Este contacto debe tener nombre y teléfono';
 
   @override
-  String get contactList => 'LISTA DE CONTATOS';
+  String get contactList => 'LISTA DE CONTACTOS';
 
   @override
   String get contactsTitle => 'Seleccionar Participantes';
@@ -411,10 +411,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get filterRaffled => 'Grupos ya sorteados';
 
   @override
-  String get filterParticipating => 'Grupos en los que participo';
+  String get filterParticipating => 'Grupos en los que participa';
 
   @override
-  String get filterManaging => 'Grupos que administro';
+  String get filterManaging => 'Grupos que administra';
 
   @override
   String get filterClear => 'Limpiar';
@@ -466,7 +466,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get roleParticipant => 'Participante';
 
   @override
-  String get createMyGroup => 'Crear mi grupo ahora';
+  String get createMyGroup => 'Crea tu grupo ahora';
 
   @override
   String get onboardingHeroTitle => 'Crea tu Amigo Secreto en Segundos';

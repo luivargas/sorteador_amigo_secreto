@@ -15,7 +15,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get refreshing => 'Atualizando...';
 
   @override
-  String get homeTitle => 'Meus Grupos';
+  String get homeTitle => 'Seus Grupos';
 
   @override
   String get homeSubtitle => 'Gerencie seus grupos de amigo secreto';
@@ -409,10 +409,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get filterRaffled => 'Grupos já sorteados';
 
   @override
-  String get filterParticipating => 'Grupos que participo';
+  String get filterParticipating => 'Grupos que participa';
 
   @override
-  String get filterManaging => 'Grupos que administro';
+  String get filterManaging => 'Grupos que administra';
 
   @override
   String get filterClear => 'Limpar';
@@ -464,7 +464,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get roleParticipant => 'Participante';
 
   @override
-  String get createMyGroup => 'Criar meu grupo agora';
+  String get createMyGroup => 'Crie seu grupo agora';
 
   @override
   String get onboardingHeroTitle => 'Crie seu Amigo Secreto em Segundos';

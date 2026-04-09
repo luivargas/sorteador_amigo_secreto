@@ -42,6 +42,7 @@ class _EditGroupFields extends State<EditGroupFields> {
             controller: widget.groupNameController,
             hintText: l10n.groupNameHint,
             icon: Icons.group,
+            textInputAction: TextInputAction.next,
           ),
         ),
         LabeledField(
@@ -52,6 +53,7 @@ class _EditGroupFields extends State<EditGroupFields> {
               hintText: l10n.locationHint,
               prefixIcon: const Icon(Icons.place),
             ),
+            textInputAction: TextInputAction.next,
           ),
         ),
         Row(
@@ -63,6 +65,7 @@ class _EditGroupFields extends State<EditGroupFields> {
                 child: MyCurrencyFormField(
                   controller: widget.minGiftValueController,
                   hintText: l10n.minValueHint,
+                  textInputAction: TextInputAction.next,
                 ),
               ),
             ),
@@ -77,6 +80,7 @@ class _EditGroupFields extends State<EditGroupFields> {
                     min: widget.minGiftValueController.text,
                     max: widget.maxGiftValueController.text,
                   ),
+                  textInputAction: TextInputAction.next,
                 ),
               ),
             ),

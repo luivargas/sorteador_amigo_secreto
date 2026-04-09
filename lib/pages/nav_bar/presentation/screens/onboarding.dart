@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
-import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/cubit/home_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/widgets/info_card.dart';
 import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/widgets/step_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
@@ -38,80 +35,6 @@ class _OnboardingState extends State<Onboarding> {
           child: Column(
             children: [
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 30),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            padding: EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              gradient: SecretSantaColors.primaryGradient,
-                            ),
-                            child: Column(
-                              spacing: 10,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  l10n.onboardingHeroTitle,
-                                  style: const TextStyle(
-                                    color: SecretSantaColors.neutral50,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Text(
-                                  l10n.onboardingHeroDesc,
-                                  style: TextStyle(
-                                    color: SecretSantaColors.neutral50.withValues(
-                                      alpha: 0.7,
-                                    ),
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 30,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: FloatingActionButton(
-                                          backgroundColor: SecretSantaColors.neutral50,
-                                          onPressed: () async {
-                                            final result = await context.push(
-                                              "/create_group",
-                                            );
-                                            if (!context.mounted) return;
-                                            if (result == true) {
-                                              () => context.read<HomeCubit>().refreshGroups();
-                                            }
-                                          },
-                                          child: Text(
-                                            l10n.createMyGroup,
-                                            style: TextStyle(
-                                              color: SecretSantaColors.accent,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Column(
                 spacing: 15,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -120,7 +43,7 @@ class _OnboardingState extends State<Onboarding> {
                     style: SecretSantaTextStyles.titleSmall,
                   ),
                   Column(
-                    spacing: 25,
+                    spacing: 10,
                     children: [
                       StepCard(
                         step: "01",
@@ -149,13 +72,18 @@ class _OnboardingState extends State<Onboarding> {
                         title: l10n.onboardingStep4AltTitle,
                         description: l10n.onboardingStep4AltDesc,
                         color: getColor(3),
+                        isLast: true,
+
                       ),
-                      InfoCard(
-                        title: l10n.onboardingFreeTitle,
-                        description: l10n.onboardingFreeDesc,
-                        backgroundColor: SecretSantaColors.accent2,
-                        icon: Icons.volunteer_activism,
-                        iconBackgroundColor: SecretSantaColors.accent,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        child: InfoCard(
+                          title: l10n.onboardingFreeTitle,
+                          description: l10n.onboardingFreeDesc,
+                          backgroundColor: SecretSantaColors.accent2,
+                          icon: Icons.volunteer_activism,
+                          iconBackgroundColor: SecretSantaColors.accent,
+                        ),
                       ),
                     ],
                   ),

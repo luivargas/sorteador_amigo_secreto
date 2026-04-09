@@ -117,7 +117,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeTitle.
   ///
   /// In pt, this message translates to:
-  /// **'Meus Grupos'**
+  /// **'Seus Grupos'**
   String get homeTitle;
 
   /// No description provided for @homeSubtitle.
@@ -849,13 +849,13 @@ abstract class AppLocalizations {
   /// No description provided for @filterParticipating.
   ///
   /// In pt, this message translates to:
-  /// **'Grupos que participo'**
+  /// **'Grupos que participa'**
   String get filterParticipating;
 
   /// No description provided for @filterManaging.
   ///
   /// In pt, this message translates to:
-  /// **'Grupos que administro'**
+  /// **'Grupos que administra'**
   String get filterManaging;
 
   /// No description provided for @filterClear.
@@ -951,7 +951,7 @@ abstract class AppLocalizations {
   /// No description provided for @createMyGroup.
   ///
   /// In pt, this message translates to:
-  /// **'Criar meu grupo agora'**
+  /// **'Crie seu grupo agora'**
   String get createMyGroup;
 
   /// No description provided for @onboardingHeroTitle.

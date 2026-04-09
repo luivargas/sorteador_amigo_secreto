@@ -103,7 +103,7 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                             pinBuilder: (context, cells) {
                               return MaterialPinRow(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                    MainAxisAlignment.spaceBetween,
                                 cells: cells,
                                 theme: MaterialPinTheme().resolve(context),
                               );

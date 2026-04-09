@@ -17,6 +17,7 @@ class MyEmailFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextFormField(
+    textCapitalization: TextCapitalization.sentences,
     controller: controller,
     textInputAction: textInputAction,
     readOnly: readOnly,
@@ -31,9 +32,7 @@ class MyEmailFormField extends StatelessWidget {
           : SecretSantaColors.neutral50,
       enabledBorder: readOnly
           ? OutlineInputBorder(
-              borderSide: BorderSide(
-                color: SecretSantaColors.neutral300,
-              ),
+              borderSide: BorderSide(color: SecretSantaColors.neutral300),
               borderRadius: BorderRadius.circular(12),
             )
           : null,

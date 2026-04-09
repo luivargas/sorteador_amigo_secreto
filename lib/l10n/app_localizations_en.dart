@@ -15,7 +15,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get refreshing => 'Updating...';
 
   @override
-  String get homeTitle => 'My Groups';
+  String get homeTitle => 'Your Groups';
 
   @override
   String get homeSubtitle => 'Manage your secret santa groups';
@@ -409,10 +409,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get filterRaffled => 'Already raffled groups';
 
   @override
-  String get filterParticipating => 'Groups I participate in';
+  String get filterParticipating => 'Groups you participate in';
 
   @override
-  String get filterManaging => 'Groups I manage';
+  String get filterManaging => 'Groups you manage';
 
   @override
   String get filterClear => 'Clear';
@@ -464,7 +464,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get roleParticipant => 'Participant';
 
   @override
-  String get createMyGroup => 'Create my group now';
+  String get createMyGroup => 'Create your group now';
 
   @override
   String get onboardingHeroTitle => 'Create your Secret Santa in Seconds';

@@ -4,7 +4,7 @@
   "refreshCompleted": "¡Actualizado!",
   "refreshing": "Actualizando...",
 
-  "homeTitle": "Mis Grupos",
+  "homeTitle": "Tus Grupos",
   "homeSubtitle": "Gestiona tus grupos de amigo secreto",
 
   "searchGroup": "Buscar grupo",
@@ -114,7 +114,7 @@
   "onboardingStep4Desc": "Cada participante recibe su amigo secreto por correo o WhatsApp (plan Premium)",
 
   "contactNotValid": "Este contacto debe tener nombre y teléfono",
-    "contactList": "LISTA DE CONTATOS",
+  "contactList": "LISTA DE CONTACTOS",
   "contactsTitle": "Seleccionar Participantes",
   "contactsSubtitle": "Elige los contactos para el sorteo",
   "searchParticipants": "Buscar participantes",
@@ -180,8 +180,8 @@
 
   "filterTitle": "Filtros",
   "filterRaffled": "Grupos ya sorteados",
-  "filterParticipating": "Grupos en los que participo",
-  "filterManaging": "Grupos que administro",
+  "filterParticipating": "Grupos en los que participa",
+  "filterManaging": "Grupos que administra",
   "filterClear": "Limpiar",
   "filterApply": "Aplicar",
   "groupOptionsTitle": "Opciones del grupo",
@@ -200,7 +200,7 @@
   "participantNameHint": "Ej: Simba",
   "roleAdmin": "Administrador",
   "roleParticipant": "Participante",
-  "createMyGroup": "Crear mi grupo ahora",
+  "createMyGroup": "Crea tu grupo ahora",
   "onboardingHeroTitle": "Crea tu Amigo Secreto en Segundos",
   "onboardingHeroDesc": "Organiza tus grupos de Amigo Secreto, edita la información de los grupos y agrega participantes de forma simple y rápida",
   "onboardingFreeTitle": "Totalmente Gratuito",
