@@ -81,7 +81,7 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                         children: [
                           Text(
                             l10n.almostThereTitle,
-                            style: SecretSantaTextStyles.h1,
+                            style: SecretSantaTextStyles.titleLarge,
                           ),
                           Text(
                             l10n.almostThereSubtitle,
@@ -96,36 +96,81 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                           .animate()
                           .fadeIn(duration: 400.ms)
                           .slideX(begin: 0.2, curve: Curves.easeOut),
-                      PinInputFormField(
-                            keyboardType: TextInputType.number,
-                            pinController: _tokenController,
-                            length: 6,
-                            pinBuilder: (context, cells) {
-                              return MaterialPinRow(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                cells: cells,
-                                theme: MaterialPinTheme().resolve(context),
-                              );
-                            },
-                            onCompleted: (value) async {
-                              await _onSubmit(value);
-                            },
-                          )
-                          .animate()
-                          .fadeIn(delay: 150.ms, duration: 400.ms)
-                          .slideX(begin: 0.2, curve: Curves.easeOut),
-                      TextButton.icon(
-                        onPressed: () async {
-                          final data = await Clipboard.getData(Clipboard.kTextPlain);
-                          final text = data?.text?.trim() ?? '';
-                          if (text.length == 6) {
-                            _tokenController.text = text;
-                            await _onSubmit(text);
-                          }
-                        },
-                        icon: const Icon(Icons.content_paste),
-                        label: Text(l10n.pasteCode),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: SecretSantaCard(
+                              color: SecretSantaColors.neutral50,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 30),
+                                child: Column(
+                                  spacing: 20,
+                                  children: [
+                                    MaterialPinField(
+                                          length: 6,
+                                          theme: MaterialPinTheme(
+  
+                                            cursorColor: SecretSantaColors.neutral50,
+                                            completeBorderColor: SecretSantaColors.accent2,
+                                            filledFillColor:SecretSantaColors.neutral50,
+                                            filledBorderColor: SecretSantaColors.accent2,
+                                            fillColor: SecretSantaColors.neutral50,
+                                            textStyle: SecretSantaTextStyles.pinField,
+                                            shape: MaterialPinShape.outlined,
+                                            // cellSize: Size(48, 56),
+                                            spacing: 10,
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
+                                            borderColor: SecretSantaColors.accent,
+                                            entryAnimation:
+                                                MaterialPinAnimation.scale,
+                                          ),
+                                          errorBuilder: (errorText) => Container(
+                                            padding: EdgeInsets.all(8),
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.error,
+                                                  color: Colors.red,
+                                                  size: 16,
+                                                ),
+                                                SizedBox(width: 8),
+                                                Text(errorText ?? ''),
+                                              ],
+                                            ),
+                                          ),
+                            
+                                          onCompleted: (value) async {
+                                            await _onSubmit(value);
+                                          },
+                                        )
+                                        .animate()
+                                        .fadeIn(delay: 150.ms, duration: 400.ms)
+                                        .slideX(
+                                          begin: 0.2,
+                                          curve: Curves.easeOut,
+                                        ),
+                                    TextButton.icon(
+                                      onPressed: () async {
+                                        final data = await Clipboard.getData(
+                                          Clipboard.kTextPlain,
+                                        );
+                                        final text = data?.text?.trim() ?? '';
+                                        if (text.length == 6) {
+                                          _tokenController.text = text;
+                                          await _onSubmit(text);
+                                        }
+                                      },
+                                      icon: const Icon(Icons.content_paste),
+                                      label: Text(l10n.pasteCode),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   );

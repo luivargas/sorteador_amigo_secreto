@@ -95,7 +95,7 @@ class _FormGroupBody extends State<CreateGroup> {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
-                            child: Icon(Icons.group, size: 30),
+                            child: Icon(Icons.group, size: 40),
                           ),
                         ),
                         Text(

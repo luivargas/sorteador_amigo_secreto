@@ -14,4 +14,5 @@ final String bearerToken = '';
 final String logo = './assets/logos/full/logo_amigo_secreto.png';
 final String contactDefaultPhoto = './assets/logos/icons/Logo_9.png';
 final String iconLogo = './assets/logos/icons/Logo_9.png';
+final String splashLogo = './assets/logos/icons/AppIcon.png';
 final List<IsoCode> favoriteIsoList = [IsoCode.BR];

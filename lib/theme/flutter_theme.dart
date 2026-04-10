@@ -69,32 +69,12 @@ class SecretSantaColors {
 // ============================================================================
 
 class SecretSantaTextStyles {
+  static const TextStyle pinField = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w500,
+  );
+
   // Headings
-  static const TextStyle h1 = TextStyle(
-    fontSize: 40,
-    fontWeight: FontWeight.w800,
-    height: 1.1,
-    letterSpacing: -0.5,
-  );
-
-  static const TextStyle h2 = TextStyle(
-    fontSize: 32,
-    fontWeight: FontWeight.w800,
-    height: 1.1,
-    letterSpacing: -0.5,
-  );
-
-  static const TextStyle h3 = TextStyle(
-    fontSize: 24,
-    fontWeight: FontWeight.w800,
-    height: 1.2,
-  );
-
-  static const TextStyle h4 = TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.w800,
-    height: 1.2,
-  );
 
   // Body
   static const TextStyle bodyLarge = TextStyle(
@@ -137,19 +117,23 @@ class SecretSantaTextStyles {
   );
 
   // Títulos da app
-  static const TextStyle titleSmall = h4;
+  static const TextStyle titleSmall = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w800,
+    height: 1.2,
+  );
 
   static const TextStyle titleMedium = TextStyle(
-    fontSize: 35,
-    color: SecretSantaColors.grey,
-    fontWeight: FontWeight.w700,
+    fontSize: 28,
+    fontWeight: FontWeight.w800,
+    height: 1.2,
   );
 
   static const TextStyle titleLarge = TextStyle(
-    fontSize: 45,
-    wordSpacing: 10,
-    color: SecretSantaColors.grey,
-    fontWeight: FontWeight.w700,
+    fontSize: 40,
+    fontWeight: FontWeight.w800,
+    height: 1.1,
+    letterSpacing: -0.5,
   );
 
   // Button
@@ -249,16 +233,13 @@ class SecretSantaTheme {
 
       // Tipografia
       textTheme: TextTheme(
-        displayLarge: SecretSantaTextStyles.h1.copyWith(
+        displayLarge: SecretSantaTextStyles.titleLarge.copyWith(
           color: SecretSantaColors.neutral900,
         ),
-        displayMedium: SecretSantaTextStyles.h2.copyWith(
+        displaySmall: SecretSantaTextStyles.titleMedium.copyWith(
           color: SecretSantaColors.neutral900,
         ),
-        displaySmall: SecretSantaTextStyles.h3.copyWith(
-          color: SecretSantaColors.neutral900,
-        ),
-        headlineMedium: SecretSantaTextStyles.h4.copyWith(
+        headlineMedium: SecretSantaTextStyles.titleSmall.copyWith(
           color: SecretSantaColors.neutral900,
         ),
         bodyLarge: SecretSantaTextStyles.bodyLarge.copyWith(

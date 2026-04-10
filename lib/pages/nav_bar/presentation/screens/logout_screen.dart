@@ -77,7 +77,7 @@ class _LogoutScreenState extends State<LogoutScreen> {
                   // Título
                   Text(
                     l10n.logoutTitle,
-                    style: SecretSantaTextStyles.h3.copyWith(
+                    style: SecretSantaTextStyles.titleMedium.copyWith(
                       color: SecretSantaColors.grey,
                     ),
                     textAlign: TextAlign.center,

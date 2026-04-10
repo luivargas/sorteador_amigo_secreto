@@ -153,7 +153,7 @@ abstract class AppLocalizations {
   /// No description provided for @createGroupTitle.
   ///
   /// In pt, this message translates to:
-  /// **'Crie seu grupo agora!'**
+  /// **'Crie seu grupo'**
   String get createGroupTitle;
 
   /// No description provided for @createGroupSubtitle.

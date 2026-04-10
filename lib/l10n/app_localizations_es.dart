@@ -35,7 +35,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noGroupsFound => 'Ningún grupo encontrado';
 
   @override
-  String get createGroupTitle => '¡Crea tu grupo ahora!';
+  String get createGroupTitle => '¡Crea tu grupo';
 
   @override
   String get createGroupSubtitle => 'Completa los datos a continuación';

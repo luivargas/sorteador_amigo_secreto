@@ -1,0 +1,14 @@
+
+flutter_native_splash:
+  color: "#FFF7ED" # Cor de fundo (ex: #42a5f5)
+  image: assets/logos/icons/AppIcon.png # Caminho da sua imagem (PNG)
+  
+  # Opcional: Para Android 12+ (icon e cor do ícone)
+  android_12:
+    image: assets/logos/icons/AppIcon.png # Caminho da sua imagem (PNG)
+    color: "#FFF7ED"
+    icon_background_color: "#FFF7ED"
+    
+  
+  # Opcional: Tela cheia
+  fullscreen: true

@@ -75,7 +75,7 @@ class _EnterGroup extends State<RequestTokenScreen> {
                     spacing: 10,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(l10n.verificationTitle, style: SecretSantaTextStyles.h1,),
+                      Text(l10n.verificationTitle, style: SecretSantaTextStyles.titleLarge,),
                       Text(l10n.verificationSubtitle),
                     ],
                   ),

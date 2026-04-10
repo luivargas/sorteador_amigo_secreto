@@ -26,7 +26,7 @@ class MyPhoneFormField extends StatelessWidget {
   static CountrySelectorNavigator _buildNavigator(BuildContext context) =>
       CountrySelectorNavigator.dialog(
         backgroundColor: SecretSantaColors.background,
-        titleStyle: SecretSantaTextStyles.h4,
+        titleStyle: SecretSantaTextStyles.titleSmall,
         searchBoxTextStyle: SecretSantaTextStyles.body.copyWith(
           color: SecretSantaColors.accent.withValues(alpha: 0.5),
         ),

@@ -56,7 +56,8 @@ dependencies:
   device_info_plus: ^12.3.0
   shared_preferences: ^2.5.4
   flutter_animate: ^4.5.0
-  pin_code_fields: ^9.0.0
+  pin_code_fields: ^9.3.0
+  flutter_native_splash: ^2.4.7
 
 dev_dependencies:
   flutter_test:

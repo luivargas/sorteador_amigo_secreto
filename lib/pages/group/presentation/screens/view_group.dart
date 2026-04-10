@@ -195,7 +195,7 @@ class _GroupHeroHeader extends StatelessWidget {
                 SecretSantaBadge(type: type),
                 Text(
                   name,
-                  style: SecretSantaTextStyles.h3.copyWith(color: Colors.white),
+                  style: SecretSantaTextStyles.titleMedium.copyWith(color: Colors.white),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),

@@ -74,8 +74,8 @@ class _MyNavbarState extends State<MyNavbar>
         dragStartBehavior: DragStartBehavior.start,
         children: [
           HomeScreen(groups: widget.groups),
-          LogoutScreen(),
           Onboarding(),
+          LogoutScreen(),
         ],
       ),
       child: TabBar(
@@ -96,12 +96,12 @@ class _MyNavbarState extends State<MyNavbar>
           SizedBox(
             height: 55,
             width: 40,
-            child: Center(child: Icon(Icons.logout, color: colors)),
+            child: Center(child: Icon(Icons.info, color: colors)),
           ),
           SizedBox(
             height: 55,
             width: 40,
-            child: Center(child: Icon(Icons.info, color: colors)),
+            child: Center(child: Icon(Icons.logout, color: colors)),
           ),
         ],
       ),

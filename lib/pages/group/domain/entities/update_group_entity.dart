@@ -42,6 +42,13 @@ class UpdateGroupEntity {
   });
 
   Map<String, dynamic> toJson() {
+    giftValue(String? v) {
+      if (v == String) {
+        v!.replaceAll(",", ".").replaceAll("R\$", "").trim();
+      }
+      return null;
+    }
+
     return {
       "name": name,
       "draw_date": drawDate,

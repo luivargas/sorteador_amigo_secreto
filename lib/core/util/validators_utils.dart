@@ -38,10 +38,10 @@ class ValidatorUtils {
     }
     if (min != '' && max != '') {
       final minGiftValue = double.parse(
-        min!.replaceAll(",", ".").replaceFirst("R\$", "").trim(),
+        min!.replaceFirst("R\$", "").trim().replaceAll(".", "").replaceAll(",", "."),
       );
       final maxGiftValue = double.parse(
-        max!.replaceAll(",", ".").replaceFirst("R\$", "").trim(),
+        max!.replaceFirst("R\$", "").trim().replaceAll(".", "").replaceAll(",", "."),
       );
       if (minGiftValue > maxGiftValue) {
         return AppLocalizations.of(context)!.validatorFixValues;

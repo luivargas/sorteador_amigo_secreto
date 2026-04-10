@@ -15,7 +15,7 @@
   },
   "noGroupsFound": "Nenhum grupo encontrado",
 
-  "createGroupTitle": "Crie seu grupo agora!",
+  "createGroupTitle": "Crie seu grupo",
   "createGroupSubtitle": "Preencha os dados abaixo",
   "groupCreatedSuccess": "Grupo {name} criado com sucesso!",
   "@groupCreatedSuccess": {
