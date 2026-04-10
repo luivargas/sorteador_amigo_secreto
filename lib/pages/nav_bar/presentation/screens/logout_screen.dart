@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/top_icon.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/database/auth_db.dart';
@@ -41,30 +42,15 @@ class _LogoutScreenState extends State<LogoutScreen> {
               color: SecretSantaColors.neutral100,
               borderRadius: BorderRadius.circular(20),
               boxShadow: SecretSantaShadows.medium,
-              border: Border.all(color: SecretSantaColors.neutral200,)
+              border: Border.all(color: SecretSantaColors.neutral200),
             ),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(32, 48, 32, 40),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Ícone
-                  Container(
-                    padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      color: SecretSantaColors.neutral50,
-                      shape: BoxShape.circle,
-                      boxShadow: SecretSantaShadows.small,
-                    ),
-                    child: const Icon(
-                      Icons.logout_rounded,
-                      size: 56,
-                      color: SecretSantaColors.accent,
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-
-                  // Label
+                  TopIcon(icon: Icons.logout),
+                  const SizedBox(height: 32), 
                   Text(
                     l10n.logoutLabel,
                     style: SecretSantaTextStyles.labelSmall.copyWith(
@@ -102,7 +88,7 @@ class _LogoutScreenState extends State<LogoutScreen> {
                     isLoading: _isLoading,
                   ),
                   const SizedBox(height: 8),
-                  
+
                   // Divisor com cadeado
                   Row(
                     children: [

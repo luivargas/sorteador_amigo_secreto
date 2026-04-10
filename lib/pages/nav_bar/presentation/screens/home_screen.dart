@@ -13,7 +13,6 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_c
 import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/widgets/home_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
-
 import '../cubit/home_cubit.dart';
 import '../cubit/home_state.dart';
 
@@ -38,15 +37,20 @@ class _HomeView extends StatefulWidget {
   State<_HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<_HomeView> {
+class _HomeViewState extends State<_HomeView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   final RefreshController _refreshController = RefreshController();
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   bool _searchBarElevated = false;
+  bool _hasGroups = false;
 
   final List<Color> cardColors = [
-    SecretSantaColors.accent,
     SecretSantaColors.accent2,
+    SecretSantaColors.accent,
   ];
   Color getColor(int index) => cardColors[index % cardColors.length];
 
@@ -54,6 +58,7 @@ class _HomeViewState extends State<_HomeView> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+    _hasGroups = widget.groups.isNotEmpty;
   }
 
   void _onScroll() {
@@ -78,128 +83,134 @@ class _HomeViewState extends State<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: MyAppBar(),
-      body: Column(
-        children: [
-          _SearchBar(
-            searchController: _searchController,
-            l10n: l10n,
-            elevated: _searchBarElevated,
-          ),
-
-          Expanded(
-            child: SmartRefresher(
-              enablePullDown: true,
-              controller: _refreshController,
-              onRefresh: _onRefresh,
-              child: CustomScrollView(
-                controller: _scrollController,
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-                      child: HomeCard(),
-                    ),
-                  ),
-
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
-                      child: Text(
-                        l10n.homeTitle,
-                        style: SecretSantaTextStyles.titleSmall,
+      body: BlocListener<HomeCubit, HomeState>(
+        listenWhen: (prev, curr) => prev.groups != curr.groups,
+        listener: (context, state) {
+          setState(() => _hasGroups = state.groups.isNotEmpty);
+        },
+        child: Column(
+          children: [
+            _SearchBar(
+              searchController: _searchController,
+              l10n: l10n,
+              elevated: _searchBarElevated,
+            ),
+        
+            Expanded(
+              child: SmartRefresher(
+                enablePullDown: true,
+                controller: _refreshController,
+                onRefresh: _onRefresh,
+                child: CustomScrollView(
+                  controller: _scrollController,
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+                        child: HomeCard(hasGroups: _hasGroups,),
                       ),
                     ),
-                  ),
-
-                  BlocBuilder<HomeCubit, HomeState>(
-                    builder: (context, state) {
-                      if (state.isLoading) {
-                        return SliverFillRemaining(
-                          hasScrollBody: false,
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: SecretSantaColors.accent,
-                            ),
-                          ),
-                        );
-                      }
-
-                      if (state.error != null) {
-                        final msg = state.error == AppError.unauthorized
-                            ? l10n.sessionExpired
-                            : state.error!.localize(context);
-                        return SliverFillRemaining(
-                          hasScrollBody: false,
-                          child: Center(child: Text(msg)),
-                        );
-                      }
-
-                      if (state.filtered.isEmpty) {
-                        final isSearching = state.search.isNotEmpty;
-                        final isFiltering = state.filter != GroupFilter.all;
-                        return SliverFillRemaining(
-                          hasScrollBody: false,
-                          child: Column(
-                            spacing: 8,
-                            children: [
-                              Icon(
-                                isSearching || isFiltering
-                                    ? Icons.search_off
-                                    : Icons.group_outlined,
-                                size: 48,
-                                color: Colors.grey,
-                              ),
-                              Text(
-                                isSearching
-                                    ? '"${state.search}" — ${l10n.noGroupsFound.toLowerCase()}'
-                                    : l10n.noGroupsFound,
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-
-                      return SliverPadding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
-                        sliver: SliverList.separated(
-                          itemCount: state.filtered.length,
-                          separatorBuilder: (_, _) =>
-                              const SizedBox(height: 12),
-                          itemBuilder: (context, index) {
-                            final g = state.filtered[index];
-                            return InkWell(
-                              onTap: () => context.pushNamed(
-                                'view_group',
-                                extra: ShowGroupArgs(
-                                  code: g.code,
-                                  token: g.token,
-                                  name: g.name,
-                                ),
-                              ),
-                              child: GroupCard(
-                                index: index,
-                                groupName: g.name,
-                                groupToken: g.token,
-                                groupCode: g.code,
-                                isRaffled: g.isRaffled,
-                                color: getColor(index),
-                              ),
-                            );
-                          },
+        
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
+                        child: Text(
+                          l10n.homeTitle,
+                          style: SecretSantaTextStyles.titleSmall,
                         ),
-                      );
-                    },
-                  ),
-                ],
+                      ),
+                    ),
+        
+                    BlocBuilder<HomeCubit, HomeState>(
+                      builder: (context, state) {
+                        if (state.isLoading) {
+                          return SliverFillRemaining(
+                            hasScrollBody: false,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: SecretSantaColors.accent,
+                              ),
+                            ),
+                          );
+                        }
+        
+                        if (state.error != null) {
+                          final msg = state.error == AppError.unauthorized
+                              ? l10n.sessionExpired
+                              : state.error!.localize(context);
+                          return SliverFillRemaining(
+                            hasScrollBody: false,
+                            child: Center(child: Text(msg)),
+                          );
+                        }
+        
+                        if (state.filtered.isEmpty) {
+                          final isSearching = state.search.isNotEmpty;
+                          final isFiltering = state.filter != GroupFilter.all;
+                          return SliverFillRemaining(
+                            hasScrollBody: false,
+                            child: Column(
+                              spacing: 8,
+                              children: [
+                                Icon(
+                                  isSearching || isFiltering
+                                      ? Icons.search_off
+                                      : Icons.group_outlined,
+                                  size: 48,
+                                  color: Colors.grey,
+                                ),
+                                Text(
+                                  isSearching
+                                      ? '"${state.search}" — ${l10n.noGroupsFound.toLowerCase()}'
+                                      : l10n.noGroupsFound,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                        return SliverPadding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
+                          sliver: SliverList.separated(
+                            itemCount: state.filtered.length,
+                            separatorBuilder: (_, _) =>
+                                const SizedBox(height: 12),
+                            itemBuilder: (context, index) {
+                              final g = state.filtered[index];
+                              return InkWell(
+                                onTap: () => context.pushNamed(
+                                  'view_group',
+                                  extra: ShowGroupArgs(
+                                    code: g.code,
+                                    token: g.token,
+                                    name: g.name,
+                                  ),
+                                ),
+                                child: GroupCard(
+                                  index: index,
+                                  groupName: g.name,
+                                  groupToken: g.token,
+                                  groupCode: g.code,
+                                  isRaffled: g.isRaffled,
+                                  color: getColor(index),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -262,7 +273,7 @@ class _SearchBar extends StatelessWidget {
                         onSelected: () => context
                             .read<HomeCubit>()
                             .onFilterChanged(GroupFilter.raffled),
-                        color: SecretSantaColors.accent
+                        color: SecretSantaColors.accent,
                       ),
                     ],
                   ),
