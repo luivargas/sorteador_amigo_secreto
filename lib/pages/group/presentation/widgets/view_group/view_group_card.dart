@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/stat_card.dart';
+import 'package:sorteador_amigo_secreto/pages/group/core/utils/gift_utils.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/group_participants_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
@@ -57,7 +58,8 @@ class ViewGroupCard extends StatelessWidget {
             Expanded(
               child: StatCard(
                 value: l10n.suggestedValue,
-                label: 'R\$ $minGiftValue\nR\$ $maxGiftValue',
+                label: GiftUtils.toDisplayFormat(minGiftValue),
+                subLabel: GiftUtils.toDisplayFormat(maxGiftValue),
                 icon: Icons.payments_outlined,
                 iconColor: SecretSantaColors.accent,
                 color: SecretSantaColors.neutral50,

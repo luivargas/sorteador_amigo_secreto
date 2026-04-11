@@ -7,7 +7,6 @@ class UpdateGroupModel {
   final String? locale;
   final String? minGiftValue;
   final String? maxGiftValue;
-  //final String? coverImageUrl;
   final String? welcomeMessage;
   final bool? isGiftListPublic;
   final String? description;
@@ -23,7 +22,6 @@ class UpdateGroupModel {
     this.locale,
     this.minGiftValue,
     this.maxGiftValue,
-    //this.coverImageUrl,
     this.welcomeMessage,
     this.isGiftListPublic,
     this.description,
@@ -49,15 +47,16 @@ class UpdateGroupModel {
       locale: json['locale'],
       minGiftValue: json['min_gift_value'],
       maxGiftValue: json['max_gift_value'],
-      //coverImageUrl: json['cover_image_url'],
       welcomeMessage: json['welcome_message'],
       isGiftListPublic: json['is_gift_list_public'],
       description: json['description'],
       raffledAt: json['raffled_at'],
       whatsappEnabled: json['whatsapp_enabled'],
       whatsappEnabledAt: json['whatsapp_enabled_at'],
-      status: json['status'],
-      participants: parseParticipants(json['participants'] as List<dynamic>),
+      status: json['status'] ?? "active",
+      participants: parseParticipants(
+        json['participants'] as List<dynamic>? ?? [],
+      ),
     );
   }
 }

@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_search_bar.dart';
-import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
@@ -22,10 +21,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<HomeCubit>()..loadGroups(groups),
-      child: _HomeView(groups: groups),
-    );
+    return _HomeView(groups: groups);
   }
 }
 

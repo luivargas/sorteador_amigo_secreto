@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
@@ -22,7 +23,7 @@ class CreateGroup extends StatefulWidget {
 
 class _FormGroupBody extends State<CreateGroup> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController nameController = TextEditingController();
+  final TextEditingController adminNameController = TextEditingController();
   final TextEditingController groupNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final PhoneController phoneController = PhoneController(
@@ -38,7 +39,7 @@ class _FormGroupBody extends State<CreateGroup> {
       name: groupNameController.text,
 
       admin: CreateParticipantEntity(
-        name: nameController.text,
+        name: adminNameController.text,
         email: emailController.text,
         phone: phoneController.value.international,
         idd: phoneController.value.countryCode,
@@ -58,13 +59,23 @@ class _FormGroupBody extends State<CreateGroup> {
         body: BlocConsumer<GroupCubit, GroupState>(
           listenWhen: (previous, current) =>
               previous.isLoading && !current.isLoading && current.created,
-          listener: (context, state) async{
-            SecretSantaAlert.show(
-              message: l10n.groupCreatedSuccess(groupNameController.text),
-              type: AlertType.success, context: context,
-            );
-            if (context.mounted) {
-              context.pop(true);
+          listener: (context, state) async {
+            if (state.created) {
+              SecretSantaAlert.show(
+                message: l10n.groupCreatedSuccess(groupNameController.text),
+                type: AlertType.success,
+                context: context,
+              );
+              if (context.mounted) {
+                context.pop(true);
+              }
+            }
+            if (state.error != null) {
+              SecretSantaAlert.show(
+                context: context,
+                message: state.error!.localize(context),
+                type: AlertType.warning,
+              );
             }
           },
           builder: (context, state) {
@@ -112,7 +123,7 @@ class _FormGroupBody extends State<CreateGroup> {
                     ),
                     GroupFormFields(
                       groupNameController: groupNameController,
-                      nameController: nameController,
+                      nameController: adminNameController,
                       emailController: emailController,
                       phoneController: phoneController,
                     ),

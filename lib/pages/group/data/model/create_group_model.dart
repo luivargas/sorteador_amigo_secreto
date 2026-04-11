@@ -44,7 +44,9 @@ class CreateGroupModel {
   factory CreateGroupModel.fromJson(Map<String, dynamic> json) {
     List<CreateParticipantModel> parseParticipants(List<dynamic> raw) {
       return raw
-          .map((e) => CreateParticipantModel.fromJson(e as Map<String, dynamic>))
+          .map(
+            (e) => CreateParticipantModel.fromJson(e as Map<String, dynamic>),
+          )
           .toList();
     }
 
@@ -62,11 +64,13 @@ class CreateGroupModel {
       isGiftListPublic: json['is_gift_list_public'],
       description: json['description'],
       raffledAt: json['raffled_at'],
-      whatsappEnabled: json['whatsapp_enabled'],
+      whatsappEnabled: json['whatsapp_enabled'] ?? false,
       whatsappEnabledAt: json['whatsapp_enabled_at'],
       status: json['status'],
       token: json['token'],
-      participants: parseParticipants(json['participants'] as List<dynamic>),
+      participants: parseParticipants(
+        json['participants'] as List<dynamic>? ?? [],
+      ),
     );
   }
 }

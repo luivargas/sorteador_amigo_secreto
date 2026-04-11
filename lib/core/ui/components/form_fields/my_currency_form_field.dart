@@ -22,7 +22,7 @@ class MyCurrencyFormField extends StatelessWidget {
     keyboardType: TextInputType.number,
     inputFormatters: [
       FilteringTextInputFormatter.digitsOnly,
-      CentavosInputFormatter(casasDecimais: 2, moeda: true),
+      CentavosInputFormatter(casasDecimais: 2, moeda: false),
     ],
     decoration: InputDecoration(
       prefixIcon: const Icon(Icons.attach_money),

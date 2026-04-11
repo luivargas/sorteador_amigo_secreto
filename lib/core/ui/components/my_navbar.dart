@@ -1,7 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
+import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
+import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/cubit/home_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/screens/home_screen.dart';
 import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/screens/logout_screen.dart';
 import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/screens/onboarding.dart';
@@ -20,10 +22,12 @@ class _MyNavbarState extends State<MyNavbar>
   late int currentPage;
   late TabController tabController;
   final Color colors = SecretSantaColors.neutral50;
+  late final HomeCubit _homeCubit;
 
   @override
   void initState() {
     currentPage = 0;
+    _homeCubit = getIt<HomeCubit>()..loadGroups(widget.groups);
     tabController = TabController(length: 3, vsync: this);
     tabController.animation!.addListener(() {
       final value = tabController.animation!.value.round();
@@ -42,6 +46,7 @@ class _MyNavbarState extends State<MyNavbar>
 
   @override
   void dispose() {
+    _homeCubit.close();
     tabController.dispose();
     super.dispose();
   }

@@ -3,10 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/loading_or_error.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
+import 'package:sorteador_amigo_secreto/pages/group/core/utils/date_time_utils.dart';
+import 'package:sorteador_amigo_secreto/pages/group/core/utils/gift_utils.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/update_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
@@ -54,28 +55,12 @@ class _EditGroup extends State<EditGroup> {
     groupNameController.text = g.name;
     descriptionController.text = g.description ?? '';
     locationController.text = g.location ?? '';
-    minGiftValueController.text = g.minGiftValue ?? '';
-    maxGiftValueController.text = g.maxGiftValue ?? '';
-    if (g.drawDate != null && g.drawDate!.isNotEmpty) {
-      try {
-        // parse do formato da API
-        final parsed = DateFormat('dd/MM/yyyy HH:mm').parse(g.drawDate!);
-        final dt = DateTime(
-          parsed.year,
-          parsed.month,
-          parsed.day,
-          parsed.hour,
-          parsed.minute,
-        );
-        _selectedDateTime = dt;
-        dateTimeController.text = g.drawDate!;
-      } catch (_) {
-        // se der ruim no parse, pelo menos mostra o valor cru
-        dateTimeController.text = g.drawDate!;
-      }
-    } else {
-      dateTimeController.text = '';
-      _selectedDateTime = null;
+    minGiftValueController.text = GiftUtils.toDisplayFormat(g.minGiftValue);
+    maxGiftValueController.text = GiftUtils.toDisplayFormat(g.maxGiftValue);
+    final parsed = DateTimeUtils.fromApi(g.drawDate);
+    if (parsed != null) {
+        _selectedDateTime = parsed;
+        dateTimeController.text = DateTimeUtils.toDisplay(parsed);
     }
 
     _prefilledOnce = true;
@@ -86,21 +71,20 @@ class _EditGroup extends State<EditGroup> {
 
     final now = DateTime.now();
 
-    // 1) Data
     final l10n = AppLocalizations.of(context)!;
     var pickedDate = await showDatePicker(
       context: context,
       initialDate: _selectedDateTime ?? now,
-      firstDate: DateTime(now.year - 100),
-      lastDate: DateTime(now.year + 5),
+      firstDate: now,
+      lastDate: DateTime(now.year + 3),
       helpText: l10n.selectDate,
       cancelText: l10n.cancel,
       confirmText: l10n.ok,
     );
 
     if (pickedDate == null) return;
+    if (!mounted) return;
 
-    // 2) Hora
     var pickedTime = await showTimePicker(
       initialEntryMode: TimePickerEntryMode.inputOnly,
       context: context,
@@ -112,23 +96,10 @@ class _EditGroup extends State<EditGroup> {
       confirmText: l10n.ok,
     );
     if (pickedTime == null) return;
+    if (!mounted) return;
 
-    // 3) Combina e atualiza
-    final dt = DateTime(
-      pickedDate.year,
-      pickedDate.month,
-      pickedDate.day,
-      pickedTime.hour,
-      pickedTime.minute,
-    );
-
-    // mostra no campo em pt-BR
-    dateTimeController.text = DateFormat(
-      'dd/MM/yyyy HH:mm',
-      'pt_BR',
-    ).format(dt);
-
-    // guarda o valor cru
+    final dt = DateTimeUtils.combine(pickedDate, pickedTime);
+    dateTimeController.text = DateTimeUtils.toDisplay(dt);
     setState(() => _selectedDateTime = dt);
   }
 
@@ -140,14 +111,10 @@ class _EditGroup extends State<EditGroup> {
 
     final description = descriptionController.text.trim();
     final groupName = groupNameController.text.trim();
-    final minGiftValue = minGiftValueController.text
-        .replaceAll(",", ".")
-        .replaceAll("R\$", "")
-        .trim();
-    final maxGiftValue = maxGiftValueController.text
-        .replaceAll(",", ".")
-        .replaceAll("R\$", "")
-        .trim();
+    final giftValue = GiftUtils.resolveMinMax(
+      minGiftValueController.text,
+      maxGiftValueController.text,
+    );
     final location = locationController.text.trim();
     DateTime? toSend;
     if (_selectedDateTime != null) {
@@ -155,12 +122,12 @@ class _EditGroup extends State<EditGroup> {
     }
     final date = toSend == null
         ? null
-        : DateFormat('yyyy-MM-dd HH:mm:ss', 'en_US').format(toSend);
+        : DateTimeUtils.toApi(_selectedDateTime!);
     final entity = UpdateGroupEntity(
       description: description,
       name: groupName,
-      maxGiftValue: maxGiftValue,
-      minGiftValue: minGiftValue,
+      minGiftValue: giftValue.min.isEmpty ? null : giftValue.min,
+      maxGiftValue: giftValue.max.isEmpty ? null : giftValue.max,
       location: location,
       drawDate: date,
     );
@@ -188,41 +155,41 @@ class _EditGroup extends State<EditGroup> {
               isLoading: state.isLoading && state.group == null,
               error: state.error,
               child: SingleChildScrollView(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: SecretSantaColors.background,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: SecretSantaColors.background,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
                   ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 50),
-                  child: Column(
-                    spacing: 20,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      EditGroupFields(
-                        groupNameController: groupNameController,
-                        dateTimeController: dateTimeController,
-                        descriptionController: descriptionController,
-                        minGiftValueController: minGiftValueController,
-                        maxGiftValueController: maxGiftValueController,
-                        addressController: locationController,
-                        onTapDateTime: _pickDateTime,
-                      ),
-                      MyGradientButton(
-                        onTap: () {
-                          _onSubmit();
-                        },
-                        title: AppLocalizations.of(context)!.save,
-                        icon: Icons.save,
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 50),
+                    child: Column(
+                      spacing: 20,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        EditGroupFields(
+                          groupNameController: groupNameController,
+                          dateTimeController: dateTimeController,
+                          descriptionController: descriptionController,
+                          minGiftValueController: minGiftValueController,
+                          maxGiftValueController: maxGiftValueController,
+                          addressController: locationController,
+                          onTapDateTime: _pickDateTime,
+                        ),
+                        MyGradientButton(
+                          onTap: () {
+                            _onSubmit();
+                          },
+                          title: AppLocalizations.of(context)!.save,
+                          icon: Icons.save,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
             );
           },
         ),

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/core/network/base_url.dart';
+import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
@@ -22,7 +23,12 @@ class ViewGroup extends StatefulWidget {
   final String code;
   final String token;
   final String? name;
-  const ViewGroup({super.key, required this.code, required this.token, this.name});
+  const ViewGroup({
+    super.key,
+    required this.code,
+    required this.token,
+    this.name,
+  });
 
   @override
   State<ViewGroup> createState() => _ViewGroupBody();
@@ -31,6 +37,7 @@ class ViewGroup extends StatefulWidget {
 class _ViewGroupBody extends State<ViewGroup> {
   final RefreshController _refreshController = RefreshController();
   ShowGroupModel? group;
+  
 
   Future<void> _onShare(ShowGroupModel? g) async {
     final title = AppLocalizations.of(context)!.shareLinkTitle;
@@ -48,7 +55,7 @@ class _ViewGroupBody extends State<ViewGroup> {
       'edit_group',
       extra: ShowGroupArgs(code: widget.code, token: widget.token),
     );
-    if (result == true) {
+    if (context.mounted && result == true) {
       context.read<GroupCubit>().show(widget.code, widget.token);
     }
   }
@@ -73,7 +80,6 @@ class _ViewGroupBody extends State<ViewGroup> {
     }
   }
 
-
   @override
   void dispose() {
     _refreshController.dispose();
@@ -82,6 +88,7 @@ class _ViewGroupBody extends State<ViewGroup> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: MyAppBar(
@@ -90,7 +97,7 @@ class _ViewGroupBody extends State<ViewGroup> {
             onPressed: _onEdit,
             icon: const Icon(Icons.edit_outlined, size: 24),
             color: SecretSantaColors.accent,
-            tooltip: AppLocalizations.of(context)!.edit,
+            tooltip: l10n.edit,
           ),
           IconButton(
             onPressed: () => _onShare(group),
@@ -101,19 +108,22 @@ class _ViewGroupBody extends State<ViewGroup> {
       ),
       body: BlocConsumer<GroupCubit, GroupState>(
         listenWhen: (previous, current) =>
-            !previous.raffled && current.raffled,
-        listener: (context, state) => _onRefresh(),
+            (!previous.raffled && current.raffled) ||
+            (previous.error == null && current.error != null),
+        listener: (context, state) {
+          if (state.raffled) _onRefresh();
+          if (state.error != null) {
+            SecretSantaAlert.show(
+              context: context,
+              message: state.error!.localize(context),
+              type: AlertType.warning,
+            );
+          }
+        },
         builder: (context, state) {
           if (state.isLoading && state.group == null) {
             return Center(
               child: CircularProgressIndicator(color: SecretSantaColors.accent),
-            );
-          }
-          if (state.error != null) {
-            return SmartRefresher(
-              controller: _refreshController,
-              onRefresh: _onRefresh,
-              child: Text(state.error!.localize(context)),
             );
           }
           if (state.group != null) {
@@ -122,7 +132,9 @@ class _ViewGroupBody extends State<ViewGroup> {
           if (group == null) return const SizedBox.shrink();
 
           final g = group!;
-          final type = g.raffledAt == null ? BadgeType.pending : BadgeType.raffled;
+          final type = g.raffledAt == null
+              ? BadgeType.pending
+              : BadgeType.raffled;
 
           return SmartRefresher(
             controller: _refreshController,
@@ -134,13 +146,15 @@ class _ViewGroupBody extends State<ViewGroup> {
                 const SizedBox(height: 16),
                 ViewGroupCard(
                   type: type,
-                  eventLocation: g.location ?? AppLocalizations.of(context)!.notDefined,
+                  eventLocation:
+                      g.location ?? l10n.notDefined,
                   minGiftValue: g.minGiftValue ?? "00,00",
                   maxGiftValue: g.maxGiftValue ?? "00,00",
                   eventDate: _formatDate(g.drawDate),
                   eventTime: g.drawDate?.split(' ').last ?? "--:--",
                   groupDescription:
-                      g.description ?? AppLocalizations.of(context)!.noDescription,
+                      g.description ??
+                      l10n.noDescription,
                   participants: g.participants.length,
                   participantsList: g.participants,
                   groupToken: g.token,
@@ -151,14 +165,16 @@ class _ViewGroupBody extends State<ViewGroup> {
                   if (g.participants.length >= 2)
                     MyGradientButton(
                       onTap: () => _onSubmit(g.code),
-                      title: AppLocalizations.of(context)!.drawButton,
+                      title: l10n.drawButton,
                       icon: Icons.draw,
                     )
                   else
                     _NeedMoreParticipantsBanner(
-                      message: AppLocalizations.of(context)!.needMoreParticipants,
+                      message: AppLocalizations.of(
+                        context,
+                      )!.needMoreParticipants,
                     ),
-                ]
+                ],
               ],
             ),
           );
@@ -195,7 +211,9 @@ class _GroupHeroHeader extends StatelessWidget {
                 SecretSantaBadge(type: type),
                 Text(
                   name,
-                  style: SecretSantaTextStyles.titleMedium.copyWith(color: Colors.white),
+                  style: SecretSantaTextStyles.titleMedium.copyWith(
+                    color: Colors.white,
+                  ),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),
@@ -229,7 +247,9 @@ class _NeedMoreParticipantsBanner extends StatelessWidget {
       decoration: BoxDecoration(
         color: SecretSantaColors.accent.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: SecretSantaColors.accent.withValues(alpha: 0.4)),
+        border: Border.all(
+          color: SecretSantaColors.accent.withValues(alpha: 0.4),
+        ),
       ),
       child: Row(
         spacing: 12,

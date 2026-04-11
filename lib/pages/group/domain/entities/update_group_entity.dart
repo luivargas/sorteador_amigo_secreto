@@ -42,20 +42,14 @@ class UpdateGroupEntity {
   });
 
   Map<String, dynamic> toJson() {
-    giftValue(String? v) {
-      if (v == String) {
-        v!.replaceAll(",", ".").replaceAll("R\$", "").trim();
-      }
-      return null;
-    }
 
     return {
-      "name": name,
-      "draw_date": drawDate,
-      "location": location,
-      "description": description,
-      "min_gift_value": minGiftValue,
-      "max_gift_value": maxGiftValue,
+      "name": name?.trim(),
+      "draw_date": drawDate?.trim(),
+      "location": location?.trim(),
+      "description": description?.trim(),
+      "min_gift_value": minGiftValue?.trim(),
+      "max_gift_value": maxGiftValue?.trim(),
     };
   }
 }

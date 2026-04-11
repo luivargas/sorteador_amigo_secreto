@@ -76,7 +76,9 @@ class ShowGroupModel {
       whatsappEnabledAt: json['whatsapp_enabled_at'],
       status: json['status'],
       token: json['token'],
-      participants: parseParticipants(json['participants']),
+      participants: parseParticipants(
+        json['participants'] as List<dynamic>? ?? [],
+      ),
     );
   }
 }
