@@ -10,6 +10,6 @@ class ValidateToken {
   });
 
   Map<String, dynamic> toJson() {
-    return {"email": email, "token": token, "device": device};
+    return {"email": email.toLowerCase(), "token": token, "device": device};
   }
 }

@@ -7,11 +7,11 @@ import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_email_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
-import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/request_token_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_state.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/core/util/participant_validators.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class RequestTokenScreen extends StatefulWidget {
@@ -81,9 +81,9 @@ class _EnterGroup extends State<RequestTokenScreen> {
                   ),
                   MyEmailFormField(
                         controller: _emailController,
-                        validator: (_) => ValidatorUtils.emailValidator(
+                        validator: (_) => ParticipantValidators.isRequiredEmailValidator(
                           context: context,
-                          v: _emailController.text,
+                          v: _emailController.text.toLowerCase(),
                         ),
                       )
                       .animate()

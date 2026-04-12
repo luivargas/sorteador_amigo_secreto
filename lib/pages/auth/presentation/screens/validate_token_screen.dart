@@ -25,7 +25,7 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final PinInputController _tokenController = PinInputController();
   late final TextEditingController _emailController = TextEditingController(
-    text: widget.email,
+    text: widget.email.toLowerCase(),
   );
 
   Future<void> _onSubmit(String token) async {

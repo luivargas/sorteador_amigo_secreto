@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/labeled_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_currency_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_name_form_field.dart';
-import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/pages/group/core/utils/group_validators.dart';
 
 class EditGroupFields extends StatefulWidget {
   final TextEditingController groupNameController;
@@ -75,7 +75,7 @@ class _EditGroupFields extends State<EditGroupFields> {
                 child: MyCurrencyFormField(
                   controller: widget.maxGiftValueController,
                   hintText: l10n.maxValueHint,
-                  validator: (_) => ValidatorUtils.giftValue(
+                  validator: (_) => GroupValidators.giftValue(
                     context: context,
                     min: widget.minGiftValueController.text,
                     max: widget.maxGiftValueController.text,

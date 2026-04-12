@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:flutter_contacts/models/properties/phone.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/util/regex_utils.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
-class ValidatorUtils {
+class ParticipantValidators {
   static String? isValidEmail({
     required BuildContext context,
     required String? v,
@@ -23,17 +23,26 @@ class ValidatorUtils {
     return null;
   }
 
-  static String? tokenValidator({
-    required BuildContext context,
-    required String v,
+  static String? emailOrPhoneValidator({
+    required BuildContext context, 
+    required String? email,
+    
+    required String phone
   }) {
-    if (v.isEmpty) {
-      return AppLocalizations.of(context)!.validatorRequired;
+    final emailEmpty = email == null || email.trim().isEmpty;
+    final phoneEmpty = phone.trim().isEmpty;
+
+    if ( emailEmpty && phoneEmpty ){
+      return AppLocalizations.of(context)!.validatorEmailOrPhone;
+    }
+
+    if ( !emailEmpty) { 
+      return isValidEmail(context: context, v: email);
     }
     return null;
   }
 
-  static String? emailValidator({
+    static String? isRequiredEmailValidator({
     required BuildContext context,
     required String? v,
   }) {
@@ -41,29 +50,6 @@ class ValidatorUtils {
       return AppLocalizations.of(context)!.validatorEnterEmail;
     }
     return isValidEmail(context: context, v: v);
-  }
-
-  static String? giftValue({
-    required BuildContext context,
-    required String? min,
-    required String? max,
-  }) {
-    
-    if ((min == null || min.isEmpty) && (max == null || max.isEmpty)) {
-      return null;
-    }
-    if ((min != null && min.isNotEmpty) && (max != null && max.isNotEmpty)) {
-      final minValue = double.parse(
-        min.replaceAll('.', '').replaceAll(',', '.'),
-      );
-      final maxValue = double.parse(
-        max.replaceAll('.', '').replaceAll(',', '.'),
-      );
-      if (minValue > maxValue) {
-        return AppLocalizations.of(context)!.validatorFixValues;
-      }
-    }
-    return null;
   }
 
   static IsoCode? isoCodeFromPhone(Phone phone) {
@@ -76,4 +62,5 @@ class ValidatorUtils {
       return null;
     }
   }
+
 }

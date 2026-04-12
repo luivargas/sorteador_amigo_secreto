@@ -492,6 +492,12 @@ abstract class AppLocalizations {
   /// **'Corrija os valores'**
   String get validatorFixValues;
 
+  /// No description provided for @validatorEmailOrPhone.
+  ///
+  /// In pt, this message translates to:
+  /// **'Informe o e-mail ou o telefone'**
+  String get validatorEmailOrPhone;
+
   /// No description provided for @onboardingTitle.
   ///
   /// In pt, this message translates to:

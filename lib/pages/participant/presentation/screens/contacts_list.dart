@@ -8,8 +8,8 @@ import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_search_bar.dart';
-import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/core/util/participant_validators.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/usecases/participant_usecase.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
@@ -140,7 +140,7 @@ class _ContactListState extends State<ContactList> {
     } else {
       final phone = c.phones.isNotEmpty ? c.phones.first : null;
       IsoCode? isoCode = phone != null
-          ? ValidatorUtils.isoCodeFromPhone(phone)
+          ? ParticipantValidators.isoCodeFromPhone(phone)
           : null;
 
       if (phone != null && isoCode == null) {
@@ -166,7 +166,7 @@ class _ContactListState extends State<ContactList> {
     String? chosenEmail = c.emails.isNotEmpty ? c.emails.first.address : null;
     IsoCode chosenIsoCode =
         (c.phones.isNotEmpty
-            ? ValidatorUtils.isoCodeFromPhone(c.phones.first)
+            ? ParticipantValidators.isoCodeFromPhone(c.phones.first)
             : null) ??
         IsoCode.BR;
 
@@ -237,7 +237,7 @@ class _ContactListState extends State<ContactList> {
                         (p) => p.number == v,
                         orElse: () => c.phones.first,
                       );
-                      final detected = ValidatorUtils.isoCodeFromPhone(match);
+                      final detected = ParticipantValidators.isoCodeFromPhone(match);
                       if (detected != null) chosenIsoCode = detected;
                     }),
                     child: Column(

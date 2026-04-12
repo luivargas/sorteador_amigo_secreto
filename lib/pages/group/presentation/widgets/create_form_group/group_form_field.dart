@@ -4,8 +4,8 @@ import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/labeled_f
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_email_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_name_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_form_field.dart';
-import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/core/util/participant_validators.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class GroupFormFields extends StatefulWidget {
@@ -59,21 +59,23 @@ class _GroupFormFields extends State<GroupFormFields> {
               ),
             ),
             LabeledField(
-              label: l10n.email,
-              child: MyEmailFormField(
-                controller: widget.emailController,
-                validator: (_) => ValidatorUtils.emailValidator(
-                  context: context,
-                  v: widget.emailController.text,
-                ),
-                textInputAction: TextInputAction.next,
-              ),
-            ),
-            LabeledField(
               label: l10n.phoneField,
               child: MyPhoneFormField(
                 controller: widget.phoneController,
                 textInputAction: TextInputAction.done,
+              ),
+            ),
+            LabeledField(
+              label: l10n.email,
+              child: MyEmailFormField(
+                controller: widget.emailController,
+                validator: (_) =>
+                    ParticipantValidators.isRequiredEmailValidator(
+                      context: context,
+                      v: widget.emailController.text,
+                    ),
+                readOnly: true,
+                textInputAction: TextInputAction.next,
               ),
             ),
           ],

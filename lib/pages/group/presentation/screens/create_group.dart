@@ -6,6 +6,8 @@ import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
+import 'package:sorteador_amigo_secreto/injector/injector.dart';
+import 'package:sorteador_amigo_secreto/pages/auth/data/database/auth_db.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/create_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
@@ -25,7 +27,7 @@ class _FormGroupBody extends State<CreateGroup> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController adminNameController = TextEditingController();
   final TextEditingController groupNameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController emailController = TextEditingController( text: getIt<AuthDB>().email);
   final PhoneController phoneController = PhoneController(
     initialValue: PhoneNumber(isoCode: IsoCode.BR, nsn: ''),
   );

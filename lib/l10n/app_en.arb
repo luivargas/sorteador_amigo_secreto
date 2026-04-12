@@ -100,6 +100,7 @@
   "validatorRequired": "Required field",
   "validatorEnterEmail": "Enter your e-mail",
   "validatorFixValues": "Fix the values",
+  "validatorEmailOrPhone": "Enter email or phone number",
 
   "onboardingTitle": "Free Raffle and Fast!",
   "onboardingWhatsapp": "Join via WhatsApp!",

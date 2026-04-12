@@ -66,7 +66,8 @@ class _CreateParticipant extends State<CreateParticipant> {
             if (state.created) {
               SecretSantaAlert.show(
                 message: l10n.participantAddedSuccess(nameController.text),
-                type: AlertType.success, context: context
+                type: AlertType.success,
+                context: context,
               );
               await Future.delayed(const Duration(milliseconds: 600));
               if (context.mounted) {
@@ -74,11 +75,14 @@ class _CreateParticipant extends State<CreateParticipant> {
               }
             }
             if (state.error != null) {
-              SecretSantaAlert.show(
-                context: context,
-                title: l10n.errorTitle,
-                message: state.error!.localize(context), type: AlertType.warning,
-              );
+              if (context.mounted) {
+                SecretSantaAlert.show(
+                  context: context,
+                  title: l10n.errorTitle,
+                  message: state.error!.localize(context),
+                  type: AlertType.warning,
+                );
+              }
             }
           },
           builder: (context, state) {
@@ -151,14 +155,28 @@ class _CreateParticipant extends State<CreateParticipant> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(l10n.quickAccess, style: TextStyle(color: SecretSantaColors.accent2, fontWeight: FontWeight.w600),),
-                                          Text(l10n.importContacts, style: const TextStyle(fontWeight: FontWeight.w600)),
+                                          Text(
+                                            l10n.quickAccess,
+                                            style: TextStyle(
+                                              color: SecretSantaColors.accent2,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          Text(
+                                            l10n.importContacts,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ],
                                   ),
                                 ),
-                                Icon(Icons.arrow_forward_ios_rounded, color: SecretSantaColors.accent,),
+                                Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  color: SecretSantaColors.accent,
+                                ),
                               ],
                             ),
                           ),

@@ -1,10 +1,12 @@
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/network/contants.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
+import 'package:sorteador_amigo_secreto/pages/auth/data/database/auth_db.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/loading_or_error.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/update_participant_entity.dart';
@@ -46,7 +48,11 @@ class _ViewParticipant extends State<ViewParticipant> {
     final g = state.showParti!;
 
     nameController.text = g.name;
-    emailController.text = g.email ?? '';
+    if (g.role == 'admin') {
+      emailController.text = GetIt.I<AuthDB>().email ?? g.email ?? '';
+    } else {
+      emailController.text = g.email ?? '';
+    }
     final idd = g.idd ?? '';
     final rawPhone = g.phone ?? '';
     final fullPhone = idd.isNotEmpty && rawPhone.isNotEmpty

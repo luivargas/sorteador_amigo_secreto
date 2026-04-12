@@ -217,6 +217,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get validatorFixValues => 'Correggi i valori';
 
   @override
+  String get validatorEmailOrPhone => 'Inserisci l\'email o il telefono';
+
+  @override
   String get onboardingTitle => 'Sorteggio Gratuito e Veloce!';
 
   @override

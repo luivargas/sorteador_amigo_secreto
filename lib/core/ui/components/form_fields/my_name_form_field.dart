@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/core/util/participant_validators.dart';
 
 class MyNameFormField extends StatelessWidget {
   final TextEditingController controller;
@@ -28,7 +28,7 @@ class MyNameFormField extends StatelessWidget {
     readOnly: readOnly,
     autofocus: autofocus,
     validator: (_) =>
-        ValidatorUtils.nameValidator(context: context, v: controller.text),
+        ParticipantValidators.nameValidator(context: context, v: controller.text),
     decoration: InputDecoration(
       hintText: hintText,
       prefixIcon: Icon(icon),

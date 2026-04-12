@@ -100,6 +100,7 @@
   "validatorRequired": "Campo obrigatório",
   "validatorEnterEmail": "Informe seu e-mail",
   "validatorFixValues": "Corrija os valores",
+  "validatorEmailOrPhone": "Informe o e-mail ou o telefone",
 
   "onboardingTitle": "Sorteio Grátis e Rápido!",
   "onboardingWhatsapp": "Participe pelo WhatsApp!",

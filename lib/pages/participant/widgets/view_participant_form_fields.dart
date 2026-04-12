@@ -4,8 +4,8 @@ import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/labeled_f
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_email_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_name_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_form_field.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/core/util/participant_validators.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
-import 'package:sorteador_amigo_secreto/core/util/validators_utils.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
@@ -33,21 +33,6 @@ class ViewParticipantFormFields extends StatefulWidget {
 }
 
 class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
-  String? _emailValidator(BuildContext context, String? v) {
-    // Guard: dados ainda não carregados, sem validação
-    final data = widget.participant;
-    if (data == null) return null;
-
-    // Compara role como String (valor retornado pela API)
-    if (data.role == 'admin') {
-      return ValidatorUtils.emailValidator(context: context, v: v);
-    }
-    if (v != null && v.isNotEmpty) {
-      return ValidatorUtils.isValidEmail(context: context, v: v);
-    }
-    return null;
-  }
-
   String _roleLabel(String? role, AppLocalizations l10n) {
     switch (role) {
       case 'admin':
@@ -60,7 +45,9 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
   }
 
   Color _roleColor(String? role) {
-    return role == 'admin' ? SecretSantaColors.accent2 : SecretSantaColors.accent;
+    return role == 'admin'
+        ? SecretSantaColors.accent2
+        : SecretSantaColors.accent;
   }
 
   @override
@@ -77,14 +64,18 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
             decoration: BoxDecoration(
               color: _roleColor(role).withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(999),
-              border: Border.all(color: _roleColor(role).withValues(alpha: 0.4)),
+              border: Border.all(
+                color: _roleColor(role).withValues(alpha: 0.4),
+              ),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               spacing: 6,
               children: [
                 Icon(
-                  role == 'admin' ? Icons.shield_outlined : Icons.person_outline,
+                  role == 'admin'
+                      ? Icons.shield_outlined
+                      : Icons.person_outline,
                   size: 14,
                   color: _roleColor(role),
                 ),
@@ -114,8 +105,12 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
           child: MyEmailFormField(
             controller: widget.emailController,
             textInputAction: TextInputAction.next,
-            readOnly: widget.readOnly,
-            validator: (v) => _emailValidator(context, v),
+            readOnly: widget.readOnly || role == 'admin',
+            validator: (_) => ParticipantValidators.emailOrPhoneValidator(
+              context: context,
+              email: widget.emailController.text,
+              phone: widget.phoneController.value.nsn,
+            ),
           ),
         ),
         LabeledField(
@@ -127,7 +122,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
             enableInteractiveSelection: widget.readOnly,
             enabled: !widget.readOnly,
             navigatorHeight: 400,
-            validator: null
+            validator: PhoneValidator.compose([PhoneValidator.valid(context)]),
           ),
         ),
       ],
