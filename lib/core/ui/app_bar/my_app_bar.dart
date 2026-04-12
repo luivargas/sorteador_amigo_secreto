@@ -13,7 +13,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
-  final Image titleImage = Image.asset(logo, scale: 7);
+  final Image titleImage = Image.asset(logo, scale: 4);
 
   @override
   Widget build(BuildContext context) {

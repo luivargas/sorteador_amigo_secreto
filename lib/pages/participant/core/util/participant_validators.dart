@@ -63,4 +63,29 @@ class ParticipantValidators {
     }
   }
 
+  static String? normalizePhoneFromContact(String rawPhone, IsoCode isoCode){
+    String digits = rawPhone.replaceAll(RegExp(r'\D'), '');
+
+    if(digits.isEmpty) return null;
+
+    if(digits.startsWith('55') && digits.length > 11){
+      digits = digits.substring(2);
+    }
+
+    if ( digits.startsWith('0')){
+      if (digits.length == 14 || digits.length == 13) {
+        digits = digits.substring(3);
+      }else if ( digits.length == 12 ){
+        digits = digits.substring(1);
+      }
+    }
+
+    try {
+      return PhoneNumber(isoCode: isoCode, nsn: digits).international;
+    }catch(_){
+      return rawPhone;
+    }
+
+  }
+
 }

@@ -1,18 +1,18 @@
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/network/contants.dart';
+import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
+import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/database/auth_db.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/loading_or_error.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/update_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/widgets/participant_card.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/view_participant_form_fields.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
@@ -31,10 +31,18 @@ class ViewParticipant extends StatefulWidget {
 }
 
 class _ViewParticipant extends State<ViewParticipant> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final PhoneController phoneController = PhoneController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final PhoneController _phoneController = PhoneController();
   final GlobalKey<FormState> _validateFormKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    super.dispose();
+  }
 
   bool _prefilledOnce = false;
 
@@ -47,18 +55,18 @@ class _ViewParticipant extends State<ViewParticipant> {
     if (state.showParti == null) return;
     final g = state.showParti!;
 
-    nameController.text = g.name;
+    _nameController.text = g.name;
     if (g.role == 'admin') {
-      emailController.text = GetIt.I<AuthDB>().email ?? g.email ?? '';
+      _emailController.text = getIt<AuthDB>().email ?? g.email ?? '';
     } else {
-      emailController.text = g.email ?? '';
+      _emailController.text = g.email ?? '';
     }
     final idd = g.idd ?? '';
     final rawPhone = g.phone ?? '';
     final fullPhone = idd.isNotEmpty && rawPhone.isNotEmpty
         ? '+$idd$rawPhone'
         : rawPhone;
-    phoneController.value = fullPhone.isNotEmpty
+    _phoneController.value = fullPhone.isNotEmpty
         ? PhoneNumber.parse(fullPhone)
         : const PhoneNumber(isoCode: IsoCode.BR, nsn: '');
     _prefilledOnce = true;
@@ -74,10 +82,10 @@ class _ViewParticipant extends State<ViewParticipant> {
     });
 
     final entity = UpdateParticipantEntity(
-      name: nameController.text,
-      email: emailController.text,
-      phone: phoneController.value.international,
-      idd: phoneController.value.countryCode,
+      name: _nameController.text,
+      email: _emailController.text,
+      phone: _phoneController.value.nsn,
+      idd: _phoneController.value.countryCode,
       role: role,
     );
     await context.read<ParticipantCubit>().update(
@@ -92,10 +100,7 @@ class _ViewParticipant extends State<ViewParticipant> {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: MyAppBar(
-        // title: l10n.participantTitle,
-        // subTitle: l10n.participantSubtitle,
-      ),
+      appBar: MyAppBar(),
       body: Form(
         key: _validateFormKey,
         child: BlocConsumer<ParticipantCubit, ParticipantState>(
@@ -111,9 +116,10 @@ class _ViewParticipant extends State<ViewParticipant> {
               });
             }
             if (state.updated) {
-              SecretSantaAlertTheme(
-                message: l10n.participantUpdatedSuccess(nameController.text),
+              SecretSantaAlert.show(
+                message: l10n.participantUpdatedSuccess(_nameController.text),
                 type: AlertType.success,
+                context: context,
               );
               if (context.mounted) {
                 context.pop(true);
@@ -129,41 +135,46 @@ class _ViewParticipant extends State<ViewParticipant> {
               isLoading: state.isLoading && !state.showed,
               error: state.error,
               onRetry: () async => await context.read<ParticipantCubit>().show(
-                    widget.userId,
-                    widget.groupToken,
-                  ),
+                widget.userId,
+                widget.groupToken,
+              ),
               child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: ParticipantCard(
-                        image: Image.asset(
-                          contactDefaultPhoto,
-                          scale: 20,
-                        ),
-                        button: MyGradientButton(
-                          onTap: () {
-                            _onSubmit();
-                          },
-                          title: l10n.save,
-                          icon: Icons.save,
-                        ),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Column(
+                    children: [
+                      Text(
+                        l10n.participantTitle,
+                        style: SecretSantaTextStyles.titleMedium,
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        l10n.participantSubtitle,
+                        style: TextStyle(),
+                        textAlign: TextAlign.center,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
                         child: ViewParticipantFormFields(
-                          nameController: nameController,
+                          nameController: _nameController,
                           readOnly: readOnly,
-                          phoneController: phoneController,
-                          emailController: emailController,
+                          phoneController: _phoneController,
+                          emailController: _emailController,
                           participant: state.showParti,
                         ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: MyGradientButton(
+                          onTap: _onSubmit,
+                          title: l10n.save,
+                          icon: Icons.save,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
             );
           },
         ),

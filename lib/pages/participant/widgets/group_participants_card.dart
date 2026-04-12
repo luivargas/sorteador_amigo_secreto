@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/card_color.dart';
+import 'package:sorteador_amigo_secreto/core/util/get_initials.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/participants_list_args.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+
 
 class GroupParticipantsCard extends StatelessWidget {
   final String groupToken;
@@ -20,12 +23,6 @@ class GroupParticipantsCard extends StatelessWidget {
     required this.type,
     required this.groupCode,
   });
-
-  String _initials(String name) {
-    final parts = name.trim().split(' ');
-    if (parts.length == 1) return parts[0][0].toUpperCase();
-    return '${parts.first[0]}${parts.last[0]}'.toUpperCase();
-  }
 
   Future<void> _goToList(BuildContext context) async {
     final result = await context.pushNamed(
@@ -60,7 +57,7 @@ class GroupParticipantsCard extends StatelessWidget {
             return Positioned(
               left: entry.key * step,
               child: _AvatarItem(
-                initials: _initials(entry.value.name),
+                initials: GetInitials.initials(entry.value.name),
                 index: entry.key,
               ),
             );
@@ -141,12 +138,6 @@ class GroupParticipantsCard extends StatelessWidget {
   }
 }
 
-final List<Color> _cardColors = [
-  SecretSantaColors.accent,
-  SecretSantaColors.accent2,
-];
-
-Color _getColor(int index) => _cardColors[index % _cardColors.length];
 
 class _AvatarItem extends StatelessWidget {
   final int index;
@@ -160,7 +151,7 @@ class _AvatarItem extends StatelessWidget {
       width: 44,
       height: 44,
       decoration: BoxDecoration(
-        color: _getColor(index),
+        color: CardColor.getColor(index),
         shape: BoxShape.circle,
         border: Border.all(color: Colors.white, width: 2),
       ),

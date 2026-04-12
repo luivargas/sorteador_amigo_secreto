@@ -121,7 +121,10 @@ class _ContactListState extends State<ContactList> {
 
   Future<void> _toggleSelection(Contact c) async {
     if (!_isContactValid(c)) {
-      SecretSantaAlertTheme(message: AppLocalizations.of(context)!.contactNotValid, type: AlertType.warning,);
+      SecretSantaAlertTheme(
+        message: AppLocalizations.of(context)!.contactNotValid,
+        type: AlertType.warning,
+      );
       return;
     }
 
@@ -151,7 +154,12 @@ class _ContactListState extends State<ContactList> {
 
       setState(() {
         _selectedContacts[c.id!] = _ContactSelection(
-          phone: phone?.number,
+          phone: phone != null && isoCode != null
+              ? ParticipantValidators.normalizePhoneFromContact(
+                  phone.number,
+                  isoCode,
+                )
+              : phone?.number,
           email: c.emails.isNotEmpty ? c.emails.first.address : null,
           isoCode: isoCode,
         );
@@ -237,7 +245,9 @@ class _ContactListState extends State<ContactList> {
                         (p) => p.number == v,
                         orElse: () => c.phones.first,
                       );
-                      final detected = ParticipantValidators.isoCodeFromPhone(match);
+                      final detected = ParticipantValidators.isoCodeFromPhone(
+                        match,
+                      );
                       if (detected != null) chosenIsoCode = detected;
                     }),
                     child: Column(
@@ -386,7 +396,7 @@ class _ContactListState extends State<ContactList> {
       if (errorMsg != null) {
         if (!context.mounted) break;
         // ignore: use_build_context_synchronously
-        SecretSantaAlertTheme(message: errorMsg!, type: AlertType.warning,);
+        SecretSantaAlertTheme(message: errorMsg!, type: AlertType.warning);
       }
     }
 

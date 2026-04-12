@@ -96,21 +96,6 @@ class _FormGroupBody extends State<CreateGroup> {
                   children: [
                     Column(
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: SecretSantaColors.neutral50,
-                            border: Border.all(
-                              color: SecretSantaColors.accent2.withValues(
-                                alpha: 0.3,
-                              ),
-                            ),
-                            borderRadius: BorderRadius.circular(99),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Icon(Icons.group, size: 40),
-                          ),
-                        ),
                         Text(
                           l10n.createGroupTitle,
                           style: SecretSantaTextStyles.titleMedium,

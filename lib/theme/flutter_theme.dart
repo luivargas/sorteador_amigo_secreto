@@ -58,7 +58,7 @@ class SecretSantaColors {
   );
 
   static const LinearGradient avatarGradient = LinearGradient(
-    colors: [accent, accent2],
+    colors: [accent, neutral500],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );

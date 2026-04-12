@@ -56,7 +56,7 @@ class _ViewGroupBody extends State<ViewGroup> {
       extra: ShowGroupArgs(code: widget.code, token: widget.token),
     );
     if (context.mounted && result == true) {
-      context.read<GroupCubit>().show(widget.code, widget.token);
+      await context.read<GroupCubit>().show(widget.code, widget.token);
     }
   }
 

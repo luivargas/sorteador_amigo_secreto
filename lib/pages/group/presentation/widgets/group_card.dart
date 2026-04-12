@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/app_list_card.dart';
+import 'package:sorteador_amigo_secreto/core/util/get_initials.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
-class GroupCard extends StatefulWidget {
+class GroupCard extends StatelessWidget {
   final String groupName;
   final String groupToken;
   final String groupCode;
@@ -21,76 +23,21 @@ class GroupCard extends StatefulWidget {
   });
 
   @override
-  State<GroupCard> createState() => _GroupCardState();
-}
-
-class _GroupCardState extends State<GroupCard> {
-  Text _initials(Color color) {
-    final text = widget.groupName.trim();
-    final avatar = text.split(' ').where((p) => p.isNotEmpty).toList();
-    final first = avatar.first[0].toUpperCase();
-    final last = avatar.length > 1 ? avatar.last[0].toUpperCase() : '';
-    return Text(
-      '$first$last',
-      style: TextStyle(fontWeight: FontWeight.bold, color: color, fontSize: 25),
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
-    return Container(
-      padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-      decoration: BoxDecoration(
-        color: SecretSantaColors.neutral50,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: SecretSantaColors.neutral200.withAlpha(150)),
-        boxShadow: SecretSantaShadows.small,
+    return AppListCard(
+      title: groupName,
+      subtitle: isRaffled ? l10n.badgeRaffled : l10n.badgePending,
+      color: color,
+      initials: GetInitials.initials(groupName),
+      borderRadius: 16,
+      backgroundColor: SecretSantaColors.neutral50,
+      border: Border.all(
+        color: SecretSantaColors.neutral200.withAlpha(150),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Row(
-          spacing: 20,
-          children: [
-            Container(
-              width: 52,
-              height: 52,
-              decoration: BoxDecoration(
-                color: widget.color.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: Center(child: _initials(widget.color)),
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.groupName,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Row(
-                    spacing: 5,
-                    children: [
-                      Icon(Icons.circle, color: widget.color, size: 10),
-                      Text(
-                        widget.isRaffled
-                            ? l10n!.badgeRaffled
-                            : l10n!.badgePending,
-                        style: TextStyle(color: widget.color),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Icon(Icons.chevron_right, color: widget.color),
-          ],
-        ),
-      ),
+      avatarSize: 52,
+      trailing: Icon(Icons.chevron_right, color: color),
     );
   }
 }

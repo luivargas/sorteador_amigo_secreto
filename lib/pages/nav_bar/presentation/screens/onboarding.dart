@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/card_color.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/top_icon.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/widgets/info_card.dart';
@@ -14,14 +15,6 @@ class Onboarding extends StatefulWidget {
 }
 
 class _OnboardingState extends State<Onboarding> {
-  final List<Color> cardColors = [
-    SecretSantaColors.accent,
-    SecretSantaColors.accent2,
-  ];
-
-  Color getColor(int index) {
-    return cardColors[index % cardColors.length];
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,28 +69,28 @@ class _OnboardingState extends State<Onboarding> {
                           icon: Icons.create,
                           title: l10n.onboardingStep1AltTitle,
                           description: l10n.onboardingStep1AltDesc,
-                          color: getColor(0),
+                          color: CardColor.getColor(0),
                         ),
                         StepCard(
                           step: "02",
                           icon: Icons.settings,
                           title: l10n.onboardingStep2AltTitle,
                           description: l10n.onboardingStep2AltDesc,
-                          color: getColor(1),
+                          color: CardColor.getColor(1),
                         ),
                         StepCard(
                           step: "03",
                           icon: Icons.group_add,
                           title: l10n.onboardingStep3AltTitle,
                           description: l10n.onboardingStep3AltDesc,
-                          color: getColor(2),
+                          color: CardColor.getColor(2),
                         ),
                         StepCard(
                           step: "04",
                           icon: Icons.celebration,
                           title: l10n.onboardingStep4AltTitle,
                           description: l10n.onboardingStep4AltDesc,
-                          color: getColor(3),
+                          color: CardColor.getColor(3),
                           isLast: true,
                         ),
                         Padding(

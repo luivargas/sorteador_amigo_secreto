@@ -13,7 +13,7 @@ class AuthDB {
 
   String? get email => prefs.getString(_keyEmail);
 
-  Future<void> saveEmail(String value) => prefs.setString(_keyEmail, value);
+  Future<void> saveEmail(String value) => prefs.setString(_keyEmail.toLowerCase(), value);
 
   String? get token => prefs.getString(_keyToken);
 

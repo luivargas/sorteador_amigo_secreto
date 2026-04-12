@@ -9,7 +9,7 @@ import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigatio
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/participants_list_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/contacts_list.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/create_participant.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/participants_list_screen.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/all_participants_view.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/view_participant.dart';
 
 List<RouteBase> participantRoutes = [
@@ -60,7 +60,7 @@ List<RouteBase> participantRoutes = [
       final extra = state.extra as ParticipantsListArgs;
       return BlocProvider(
         create: (_) => getIt<GroupCubit>()..show(extra.groupCode, extra.groupToken),
-        child: ParticipantsListScreen(
+        child: AllParticipantsView(
           groupToken: extra.groupToken,
           groupCode: extra.groupCode,
           type: extra.type,

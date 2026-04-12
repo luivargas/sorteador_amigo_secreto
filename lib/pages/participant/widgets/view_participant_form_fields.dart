@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/form_body.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/labeled_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_email_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_name_form_field.dart';
@@ -7,7 +8,6 @@ import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_
 import 'package:sorteador_amigo_secreto/pages/participant/core/util/participant_validators.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
-import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 enum ParticipantRole { admin, participant, observer }
 
@@ -33,22 +33,6 @@ class ViewParticipantFormFields extends StatefulWidget {
 }
 
 class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
-  String _roleLabel(String? role, AppLocalizations l10n) {
-    switch (role) {
-      case 'admin':
-        return l10n.roleAdmin;
-      case 'participant':
-        return l10n.roleParticipant;
-      default:
-        return role ?? l10n.roleParticipant;
-    }
-  }
-
-  Color _roleColor(String? role) {
-    return role == 'admin'
-        ? SecretSantaColors.accent2
-        : SecretSantaColors.accent;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,71 +42,47 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 10,
       children: [
-        if (role != null)
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color: _roleColor(role).withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(999),
-              border: Border.all(
-                color: _roleColor(role).withValues(alpha: 0.4),
-              ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              spacing: 6,
-              children: [
-                Icon(
-                  role == 'admin'
-                      ? Icons.shield_outlined
-                      : Icons.person_outline,
-                  size: 14,
-                  color: _roleColor(role),
+        FormBody(
+          child: Column(
+            children: [
+              LabeledField(
+                label: l10n.name,
+                child: MyNameFormField(
+                  controller: widget.nameController,
+                  hintText: l10n.participantNameHint,
+                  textInputAction: TextInputAction.next,
+                  readOnly: widget.readOnly,
+                  autofocus: true,
                 ),
-                Text(
-                  _roleLabel(role, l10n),
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: _roleColor(role),
+              ),
+              LabeledField(
+                label: l10n.email,
+                child: MyEmailFormField(
+                  controller: widget.emailController,
+                  textInputAction: TextInputAction.next,
+                  readOnly: widget.readOnly || role == 'admin',
+                  validator: (_) => ParticipantValidators.emailOrPhoneValidator(
+                    context: context,
+                    email: widget.emailController.text,
+                    phone: widget.phoneController.value.nsn,
                   ),
                 ),
-              ],
-            ),
-          ),
-        LabeledField(
-          label: l10n.name,
-          child: MyNameFormField(
-            controller: widget.nameController,
-            hintText: l10n.participantNameHint,
-            textInputAction: TextInputAction.next,
-            readOnly: widget.readOnly,
-            autofocus: true,
-          ),
-        ),
-        LabeledField(
-          label: l10n.email,
-          child: MyEmailFormField(
-            controller: widget.emailController,
-            textInputAction: TextInputAction.next,
-            readOnly: widget.readOnly || role == 'admin',
-            validator: (_) => ParticipantValidators.emailOrPhoneValidator(
-              context: context,
-              email: widget.emailController.text,
-              phone: widget.phoneController.value.nsn,
-            ),
-          ),
-        ),
-        LabeledField(
-          label: l10n.phoneField,
-          child: MyPhoneFormField(
-            controller: widget.phoneController,
-            textInputAction: TextInputAction.done,
-            keyboardType: TextInputType.phone,
-            enableInteractiveSelection: widget.readOnly,
-            enabled: !widget.readOnly,
-            navigatorHeight: 400,
-            validator: PhoneValidator.compose([PhoneValidator.valid(context)]),
+              ),
+              LabeledField(
+                label: l10n.phoneField,
+                child: MyPhoneFormField(
+                  controller: widget.phoneController,
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.phone,
+                  enableInteractiveSelection: widget.readOnly,
+                  enabled: !widget.readOnly,
+                  navigatorHeight: 400,
+                  validator: PhoneValidator.compose([
+                    PhoneValidator.valid(context),
+                  ]),
+                ),
+              ),
+            ],
           ),
         ),
       ],

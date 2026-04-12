@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/card_color.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_search_bar.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
@@ -44,11 +45,7 @@ class _HomeViewState extends State<_HomeView>
   bool _searchBarElevated = false;
   bool _hasGroups = false;
 
-  final List<Color> cardColors = [
-    SecretSantaColors.accent2,
-    SecretSantaColors.accent,
-  ];
-  Color getColor(int index) => cardColors[index % cardColors.length];
+
 
   @override
   void initState() {
@@ -193,7 +190,7 @@ class _HomeViewState extends State<_HomeView>
                                   groupToken: g.token,
                                   groupCode: g.code,
                                   isRaffled: g.isRaffled,
-                                  color: getColor(index),
+                                  color: CardColor.getColor(index),
                                 ),
                               );
                             },
@@ -226,8 +223,8 @@ class _SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      elevation: elevated ? 3 : 0,
       color: SecretSantaColors.background,
+      shadowColor: SecretSantaColors.neutral900,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
         child: Column(
@@ -244,7 +241,6 @@ class _SearchBar extends StatelessWidget {
               buildWhen: (prev, cur) => prev.filter != cur.filter,
               builder: (context, state) {
                 return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
                   child: Row(
                     spacing: 8,
                     children: [
@@ -317,7 +313,7 @@ class _FilterChip extends StatelessWidget {
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: selected ? Colors.white : SecretSantaColors.neutral600,
+            color: selected ? SecretSantaColors.neutral50 : SecretSantaColors.neutral600,
           ),
         ),
       ),

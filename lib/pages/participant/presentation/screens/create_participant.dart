@@ -92,44 +92,37 @@ class _CreateParticipant extends State<CreateParticipant> {
                 child: Column(
                   spacing: 30,
                   children: [
-                    Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: SecretSantaColors.neutral50,
-                            border: Border.all(
-                              color: SecretSantaColors.accent2.withValues(
-                                alpha: 0.3,
-                              ),
-                            ),
-                            borderRadius: BorderRadius.circular(99),
+                    Padding(
+                      padding: const EdgeInsets.only(top:15.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            l10n.addParticipantTitle,
+                            style: SecretSantaTextStyles.titleMedium,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Icon(Icons.person_add_alt_1, size: 30),
+                          Text(
+                            l10n.addParticipantSubtitle,
+                            style: TextStyle(),
+                            textAlign: TextAlign.center,
                           ),
-                        ),
-                        Text(
-                          l10n.addParticipantTitle,
-                          style: SecretSantaTextStyles.titleMedium,
-                        ),
-                        Text(
-                          l10n.addParticipantSubtitle,
-                          style: TextStyle(),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
 
                     InkWell(
                       borderRadius: BorderRadius.circular(20),
-                      onTap: () => context.pushNamed(
-                        'contacts',
-                        extra: CreateParticipantArgs(
-                          groupToken: widget.groupToken,
-                          groupCode: widget.groupCode,
-                        ),
-                      ),
+                      onTap: () async {
+                        final result = await context.pushNamed(
+                          'contacts',
+                          extra: CreateParticipantArgs(
+                            groupToken: widget.groupToken,
+                            groupCode: widget.groupCode,
+                          ),
+                        );
+                        if (result == true && context.mounted){
+                          context.pop(true);
+                        }
+                      },
                       child: Container(
                         padding: const EdgeInsets.all(3),
                         decoration: BoxDecoration(
