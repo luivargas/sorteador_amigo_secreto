@@ -153,13 +153,13 @@ class _AvatarItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: CardColor.getColor(index),
         shape: BoxShape.circle,
-        border: Border.all(color: Colors.white, width: 2),
+        border: Border.all(color: SecretSantaColors.neutral50, width: 2),
       ),
       child: Center(
         child: Text(
           initials,
           style: const TextStyle(
-            color: Colors.white,
+            color: SecretSantaColors.neutral50,
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
@@ -182,7 +182,7 @@ class _ExtraAvatar extends StatelessWidget {
       decoration: BoxDecoration(
         color: SecretSantaColors.neutral200,
         shape: BoxShape.circle,
-        border: Border.all(color: Colors.white, width: 2),
+        border: Border.all(color: SecretSantaColors.neutral50, width: 2),
       ),
       child: Center(
         child: Text(

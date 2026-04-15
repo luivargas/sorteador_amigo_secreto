@@ -50,3 +50,4 @@ app.*.map.json
 .fvm/
 
 android/app/google-services.json
+lib/core/network/url

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
-import 'package:sorteador_amigo_secreto/core/network/contants.dart';
+import 'package:sorteador_amigo_secreto/core/network/url/contants.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class MyPhoneFormField extends StatelessWidget {

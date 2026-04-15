@@ -18,7 +18,7 @@ class InfoCard extends StatelessWidget {
     required this.backgroundColor,
     required this.icon,
     required this.iconBackgroundColor,
-    this.textColor = Colors.white,
+    this.textColor = SecretSantaColors.neutral50,
     this.padding = const EdgeInsets.all(24),
     this.borderRadius = 16,
   });

@@ -59,8 +59,8 @@ class _EditGroup extends State<EditGroup> {
     maxGiftValueController.text = GiftUtils.toDisplayFormat(g.maxGiftValue);
     final parsed = DateTimeUtils.fromApi(g.drawDate);
     if (parsed != null) {
-        _selectedDateTime = parsed;
-        dateTimeController.text = DateTimeUtils.toDisplay(parsed);
+      _selectedDateTime = parsed;
+      dateTimeController.text = DateTimeUtils.toDisplay(parsed);
     }
 
     _prefilledOnce = true;
@@ -136,13 +136,12 @@ class _EditGroup extends State<EditGroup> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Form(
       key: _editGroupKey,
       child: Scaffold(
-        appBar: MyAppBar(
-          // title: AppLocalizations.of(context)!.editGroupTitle,
-          // subTitle: AppLocalizations.of(context)!.editGroupSubtitle,
-        ),
+        appBar: MyAppBar(),
         body: BlocConsumer<GroupCubit, GroupState>(
           listener: (context, state) {
             _prefillFromApi(state);
@@ -155,38 +154,43 @@ class _EditGroup extends State<EditGroup> {
               isLoading: state.isLoading && state.group == null,
               error: state.error,
               child: SingleChildScrollView(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: SecretSantaColors.background,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 50),
-                    child: Column(
-                      spacing: 20,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        EditGroupFields(
-                          groupNameController: groupNameController,
-                          dateTimeController: dateTimeController,
-                          descriptionController: descriptionController,
-                          minGiftValueController: minGiftValueController,
-                          maxGiftValueController: maxGiftValueController,
-                          addressController: locationController,
-                          onTapDateTime: _pickDateTime,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 50),
+                  child: Column(
+                    spacing: 30,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              l10n.editGroupTitle,
+                              style: SecretSantaTextStyles.titleMedium,
+                            ),
+                            Text(
+                              l10n.editGroupSubtitle,
+                              style: TextStyle(),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
-                        MyGradientButton(
-                          onTap: () {
-                            _onSubmit();
-                          },
-                          title: AppLocalizations.of(context)!.save,
-                          icon: Icons.save,
-                        ),
-                      ],
-                    ),
+                      ),
+                      EditGroupFields(
+                        groupNameController: groupNameController,
+                        dateTimeController: dateTimeController,
+                        descriptionController: descriptionController,
+                        minGiftValueController: minGiftValueController,
+                        maxGiftValueController: maxGiftValueController,
+                        addressController: locationController,
+                        onTapDateTime: _pickDateTime,
+                      ),
+                      MyGradientButton(
+                        onTap: _onSubmit,
+                        title: AppLocalizations.of(context)!.save,
+                        icon: Icons.save,
+                      ),
+                    ],
                   ),
                 ),
               ),

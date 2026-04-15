@@ -7,7 +7,7 @@ import 'package:sorteador_amigo_secreto/pages/group/domain/entities/update_group
 
 abstract class GroupRepository {
   Future<ApiResult<CreateGroupModel>> create(CreateGroupEntity entity);
-  Future<void> delete(String token);
+  Future<ApiResult<String>> delete(String code, String token);
   Future<ApiResult<ShowGroupModel>> show(String code, String token);
   Future<ApiResult<UpdateGroupModel>> update(UpdateGroupEntity entity, String code, String token);
   Future<ApiResult<String>> raffle(String code, String token);

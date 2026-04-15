@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/app_list_card.dart';
 import 'package:sorteador_amigo_secreto/core/util/get_initials.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/show_parti_args.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
@@ -38,6 +40,15 @@ class ParticipantListItem extends StatelessWidget {
       color: color,
       initials: GetInitials.initials(participant.name),
       trailing: _StatusBadge(isConfirmed: _isConfirmed),
+      onDelete: participant.role == 'admin'
+          ? null
+          : () => context.read<ParticipantCubit>().delete(
+              participant.id,
+              groupToken,
+            ),
+      blockedMessage: participant.role == 'admin'
+          ? 'O administrador do grupo não pode ser excluído.'
+          : null,
       onTap: () => context.pushNamed(
         'view_parti',
         extra: ShowParticipantArgs(

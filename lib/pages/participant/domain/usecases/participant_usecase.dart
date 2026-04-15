@@ -12,15 +12,17 @@ class ParticipantUsecase {
 
   Future<ApiResult<CreateParticipantModel>> create(
     CreateParticipantEntity entity,
-    String groupToken,
-  ) => repository.create(entity, groupToken);
+    String token,
+  ) => repository.create(entity, token);
 
   Future<ApiResult<UpdateParticipantModel>> update(
     UpdateParticipantEntity entity,
     String id,
-    String groupToken,
-  ) => repository.update(entity, id, groupToken);
+    String token,
+  ) => repository.update(entity, id, token);
 
-  Future<ApiResult<ShowParticipantModel>> show(String id, String groupToken) =>
-      repository.show(id, groupToken);
+  Future<ApiResult<ShowParticipantModel>> show(String id, String token) =>
+      repository.show(id, token);
+        Future<ApiResult<void>> delete(String id, String token) =>
+      repository.delete(id, token);
 }

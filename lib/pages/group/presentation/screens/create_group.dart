@@ -11,6 +11,7 @@ import 'package:sorteador_amigo_secreto/pages/auth/data/database/auth_db.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/create_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/create_form_group/group_form_field.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
@@ -27,7 +28,9 @@ class _FormGroupBody extends State<CreateGroup> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController adminNameController = TextEditingController();
   final TextEditingController groupNameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController( text: getIt<AuthDB>().email);
+  final TextEditingController emailController = TextEditingController(
+    text: getIt<AuthDB>().email,
+  );
   final PhoneController phoneController = PhoneController(
     initialValue: PhoneNumber(isoCode: IsoCode.BR, nsn: ''),
   );
@@ -68,8 +71,15 @@ class _FormGroupBody extends State<CreateGroup> {
                 type: AlertType.success,
                 context: context,
               );
-              if (context.mounted) {
-                context.pop(true);
+              if (context.mounted && state.createdGroup != null) {
+                context.pushReplacementNamed(
+                  'view_group',
+                  extra: ShowGroupArgs(
+                    code: state.createdGroup!.code,
+                    token: state.createdGroup!.token,
+                    name: state.createdGroup!.name,
+                  ),
+                );
               }
             }
             if (state.error != null) {

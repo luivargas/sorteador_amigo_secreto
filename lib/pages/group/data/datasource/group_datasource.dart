@@ -8,7 +8,7 @@ import 'package:sorteador_amigo_secreto/pages/group/data/model/update_group_mode
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/create_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/update_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/repository/group_repository.dart';
-import 'package:sorteador_amigo_secreto/core/network/contants.dart';
+import 'package:sorteador_amigo_secreto/core/network/url/contants.dart';
 
 class GroupDatasource extends GroupRepository {
   final dio = Dio(BaseOptions(headers: {'Accept': 'application/json'}));
@@ -30,16 +30,6 @@ class GroupDatasource extends GroupRepository {
     } catch (e) {
       return Failure(ApiError(AppError.unknown, raw: e));
     }
-  }
-
-  @override
-  Future<void> delete(String token) async {
-    try {
-      await dio.delete(
-        stageGroupApiUrl,
-        options: Options(headers: {'Access-Key': token}),
-      );
-    } catch (_) {}
   }
 
   @override
@@ -93,6 +83,27 @@ class GroupDatasource extends GroupRepository {
 
   @override
   Future<ApiResult<String>> raffle(String code, String token) async {
+    try {
+      final resp = await dio.post(
+        '$stageGroupApiUrl/$code/raffle',
+        options: Options(headers: {'Access-Key': token}),
+      );
+      return Success(resp.statusMessage ?? 'OK');
+    } on DioException catch (e) {
+      return Failure(
+        ApiError(
+          ApiErrorMapper.map(e),
+          statusCode: e.response?.statusCode,
+          raw: e.response?.data,
+        ),
+      );
+    } catch (e) {
+      return Failure(ApiError(AppError.unknown, raw: e));
+    }
+  }
+
+  @override
+  Future<ApiResult<String>> delete(String code, String token) async {
     try {
       final resp = await dio.post(
         '$stageGroupApiUrl/$code/raffle',

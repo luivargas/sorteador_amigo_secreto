@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class SecretSantaColors {
@@ -211,7 +212,15 @@ class SecretSantaTheme {
       canvasColor: SecretSantaColors.background,
 
       // AppBar
-      appBarTheme: AppBarTheme(backgroundColor: SecretSantaColors.background),
+      appBarTheme: AppBarTheme(
+        surfaceTintColor: SecretSantaColors.background,
+        backgroundColor: SecretSantaColors.background,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: SecretSantaColors.background,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
+      ),
 
       // Progress indicator
       progressIndicatorTheme: ProgressIndicatorThemeData(

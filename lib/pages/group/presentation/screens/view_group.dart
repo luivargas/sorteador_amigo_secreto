@@ -1,10 +1,12 @@
+import 'package:confetti/confetti.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-import 'package:sorteador_amigo_secreto/core/network/base_url.dart';
+import 'package:sorteador_amigo_secreto/core/network/url/base_url.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
@@ -36,8 +38,17 @@ class ViewGroup extends StatefulWidget {
 
 class _ViewGroupBody extends State<ViewGroup> {
   final RefreshController _refreshController = RefreshController();
+  late final ConfettiController _confettiController;
+  bool _showRaffleSuccess = false;
   ShowGroupModel? group;
-  
+
+  @override
+  void initState() {
+    super.initState();
+    _confettiController = ConfettiController(
+      duration: const Duration(seconds: 3),
+    );
+  }
 
   Future<void> _onShare(ShowGroupModel? g) async {
     final title = AppLocalizations.of(context)!.shareLinkTitle;
@@ -82,6 +93,7 @@ class _ViewGroupBody extends State<ViewGroup> {
 
   @override
   void dispose() {
+    _confettiController.dispose();
     _refreshController.dispose();
     super.dispose();
   }
@@ -90,96 +102,174 @@ class _ViewGroupBody extends State<ViewGroup> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      appBar: MyAppBar(
-        actions: [
-          IconButton(
-            onPressed: _onEdit,
-            icon: const Icon(Icons.edit_outlined, size: 24),
-            color: SecretSantaColors.accent,
-            tooltip: l10n.edit,
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: MyAppBar(
+            actions: [
+              IconButton(
+                onPressed: _onEdit,
+                icon: const Icon(Icons.edit_outlined, size: 24),
+                color: SecretSantaColors.accent,
+                tooltip: l10n.edit,
+              ),
+              IconButton(
+                onPressed: () => _onShare(group),
+                icon: const Icon(Icons.share_outlined, size: 24),
+                color: SecretSantaColors.accent,
+              ),
+            ],
           ),
-          IconButton(
-            onPressed: () => _onShare(group),
-            icon: const Icon(Icons.share_outlined, size: 24),
-            color: SecretSantaColors.accent,
-          ),
-        ],
-      ),
-      body: BlocConsumer<GroupCubit, GroupState>(
-        listenWhen: (previous, current) =>
-            (!previous.raffled && current.raffled) ||
-            (previous.error == null && current.error != null),
-        listener: (context, state) {
-          if (state.raffled) _onRefresh();
-          if (state.error != null) {
-            SecretSantaAlert.show(
-              context: context,
-              message: state.error!.localize(context),
-              type: AlertType.warning,
-            );
-          }
-        },
-        builder: (context, state) {
-          if (state.isLoading && state.group == null) {
-            return Center(
-              child: CircularProgressIndicator(color: SecretSantaColors.accent),
-            );
-          }
-          if (state.group != null) {
-            group = state.group!;
-          }
-          if (group == null) return const SizedBox.shrink();
+          body: BlocConsumer<GroupCubit, GroupState>(
+            listenWhen: (previous, current) =>
+                (!previous.raffled && current.raffled) ||
+                (previous.error == null && current.error != null),
+            listener: (context, state) {
+              if (state.raffled) {
+                setState(() => _showRaffleSuccess = true);
+                _confettiController.play();
+                _onRefresh();
+              }
+              if (state.error != null) {
+                SecretSantaAlert.show(
+                  context: context,
+                  message: state.error!.localize(context),
+                  type: AlertType.warning,
+                );
+              }
+            },
+            builder: (context, state) {
+              if (state.isLoading && state.group == null) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: SecretSantaColors.accent,
+                  ),
+                );
+              }
+              if (state.group != null) {
+                group = state.group!;
+              }
+              if (group == null) return const SizedBox.shrink();
 
-          final g = group!;
-          final type = g.raffledAt == null
-              ? BadgeType.pending
-              : BadgeType.raffled;
+              final g = group!;
+              final type = g.raffledAt == null
+                  ? BadgeType.pending
+                  : BadgeType.raffled;
 
-          return SmartRefresher(
-            controller: _refreshController,
-            onRefresh: _onRefresh,
-            child: ListView(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 60),
-              children: [
-                _GroupHeroHeader(name: g.name, type: type),
-                const SizedBox(height: 16),
-                ViewGroupCard(
-                  type: type,
-                  eventLocation:
-                      g.location ?? l10n.notDefined,
-                  minGiftValue: g.minGiftValue ?? "00,00",
-                  maxGiftValue: g.maxGiftValue ?? "00,00",
-                  eventDate: _formatDate(g.drawDate),
-                  eventTime: g.drawDate?.split(' ').last ?? "--:--",
-                  groupDescription:
-                      g.description ??
-                      l10n.noDescription,
-                  participants: g.participants.length,
-                  participantsList: g.participants,
-                  groupToken: g.token,
-                  groupCode: g.code,
-                ),
-                if (g.raffledAt == null) ...[
-                  const SizedBox(height: 24),
-                  if (g.participants.length >= 2)
-                    MyGradientButton(
-                      onTap: () => _onSubmit(g.code),
-                      title: l10n.drawButton,
-                      icon: Icons.draw,
-                    )
-                  else
-                    _NeedMoreParticipantsBanner(
-                      message: AppLocalizations.of(
-                        context,
-                      )!.needMoreParticipants,
+              return SmartRefresher(
+                controller: _refreshController,
+                onRefresh: _onRefresh,
+                child: ListView(
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 60),
+                  children: [
+                    _GroupHeroHeader(name: g.name, type: type),
+                    const SizedBox(height: 16),
+                    ViewGroupCard(
+                      type: type,
+                      eventLocation: g.location ?? l10n.notDefined,
+                      minGiftValue: g.minGiftValue ?? "00,00",
+                      maxGiftValue: g.maxGiftValue ?? "00,00",
+                      eventDate: _formatDate(g.drawDate),
+                      eventTime: g.drawDate?.split(' ').last ?? "--:--",
+                      groupDescription: g.description ?? l10n.noDescription,
+                      participants: g.participants.length,
+                      participantsList: g.participants,
+                      groupToken: g.token,
+                      groupCode: g.code,
                     ),
-                ],
-              ],
+                    if (g.raffledAt == null) ...[
+                      const SizedBox(height: 24),
+                      if (g.participants.length >= 2)
+                        MyGradientButton(
+                          onTap: () => _onSubmit(g.code),
+                          title: l10n.drawButton,
+                          icon: Icons.draw,
+                        )
+                      else
+                        _NeedMoreParticipantsBanner(
+                          message: AppLocalizations.of(
+                            context,
+                          )!.needMoreParticipants,
+                        ),
+                    ],
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+
+        if (_showRaffleSuccess)
+          GestureDetector(
+            onTap: () => setState(() => _showRaffleSuccess = false),
+            child: Container(color: Colors.black.withValues(alpha: 0.6)),
+          ).animate().fadeIn(duration: 300.ms),
+
+        if (_showRaffleSuccess)
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child:
+                  Container(
+                        padding: const EdgeInsets.all(32),
+                        decoration: BoxDecoration(
+                          color: SecretSantaColors.neutral50,
+                          borderRadius: BorderRadius.circular(24),
+                          boxShadow: SecretSantaShadows.large,
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          spacing: 16,
+                          children: [
+                            Icon(
+                              Icons.celebration,
+                              size: 72,
+                              color: SecretSantaColors.accent2,
+                            ).animate().scale(
+                              begin: const Offset(0.5, 0.5),
+                              curve: Curves.elasticOut,
+                              duration: 700.ms,
+                            ),
+                            Text(
+                              'Sorteio realizado!',
+                              style: SecretSantaTextStyles.titleSmall,
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              'O amigo secreto foi sorteado com sucesso. Cada participante ja pode ver o resultado!',
+                              style: SecretSantaTextStyles.bodySmall.copyWith(
+                                color: SecretSantaColors.neutral500,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      )
+                      .animate()
+                      .scale(
+                        begin: const Offset(0.8, 0.8),
+                        curve: Curves.easeOutBack,
+                        duration: 400.ms,
+                      )
+                      .fadeIn(duration: 300.ms),
             ),
-          );
-        },
-      ),
+          ),
+
+        Align(
+          alignment: Alignment.topCenter,
+          child: ConfettiWidget(
+            confettiController: _confettiController,
+            blastDirectionality: BlastDirectionality.explosive,
+            numberOfParticles: 30,
+            colors: const [
+              SecretSantaColors.accent,
+              SecretSantaColors.accent2,
+              SecretSantaColors.accent3,
+              SecretSantaColors.success,
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -212,7 +302,7 @@ class _GroupHeroHeader extends StatelessWidget {
                 Text(
                   name,
                   style: SecretSantaTextStyles.titleMedium.copyWith(
-                    color: Colors.white,
+                    color: SecretSantaColors.neutral50,
                   ),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
@@ -220,7 +310,6 @@ class _GroupHeroHeader extends StatelessWidget {
               ],
             ),
           ),
-          // Ícone decorativo semi-transparente no canto direito
           Positioned(
             right: -20,
             child: Icon(

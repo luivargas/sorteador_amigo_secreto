@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:sorteador_amigo_secreto/core/network/api_error_mapper.dart';
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
-import 'package:sorteador_amigo_secreto/core/network/base_url.dart';
+import 'package:sorteador_amigo_secreto/core/network/url/base_url.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 
 import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/request_token_entity.dart';

@@ -45,8 +45,6 @@ class _HomeViewState extends State<_HomeView>
   bool _searchBarElevated = false;
   bool _hasGroups = false;
 
-
-
   @override
   void initState() {
     super.initState();
@@ -64,6 +62,36 @@ class _HomeViewState extends State<_HomeView>
   Future<void> _onRefresh() async {
     await context.read<HomeCubit>().refreshGroups();
     _refreshController.refreshCompleted();
+  }
+
+  Future<void> _confirmDeleteGroup(
+    BuildContext context,
+    String name,
+    String token,
+    String code,
+  ) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Excluir grupo'),
+        content: Text(
+          'Deseja excluir "$name"? Esta ação não pode ser desfeita.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Excluir', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true && context.mounted) {
+      context.read<HomeCubit>().deleteGroup(token, code);
+    }
   }
 
   @override
@@ -93,7 +121,7 @@ class _HomeViewState extends State<_HomeView>
               l10n: l10n,
               elevated: _searchBarElevated,
             ),
-        
+
             Expanded(
               child: SmartRefresher(
                 enablePullDown: true,
@@ -105,10 +133,10 @@ class _HomeViewState extends State<_HomeView>
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-                        child: HomeCard(hasGroups: _hasGroups,),
+                        child: HomeCard(hasGroups: _hasGroups),
                       ),
                     ),
-        
+
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
@@ -118,7 +146,7 @@ class _HomeViewState extends State<_HomeView>
                         ),
                       ),
                     ),
-        
+
                     BlocBuilder<HomeCubit, HomeState>(
                       builder: (context, state) {
                         if (state.isLoading) {
@@ -131,7 +159,7 @@ class _HomeViewState extends State<_HomeView>
                             ),
                           );
                         }
-        
+
                         if (state.error != null) {
                           final msg = state.error == AppError.unauthorized
                               ? l10n.sessionExpired
@@ -141,7 +169,7 @@ class _HomeViewState extends State<_HomeView>
                             child: Center(child: Text(msg)),
                           );
                         }
-        
+
                         if (state.filtered.isEmpty) {
                           final isSearching = state.search.isNotEmpty;
                           final isFiltering = state.filter != GroupFilter.all;
@@ -175,8 +203,8 @@ class _HomeViewState extends State<_HomeView>
                                 const SizedBox(height: 12),
                             itemBuilder: (context, index) {
                               final g = state.filtered[index];
-                              return InkWell(
-                                onTap: () => context.pushNamed(
+                              return GroupCard(
+                                onPress: () => context.pushNamed(
                                   'view_group',
                                   extra: ShowGroupArgs(
                                     code: g.code,
@@ -184,14 +212,13 @@ class _HomeViewState extends State<_HomeView>
                                     name: g.name,
                                   ),
                                 ),
-                                child: GroupCard(
-                                  index: index,
-                                  groupName: g.name,
-                                  groupToken: g.token,
-                                  groupCode: g.code,
-                                  isRaffled: g.isRaffled,
-                                  color: CardColor.getColor(index),
-                                ),
+                                onLongPress: () {},
+                                index: index,
+                                groupName: g.name,
+                                groupToken: g.token,
+                                groupCode: g.code,
+                                isRaffled: g.isRaffled,
+                                color: CardColor.getColor(index),
                               );
                             },
                           ),
@@ -313,7 +340,9 @@ class _FilterChip extends StatelessWidget {
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: selected ? SecretSantaColors.neutral50 : SecretSantaColors.neutral600,
+            color: selected
+                ? SecretSantaColors.neutral50
+                : SecretSantaColors.neutral600,
           ),
         ),
       ),

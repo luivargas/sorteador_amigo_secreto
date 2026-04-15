@@ -7,6 +7,7 @@ class ParticipantState extends Equatable {
   final bool created;
   final bool updated;
   final bool showed;
+  final bool deleted;
   final AppError? error;
   final ShowParticipantModel? showParti;
 
@@ -17,6 +18,7 @@ class ParticipantState extends Equatable {
     required this.showed,
     this.error,
     this.showParti,
+    required this.deleted,
   });
 
   factory ParticipantState.initial() {
@@ -25,6 +27,7 @@ class ParticipantState extends Equatable {
       created: false,
       updated: false,
       showed: false,
+      deleted: false,
     );
   }
 
@@ -33,6 +36,7 @@ class ParticipantState extends Equatable {
     bool? created,
     bool? updated,
     bool? showed,
+    bool? deleted,
     AppError? error,
     ShowParticipantModel? showParti,
     bool clearError = false,
@@ -45,9 +49,18 @@ class ParticipantState extends Equatable {
       showed: showed ?? this.showed,
       error: clearError ? null : (error ?? this.error),
       showParti: clearShowParti ? null : (showParti ?? this.showParti),
+      deleted: deleted ?? this.deleted,
     );
   }
 
   @override
-  List<Object?> get props => [isLoading, created, updated, showed, error, showParti];
+  List<Object?> get props => [
+    isLoading,
+    created,
+    updated,
+    showed,
+    error,
+    showParti,
+    deleted,
+  ];
 }

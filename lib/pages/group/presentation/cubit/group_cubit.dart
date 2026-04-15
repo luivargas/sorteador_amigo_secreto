@@ -15,7 +15,7 @@ class GroupCubit extends Cubit<GroupState> {
     try {
       final result = await groupUsecases.create(entity);
       result.when(
-        success: (_) => emit(state.copyWith(isLoading: false, created: true)),
+        success: (group) => emit(state.copyWith(isLoading: false, created: true, createdGroup: group)),
         failure: (f) => emit(
           state.copyWith(isLoading: false, error: f.error, created: false),
         ),
@@ -25,10 +25,10 @@ class GroupCubit extends Cubit<GroupState> {
     }
   }
 
-  Future<void> delete(String token) async {
+  Future<void> delete(String token, String code) async {
     safeEmit(state.copyWith(isLoading: true, clearError: true));
     try {
-      await groupUsecases.delete(token);
+      await groupUsecases.delete(token, code);
       emit(state.copyWith(isLoading: false, deleted: true));
     } catch (e) {
       emit(state.copyWith(error: AppError.unknown, isLoading: false));

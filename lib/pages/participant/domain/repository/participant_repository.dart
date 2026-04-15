@@ -6,7 +6,15 @@ import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/update_participant_entity.dart';
 
 abstract class ParticipantRepository {
-  Future<ApiResult<CreateParticipantModel>> create(CreateParticipantEntity entity, String groupToken);
-  Future<ApiResult<UpdateParticipantModel>> update(UpdateParticipantEntity entity, String id, String groupToken);
+  Future<ApiResult<CreateParticipantModel>> create(
+    CreateParticipantEntity entity,
+    String token,
+  );
+  Future<ApiResult<UpdateParticipantModel>> update(
+    UpdateParticipantEntity entity,
+    String id,
+    String token,
+  );
   Future<ApiResult<ShowParticipantModel>> show(String id, String token);
+  Future<ApiResult<void>> delete(String id, String token);
 }

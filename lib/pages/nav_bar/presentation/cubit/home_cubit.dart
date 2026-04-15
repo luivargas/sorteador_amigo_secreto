@@ -55,7 +55,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> deleteGroup(String token, String code) async {
     try {
-      await _groupUsecases.delete(token);
+      await _groupUsecases.delete(token, code);
       final updated = state.groups.where((g) => g.code != code).toList();
       final filtered = _applyFilter(updated, state.search, state.filter);
       emit(state.copyWith(groups: updated, filtered: filtered));

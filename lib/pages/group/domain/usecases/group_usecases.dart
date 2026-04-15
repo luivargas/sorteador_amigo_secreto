@@ -12,11 +12,16 @@ class GroupUsecases {
 
   Future<ApiResult<CreateGroupModel>> create(CreateGroupEntity entity) =>
       repository.create(entity);
-  Future<void> delete(String token) => repository.delete(token);
   Future<ApiResult<ShowGroupModel>> show(String code, String token) =>
       repository.show(code, token);
-  Future<ApiResult<UpdateGroupModel>> update(UpdateGroupEntity entity, String code, String token) =>
-      repository.update(entity, code, token);
+  Future<ApiResult<UpdateGroupModel>> update(
+    UpdateGroupEntity entity,
+    String code,
+    String token,
+  ) => repository.update(entity, code, token);
   Future<ApiResult<String>> raffle(String code, String token) =>
+      repository.raffle(code, token);
+
+  Future<ApiResult<String>> delete(String code, String token) =>
       repository.raffle(code, token);
 }

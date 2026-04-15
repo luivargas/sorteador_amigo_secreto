@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
@@ -14,6 +15,8 @@ import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create
 import 'package:sorteador_amigo_secreto/pages/participant/domain/usecases/participant_usecase.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:io' show Platform;
 
 class _ContactSelection {
   final String? phone;
@@ -34,7 +37,7 @@ class ContactList extends StatefulWidget {
   State<ContactList> createState() => _ContactListState();
 }
 
-class _ContactListState extends State<ContactList> {
+class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
   final TextEditingController _searchController = TextEditingController();
 
   final Map<String, _ContactSelection> _selectedContacts = {};
@@ -63,6 +66,7 @@ class _ContactListState extends State<ContactList> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _usecase = getIt<ParticipantUsecase>();
     _searchController.addListener(() => setState(() {}));
     _loadContacts();
@@ -70,9 +74,17 @@ class _ContactListState extends State<ContactList> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _sub?.cancel();
     _searchController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && _denied) {
+      _loadContacts();
+    }
   }
 
   bool _hasName(Contact c) => (c.displayName ?? '').trim().isNotEmpty;
@@ -98,8 +110,11 @@ class _ContactListState extends State<ContactList> {
       PermissionType.readWrite,
     );
     if (s != PermissionStatus.granted && s != PermissionStatus.limited) {
-      return setState(() => _denied = true);
+      return setState(() {
+        _denied = true;
+      });
     }
+    setState(() => _denied = false);
     _sub = FlutterContacts.onContactChange.listen((_) => _load());
     _load();
   }
@@ -340,7 +355,7 @@ class _ContactListState extends State<ContactList> {
                         isoCode: chosenPhone != null ? chosenIsoCode : null,
                       );
                     });
-                    Navigator.pop(ctx);
+                    context.pop(ctx);
                   },
                   title: l10n.select,
                 ),
@@ -403,8 +418,7 @@ class _ContactListState extends State<ContactList> {
     setState(() => _isCreating = false);
 
     if (!context.mounted) return;
-    // ignore: use_build_context_synchronously
-    if (anySuccess) context.pop(true);
+    if (anySuccess && context.mounted) context.pop(true);
   }
 
   Widget? _initials(String? name, TextStyle style) {
@@ -467,7 +481,34 @@ class _ContactListState extends State<ContactList> {
               hintText: l10n.searchParticipants,
             ),
             if (_denied)
-              Center(child: Text(l10n.contactPermissionDenied))
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.contacts_outlined,
+                      size: 64,
+                      color: SecretSantaColors.neutral500,
+                    ),
+                    Text(
+                      l10n.contactPermissionDenied,
+                      textAlign: TextAlign.center,
+                    ),
+                    TextButton.icon(
+                      onPressed: () async {
+                        if (Platform.isIOS) {
+                          final uri = Uri.parse('app-settings:');
+                          if (await canLaunchUrl(uri)) await launchUrl(uri);
+                        } else {
+                          await AppSettings.openAppSettings();
+                        }
+                      },
+                      icon: Icon(Icons.settings_outlined),
+                      label: Text('Abrir configurações'),
+                    ),
+                  ],
+                ),
+              )
             else if (_contacts == null)
               const Center(child: CircularProgressIndicator())
             else

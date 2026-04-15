@@ -143,6 +143,7 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
                         itemCount: participants.length,
                         separatorBuilder: (_, _) => const SizedBox(height: 12),
                         itemBuilder: (context, index) {
+                          final p = participants[index];
                           return ParticipantListItem(
                             participant: participants[index],
                             groupToken: widget.groupToken,

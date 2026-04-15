@@ -62,4 +62,23 @@ class ParticipantCubit extends Cubit<ParticipantState> {
       emit(state.copyWith(error: AppError.unknown, isLoading: false, updated: false));
     }
   }
+
+    Future<void> delete(
+    String id,
+    String groupToken,
+  ) async {
+    if (isClosed) return;
+    safeEmit(state.copyWith(isLoading: true, clearError: true, deleted: false));
+    try {
+      final result = await participantUsecase.delete(id, groupToken);
+      result.when(
+        success: (_) => emit(state.copyWith(isLoading: false, deleted: true)),
+        failure: (f) => emit(
+          state.copyWith(isLoading: false, error: f.error, deleted: false),
+        ),
+      );
+    } catch (e) {
+      emit(state.copyWith(error: AppError.unknown, isLoading: false, deleted: false));
+    }
+  }
 }
