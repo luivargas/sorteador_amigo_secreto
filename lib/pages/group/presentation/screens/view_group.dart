@@ -1,22 +1,23 @@
 import 'package:confetti/confetti.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-import 'package:sorteador_amigo_secreto/core/network/url/base_url.dart';
+import 'package:sorteador_amigo_secreto/core/network/url/base_url/web.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/app_list_card.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
+import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
+import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/view_group/view_group_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-
 import 'package:share_plus/share_plus.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -54,7 +55,7 @@ class _ViewGroupBody extends State<ViewGroup> {
     final title = AppLocalizations.of(context)!.shareLinkTitle;
     await SharePlus.instance.share(
       ShareParams(
-        uri: Uri.parse("$stgBaseUrl/grupo/${g?.code}/entrar"),
+        uri: Uri.parse("$stgSiteBaseUrl/grupo/${g?.code}/entrar"),
         title: title,
         subject: title,
       ),
@@ -67,7 +68,7 @@ class _ViewGroupBody extends State<ViewGroup> {
       extra: ShowGroupArgs(code: widget.code, token: widget.token),
     );
     if (context.mounted && result == true) {
-      await context.read<GroupCubit>().show(widget.code, widget.token);
+      context.read<GroupCubit>().show(widget.code, widget.token);
     }
   }
 
@@ -91,6 +92,125 @@ class _ViewGroupBody extends State<ViewGroup> {
     }
   }
 
+  Future<void> _onDelete(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+    if (context.mounted) {
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text(l10n.delete),
+          content: Text(l10n.confirmDeleteGroup(widget.name ?? '')),
+          actions: [
+            TextButton(
+              onPressed: () => context.pop(false),
+              child: Text(
+                l10n.cancel,
+                style: const TextStyle(color: SecretSantaColors.accent2),
+              ),
+            ),
+            TextButton(
+              onPressed: () => context.pop(true),
+              child: Text(
+                l10n.delete,
+                style: const TextStyle(color: SecretSantaColors.accent),
+              ),
+            ),
+          ],
+        ),
+      );
+
+      if (confirmed == true && context.mounted) {
+        context.read<GroupCubit>().delete(widget.code, widget.token);
+        if (context.mounted) {
+          context.pop(true);
+        }
+      }
+    }
+  }
+
+  void _showOptions(BuildContext context, ShowGroupModel? group) {
+    final l10n = AppLocalizations.of(context)!;
+    showModalBottomSheet(
+      backgroundColor: SecretSantaColors.background,
+      context: context,
+      builder: (_) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            spacing: 15,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0),
+                child: Column(
+                  spacing: 5,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.groupActions,
+                      style: SecretSantaTextStyles.titleMedium,
+                    ),
+                    Text(
+                      l10n.groupOptionsTitle.toUpperCase(),
+                      style: SecretSantaTheme.theme.textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ),
+              if (!getIt<GroupSession>().isRaffled) ...[
+                AppListCard(
+                  title: l10n.shareGroup,
+                  subtitle: l10n.shareGroupSubtitle,
+                  color: SecretSantaColors.accent,
+                  icon: Icons.share,
+                  initials: '',
+                  trailing: Icon(
+                    Icons.chevron_right,
+                    color: SecretSantaColors.accent,
+                  ),
+                  onTap: () {
+                    context.pop();
+                    _onShare(group);
+                  },
+                ),
+              ],
+              AppListCard(
+                title: l10n.edit,
+                subtitle: l10n.editGroupSubtitle2,
+                color: SecretSantaColors.accent2,
+                icon: Icons.edit,
+                initials: '',
+                trailing: Icon(
+                  Icons.chevron_right,
+                  color: SecretSantaColors.accent2,
+                ),
+                onTap: () {
+                  context.pop();
+                  _onEdit();
+                },
+              ),
+              AppListCard(
+                title: l10n.deleteGroup,
+                subtitle: l10n.deleteGroupSubtitle,
+                color: SecretSantaColors.error,
+                icon: Icons.delete_outline,
+                initials: '',
+                trailing: Icon(
+                  Icons.chevron_right,
+                  color: SecretSantaColors.error,
+                ),
+                onTap: () {
+                  context.pop();
+                  _onDelete(context);
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   void dispose() {
     _confettiController.dispose();
@@ -108,14 +228,8 @@ class _ViewGroupBody extends State<ViewGroup> {
           appBar: MyAppBar(
             actions: [
               IconButton(
-                onPressed: _onEdit,
-                icon: const Icon(Icons.edit_outlined, size: 24),
-                color: SecretSantaColors.accent,
-                tooltip: l10n.edit,
-              ),
-              IconButton(
-                onPressed: () => _onShare(group),
-                icon: const Icon(Icons.share_outlined, size: 24),
+                onPressed: () => _showOptions(context, group),
+                icon: const Icon(Icons.more_vert, size: 24),
                 color: SecretSantaColors.accent,
               ),
             ],
@@ -231,12 +345,12 @@ class _ViewGroupBody extends State<ViewGroup> {
                               duration: 700.ms,
                             ),
                             Text(
-                              'Sorteio realizado!',
+                              l10n.raffleCompleted,
                               style: SecretSantaTextStyles.titleSmall,
                               textAlign: TextAlign.center,
                             ),
                             Text(
-                              'O amigo secreto foi sorteado com sucesso. Cada participante ja pode ver o resultado!',
+                              l10n.raffleCompletedMessage,
                               style: SecretSantaTextStyles.bodySmall.copyWith(
                                 color: SecretSantaColors.neutral500,
                               ),

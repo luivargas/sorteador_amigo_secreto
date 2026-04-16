@@ -40,11 +40,11 @@ class _OnboardingState extends State<Onboarding> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Guia rápido',
+                            l10n.onboardingGuideTitle,
                             style: SecretSantaTheme.theme.textTheme.titleSmall,
                           ),
                           Text(
-                            'Tudo que você precisa saber para criar seu amigo secreto.',
+                            l10n.onboardingGuideSubtitle,
                             style: TextStyle(color: SecretSantaColors.neutral600.withValues(alpha: 0.8)),
                           ),
                         ],

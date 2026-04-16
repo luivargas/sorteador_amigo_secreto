@@ -1,7 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
+import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/create_group_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
+
+enum GroupFilter { all, pending, raffled }
 
 class GroupState extends Equatable {
   final bool isLoading;
@@ -12,6 +15,10 @@ class GroupState extends Equatable {
   final AppError? error;
   final ShowGroupModel? group;
   final CreateGroupModel? createdGroup;
+  final List<AuthGroupModel> groups;
+  final List<AuthGroupModel> filtered;
+  final String search;
+  final GroupFilter filter;
 
   const GroupState({
     required this.isLoading,
@@ -22,6 +29,10 @@ class GroupState extends Equatable {
     this.error,
     this.group,
     this.createdGroup,
+    required this.groups,
+    required this.filtered,
+    required this.search,
+    required this.filter,
   });
 
   factory GroupState.initial() {
@@ -31,6 +42,10 @@ class GroupState extends Equatable {
       updated: false,
       deleted: false,
       raffled: false,
+      groups: [],
+      filtered: [],
+      search: '',
+      filter: GroupFilter.all,
     );
   }
 
@@ -46,6 +61,10 @@ class GroupState extends Equatable {
     bool clearGroup = false,
     CreateGroupModel? createdGroup,
     bool clearCreatedGroup = false,
+    List<AuthGroupModel>? groups,
+    List<AuthGroupModel>? filtered,
+    String? search,
+    GroupFilter? filter,
   }) {
     return GroupState(
       isLoading: isLoading ?? this.isLoading,
@@ -55,7 +74,13 @@ class GroupState extends Equatable {
       raffled: raffled ?? this.raffled,
       error: clearError ? null : (error ?? this.error),
       group: clearGroup ? null : (group ?? this.group),
-      createdGroup: clearCreatedGroup ? null : ( createdGroup ?? this.createdGroup),
+      createdGroup: clearCreatedGroup
+          ? null
+          : (createdGroup ?? this.createdGroup),
+      groups: groups ?? this.groups,
+      filtered: filtered ?? this.filtered,
+      search: search ?? this.search,
+      filter: filter ?? this.filter,
     );
   }
 
@@ -69,5 +94,9 @@ class GroupState extends Equatable {
     error,
     group,
     createdGroup,
+    groups,
+    filtered,
+    search,
+    filter,
   ];
 }

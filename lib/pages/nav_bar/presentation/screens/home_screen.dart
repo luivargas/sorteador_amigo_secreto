@@ -8,13 +8,12 @@ import 'package:sorteador_amigo_secreto/core/ui/components/card_color.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_search_bar.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show_group_args.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/group_card.dart';
 import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/widgets/home_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-
-import '../cubit/home_cubit.dart';
-import '../cubit/home_state.dart';
 
 class HomeScreen extends StatelessWidget {
   final List<AuthGroupModel> groups;
@@ -60,38 +59,8 @@ class _HomeViewState extends State<_HomeView>
   }
 
   Future<void> _onRefresh() async {
-    await context.read<HomeCubit>().refreshGroups();
+    await context.read<GroupCubit>().refreshGroups();
     _refreshController.refreshCompleted();
-  }
-
-  Future<void> _confirmDeleteGroup(
-    BuildContext context,
-    String name,
-    String token,
-    String code,
-  ) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: const Text('Excluir grupo'),
-        content: Text(
-          'Deseja excluir "$name"? Esta ação não pode ser desfeita.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancelar'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Excluir', style: TextStyle(color: Colors.red)),
-          ),
-        ],
-      ),
-    );
-    if (confirmed == true && context.mounted) {
-      context.read<HomeCubit>().deleteGroup(token, code);
-    }
   }
 
   @override
@@ -109,7 +78,7 @@ class _HomeViewState extends State<_HomeView>
 
     return Scaffold(
       appBar: MyAppBar(),
-      body: BlocListener<HomeCubit, HomeState>(
+      body: BlocListener<GroupCubit, GroupState>(
         listenWhen: (prev, curr) => prev.groups != curr.groups,
         listener: (context, state) {
           setState(() => _hasGroups = state.groups.isNotEmpty);
@@ -147,7 +116,7 @@ class _HomeViewState extends State<_HomeView>
                       ),
                     ),
 
-                    BlocBuilder<HomeCubit, HomeState>(
+                    BlocBuilder<GroupCubit, GroupState>(
                       builder: (context, state) {
                         if (state.isLoading) {
                           return SliverFillRemaining(
@@ -204,19 +173,19 @@ class _HomeViewState extends State<_HomeView>
                             itemBuilder: (context, index) {
                               final g = state.filtered[index];
                               return GroupCard(
-                                onPress: () => context.pushNamed(
-                                  'view_group',
-                                  extra: ShowGroupArgs(
-                                    code: g.code,
-                                    token: g.token,
-                                    name: g.name,
-                                  ),
-                                ),
-                                onLongPress: () {},
+                                onPress: () async {
+                                  final result = await context.pushNamed(
+                                    'view_group',
+                                    extra: ShowGroupArgs(
+                                      code: g.code,
+                                      token: g.token,
+                                      name: g.name,
+                                    ),
+                                  );
+                                  if( result == true) _onRefresh();
+                                },
                                 index: index,
                                 groupName: g.name,
-                                groupToken: g.token,
-                                groupCode: g.code,
                                 isRaffled: g.isRaffled,
                                 color: CardColor.getColor(index),
                               );
@@ -262,9 +231,9 @@ class _SearchBar extends StatelessWidget {
             MySearchBar(
               controller: _searchController,
               hintText: l10n.searchGroup,
-              onChanged: (v) => context.read<HomeCubit>().onSearchChanged(v),
+              onChanged: (v) => context.read<GroupCubit>().onSearchChanged(v),
             ),
-            BlocBuilder<HomeCubit, HomeState>(
+            BlocBuilder<GroupCubit, GroupState>(
               buildWhen: (prev, cur) => prev.filter != cur.filter,
               builder: (context, state) {
                 return SingleChildScrollView(
@@ -275,14 +244,14 @@ class _SearchBar extends StatelessWidget {
                         label: l10n.filterAll,
                         selected: state.filter == GroupFilter.all,
                         onSelected: () => context
-                            .read<HomeCubit>()
+                            .read<GroupCubit>()
                             .onFilterChanged(GroupFilter.all),
                       ),
                       _FilterChip(
                         label: l10n.badgePending,
                         selected: state.filter == GroupFilter.pending,
                         onSelected: () => context
-                            .read<HomeCubit>()
+                            .read<GroupCubit>()
                             .onFilterChanged(GroupFilter.pending),
                         color: SecretSantaColors.accent3,
                       ),
@@ -290,7 +259,7 @@ class _SearchBar extends StatelessWidget {
                         label: l10n.badgeRaffled,
                         selected: state.filter == GroupFilter.raffled,
                         onSelected: () => context
-                            .read<HomeCubit>()
+                            .read<GroupCubit>()
                             .onFilterChanged(GroupFilter.raffled),
                         color: SecretSantaColors.accent,
                       ),

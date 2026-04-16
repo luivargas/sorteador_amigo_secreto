@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
-import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/cubit/home_cubit.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class HomeCard extends StatefulWidget {
@@ -64,7 +64,7 @@ class _HomeCardState extends State<HomeCard> {
                                 );
                                 if (!context.mounted) return;
                                 if (result == true) {
-                                  context.read<HomeCubit>().refreshGroups();
+                                  context.read<GroupCubit>().refreshGroups();
                                 }
                               },
                               child: Container(
@@ -169,7 +169,7 @@ class _HomeCardState extends State<HomeCard> {
                               );
                               if (!context.mounted) return;
                               if (result == true) {
-                                context.read<HomeCubit>().refreshGroups();
+                                context.read<GroupCubit>().refreshGroups();
                               }
                             },
                             child: Container(

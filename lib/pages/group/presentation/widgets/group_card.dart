@@ -1,30 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/app_list_card.dart';
 import 'package:sorteador_amigo_secreto/core/util/get_initials.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class GroupCard extends StatelessWidget {
   final String groupName;
-  final String groupToken;
-  final String groupCode;
   final bool isRaffled;
   final int index;
   final Color color;
-  final VoidCallback? onLongPress;
   final VoidCallback? onPress;
 
   const GroupCard({
     super.key,
     required this.groupName,
-    required this.groupToken,
-    required this.groupCode,
     required this.index,
     required this.isRaffled,
     required this.color,
-    this.onLongPress,
     this.onPress,
   });
 
@@ -33,9 +25,6 @@ class GroupCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return AppListCard(
-      deleteTitle: 'Excluir grupo',
-      deleteMessage: 'Deseja excluir "$groupName"?',
-      onDelete: () => context.read<GroupCubit>().delete(groupToken, groupCode),
       onTap: onPress,
       title: groupName,
       subtitle: isRaffled ? l10n.badgeRaffled : l10n.badgePending,

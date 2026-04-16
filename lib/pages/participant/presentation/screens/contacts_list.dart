@@ -504,7 +504,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                         }
                       },
                       icon: Icon(Icons.settings_outlined),
-                      label: Text('Abrir configurações'),
+                      label: Text(l10n.openSettings),
                     ),
                   ],
                 ),

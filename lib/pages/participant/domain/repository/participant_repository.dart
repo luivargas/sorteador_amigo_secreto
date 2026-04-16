@@ -16,5 +16,5 @@ abstract class ParticipantRepository {
     String token,
   );
   Future<ApiResult<ShowParticipantModel>> show(String id, String token);
-  Future<ApiResult<void>> delete(String id, String token);
+  Future<ApiResult> delete(String id, String token);
 }

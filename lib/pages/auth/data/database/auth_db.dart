@@ -13,11 +13,11 @@ class AuthDB {
 
   String? get email => prefs.getString(_keyEmail);
 
-  Future<void> saveEmail(String value) => prefs.setString(_keyEmail.toLowerCase(), value);
+  Future<void> saveEmail(String value) async => await prefs.setString(_keyEmail.toLowerCase(), value);
 
   String? get token => prefs.getString(_keyToken);
 
-  Future<void> saveToken(String value) => prefs.setString(_keyToken, value);
+  Future<void> saveToken(String value) async => await prefs.setString(_keyToken, value);
 
   DeviceData? get device {
     final name = prefs.getString(_keyDeviceName);

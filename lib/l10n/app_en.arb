@@ -219,5 +219,26 @@
   "logoutTitle": "Do you really want to sign out?",
   "logoutSubtitle": "You will be disconnected from the app and will need your credentials to sign in again.",
   "logoutButton": "Sign out",
-  "logoutBack": "Back to app"
+  "logoutBack": "Back to app",
+
+  "confirmDeleteGroup": "Do you want to delete the group {name}?",
+  "@confirmDeleteGroup": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "confirmDeleteParticipant": "Do you want to delete the participant {name}?",
+  "@confirmDeleteParticipant": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "adminCannotBeDeleted": "The group administrator cannot be deleted.",
+  "groupActions": "Group actions",
+  "shareGroupSubtitle": "INVITE NEW PARTICIPANTS",
+  "editGroupSubtitle2": "UPDATE THE INFORMATION",
+  "deleteGroup": "Delete group",
+  "deleteGroupSubtitle": "PERMANENTLY DELETE GROUP",
+  "raffleCompleted": "Draw completed!",
+  "raffleCompletedMessage": "The secret santa was successfully drawn!",
+  "adminRole": "Admin",
+  "openSettings": "Open settings",
+  "onboardingGuideTitle": "Quick guide",
+  "onboardingGuideSubtitle": "Everything you need to know to create your secret santa."
 }

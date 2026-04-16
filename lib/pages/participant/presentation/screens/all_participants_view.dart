@@ -5,25 +5,20 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/card_color.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_search_bar.dart';
+import 'package:sorteador_amigo_secreto/injector/injector.dart';
+import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/create_parti_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/participant_list_item.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class AllParticipantsView extends StatefulWidget {
-  final String groupToken;
-  final String groupCode;
-  final BadgeType type;
-
-  const AllParticipantsView({
-    super.key,
-    required this.groupToken,
-    required this.groupCode,
-    required this.type,
-  });
+  const AllParticipantsView({super.key});
 
   @override
   State<AllParticipantsView> createState() => _AllParticipantsViewState();
@@ -33,7 +28,7 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
   final RefreshController _refreshController = RefreshController();
   final TextEditingController _searchController = TextEditingController();
   String _query = '';
-  final bool _didCreate = false;
+  bool _didCreate = false;
 
   @override
   void dispose() {
@@ -55,20 +50,23 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
   }
 
   Future<void> _onAddParticipant() async {
+    final session = getIt<GroupSession>();
     final result = await context.pushNamed(
       'create_part',
       extra: CreateParticipantArgs(
-        groupToken: widget.groupToken,
-        groupCode: widget.groupCode,
+        groupToken: session.token,
+        groupCode: session.code,
       ),
     );
     if (result == true && context.mounted) {
+      _didCreate = true;
       _onRefresh();
     }
   }
 
   Future<void> _onRefresh() async {
-    await context.read<GroupCubit>().show(widget.groupCode, widget.groupToken);
+    final session = getIt<GroupSession>();
+    await context.read<GroupCubit>().show(session.code, session.token);
     _refreshController.refreshCompleted();
   }
 
@@ -83,7 +81,7 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
       },
       child: Scaffold(
         appBar: MyAppBar(),
-        floatingActionButton: widget.type == BadgeType.pending
+        floatingActionButton: !getIt<GroupSession>().isRaffled
             ? FloatingActionButton(
                 onPressed: _onAddParticipant,
                 backgroundColor: SecretSantaColors.accent,
@@ -103,57 +101,67 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
                 onChanged: (v) => setState(() => _query = v),
               ),
               Expanded(
-                child: BlocBuilder<GroupCubit, GroupState>(
-                  builder: (context, state) {
-                    if (state.isLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
+                child: BlocListener<ParticipantCubit, ParticipantState>(
+                  listenWhen: (prev, curr) => !prev.deleted && curr.deleted,
+                  listener: (context, state) {
+                    _didCreate = true;
+                    _onRefresh();
+                  },
+                  child: BlocBuilder<GroupCubit, GroupState>(
+                    builder: (context, state) {
+                      if (state.isLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
 
-                    final participants = _filtered(
-                      state.group?.participants ?? [],
-                    );
+                      final participants = _filtered(
+                        state.group?.participants ?? [],
+                      );
 
-                    if (participants.isEmpty) {
-                      return Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.people_outline,
-                              size: 64,
-                              color: SecretSantaColors.neutral300,
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              l10n.noGroupsFound,
-                              style: TextStyle(
-                                color: SecretSantaColors.neutral500,
+                      if (participants.isEmpty) {
+                        return Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.people_outline,
+                                size: 64,
+                                color: SecretSantaColors.neutral300,
                               ),
-                            ),
-                          ],
+                              const SizedBox(height: 12),
+                              Text(
+                                l10n.noGroupsFound,
+                                style: TextStyle(
+                                  color: SecretSantaColors.neutral500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+
+                      return SmartRefresher(
+                        controller: _refreshController,
+                        onRefresh: _onRefresh,
+                        child: ListView.separated(
+                          padding: const EdgeInsets.fromLTRB(0, 20, 0, 100),
+                          itemCount: participants.length,
+                          separatorBuilder: (_, _) =>
+                              const SizedBox(height: 12),
+                          itemBuilder: (context, index) {
+                            final p = participants[index];
+                            return ParticipantListItem(
+                              participant: p,
+                              color: CardColor.getColor(index),
+                              onChanged: (){
+                                _didCreate = true;
+                                _onRefresh();
+                              }
+                            );
+                          },
                         ),
                       );
-                    }
-
-                    return SmartRefresher(
-                      controller: _refreshController,
-                      onRefresh: _onRefresh,
-                      child: ListView.separated(
-                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 100),
-                        itemCount: participants.length,
-                        separatorBuilder: (_, _) => const SizedBox(height: 12),
-                        itemBuilder: (context, index) {
-                          final p = participants[index];
-                          return ParticipantListItem(
-                            participant: participants[index],
-                            groupToken: widget.groupToken,
-                            groupCode: widget.groupCode,
-                            color: CardColor.getColor(index),
-                          );
-                        },
-                      ),
-                    );
-                  },
+                    },
+                  ),
                 ),
               ),
             ],

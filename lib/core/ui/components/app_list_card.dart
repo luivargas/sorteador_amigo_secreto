@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class AppListCard extends StatelessWidget {
@@ -13,10 +12,7 @@ class AppListCard extends StatelessWidget {
   final Color backgroundColor;
   final Border? border;
   final double avatarSize;
-  final VoidCallback? onDelete;
-  final String? deleteTitle;
-  final String? deleteMessage;
-  final String? blockedMessage;
+  final IconData? icon;
 
   const AppListCard({
     super.key,
@@ -30,52 +26,8 @@ class AppListCard extends StatelessWidget {
     this.backgroundColor = SecretSantaColors.neutral50,
     this.border,
     this.avatarSize = 56,
-    this.onDelete,
-    this.deleteTitle,
-    this.deleteMessage,
-    this.blockedMessage,
+    this.icon,
   });
-
-  Future<void> _onLongPress(BuildContext context) async {
-    if (blockedMessage != null) {
-      await showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: const Text('Ação não permitida'),
-          content: Text(blockedMessage!),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Entendi'),
-            ),
-          ],
-        ),
-      );
-      return;
-    }
-
-    if (onDelete == null) return;
-
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: Text(deleteTitle ?? 'Excluir'),
-        content: Text(deleteMessage ?? 'Deseja excluir este item?'),
-        actions: [
-          TextButton(
-            onPressed: () => context.pop(false),
-            child: const Text('Cancelar',style: TextStyle(color: SecretSantaColors.accent2)),
-          ),
-          TextButton(
-            onPressed: () => context.pop( true),
-            child: const Text('Excluir', style: TextStyle(color: SecretSantaColors.accent)),
-          ),
-        ],
-      ),
-    );
-
-    if (confirmed == true) onDelete!();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,9 +35,6 @@ class AppListCard extends StatelessWidget {
       focusColor: SecretSantaColors.accent,
       splashColor: color.withValues(alpha: 0.2),
       highlightColor: color.withValues(alpha: 0.1),
-      onLongPress: (onDelete != null || blockedMessage != null)
-          ? () => _onLongPress(context)
-          : null,
       onTap: onTap,
       borderRadius: BorderRadius.circular(borderRadius),
       child: Ink(
@@ -106,14 +55,20 @@ class AppListCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(avatarSize * 0.27),
               ),
               child: Center(
-                child: Text(
-                  initials,
-                  style: TextStyle(
-                    color: SecretSantaColors.neutral50,
-                    fontWeight: FontWeight.bold,
-                    fontSize: avatarSize * 0.36,
-                  ),
-                ),
+                child: icon != null
+                    ? Icon(
+                        icon,
+                        color: SecretSantaColors.neutral50,
+                        size: avatarSize * 0.5,
+                      )
+                    : Text(
+                        initials,
+                        style: TextStyle(
+                          color: SecretSantaColors.neutral50,
+                          fontWeight: FontWeight.bold,
+                          fontSize: avatarSize * 0.36,
+                        ),
+                      ),
               ),
             ),
             const SizedBox(width: 14),

@@ -9,6 +9,7 @@ import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/database/auth_db.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/loading_or_error.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
+import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/update_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
@@ -18,11 +19,11 @@ import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class ViewParticipant extends StatefulWidget {
   final String userId;
-  final String groupToken;
+
+
   const ViewParticipant({
     super.key,
     required this.userId,
-    required this.groupToken,
   });
 
   @override
@@ -41,6 +42,58 @@ class _ViewParticipant extends State<ViewParticipant> {
     _emailController.dispose();
     _phoneController.dispose();
     super.dispose();
+  }
+
+  Future<void> _onDelete(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+    if (role == 'admin') {
+      await showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text(l10n.adminCannotBeDeleted),
+          actions: [
+            TextButton(
+              onPressed: () => context.pop(),
+              child: Text(l10n.ok),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    if (context.mounted) {
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text(l10n.delete),
+          content: Text(l10n.confirmDeleteParticipant(_nameController.text)),
+          actions: [
+            TextButton(
+              onPressed: () => context.pop(false),
+              child: Text(
+                l10n.cancel,
+                style: const TextStyle(color: SecretSantaColors.accent2),
+              ),
+            ),
+            TextButton(
+              onPressed: () => context.pop(true),
+              child: Text(
+                l10n.delete,
+                style: const TextStyle(color: SecretSantaColors.accent),
+              ),
+            ),
+          ],
+        ),
+      );
+
+      if (confirmed == true && context.mounted) {
+        return context.read<ParticipantCubit>().delete(
+          widget.userId,
+          getIt<GroupSession>().token,
+        );
+      }
+    }
   }
 
   bool _prefilledOnce = false;
@@ -90,7 +143,7 @@ class _ViewParticipant extends State<ViewParticipant> {
     await context.read<ParticipantCubit>().update(
       entity,
       widget.userId,
-      widget.groupToken,
+      getIt<GroupSession>().token,
     );
   }
 
@@ -99,7 +152,16 @@ class _ViewParticipant extends State<ViewParticipant> {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: MyAppBar(),
+      appBar: MyAppBar(
+        actions: [
+          if (!getIt<GroupSession>().isRaffled) // novo
+            IconButton(
+              onPressed: () => _onDelete(context),
+              icon: const Icon(Icons.delete, size: 24),
+              color: SecretSantaColors.error,
+            ),
+        ],
+      ),
       body: Form(
         key: _validateFormKey,
         child: BlocConsumer<ParticipantCubit, ParticipantState>(
@@ -124,6 +186,16 @@ class _ViewParticipant extends State<ViewParticipant> {
                 context.pop(true);
               }
             }
+            if (state.deleted) {
+              SecretSantaAlert.show(
+                message: l10n.participantUpdatedSuccess(_nameController.text),
+                type: AlertType.success,
+                context: context,
+              );
+              if (context.mounted) {
+                context.pop(true);
+              }
+            }
           },
           buildWhen: (previous, current) =>
               previous.isLoading != current.isLoading ||
@@ -135,7 +207,7 @@ class _ViewParticipant extends State<ViewParticipant> {
               error: state.error,
               onRetry: () async => await context.read<ParticipantCubit>().show(
                 widget.userId,
-                widget.groupToken,
+                getIt<GroupSession>().token,
               ),
               child: SingleChildScrollView(
                 child: Padding(

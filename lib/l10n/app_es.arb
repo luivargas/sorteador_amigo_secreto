@@ -219,5 +219,26 @@
   "logoutTitle": "¿Realmente deseas salir?",
   "logoutSubtitle": "Serás desconectado de la aplicación y necesitarás tus datos para ingresar nuevamente.",
   "logoutButton": "Cerrar sesión",
-  "logoutBack": "Volver a la app"
+  "logoutBack": "Volver a la app",
+
+  "confirmDeleteGroup": "¿Deseas eliminar el grupo {name}?",
+  "@confirmDeleteGroup": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "confirmDeleteParticipant": "¿Deseas eliminar al participante {name}?",
+  "@confirmDeleteParticipant": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "adminCannotBeDeleted": "El administrador del grupo no puede ser eliminado.",
+  "groupActions": "Acciones del grupo",
+  "shareGroupSubtitle": "INVITA NUEVOS PARTICIPANTES",
+  "editGroupSubtitle2": "ACTUALIZA LA INFORMACIÓN",
+  "deleteGroup": "Eliminar grupo",
+  "deleteGroupSubtitle": "ELIMINAR GRUPO PERMANENTEMENTE",
+  "raffleCompleted": "¡Sorteo realizado!",
+  "raffleCompletedMessage": "¡El amigo secreto fue sorteado con éxito!",
+  "adminRole": "Admin",
+  "openSettings": "Abrir configuración",
+  "onboardingGuideTitle": "Guía rápida",
+  "onboardingGuideSubtitle": "Todo lo que necesitas saber para crear tu amigo secreto."
 }

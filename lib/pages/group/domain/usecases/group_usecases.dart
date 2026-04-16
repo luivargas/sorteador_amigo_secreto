@@ -23,5 +23,5 @@ class GroupUsecases {
       repository.raffle(code, token);
 
   Future<ApiResult<String>> delete(String code, String token) =>
-      repository.raffle(code, token);
+      repository.delete(code, token);
 }

@@ -1061,6 +1061,90 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Voltar para o app'**
   String get logoutBack;
+
+  /// No description provided for @confirmDeleteGroup.
+  ///
+  /// In pt, this message translates to:
+  /// **'Deseja excluir o grupo {name}?'**
+  String confirmDeleteGroup(String name);
+
+  /// No description provided for @confirmDeleteParticipant.
+  ///
+  /// In pt, this message translates to:
+  /// **'Deseja excluir o participante {name}?'**
+  String confirmDeleteParticipant(String name);
+
+  /// No description provided for @adminCannotBeDeleted.
+  ///
+  /// In pt, this message translates to:
+  /// **'O administrador do grupo não pode ser excluído.'**
+  String get adminCannotBeDeleted;
+
+  /// No description provided for @groupActions.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ações do grupo'**
+  String get groupActions;
+
+  /// No description provided for @shareGroupSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'CONVIDE NOVOS PARTICIPANTES'**
+  String get shareGroupSubtitle;
+
+  /// No description provided for @editGroupSubtitle2.
+  ///
+  /// In pt, this message translates to:
+  /// **'ATUALISE AS INFORMAÇÕES'**
+  String get editGroupSubtitle2;
+
+  /// No description provided for @deleteGroup.
+  ///
+  /// In pt, this message translates to:
+  /// **'Excluir grupo'**
+  String get deleteGroup;
+
+  /// No description provided for @deleteGroupSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'EXCLUIR GRUPO PERMANENTEMENTE'**
+  String get deleteGroupSubtitle;
+
+  /// No description provided for @raffleCompleted.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sorteio realizado!'**
+  String get raffleCompleted;
+
+  /// No description provided for @raffleCompletedMessage.
+  ///
+  /// In pt, this message translates to:
+  /// **'O amigo secreto foi sorteado com sucesso!'**
+  String get raffleCompletedMessage;
+
+  /// No description provided for @adminRole.
+  ///
+  /// In pt, this message translates to:
+  /// **'Admin'**
+  String get adminRole;
+
+  /// No description provided for @openSettings.
+  ///
+  /// In pt, this message translates to:
+  /// **'Abrir configurações'**
+  String get openSettings;
+
+  /// No description provided for @onboardingGuideTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Guia rápido'**
+  String get onboardingGuideTitle;
+
+  /// No description provided for @onboardingGuideSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tudo que você precisa saber para criar seu amigo secreto.'**
+  String get onboardingGuideSubtitle;
 }
 
 class _AppLocalizationsDelegate

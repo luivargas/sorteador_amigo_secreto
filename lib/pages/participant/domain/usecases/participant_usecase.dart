@@ -23,6 +23,6 @@ class ParticipantUsecase {
 
   Future<ApiResult<ShowParticipantModel>> show(String id, String token) =>
       repository.show(id, token);
-        Future<ApiResult<void>> delete(String id, String token) =>
+  Future<ApiResult> delete(String id, String token) =>
       repository.delete(id, token);
 }

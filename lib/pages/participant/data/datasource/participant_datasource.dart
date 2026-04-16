@@ -88,13 +88,10 @@ class ParticipantDatasource extends ParticipantRepository {
     }
   }
 
-    @override
-  Future<ApiResult<void>> delete(
-    String id,
-    String token,
-  ) async {
+  @override
+  Future<ApiResult> delete(String id, String token) async {
     try {
-      final resp = await dio.put(
+      final resp = await dio.delete(
         '$stageParticipantApiUrl/$id',
         options: Options(headers: {'Access-Key': token}),
       );

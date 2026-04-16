@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:sorteador_amigo_secreto/core/network/api_error_mapper.dart';
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
-import 'package:sorteador_amigo_secreto/core/network/url/base_url.dart';
+import 'package:sorteador_amigo_secreto/core/network/url/base_url/api.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 
 import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/request_token_entity.dart';
@@ -18,7 +18,7 @@ class AuthDatasource extends AuthRepository {
   ) async {
     Response resp;
     try {
-      resp = await dio.post(requestToken, data: entity.toJson());
+      resp = await dio.post(stgRequestToken, data: entity.toJson());
       return Success(resp);
     } on DioException catch (e) {
       return Failure(ApiError(
@@ -35,7 +35,7 @@ class AuthDatasource extends AuthRepository {
   Future<ApiResult<List<AuthGroupModel>>> validate(ValidateToken entity) async {
     try {
       final resp = await dio.post(
-        validateToken,
+        stgValidateToken,
         data: entity.toJson(),
       );
       final model = (resp.data['groups'] as List)

@@ -525,4 +525,53 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logoutBack => 'Back to app';
+
+  @override
+  String confirmDeleteGroup(String name) {
+    return 'Do you want to delete the group $name?';
+  }
+
+  @override
+  String confirmDeleteParticipant(String name) {
+    return 'Do you want to delete the participant $name?';
+  }
+
+  @override
+  String get adminCannotBeDeleted =>
+      'The group administrator cannot be deleted.';
+
+  @override
+  String get groupActions => 'Group actions';
+
+  @override
+  String get shareGroupSubtitle => 'INVITE NEW PARTICIPANTS';
+
+  @override
+  String get editGroupSubtitle2 => 'UPDATE THE INFORMATION';
+
+  @override
+  String get deleteGroup => 'Delete group';
+
+  @override
+  String get deleteGroupSubtitle => 'PERMANENTLY DELETE GROUP';
+
+  @override
+  String get raffleCompleted => 'Draw completed!';
+
+  @override
+  String get raffleCompletedMessage =>
+      'The secret santa was successfully drawn!';
+
+  @override
+  String get adminRole => 'Admin';
+
+  @override
+  String get openSettings => 'Open settings';
+
+  @override
+  String get onboardingGuideTitle => 'Quick guide';
+
+  @override
+  String get onboardingGuideSubtitle =>
+      'Everything you need to know to create your secret santa.';
 }

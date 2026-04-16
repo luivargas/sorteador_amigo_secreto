@@ -8,7 +8,7 @@ import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/screens/request_token.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/screens/splash_screen.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/screens/validate_token_screen.dart';
-import 'package:sorteador_amigo_secreto/pages/nav_bar/presentation/cubit/home_cubit.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 
 CustomTransitionPage<void> _fadePage({
   required GoRouterState state,
@@ -71,7 +71,7 @@ List<RouteBase> authRoutes = [
       return _fadePage(
         state: state,
         child: BlocProvider(
-          create: (_) => getIt<HomeCubit>()..loadGroups(groups),
+          create: (_) => getIt<GroupCubit>()..loadGroups(groups),
           child: MyNavbar(groups: groups),
         ),
       );

@@ -1,32 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/app_list_card.dart';
 import 'package:sorteador_amigo_secreto/core/util/get_initials.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/show_parti_args.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class ParticipantListItem extends StatelessWidget {
   final ShowParticipantModel participant;
-  final String groupToken;
-  final String groupCode;
   final Color color;
+  final VoidCallback? onChanged;
 
   const ParticipantListItem({
     super.key,
     required this.participant,
-    required this.groupToken,
-    required this.groupCode,
     required this.color,
+    this.onChanged,
   });
 
   bool get _isConfirmed => participant.viewStatus != null;
 
-  String? get _subtitle {
-    if (participant.role == 'admin') return 'Admin';
+  String? _subtitle(AppLocalizations l10n) {
+    if (participant.role == 'admin') return l10n.adminRole;
     if (participant.email?.isNotEmpty == true) return participant.email;
     if (participant.phone?.isNotEmpty == true) return participant.phone;
     return null;
@@ -34,28 +30,19 @@ class ParticipantListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AppListCard(
       title: participant.name,
-      subtitle: _subtitle,
+      subtitle: _subtitle(l10n),
       color: color,
       initials: GetInitials.initials(participant.name),
       trailing: _StatusBadge(isConfirmed: _isConfirmed),
-      onDelete: participant.role == 'admin'
-          ? null
-          : () => context.read<ParticipantCubit>().delete(
-              participant.id,
-              groupToken,
-            ),
-      blockedMessage: participant.role == 'admin'
-          ? 'O administrador do grupo não pode ser excluído.'
-          : null,
-      onTap: () => context.pushNamed(
-        'view_parti',
-        extra: ShowParticipantArgs(
-          partId: participant.id,
-          groupToken: groupToken,
-        ),
-      ),
+      onTap: () {
+        context.pushNamed(
+          'view_parti',
+          extra: ShowParticipantArgs(partId: participant.id),
+        );
+      },
     );
   }
 }

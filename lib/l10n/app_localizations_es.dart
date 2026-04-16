@@ -528,4 +528,53 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get logoutBack => 'Volver a la app';
+
+  @override
+  String confirmDeleteGroup(String name) {
+    return '¿Deseas eliminar el grupo $name?';
+  }
+
+  @override
+  String confirmDeleteParticipant(String name) {
+    return '¿Deseas eliminar al participante $name?';
+  }
+
+  @override
+  String get adminCannotBeDeleted =>
+      'El administrador del grupo no puede ser eliminado.';
+
+  @override
+  String get groupActions => 'Acciones del grupo';
+
+  @override
+  String get shareGroupSubtitle => 'INVITA NUEVOS PARTICIPANTES';
+
+  @override
+  String get editGroupSubtitle2 => 'ACTUALIZA LA INFORMACIÓN';
+
+  @override
+  String get deleteGroup => 'Eliminar grupo';
+
+  @override
+  String get deleteGroupSubtitle => 'ELIMINAR GRUPO PERMANENTEMENTE';
+
+  @override
+  String get raffleCompleted => '¡Sorteo realizado!';
+
+  @override
+  String get raffleCompletedMessage =>
+      '¡El amigo secreto fue sorteado con éxito!';
+
+  @override
+  String get adminRole => 'Admin';
+
+  @override
+  String get openSettings => 'Abrir configuración';
+
+  @override
+  String get onboardingGuideTitle => 'Guía rápida';
+
+  @override
+  String get onboardingGuideSubtitle =>
+      'Todo lo que necesitas saber para crear tu amigo secreto.';
 }

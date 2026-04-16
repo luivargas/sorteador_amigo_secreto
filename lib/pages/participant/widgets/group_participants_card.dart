@@ -5,7 +5,6 @@ import 'package:sorteador_amigo_secreto/core/ui/components/card_color.dart';
 import 'package:sorteador_amigo_secreto/core/util/get_initials.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/participants_list_args.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
@@ -27,11 +26,6 @@ class GroupParticipantsCard extends StatelessWidget {
   Future<void> _goToList(BuildContext context) async {
     final result = await context.pushNamed(
       'participants_list',
-      extra: ParticipantsListArgs(
-        groupToken: groupToken,
-        groupCode: groupCode,
-        type: type,
-      ),
     );
     if (result == true && context.mounted) {
       context.read<GroupCubit>().show(groupCode, groupToken);

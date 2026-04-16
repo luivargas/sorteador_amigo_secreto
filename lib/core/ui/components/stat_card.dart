@@ -5,7 +5,7 @@ import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart'
 class StatCard extends StatelessWidget {
   final String value;
   final String label;
-  final String? subLabel; // informação secundária, ex: horário
+  final String? subLabel;
   final IconData? icon;
   final Color iconColor;
   final Color color;
