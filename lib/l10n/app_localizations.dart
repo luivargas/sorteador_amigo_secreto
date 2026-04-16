@@ -1089,7 +1089,7 @@ abstract class AppLocalizations {
   /// No description provided for @groupActions.
   ///
   /// In pt, this message translates to:
-  /// **'Ações do grupo'**
+  /// **'Gerencie este grupo e suas configurações'**
   String get groupActions;
 
   /// No description provided for @shareGroupSubtitle.
@@ -1151,6 +1151,42 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Tudo que você precisa saber para criar seu amigo secreto.'**
   String get onboardingGuideSubtitle;
+
+  /// No description provided for @participantOptionsTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Opções do participante'**
+  String get participantOptionsTitle;
+
+  /// No description provided for @participantOptionsSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Gerencie este participante'**
+  String get participantOptionsSubtitle;
+
+  /// No description provided for @resendEmail.
+  ///
+  /// In pt, this message translates to:
+  /// **'Reenviar e-mail'**
+  String get resendEmail;
+
+  /// No description provided for @resendEmailSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Reenviar e-mail do sorteio'**
+  String get resendEmailSubtitle;
+
+  /// No description provided for @deleteParticipant.
+  ///
+  /// In pt, this message translates to:
+  /// **'Excluir participante'**
+  String get deleteParticipant;
+
+  /// No description provided for @deleteParticipantSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Remover do grupo permanentemente'**
+  String get deleteParticipantSubtitle;
 }
 
 class _AppLocalizationsDelegate

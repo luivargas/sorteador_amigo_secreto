@@ -546,7 +546,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'The group administrator cannot be deleted.';
 
   @override
-  String get groupActions => 'Group actions';
+  String get groupActions => 'Manage this group and its settings';
 
   @override
   String get shareGroupSubtitle => 'INVITE NEW PARTICIPANTS';
@@ -579,4 +579,22 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get onboardingGuideSubtitle =>
       'Everything you need to know to create your secret santa.';
+
+  @override
+  String get participantOptionsTitle => 'Participant options';
+
+  @override
+  String get participantOptionsSubtitle => 'Manage this participant';
+
+  @override
+  String get resendEmail => 'Resend email';
+
+  @override
+  String get resendEmailSubtitle => 'Resend the draw email';
+
+  @override
+  String get deleteParticipant => 'Delete participant';
+
+  @override
+  String get deleteParticipantSubtitle => 'Permanently remove from group';
 }

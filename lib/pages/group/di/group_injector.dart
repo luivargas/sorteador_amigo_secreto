@@ -10,7 +10,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cub
 
 void groupInjectors() {
   getIt.registerLazySingleton<GroupRepository>(
-    () => GroupDatasource(authDB: getIt<AuthDB>()),
+    () => GroupDatasource(),
   );
   getIt.registerLazySingleton(() => GroupSession());
   getIt.registerLazySingleton(() => GroupUsecases(getIt<GroupRepository>()));

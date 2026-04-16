@@ -19,7 +19,7 @@ class AuthDatasource extends AuthRepository {
     Response resp;
     try {
       resp = await dio.post(stgRequestToken, data: entity.toJson());
-      return Success(resp);
+      return Success(resp.statusMessage);
     } on DioException catch (e) {
       return Failure(ApiError(
         ApiErrorMapper.map(e),

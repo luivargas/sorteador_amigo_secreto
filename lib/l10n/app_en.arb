@@ -234,7 +234,7 @@
     "placeholders": { "name": { "type": "String" } }
   },
   "adminCannotBeDeleted": "The group administrator cannot be deleted.",
-  "groupActions": "Group actions",
+  "groupActions": "Manage this group and its settings",
   "shareGroupSubtitle": "INVITE NEW PARTICIPANTS",
   "editGroupSubtitle2": "UPDATE THE INFORMATION",
   "deleteGroup": "Delete group",
@@ -244,5 +244,12 @@
   "adminRole": "Admin",
   "openSettings": "Open settings",
   "onboardingGuideTitle": "Quick guide",
-  "onboardingGuideSubtitle": "Everything you need to know to create your secret santa."
+  "onboardingGuideSubtitle": "Everything you need to know to create your secret santa.",
+
+  "participantOptionsTitle": "Participant options",                                                                     
+  "participantOptionsSubtitle": "Manage this participant",
+  "resendEmail": "Resend email",                                                                                        
+  "resendEmailSubtitle": "Resend the draw email",                                                                     
+  "deleteParticipant": "Delete participant",                                                                          
+  "deleteParticipantSubtitle": "Permanently remove from group"
 }

@@ -9,6 +9,7 @@ import 'package:sorteador_amigo_secreto/core/network/url/base_url/web.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/app_list_card.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_botton_sheet.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
@@ -127,93 +128,6 @@ class _ViewGroupBody extends State<ViewGroup> {
     }
   }
 
-  void _showOptions(BuildContext context, ShowGroupModel? group) {
-    final l10n = AppLocalizations.of(context)!;
-    showModalBottomSheet(
-      backgroundColor: SecretSantaColors.background,
-      context: context,
-      builder: (_) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            spacing: 15,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 15.0),
-                child: Row(
-                  children: [
-                    Column(
-                      spacing: 5,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l10n.groupActions,
-                          style: SecretSantaTextStyles.titleMedium,
-                        ),
-                        Text(
-                          l10n.groupOptionsTitle.toUpperCase(),
-                          style: SecretSantaTheme.theme.textTheme.bodySmall,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              if (!getIt<GroupSession>().isRaffled) ...[
-                AppListCard(
-                  title: l10n.shareGroup,
-                  subtitle: l10n.shareGroupSubtitle,
-                  color: SecretSantaColors.accent,
-                  icon: Icons.share,
-                  initials: '',
-                  trailing: Icon(
-                    Icons.chevron_right,
-                    color: SecretSantaColors.accent,
-                  ),
-                  onTap: () {
-                    context.pop();
-                    _onShare(group);
-                  },
-                ),
-              ],
-              AppListCard(
-                title: l10n.edit,
-                subtitle: l10n.editGroupSubtitle2,
-                color: SecretSantaColors.accent2,
-                icon: Icons.edit,
-                initials: '',
-                trailing: Icon(
-                  Icons.chevron_right,
-                  color: SecretSantaColors.accent2,
-                ),
-                onTap: () {
-                  context.pop();
-                  _onEdit();
-                },
-              ),
-              AppListCard(
-                title: l10n.deleteGroup,
-                subtitle: l10n.deleteGroupSubtitle,
-                color: SecretSantaColors.error,
-                icon: Icons.delete_outline,
-                initials: '',
-                trailing: Icon(
-                  Icons.chevron_right,
-                  color: SecretSantaColors.error,
-                ),
-                onTap: () {
-                  context.pop();
-                  _onDelete(context);
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   void dispose() {
     _confettiController.dispose();
@@ -228,7 +142,7 @@ class _ViewGroupBody extends State<ViewGroup> {
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, _) {
-        if(!didPop) context.pop(_didChange);
+        if (!didPop) context.pop(_didChange);
       },
       child: Stack(
         children: [
@@ -236,7 +150,61 @@ class _ViewGroupBody extends State<ViewGroup> {
             appBar: MyAppBar(
               actions: [
                 IconButton(
-                  onPressed: () => _showOptions(context, group),
+                  onPressed: () => MyBottonSheet.show(
+                    title: l10n.groupOptionsTitle,
+                    subTitle: l10n.groupActions,
+                    context: context,
+                    group: group,
+                    items: [
+                      if (!getIt<GroupSession>().isRaffled) ...[
+                        AppListCard(
+                          title: l10n.shareGroup,
+                          subtitle: l10n.shareGroupSubtitle,
+                          color: SecretSantaColors.accent,
+                          icon: Icons.share,
+                          initials: '',
+                          trailing: Icon(
+                            Icons.chevron_right,
+                            color: SecretSantaColors.accent,
+                          ),
+                          onTap: () {
+                            context.pop();
+                            _onShare(group);
+                          },
+                        ),
+                      ],
+                      AppListCard(
+                        title: l10n.edit,
+                        subtitle: l10n.editGroupSubtitle2,
+                        color: SecretSantaColors.accent2,
+                        icon: Icons.edit,
+                        initials: '',
+                        trailing: Icon(
+                          Icons.chevron_right,
+                          color: SecretSantaColors.accent2,
+                        ),
+                        onTap: () {
+                          context.pop();
+                          _onEdit();
+                        },
+                      ),
+                      AppListCard(
+                        title: l10n.deleteGroup,
+                        subtitle: l10n.deleteGroupSubtitle,
+                        color: SecretSantaColors.error,
+                        icon: Icons.delete_outline,
+                        initials: '',
+                        trailing: Icon(
+                          Icons.chevron_right,
+                          color: SecretSantaColors.error,
+                        ),
+                        onTap: () {
+                          context.pop();
+                          _onDelete(context);
+                        },
+                      ),
+                    ],
+                  ),
                   icon: const Icon(Icons.more_vert, size: 24),
                   color: SecretSantaColors.accent,
                 ),
@@ -245,7 +213,8 @@ class _ViewGroupBody extends State<ViewGroup> {
             body: BlocConsumer<GroupCubit, GroupState>(
               listenWhen: (previous, current) =>
                   (!previous.raffled && current.raffled) ||
-                  (previous.error == null && current.error != null) || (!previous.deleted && current.deleted) ,
+                  (previous.error == null && current.error != null) ||
+                  (!previous.deleted && current.deleted),
               listener: (context, state) {
                 if (state.raffled) {
                   setState(() => _showRaffleSuccess = true);
@@ -259,7 +228,7 @@ class _ViewGroupBody extends State<ViewGroup> {
                     type: AlertType.warning,
                   );
                 }
-                if(state.deleted) {
+                if (state.deleted) {
                   context.pop(true);
                 }
               },
@@ -275,12 +244,12 @@ class _ViewGroupBody extends State<ViewGroup> {
                   group = state.group!;
                 }
                 if (group == null) return const SizedBox.shrink();
-      
+
                 final g = group!;
                 final type = g.raffledAt == null
                     ? BadgeType.pending
                     : BadgeType.raffled;
-      
+
                 return SmartRefresher(
                   controller: _refreshController,
                   onRefresh: _onRefresh,
@@ -323,13 +292,13 @@ class _ViewGroupBody extends State<ViewGroup> {
               },
             ),
           ),
-      
+
           if (_showRaffleSuccess)
             GestureDetector(
               onTap: () => setState(() => _showRaffleSuccess = false),
               child: Container(color: Colors.black.withValues(alpha: 0.6)),
             ).animate().fadeIn(duration: 300.ms),
-      
+
           if (_showRaffleSuccess)
             Center(
               child: Padding(
@@ -379,7 +348,7 @@ class _ViewGroupBody extends State<ViewGroup> {
                         .fadeIn(duration: 300.ms),
               ),
             ),
-      
+
           Align(
             alignment: Alignment.topCenter,
             child: ConfettiWidget(

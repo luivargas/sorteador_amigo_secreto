@@ -546,7 +546,7 @@ class AppLocalizationsPt extends AppLocalizations {
       'O administrador do grupo não pode ser excluído.';
 
   @override
-  String get groupActions => 'Ações do grupo';
+  String get groupActions => 'Gerencie este grupo e suas configurações';
 
   @override
   String get shareGroupSubtitle => 'CONVIDE NOVOS PARTICIPANTES';
@@ -579,4 +579,22 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get onboardingGuideSubtitle =>
       'Tudo que você precisa saber para criar seu amigo secreto.';
+
+  @override
+  String get participantOptionsTitle => 'Opções do participante';
+
+  @override
+  String get participantOptionsSubtitle => 'Gerencie este participante';
+
+  @override
+  String get resendEmail => 'Reenviar e-mail';
+
+  @override
+  String get resendEmailSubtitle => 'Reenviar e-mail do sorteio';
+
+  @override
+  String get deleteParticipant => 'Excluir participante';
+
+  @override
+  String get deleteParticipantSubtitle => 'Remover do grupo permanentemente';
 }

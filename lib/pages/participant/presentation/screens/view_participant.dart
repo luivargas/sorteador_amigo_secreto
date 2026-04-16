@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/app_list_card.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_botton_sheet.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/database/auth_db.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/loading_or_error.dart';
@@ -31,6 +33,10 @@ class _ViewParticipant extends State<ViewParticipant> {
   final TextEditingController _emailController = TextEditingController();
   final PhoneController _phoneController = PhoneController();
   final GlobalKey<FormState> _validateFormKey = GlobalKey<FormState>();
+  bool _hasEmail = false;
+  bool _prefilledOnce = false;
+  bool readOnly = false;
+  String? role;
 
   @override
   void dispose() {
@@ -40,6 +46,8 @@ class _ViewParticipant extends State<ViewParticipant> {
     super.dispose();
   }
 
+  Future<void> _onResendEmail(BuildContext context) async {}
+
   Future<void> _onDelete(BuildContext context) async {
     final l10n = AppLocalizations.of(context)!;
     if (role == 'admin') {
@@ -48,7 +56,12 @@ class _ViewParticipant extends State<ViewParticipant> {
         builder: (_) => AlertDialog(
           title: Text(l10n.adminCannotBeDeleted),
           actions: [
-            TextButton(onPressed: () => context.pop(), child: Text(l10n.ok)),
+            TextButton(
+              onPressed: () {
+                context.pop();
+              },
+              child: Text(l10n.ok),
+            ),
           ],
         ),
       );
@@ -89,12 +102,6 @@ class _ViewParticipant extends State<ViewParticipant> {
     }
   }
 
-  bool _prefilledOnce = false;
-
-  bool readOnly = false;
-
-  String? role;
-
   void _prefillFromApi(ParticipantState state) {
     if (_prefilledOnce) return;
     if (state.showParti == null) return;
@@ -116,6 +123,7 @@ class _ViewParticipant extends State<ViewParticipant> {
         : const PhoneNumber(isoCode: IsoCode.BR, nsn: '');
     _prefilledOnce = true;
     role = g.role;
+    setState(() => _hasEmail = _emailController.text.isNotEmpty);
   }
 
   Future<void> _onSubmit() async {
@@ -147,11 +155,46 @@ class _ViewParticipant extends State<ViewParticipant> {
     return Scaffold(
       appBar: MyAppBar(
         actions: [
-          if (!getIt<GroupSession>().isRaffled) // novo
+          if (!getIt<GroupSession>().isRaffled || _hasEmail)
             IconButton(
-              onPressed: () => _onDelete(context),
-              icon: const Icon(Icons.delete, size: 24),
-              color: SecretSantaColors.error,
+              onPressed: () => MyBottonSheet.show(
+                title: l10n.participantOptionsTitle,
+                subTitle: l10n.participantOptionsSubtitle,
+                context: context,
+                items: [
+                  if (getIt<GroupSession>().isRaffled && _hasEmail)
+                    AppListCard(
+                      title: l10n.resendEmail,
+                      subtitle: l10n.resendEmailSubtitle,
+                      color: SecretSantaColors.accent,
+                      icon: Icons.email_rounded,
+                      initials: '',
+                      trailing: Icon(
+                        Icons.chevron_right,
+                        color: SecretSantaColors.accent,
+                      ),
+                      onTap: () => _onResendEmail(context),
+                    ),
+                  if (!getIt<GroupSession>().isRaffled)
+                    AppListCard(
+                      title: l10n.deleteParticipant,
+                      subtitle: l10n.deleteParticipantSubtitle,
+                      color: SecretSantaColors.error,
+                      icon: Icons.delete_outline,
+                      initials: '',
+                      trailing: Icon(
+                        Icons.chevron_right,
+                        color: SecretSantaColors.error,
+                      ),
+                      onTap: () {
+                        context.pop();
+                        _onDelete(context);
+                      },
+                    ),
+                ],
+              ),
+              icon: const Icon(Icons.more_vert, size: 24),
+              color: SecretSantaColors.accent,
             ),
         ],
       ),

@@ -234,7 +234,7 @@
     "placeholders": { "name": { "type": "String" } }
   },
   "adminCannotBeDeleted": "L'amministratore del gruppo non può essere eliminato.",
-  "groupActions": "Azioni del gruppo",
+  "groupActions": "Gestisci questo gruppo e le sue impostazioni",
   "shareGroupSubtitle": "INVITA NUOVI PARTECIPANTI",
   "editGroupSubtitle2": "AGGIORNA LE INFORMAZIONI",
   "deleteGroup": "Elimina gruppo",
@@ -244,5 +244,12 @@
   "adminRole": "Admin",
   "openSettings": "Apri impostazioni",
   "onboardingGuideTitle": "Guida rapida",
-  "onboardingGuideSubtitle": "Tutto quello che devi sapere per creare il tuo amico segreto."
+  "onboardingGuideSubtitle": "Tutto quello che devi sapere per creare il tuo amico segreto.",
+
+  "participantOptionsTitle": "Opzioni partecipante",                                                                    
+  "participantOptionsSubtitle": "Gestisci questo partecipante",                                                       
+  "resendEmail": "Reinvia email",                                                                                     
+  "resendEmailSubtitle": "Reinvia l'email del sorteggio",                                                               
+  "deleteParticipant": "Elimina partecipante",           
+  "deleteParticipantSubtitle": "Rimuovi dal gruppo permanentemente"
 }
