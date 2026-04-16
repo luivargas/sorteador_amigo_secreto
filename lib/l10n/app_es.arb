@@ -82,6 +82,10 @@
   "@participantUpdatedSuccess": {
     "placeholders": { "name": { "type": "String" } }
   },
+  "participantDeletedSuccess": "Participante {name} eliminado con éxito!",
+  "@participantDeletedSuccess": {
+    "placeholders": { "name": { "type": "String" } }
+  },
   "name": "Nombre",
   "addParticipantButton": "Agregar participante",
 

@@ -37,11 +37,14 @@ class ParticipantListItem extends StatelessWidget {
       color: color,
       initials: GetInitials.initials(participant.name),
       trailing: _StatusBadge(isConfirmed: _isConfirmed),
-      onTap: () {
-        context.pushNamed(
+      onTap: () async{
+       final result = await context.pushNamed(
           'view_parti',
           extra: ShowParticipantArgs(partId: participant.id),
         );
+        if(result == true && context.mounted){
+          onChanged?.call();
+        }
       },
     );
   }

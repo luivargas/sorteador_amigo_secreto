@@ -420,6 +420,12 @@ abstract class AppLocalizations {
   /// **'Participante {name} atualizado com sucesso!'**
   String participantUpdatedSuccess(String name);
 
+  /// No description provided for @participantDeletedSuccess.
+  ///
+  /// In pt, this message translates to:
+  /// **'Participante {name} excluído com sucesso!'**
+  String participantDeletedSuccess(String name);
+
   /// No description provided for @name.
   ///
   /// In pt, this message translates to:

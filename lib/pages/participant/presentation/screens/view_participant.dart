@@ -20,11 +20,7 @@ import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 class ViewParticipant extends StatefulWidget {
   final String userId;
 
-
-  const ViewParticipant({
-    super.key,
-    required this.userId,
-  });
+  const ViewParticipant({super.key, required this.userId});
 
   @override
   State<ViewParticipant> createState() => _ViewParticipant();
@@ -52,10 +48,7 @@ class _ViewParticipant extends State<ViewParticipant> {
         builder: (_) => AlertDialog(
           title: Text(l10n.adminCannotBeDeleted),
           actions: [
-            TextButton(
-              onPressed: () => context.pop(),
-              child: Text(l10n.ok),
-            ),
+            TextButton(onPressed: () => context.pop(), child: Text(l10n.ok)),
           ],
         ),
       );
@@ -88,7 +81,7 @@ class _ViewParticipant extends State<ViewParticipant> {
       );
 
       if (confirmed == true && context.mounted) {
-        return context.read<ParticipantCubit>().delete(
+        context.read<ParticipantCubit>().delete(
           widget.userId,
           getIt<GroupSession>().token,
         );
@@ -188,7 +181,7 @@ class _ViewParticipant extends State<ViewParticipant> {
             }
             if (state.deleted) {
               SecretSantaAlert.show(
-                message: l10n.participantUpdatedSuccess(_nameController.text),
+                message: l10n.participantDeletedSuccess(_nameController.text),
                 type: AlertType.success,
                 context: context,
               );

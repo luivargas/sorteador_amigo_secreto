@@ -179,6 +179,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String participantDeletedSuccess(String name) {
+    return 'Partecipante $name eliminato con successo!';
+  }
+
+  @override
   String get name => 'Nome';
 
   @override
