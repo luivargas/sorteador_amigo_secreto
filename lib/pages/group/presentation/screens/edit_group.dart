@@ -155,13 +155,18 @@ class _EditGroup extends State<EditGroup> {
               error: state.error,
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 50),
+                  padding: const EdgeInsets.fromLTRB(
+                    SecretSantaSpacing.lg,
+                    SecretSantaSpacing.lg,
+                    SecretSantaSpacing.lg,
+                    SecretSantaSpacing.xxl,
+                  ),
                   child: Column(
-                    spacing: 30,
+                    spacing: SecretSantaSpacing.xl,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 15.0),
+                        padding: const EdgeInsets.only(top: SecretSantaSpacing.md),
                         child: Column(
                           children: [
                             Text(

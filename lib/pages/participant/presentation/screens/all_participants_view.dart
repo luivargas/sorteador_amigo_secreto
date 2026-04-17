@@ -9,7 +9,7 @@ import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/create_parti_args.dart';
@@ -37,8 +37,8 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
     super.dispose();
   }
 
-  List<ShowParticipantModel> _filtered(
-    List<ShowParticipantModel> participants,
+  List<ParticipantModel> _filtered(
+    List<ParticipantModel> participants,
   ) {
     if (_query.isEmpty) return participants;
     final q = _query.toLowerCase();
@@ -91,22 +91,33 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
                 ),
               )
             : null,
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-          child: Column(
-            children: [
-              MySearchBar(
-                controller: _searchController,
-                hintText: l10n.searchParticipants,
-                onChanged: (v) => setState(() => _query = v),
+        body: Column(
+          children: [
+            ColoredBox(
+              color: SecretSantaColors.background,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: SecretSantaRadius.lg,
+                  vertical: SecretSantaRadius.sm,
+                ),
+                child: MySearchBar(
+                  controller: _searchController,
+                  hintText: l10n.searchParticipants,
+                  onChanged: (v) => setState(() => _query = v),
+                ),
               ),
-              Expanded(
-                child: BlocListener<ParticipantCubit, ParticipantState>(
-                  listenWhen: (prev, curr) => !prev.deleted && curr.deleted,
-                  listener: (context, state) {
-                    _didCreate = true;
-                    _onRefresh();
-                  },
+            ),
+            Expanded(
+              child: BlocListener<ParticipantCubit, ParticipantState>(
+                listenWhen: (prev, curr) => !prev.deleted && curr.deleted,
+                listener: (context, state) {
+                  _didCreate = true;
+                  _onRefresh();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: SecretSantaRadius.lg,
+                  ),
                   child: BlocBuilder<GroupCubit, GroupState>(
                     builder: (context, state) {
                       if (state.isLoading) {
@@ -143,7 +154,10 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
                         controller: _refreshController,
                         onRefresh: _onRefresh,
                         child: ListView.separated(
-                          padding: const EdgeInsets.fromLTRB(0, 20, 0, 100),
+                          padding: const EdgeInsets.only(
+                            top: SecretSantaSpacing.lg,
+                            bottom: 100,
+                          ),
                           itemCount: participants.length,
                           separatorBuilder: (_, _) =>
                               const SizedBox(height: 12),
@@ -152,10 +166,10 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
                             return ParticipantListItem(
                               participant: p,
                               color: CardColor.getColor(index),
-                              onChanged: (){
+                              onChanged: () {
                                 _didCreate = true;
                                 _onRefresh();
-                              }
+                              },
                             );
                           },
                         ),
@@ -164,8 +178,8 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

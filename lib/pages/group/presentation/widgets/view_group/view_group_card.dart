@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/stat_card.dart';
 import 'package:sorteador_amigo_secreto/pages/group/core/utils/gift_utils.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/group_participants_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
@@ -14,7 +14,7 @@ class ViewGroupCard extends StatelessWidget {
   final String eventTime;
   final String groupDescription;
   final int participants;
-  final List<ShowParticipantModel> participantsList;
+  final List<ParticipantModel> participantsList;
   final String groupToken;
   final String groupCode;
   final BadgeType type;
@@ -39,11 +39,11 @@ class ViewGroupCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return Column(
-      spacing: 12,
+      spacing: SecretSantaSpacing.sm,
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 12,
+          spacing: SecretSantaSpacing.sm,
           children: [
             Expanded(
               child: StatCard(
@@ -69,24 +69,27 @@ class ViewGroupCard extends StatelessWidget {
         ),
 
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          padding: const EdgeInsets.symmetric(
+            horizontal: SecretSantaSpacing.lg,
+            vertical: SecretSantaSpacing.md,
+          ),
           decoration: BoxDecoration(
             color: SecretSantaColors.neutral50,
             border: Border.all(
               color: SecretSantaColors.neutral200.withValues(alpha: 0.8),
             ),
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(SecretSantaSpacing.lg),
             boxShadow: SecretSantaShadows.medium,
           ),
           child: Row(
-            spacing: 16,
+            spacing: SecretSantaSpacing.md,
             children: [
               Container(
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
                   color: SecretSantaColors.accent2.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(SecretSantaSpacing.md),
                 ),
                 child: Icon(
                   Icons.place_outlined,
@@ -124,10 +127,10 @@ class ViewGroupCard extends StatelessWidget {
         ),
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(SecretSantaSpacing.lg),
           decoration: BoxDecoration(
             color: SecretSantaColors.neutral50,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(SecretSantaRadius.lg),
             border: Border.all(
               color: SecretSantaColors.neutral200.withValues(alpha: 0.8),
             ),
@@ -135,10 +138,10 @@ class ViewGroupCard extends StatelessWidget {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 6,
+            spacing: SecretSantaSpacing.xs,
             children: [
               Row(
-                spacing: 6,
+                spacing: SecretSantaSpacing.xs,
                 children: [
                   Icon(
                     Icons.notes_outlined,

@@ -11,16 +11,16 @@ class GroupButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20),
+      padding: const EdgeInsets.symmetric(horizontal: SecretSantaSpacing.lg),
       child: SizedBox(
         height: 300,
         child: Column(
-          spacing: 30,
+          spacing: SecretSantaSpacing.xl,
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Column(
-              spacing: 10,
+              spacing: SecretSantaSpacing.sm,
               children: [
                 MyGradientButton(
                   title: l10n.createGroupButton,
@@ -36,7 +36,7 @@ class GroupButton extends StatelessWidget {
               ],
             ),
             Column(
-              spacing: 10,
+              spacing: SecretSantaSpacing.sm,
               children: [
                 MyGradientButton(
                   title: l10n.recoverGroup,

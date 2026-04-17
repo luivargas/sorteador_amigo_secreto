@@ -24,15 +24,15 @@ class _OnboardingState extends State<Onboarding> {
       appBar: MyAppBar(),
       backgroundColor: SecretSantaColors.background,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: SecretSantaSpacing.lg),
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(top:  20.0),
+            padding: const EdgeInsets.only(top:SecretSantaSpacing.lg),
             child: Column(
-              spacing: 30,
+              spacing: SecretSantaSpacing.xl,
               children: [
                 Row(
-                  spacing: 20,
+                  spacing: SecretSantaSpacing.lg,
                   children: [
                     TopIcon(icon: Icons.card_giftcard),
                     Expanded(
@@ -54,7 +54,7 @@ class _OnboardingState extends State<Onboarding> {
                 ),
             
                 Column(
-                  spacing: 15,
+                  spacing:  SecretSantaSpacing.md,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -62,7 +62,7 @@ class _OnboardingState extends State<Onboarding> {
                       style: SecretSantaTextStyles.titleSmall,
                     ),
                     Column(
-                      spacing: 10,
+                      spacing: SecretSantaSpacing.sm,
                       children: [
                         StepCard(
                           step: "01",
@@ -94,7 +94,7 @@ class _OnboardingState extends State<Onboarding> {
                           isLast: true,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 20.0),
+                          padding: const EdgeInsets.only(top:SecretSantaSpacing.lg),
                           child: InfoCard(
                             title: l10n.onboardingFreeTitle,
                             description: l10n.onboardingFreeDesc,

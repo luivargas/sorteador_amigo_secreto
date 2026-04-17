@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_form_field.dart';
@@ -136,7 +139,8 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
 
   Future<void> _toggleSelection(Contact c) async {
     if (!_isContactValid(c)) {
-      SecretSantaAlertTheme(
+      AppAlert.showBanner(
+        context,
         message: AppLocalizations.of(context)!.contactNotValid,
         type: AlertType.warning,
       );
@@ -203,7 +207,12 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
       builder: (_) => StatefulBuilder(
         builder: (ctx, setSheetState) {
           return SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
+            padding: const EdgeInsets.fromLTRB(
+              SecretSantaSpacing.lg,
+              SecretSantaSpacing.md,
+              SecretSantaSpacing.lg,
+              SecretSantaSpacing.lg,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,7 +221,9 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                   child: Container(
                     width: 40,
                     height: 4,
-                    margin: const EdgeInsets.only(bottom: 16),
+                    margin: const EdgeInsets.only(
+                      bottom: SecretSantaSpacing.md,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(2),
@@ -376,14 +387,16 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
         .where((c) => _selectedContacts.containsKey(c.id))
         .toList();
 
-    final l10nConfirm = AppLocalizations.of(context)!;
-    bool anySuccess = false;
+    final l10n = AppLocalizations.of(context)!;
+    final List<String> successes = [];
+    final List<String> failures = [];
 
     for (final contact in selected) {
       final selection = _selectedContacts[contact.id];
+      final name = contact.displayName ?? '';
 
       final entity = CreateParticipantEntity(
-        name: contact.displayName!,
+        name: name,
         email: selection?.email,
         phone: selection?.phone,
         idd: selection?.isoCode != null
@@ -395,30 +408,48 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
 
       final result = await _usecase.create(entity, widget.groupToken);
 
-      String? errorMsg;
       result.when(
-        success: (_) {
-          anySuccess = true;
-        },
-        failure: (f) {
-          errorMsg = l10nConfirm.errorAddingContact(
-            contact.displayName ?? '',
-            f.error.localize(context),
-          );
-        },
+        success: (_) => successes.add(name),
+        failure: (f) => failures.add('$name: ${f.error.localize(context)}'),
       );
-
-      if (errorMsg != null) {
-        if (!context.mounted) break;
-        // ignore: use_build_context_synchronously
-        SecretSantaAlertTheme(message: errorMsg!, type: AlertType.warning);
-      }
     }
 
     setState(() => _isCreating = false);
 
     if (!context.mounted) return;
-    if (anySuccess && context.mounted) context.pop(true);
+
+    // Monta o conteúdo do dialog
+    final StringBuffer body = StringBuffer();
+
+    if (successes.isNotEmpty) {
+      body.writeln('✅ Adicionados (${successes.length}):');
+      for (final name in successes) {
+        body.writeln('  • $name');
+      }
+    }
+
+    if (failures.isNotEmpty) {
+      if (body.isNotEmpty) body.writeln();
+      body.writeln('❌ Falhas (${failures.length}):');
+      for (final msg in failures) {
+        body.writeln('  • $msg');
+      }
+    }
+
+    await AppAlert.showAlertDialog(
+      context,
+      title: l10n.errorTitle,
+      // failures.isEmpty
+      //     ? l10n.successTitle
+      //     : successes.isEmpty
+      //     ? l10n.errorTitle
+      //     : l10n.partialTitle,
+      message: body.toString().trim(),
+      confirmText: 'OK',
+      onConfirm: () {
+        if (successes.isNotEmpty) context.pop(true);
+      },
+    );
   }
 
   Widget? _initials(String? name, TextStyle style) {
@@ -441,37 +472,45 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
     return Scaffold(
       appBar: MyAppBar(),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
+        padding: const EdgeInsets.fromLTRB(
+          SecretSantaSpacing.lg,
+          SecretSantaSpacing.lg,
+          SecretSantaSpacing.lg,
+          40,
+        ),
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Row(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.contactList,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: SecretSantaColors.accent2,
-                          fontWeight: FontWeight.w500,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.contactList,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: SecretSantaColors.accent2,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                      Text(
-                        l10n.contactsTitle,
-                        style: SecretSantaTextStyles.titleMedium,
-                      ),
-                      Text(
-                        l10n.contactsSubtitle,
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: SecretSantaColors.neutral500,
-                          fontWeight: FontWeight.w500,
+                        Text(
+                          l10n.contactsTitle,
+                          style: SecretSantaTextStyles.titleMedium,
                         ),
-                      ),
-                    ],
+                        Text(
+                          l10n.contactsSubtitle,
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: SecretSantaColors.neutral500,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -529,14 +568,14 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                         onTap: () => _toggleSelection(c),
                         color: selected
                             ? getColor(i).withValues(alpha: 0.5)
-                            : SecretSantaColors.neutral100,
+                            : SecretSantaColors.neutral50,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                             vertical: 10,
                             horizontal: 15,
                           ),
                           child: Row(
-                            spacing: 15,
+                            spacing: SecretSantaSpacing.md,
                             children: [
                               Container(
                                 width: 52,

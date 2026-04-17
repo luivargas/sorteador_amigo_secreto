@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
 
 class ParticipantState extends Equatable {
   final bool isLoading;
@@ -9,7 +9,7 @@ class ParticipantState extends Equatable {
   final bool showed;
   final bool deleted;
   final AppError? error;
-  final ShowParticipantModel? showParti;
+  final ParticipantModel? showParti;
 
   const ParticipantState({
     required this.isLoading,
@@ -38,7 +38,7 @@ class ParticipantState extends Equatable {
     bool? showed,
     bool? deleted,
     AppError? error,
-    ShowParticipantModel? showParti,
+    ParticipantModel? showParti,
     bool clearError = false,
     bool clearShowParti = false,
   }) {

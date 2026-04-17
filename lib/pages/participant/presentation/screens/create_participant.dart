@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
-import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
+import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
@@ -64,10 +64,11 @@ class _CreateParticipant extends State<CreateParticipant> {
           listenWhen: (prev, curr) => prev.isLoading && !curr.isLoading,
           listener: (context, state) async {
             if (state.created) {
-              SecretSantaAlert.show(
+              AppAlert.showBanner(
+                context,
                 message: l10n.participantAddedSuccess(nameController.text),
                 type: AlertType.success,
-                context: context,
+
               );
               await Future.delayed(const Duration(milliseconds: 600));
               if (context.mounted) {
@@ -76,8 +77,8 @@ class _CreateParticipant extends State<CreateParticipant> {
             }
             if (state.error != null) {
               if (context.mounted) {
-                SecretSantaAlert.show(
-                  context: context,
+                AppAlert.showBanner(
+                  context,
                   title: l10n.errorTitle,
                   message: state.error!.localize(context),
                   type: AlertType.warning,
@@ -87,13 +88,17 @@ class _CreateParticipant extends State<CreateParticipant> {
           },
           builder: (context, state) {
             return Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: SecretSantaSpacing.lg,
+              ),
               child: SingleChildScrollView(
                 child: Column(
-                  spacing: 30,
+                  spacing: SecretSantaSpacing.xl,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top:15.0),
+                      padding: const EdgeInsets.only(
+                        top: SecretSantaSpacing.md,
+                      ),
                       child: Column(
                         children: [
                           Text(
@@ -119,7 +124,7 @@ class _CreateParticipant extends State<CreateParticipant> {
                             groupCode: widget.groupCode,
                           ),
                         );
-                        if (result == true && context.mounted){
+                        if (result == true && context.mounted) {
                           context.pop(true);
                         }
                       },
@@ -138,7 +143,7 @@ class _CreateParticipant extends State<CreateParticipant> {
                           child: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Row(
-                              spacing: 15,
+                              spacing: SecretSantaSpacing.md,
                               children: [
                                 Icon(Icons.contact_page),
                                 Expanded(
@@ -178,7 +183,7 @@ class _CreateParticipant extends State<CreateParticipant> {
                     ),
 
                     Column(
-                      spacing: 20,
+                      spacing: SecretSantaSpacing.lg,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         CreateParticipantFormFields(

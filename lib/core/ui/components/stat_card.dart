@@ -23,17 +23,17 @@ class StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(SecretSantaSpacing.md),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(SecretSantaRadius.lg),
         border: Border.all(
           color: SecretSantaColors.neutral200.withValues(alpha: 0.8),
         ),
         boxShadow: SecretSantaShadows.medium,
       ),
       child: Column(
-        spacing: 6,
+        spacing: SecretSantaSpacing.xs,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, size: 24, color: iconColor),

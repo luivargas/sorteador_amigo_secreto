@@ -11,6 +11,7 @@ import 'package:sorteador_amigo_secreto/pages/group/domain/entities/update_group
 import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/usecases/group_usecases.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class GroupCubit extends Cubit<GroupState> {
   final GroupUsecases _groupUsecases;
@@ -95,9 +96,11 @@ class GroupCubit extends Cubit<GroupState> {
     try {
       final result = await _groupUsecases.create(entity);
       result.when(
-        success: (group) => safeEmit(
+        success: (group) { 
+          _groupSession.setGroup(group);
+          safeEmit(
           state.copyWith(isLoading: false, created: true, createdGroup: group),
-        ),
+        );},
         failure: (f) => safeEmit(
           state.copyWith(isLoading: false, error: f.error, created: false),
         ),

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/app_list_card.dart';
 import 'package:sorteador_amigo_secreto/core/util/get_initials.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/show_parti_args.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class ParticipantListItem extends StatelessWidget {
-  final ShowParticipantModel participant;
+  final ParticipantModel participant;
   final Color color;
   final VoidCallback? onChanged;
 
@@ -22,7 +22,7 @@ class ParticipantListItem extends StatelessWidget {
   bool get _isConfirmed => participant.viewStatus != null;
 
   String? _subtitle(AppLocalizations l10n) {
-    if (participant.role == 'admin') return l10n.adminRole;
+    if (participant.role == ParticipantRole.admin.toString()) return l10n.adminRole;
     if (participant.email?.isNotEmpty == true) return participant.email;
     if (participant.phone?.isNotEmpty == true) return participant.phone;
     return null;

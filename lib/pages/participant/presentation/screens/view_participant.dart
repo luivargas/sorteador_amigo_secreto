@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
-import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
+import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/app_list_card.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_botton_sheet.dart';
@@ -50,7 +50,7 @@ class _ViewParticipant extends State<ViewParticipant> {
 
   Future<void> _onDelete(BuildContext context) async {
     final l10n = AppLocalizations.of(context)!;
-    if (role == 'admin') {
+    if (role == ParticipantRole.admin.toString()) {
       await showDialog(
         context: context,
         builder: (_) => AlertDialog(
@@ -108,7 +108,7 @@ class _ViewParticipant extends State<ViewParticipant> {
     final g = state.showParti!;
 
     _nameController.text = g.name;
-    if (g.role == 'admin') {
+    if (g.role == ParticipantRole.admin.toString()) {
       _emailController.text = getIt<AuthDB>().email ?? g.email ?? '';
     } else {
       _emailController.text = g.email ?? '';
@@ -204,7 +204,8 @@ class _ViewParticipant extends State<ViewParticipant> {
           listener: (context, state) {
             _prefillFromApi(state);
             if (state.error != null) {
-              SecretSantaAlertTheme(
+              AppAlert.showBanner(
+                context,
                 message: state.error!.localize(context),
                 type: AlertType.warning,
               );
@@ -213,20 +214,20 @@ class _ViewParticipant extends State<ViewParticipant> {
               });
             }
             if (state.updated) {
-              SecretSantaAlert.show(
+              AppAlert.showBanner(
+                context,
                 message: l10n.participantUpdatedSuccess(_nameController.text),
                 type: AlertType.success,
-                context: context,
               );
               if (context.mounted) {
                 context.pop(true);
               }
             }
             if (state.deleted) {
-              SecretSantaAlert.show(
+              AppAlert.showBanner(
+                context,
                 message: l10n.participantDeletedSuccess(_nameController.text),
                 type: AlertType.success,
-                context: context,
               );
               if (context.mounted) {
                 context.pop(true);
@@ -247,7 +248,7 @@ class _ViewParticipant extends State<ViewParticipant> {
               ),
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
+                  padding: const EdgeInsets.only(top: SecretSantaSpacing.lg),
                   child: Column(
                     children: [
                       Text(
@@ -261,7 +262,7 @@ class _ViewParticipant extends State<ViewParticipant> {
                         textAlign: TextAlign.center,
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.all(SecretSantaSpacing.lg),
                         child: ViewParticipantFormFields(
                           nameController: _nameController,
                           readOnly: readOnly,
@@ -271,7 +272,9 @@ class _ViewParticipant extends State<ViewParticipant> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: SecretSantaSpacing.lg,
+                        ),
                         child: MyGradientButton(
                           onTap: _onSubmit,
                           title: l10n.save,

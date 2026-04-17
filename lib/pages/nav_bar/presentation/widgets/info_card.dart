@@ -19,7 +19,7 @@ class InfoCard extends StatelessWidget {
     required this.icon,
     required this.iconBackgroundColor,
     this.textColor = SecretSantaColors.neutral50,
-    this.padding = const EdgeInsets.all(24),
+    this.padding = const EdgeInsets.all(SecretSantaSpacing.md),
     this.borderRadius = 16,
   });
 
@@ -52,7 +52,7 @@ class InfoCard extends StatelessWidget {
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 8,
+                  spacing: SecretSantaSpacing.sm,
                   children: [
                     Text(
                       title,

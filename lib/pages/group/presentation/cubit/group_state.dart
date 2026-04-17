@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/model/create_group_model.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
+import 'package:sorteador_amigo_secreto/pages/group/data/model/group_model.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
-enum GroupFilter { all, pending, raffled }
+
 
 class GroupState extends Equatable {
   final bool isLoading;
@@ -13,8 +13,8 @@ class GroupState extends Equatable {
   final bool deleted;
   final bool raffled;
   final AppError? error;
-  final ShowGroupModel? group;
-  final CreateGroupModel? createdGroup;
+  final GroupModel? group;
+  final GroupModel? createdGroup;
   final List<AuthGroupModel> groups;
   final List<AuthGroupModel> filtered;
   final String search;
@@ -56,10 +56,10 @@ class GroupState extends Equatable {
     bool? deleted,
     bool? raffled,
     AppError? error,
-    ShowGroupModel? group,
+    GroupModel? group,
     bool clearError = false,
     bool clearGroup = false,
-    CreateGroupModel? createdGroup,
+    GroupModel? createdGroup,
     bool clearCreatedGroup = false,
     List<AuthGroupModel>? groups,
     List<AuthGroupModel>? filtered,

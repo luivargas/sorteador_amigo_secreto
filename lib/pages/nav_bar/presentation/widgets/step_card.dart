@@ -23,10 +23,10 @@ class StepCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: Row(
-        spacing: 20,
+        spacing: SecretSantaSpacing.lg,
         children: [
           Column(
-            spacing: 10,
+            spacing: SecretSantaSpacing.sm,
             children: [
               Container(
                 width: 52,

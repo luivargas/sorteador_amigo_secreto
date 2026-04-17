@@ -86,7 +86,7 @@ class _MyNavbarState extends State<MyNavbar>
       child: TabBar(
         dividerColor: Colors.transparent,
         splashBorderRadius: BorderRadius.circular(50),
-        indicatorPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        indicatorPadding: const EdgeInsets.symmetric(horizontal: SecretSantaSpacing.sm),
         controller: tabController,
         indicator: UnderlineTabIndicator(
           borderSide: BorderSide(color: colors, width: 4),

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/card_color.dart';
 import 'package:sorteador_amigo_secreto/core/util/get_initials.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
@@ -13,7 +13,7 @@ class GroupParticipantsCard extends StatelessWidget {
   final String groupToken;
   final String groupCode;
   final BadgeType type;
-  final List<ShowParticipantModel> participantsList;
+  final List<ParticipantModel> participantsList;
 
   const GroupParticipantsCard({
     super.key,
@@ -75,10 +75,10 @@ class GroupParticipantsCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(16),
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: SecretSantaSpacing.lg, vertical: SecretSantaSpacing.md),
         decoration: BoxDecoration(
           color: SecretSantaColors.neutral50,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(SecretSantaRadius.md),
           border: Border.all(
             color: SecretSantaColors.neutral200.withValues(alpha: 0.8),
           ),
@@ -117,7 +117,7 @@ class GroupParticipantsCard extends StatelessWidget {
             const SizedBox(height: 12),
             if (participantsList.isEmpty)
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.symmetric(vertical: SecretSantaSpacing.sm),
                 child: Text(
                   l10n.noParticipantsSelected,
                   style: TextStyle(color: SecretSantaColors.neutral400, fontSize: 13),

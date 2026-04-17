@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
+enum GroupFilter { all, pending, raffled }
+
+enum ParticipantRole { admin, participant, observer }
+
+enum BadgeType { pending, raffled }
+
 class SecretSantaColors {
   // Cores principais (gradientes)
   static const Color accent = Color(0xFFf97316);
@@ -206,12 +212,10 @@ class SecretSantaTheme {
     return ThemeData(
       useMaterial3: true,
 
-      // Background
       scaffoldBackgroundColor: SecretSantaColors.background,
       primaryColor: SecretSantaColors.background,
       canvasColor: SecretSantaColors.background,
 
-      // AppBar
       appBarTheme: AppBarTheme(
         surfaceTintColor: SecretSantaColors.background,
         backgroundColor: SecretSantaColors.background,
@@ -222,12 +226,10 @@ class SecretSantaTheme {
         ),
       ),
 
-      // Progress indicator
       progressIndicatorTheme: ProgressIndicatorThemeData(
         color: SecretSantaColors.accent,
       ),
 
-      // Cores
       colorScheme: ColorScheme.light(
         primary: SecretSantaColors.accent,
         secondary: SecretSantaColors.accent2,
@@ -240,7 +242,6 @@ class SecretSantaTheme {
         onError: Colors.white,
       ),
 
-      // Tipografia
       textTheme: TextTheme(
         displayLarge: SecretSantaTextStyles.titleLarge.copyWith(
           color: SecretSantaColors.neutral900,
@@ -271,7 +272,6 @@ class SecretSantaTheme {
         titleLarge: SecretSantaTextStyles.titleLarge,
       ),
 
-      // Inputs
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: SecretSantaColors.neutral50,
@@ -312,10 +312,9 @@ class SecretSantaTheme {
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(color: SecretSantaColors.neutral700, width: 1),
         ),
-        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding: EdgeInsets.symmetric(horizontal: SecretSantaSpacing.md, vertical: SecretSantaSpacing.md),
       ),
 
-      // Botão elevado
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           textStyle: WidgetStateProperty<TextStyle?>.fromMap(
@@ -344,7 +343,6 @@ class SecretSantaTheme {
         ),
       ),
 
-      // Navigation bar
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: SecretSantaColors.accent,
         labelTextStyle: WidgetStateProperty<TextStyle?>.fromMap(
@@ -357,7 +355,6 @@ class SecretSantaTheme {
         ),
       ),
 
-      // Ícones
       iconTheme: IconThemeData(color: SecretSantaColors.accent2),
       iconButtonTheme: IconButtonThemeData(
         style: ButtonStyle(
@@ -369,10 +366,8 @@ class SecretSantaTheme {
         ),
       ),
 
-      // ListTile
       listTileTheme: ListTileThemeData(iconColor: SecretSantaColors.accent2),
 
-      // Cards
       cardTheme: CardThemeData(
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -382,7 +377,6 @@ class SecretSantaTheme {
         shadowColor: Color.fromRGBO(17, 24, 39, 0.06),
       ),
 
-      // Dividers
       dividerTheme: DividerThemeData(
         color: SecretSantaColors.neutral200,
         thickness: 1,
@@ -392,11 +386,6 @@ class SecretSantaTheme {
   }
 }
 
-// ============================================================================
-// COMPONENTES CUSTOMIZADOS
-// ============================================================================
-
-/// Botão com gradiente (Primary)
 class GradientButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final String text;
@@ -466,7 +455,6 @@ class GradientButton extends StatelessWidget {
   }
 }
 
-/// Botão secundário
 class SecondaryButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final String text;
@@ -515,7 +503,6 @@ class SecondaryButton extends StatelessWidget {
   }
 }
 
-/// Card com sombra e borda
 class SecretSantaCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? padding;
@@ -551,7 +538,6 @@ class SecretSantaCard extends StatelessWidget {
   }
 }
 
-/// Badge colorido
 class SecretSantaBadge extends StatelessWidget {
   final BadgeType type;
 
@@ -595,134 +581,7 @@ class SecretSantaBadge extends StatelessWidget {
   }
 }
 
-enum BadgeType { pending, raffled }
 
-/// Avatar circular com gradiente
-class GradientAvatar extends StatelessWidget {
-  final String initials;
-  final double size;
-
-  const GradientAvatar({super.key, required this.initials, this.size = 48});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        gradient: SecretSantaColors.avatarGradient,
-        shape: BoxShape.circle,
-        boxShadow: size > 80
-            ? [
-                BoxShadow(
-                  color: Color.fromRGBO(249, 115, 22, 0.3),
-                  offset: Offset(0, 20),
-                  blurRadius: 60,
-                ),
-              ]
-            : null,
-      ),
-      child: Center(
-        child: Text(
-          initials.toUpperCase(),
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: size * 0.4,
-            fontWeight: FontWeight.w900,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Alert/Banner informativo
-class SecretSantaAlertTheme extends StatelessWidget {
-  final String? title;
-  final String message;
-  final AlertType type;
-  final IconData? icon;
-
-  const SecretSantaAlertTheme({
-    super.key,
-    this.title,
-    required this.message,
-    required this.type,
-    this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    Color bgColor;
-    Color textColor;
-    Color borderColor;
-    IconData defaultIcon;
-
-    switch (type) {
-      case AlertType.success:
-        bgColor = SecretSantaColors.successBg;
-        textColor = SecretSantaColors.successText;
-        borderColor = SecretSantaColors.successBorder;
-        defaultIcon = Icons.check_circle_outline;
-        break;
-      case AlertType.warning:
-        bgColor = SecretSantaColors.warningBg;
-        textColor = SecretSantaColors.warningText;
-        borderColor = SecretSantaColors.warningBorder;
-        defaultIcon = Icons.warning_amber_outlined;
-        break;
-      case AlertType.info:
-        bgColor = SecretSantaColors.infoBg;
-        textColor = SecretSantaColors.infoText;
-        borderColor = SecretSantaColors.infoBorder;
-        defaultIcon = Icons.info_outline;
-        break;
-    }
-
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: borderColor, width: 1),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon ?? defaultIcon, color: textColor, size: 24),
-          SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (title != null) ...[
-                  Text(
-                    title!,
-                    style: SecretSantaTextStyles.label.copyWith(
-                      color: textColor,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                ],
-                Text(
-                  message,
-                  style: SecretSantaTextStyles.bodySmall.copyWith(
-                    color: textColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-enum AlertType { success, warning, info }
-
-/// Input customizado
 class SecretSantaTextField extends StatelessWidget {
   final String label;
   final String? hintText;
@@ -780,13 +639,13 @@ class SecretSantaTextField extends StatelessWidget {
 // ============================================================================
 
 class SecretSantaSpacing {
-  static const double xs = 4;
-  static const double sm = 8;
-  static const double md = 16;
-  static const double lg = 24;
-  static const double xl = 32;
-  static const double xxl = 48;
-  static const double xxxl = 64;
+  static const double xs = 5;
+  static const double sm = 10;
+  static const double md = 15;
+  static const double lg = 20;
+  static const double xl = 35;
+  static const double xxl = 50;
+  static const double xxxl = 65;
 }
 
 // ============================================================================

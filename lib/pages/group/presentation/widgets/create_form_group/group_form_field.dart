@@ -7,6 +7,7 @@ import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_name_f
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/core/util/participant_validators.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class GroupFormFields extends StatefulWidget {
   final TextEditingController nameController;
@@ -33,7 +34,7 @@ class _GroupFormFields extends State<GroupFormFields> {
     return FormBody(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 10,
+        spacing: SecretSantaSpacing.sm,
         children: [
           LabeledField(
             label: l10n.groupName,

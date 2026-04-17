@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
-import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
+import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
@@ -66,10 +66,10 @@ class _FormGroupBody extends State<CreateGroup> {
               previous.isLoading && !current.isLoading && current.created,
           listener: (context, state) async {
             if (state.created) {
-              SecretSantaAlert.show(
+              AppAlert.showBanner(
+                context,
                 message: l10n.groupCreatedSuccess(groupNameController.text),
                 type: AlertType.success,
-                context: context,
               );
               if (context.mounted && state.createdGroup != null) {
                 context.pushReplacementNamed(
@@ -83,8 +83,8 @@ class _FormGroupBody extends State<CreateGroup> {
               }
             }
             if (state.error != null) {
-              SecretSantaAlert.show(
-                context: context,
+              AppAlert.showBanner(
+                context,
                 message: state.error!.localize(context),
                 type: AlertType.warning,
               );
@@ -100,9 +100,14 @@ class _FormGroupBody extends State<CreateGroup> {
             }
             return SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 50),
+                padding: const EdgeInsets.fromLTRB(
+                  SecretSantaSpacing.lg,
+                  SecretSantaSpacing.lg,
+                  SecretSantaSpacing.lg,
+                  SecretSantaSpacing.xxl,
+                ),
                 child: Column(
-                  spacing: 30,
+                  spacing: SecretSantaSpacing.xl,
                   children: [
                     Column(
                       children: [

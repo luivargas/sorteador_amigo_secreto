@@ -1,6 +1,7 @@
 import 'package:phone_form_field/phone_form_field.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
-enum ParticipantRole { admin, participant }
+
 
 class ParticipantForm {
   final String name;

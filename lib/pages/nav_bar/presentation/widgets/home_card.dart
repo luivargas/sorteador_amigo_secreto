@@ -16,98 +16,17 @@ class HomeCard extends StatefulWidget {
 class _HomeCardState extends State<HomeCard> {
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     if (widget.hasGroups) {
-      return Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              SecretSantaColors.accent2,
-              SecretSantaColors.accent3,
-              SecretSantaColors.accent,
-            ],
-          ),
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: SecretSantaShadows.large,
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              right: 0,
-              bottom: 0,
-              child: Opacity(
-                opacity: 0.2,
-                child: Icon(
-                  Icons.card_giftcard,
-                  size: 80,
-                  color: SecretSantaColors.neutral50,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                spacing: 10,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            InkWell(
-                              onTap: () async {
-                                final result = await context.push(
-                                  "/create_group",
-                                );
-                                if (!context.mounted) return;
-                                if (result == true) {
-                                  context.read<GroupCubit>().refreshGroups();
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: SecretSantaColors.neutral50,
-                                  borderRadius: BorderRadius.circular(100),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 10,
-                                  ),
-                                  child: Row(
-                                    spacing: 10,
-                                    children: [
-                                      Text(
-                                        l10n.createGroupButton,
-                                        style: TextStyle(
-                                          color: SecretSantaColors.accent2,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.add_circle_rounded,
-                                        color: SecretSantaColors.accent2,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
+      _CardWhithGroups();
     }
+    return _CardEmpty();
+  }
+}
+
+class _CardWhithGroups extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -137,9 +56,105 @@ class _HomeCardState extends State<HomeCard> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(SecretSantaSpacing.lg),
             child: Column(
-              spacing: 10,
+              spacing: SecretSantaSpacing.sm,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          InkWell(
+                            onTap: () async {
+                              final result = await context.push(
+                                "/create_group",
+                              );
+                              if (!context.mounted) return;
+                              if (result == true) {
+                                context.read<GroupCubit>().refreshGroups();
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: SecretSantaColors.neutral50,
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: SecretSantaSpacing.md,
+                                  vertical: SecretSantaSpacing.sm,
+                                ),
+                                child: Row(
+                                  spacing: SecretSantaSpacing.sm,
+                                  children: [
+                                    Text(
+                                      l10n.createGroupButton,
+                                      style: TextStyle(
+                                        color: SecretSantaColors.accent2,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.add_circle_rounded,
+                                      color: SecretSantaColors.accent2,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CardEmpty extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            SecretSantaColors.accent2,
+            SecretSantaColors.accent3,
+            SecretSantaColors.accent,
+          ],
+        ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: SecretSantaShadows.large,
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: Opacity(
+              opacity: 0.2,
+              child: Icon(
+                Icons.card_giftcard,
+                size: 80,
+                color: SecretSantaColors.neutral50,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(SecretSantaSpacing.lg),
+            child: Column(
+              spacing: SecretSantaSpacing.sm,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -179,11 +194,11 @@ class _HomeCardState extends State<HomeCard> {
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 10,
+                                  horizontal: SecretSantaSpacing.md,
+                                  vertical: SecretSantaSpacing.sm,
                                 ),
                                 child: Row(
-                                  spacing: 10,
+                                  spacing: SecretSantaSpacing.sm,
                                   children: [
                                     Text(
                                       l10n.getStarted,

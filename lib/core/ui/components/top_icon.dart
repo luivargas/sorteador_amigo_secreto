@@ -8,10 +8,10 @@ class TopIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(SecretSantaSpacing.sm),
       decoration: BoxDecoration(
         color: SecretSantaColors.accent,
-        borderRadius: BorderRadius.all(Radius.circular(15)),
+        borderRadius: BorderRadius.all(Radius.circular(SecretSantaRadius.lg)),
         boxShadow: SecretSantaShadows.small,
       ),
       child: Icon(icon, size: 50, color: SecretSantaColors.neutral50),

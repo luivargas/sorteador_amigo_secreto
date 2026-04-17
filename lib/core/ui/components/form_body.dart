@@ -13,7 +13,7 @@ class FormBody extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+        padding: const EdgeInsets.all(SecretSantaSpacing.xl),
         child: child,
       ),
     );

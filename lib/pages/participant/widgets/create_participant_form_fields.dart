@@ -7,6 +7,7 @@ import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_name_f
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/core/util/participant_validators.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class CreateParticipantFormFields extends StatefulWidget {
   final TextEditingController nameController;
@@ -32,7 +33,7 @@ class _CreateParticipantFormFields extends State<CreateParticipantFormFields> {
     return FormBody(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 20,
+        spacing: SecretSantaSpacing.lg,
         children: [
           LabeledField(
             label: l10n.name,

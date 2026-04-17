@@ -34,7 +34,12 @@ class _LogoutScreenState extends State<LogoutScreen> {
     return Scaffold(
       appBar: MyAppBar(),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
+        padding: const EdgeInsets.fromLTRB(
+          SecretSantaSpacing.lg,
+          SecretSantaSpacing.lg,
+          SecretSantaSpacing.lg,
+          SecretSantaSpacing.xl,
+        ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Container(
@@ -45,12 +50,15 @@ class _LogoutScreenState extends State<LogoutScreen> {
               border: Border.all(color: SecretSantaColors.neutral200),
             ),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(32, 48, 32, 40),
+              padding: const EdgeInsets.symmetric(
+                horizontal: SecretSantaSpacing.xl,
+                vertical: SecretSantaSpacing.xxl,
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TopIcon(icon: Icons.logout),
-                  const SizedBox(height: 32), 
+                  const SizedBox(height: 32),
                   Text(
                     l10n.logoutLabel,
                     style: SecretSantaTextStyles.labelSmall.copyWith(
@@ -99,7 +107,7 @@ class _LogoutScreenState extends State<LogoutScreen> {
                         ),
                       ),
                       const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        padding: EdgeInsets.symmetric(horizontal: SecretSantaSpacing.md),
                         child: Icon(
                           Icons.lock_outline,
                           size: 14,

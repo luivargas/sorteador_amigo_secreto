@@ -19,7 +19,7 @@ class _FilterSheetState extends State<FilterSheet> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(SecretSantaSpacing.lg),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

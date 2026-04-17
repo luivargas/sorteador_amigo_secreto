@@ -53,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
         body: BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
             return Column(
-              spacing: 20,
+              spacing: SecretSantaSpacing.lg,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(child: Image.asset(iconLogo, scale: 15))

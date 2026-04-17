@@ -2,9 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:sorteador_amigo_secreto/core/network/api_error_mapper.dart';
 import 'package:sorteador_amigo_secreto/core/network/api_result.dart';
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/data/model/create_participant_model.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/data/model/update_participant_model.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/update_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/repository/participant_repository.dart';
@@ -14,7 +12,7 @@ class ParticipantDatasource extends ParticipantRepository {
   final dio = Dio(BaseOptions(headers: {'Accept': 'application/json'}));
 
   @override
-  Future<ApiResult<CreateParticipantModel>> create(
+  Future<ApiResult<ParticipantModel>> create(
     CreateParticipantEntity entity,
     String groupToken,
   ) async {
@@ -24,7 +22,7 @@ class ParticipantDatasource extends ParticipantRepository {
         data: entity.toJson(),
         options: Options(headers: {'Access-Key': groupToken}),
       );
-      final model = CreateParticipantModel.fromJson(resp.data);
+      final model = ParticipantModel.fromJson(resp.data);
       return Success(model);
     } on DioException catch (e) {
       return Failure(
@@ -40,13 +38,13 @@ class ParticipantDatasource extends ParticipantRepository {
   }
 
   @override
-  Future<ApiResult<ShowParticipantModel>> show(String id, String token) async {
+  Future<ApiResult<ParticipantModel>> show(String id, String token) async {
     try {
       final resp = await dio.get(
         '$stageParticipantApiUrl/$id',
         options: Options(headers: {'Access-Key': token}),
       );
-      final model = ShowParticipantModel.fromJson(resp.data);
+      final model = ParticipantModel.fromJson(resp.data);
       return Success(model);
     } on DioException catch (e) {
       return Failure(
@@ -62,7 +60,7 @@ class ParticipantDatasource extends ParticipantRepository {
   }
 
   @override
-  Future<ApiResult<UpdateParticipantModel>> update(
+  Future<ApiResult<ParticipantModel>> update(
     UpdateParticipantEntity entity,
     String id,
     String token,
@@ -73,7 +71,7 @@ class ParticipantDatasource extends ParticipantRepository {
         data: entity.toJson(),
         options: Options(headers: {'Access-Key': token}),
       );
-      final model = UpdateParticipantModel.fromJson(resp.data);
+      final model = ParticipantModel.fromJson(resp.data);
       return Success(model);
     } on DioException catch (e) {
       return Failure(

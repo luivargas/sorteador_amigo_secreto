@@ -5,6 +5,7 @@ import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_curren
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_name_form_field.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/group/core/utils/group_validators.dart';
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class EditGroupFields extends StatefulWidget {
   final TextEditingController groupNameController;
@@ -36,7 +37,7 @@ class _EditGroupFields extends State<EditGroupFields> {
     final l10n = AppLocalizations.of(context)!;
     return FormBody(
       child: Column(
-        spacing: 10,
+        spacing: SecretSantaSpacing.sm,
         children: [
           LabeledField(
             label: l10n.groupName,
@@ -59,7 +60,7 @@ class _EditGroupFields extends State<EditGroupFields> {
             ),
           ),
           Row(
-            spacing: 20,
+            spacing: SecretSantaSpacing.lg,
             children: [
               Expanded(
                 child: LabeledField(

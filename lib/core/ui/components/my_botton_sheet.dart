@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/app_list_card.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
+import 'package:sorteador_amigo_secreto/pages/group/data/model/group_model.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class MyBottonSheet {
@@ -8,7 +8,7 @@ class MyBottonSheet {
     required String title,
     required String subTitle,
     required BuildContext context,
-    ShowGroupModel? group,
+    GroupModel? group,
     required List<AppListCard> items,
   }) {
     showModalBottomSheet(
@@ -18,9 +18,9 @@ class MyBottonSheet {
       builder: (_) => SafeArea(
         top: false,
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(SecretSantaSpacing.lg),
           child: Column(
-            spacing: 15,
+            spacing: SecretSantaSpacing.md,
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
@@ -33,7 +33,7 @@ class MyBottonSheet {
               Row(
                 children: [
                   Column(
-                    spacing: 5,
+                    spacing: SecretSantaSpacing.xs,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(

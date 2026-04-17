@@ -20,14 +20,14 @@ class MyGradientButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: isLoading ? null : onTap,
-      borderRadius: BorderRadius.all(Radius.circular(20)),
+      borderRadius: BorderRadius.all(Radius.circular(SecretSantaRadius.xl)),
       child: Container(
         decoration: BoxDecoration(
           gradient: SecretSantaColors.primaryGradient,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: BorderRadius.all(Radius.circular(SecretSantaRadius.xl)),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(SecretSantaSpacing.md),
           child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 50),
             child: isLoading
@@ -44,7 +44,7 @@ class MyGradientButton extends StatelessWidget {
                   )
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    spacing: 10,
+                    spacing: SecretSantaSpacing.sm,
                     children: [
                       if (icon != null)
                         Icon(icon, color: SecretSantaColors.neutral50, size: 20),

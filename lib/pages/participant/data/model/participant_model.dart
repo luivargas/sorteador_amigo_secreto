@@ -1,4 +1,4 @@
-class CreateParticipantModel {
+class ParticipantModel {
   final String id;
   final String name;
   final String? email;
@@ -6,7 +6,7 @@ class CreateParticipantModel {
   final String? phone;
   final bool? isParticipant;
   final bool? isDependent;
-  final String role;
+  final String? role;
   final String? viewStatus;
   final String? viewedAt;
   final String? whatsappSentAt;
@@ -18,15 +18,14 @@ class CreateParticipantModel {
   final List<dynamic>? size;
   final List<dynamic>? dislike;
 
-  CreateParticipantModel({
+  ParticipantModel({
     required this.id,
     required this.name,
     this.email,
-    this.idd,
     this.phone,
     this.isParticipant,
     this.isDependent,
-    required this.role,
+    this.role,
     this.viewStatus,
     this.viewedAt,
     this.whatsappSentAt,
@@ -36,11 +35,11 @@ class CreateParticipantModel {
     this.wishList,
     this.preferences,
     this.size,
-    this.dislike,
+    this.dislike, this.idd,
   });
 
-  factory CreateParticipantModel.fromJson(Map<String, dynamic> json) {
-    return CreateParticipantModel(
+  factory ParticipantModel.fromJson(Map<String, dynamic> json) {
+    return ParticipantModel(
       id: json['id'],
       name: json['name'],
       email: json['email'],

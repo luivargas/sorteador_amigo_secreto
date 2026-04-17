@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_email_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
@@ -54,9 +55,10 @@ class _EnterGroup extends State<RequestTokenScreen> {
           );
         }
         if (state.error != null) {
-          SecretSantaAlertTheme(
+          AppAlert.showBanner(
+            context,
             message: state.error!.localize(context),
-            type: AlertType.warning,
+            type: AlertType.error,
           );
         }
       },
@@ -66,13 +68,13 @@ class _EnterGroup extends State<RequestTokenScreen> {
           appBar: MyAppBar(),
           body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20, 0),
+              padding: const EdgeInsets.symmetric(horizontal: SecretSantaSpacing.lg),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 20,
+                spacing: SecretSantaSpacing.lg,
                 children: [
                   Column(
-                    spacing: 10,
+                    spacing: SecretSantaSpacing.sm,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(l10n.verificationTitle, style: SecretSantaTextStyles.titleLarge,),

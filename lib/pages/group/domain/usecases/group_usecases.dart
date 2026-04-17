@@ -1,7 +1,5 @@
 import 'package:sorteador_amigo_secreto/core/network/api_result.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/model/create_group_model.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/model/update_group_model.dart';
+import 'package:sorteador_amigo_secreto/pages/group/data/model/group_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/create_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/update_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/repository/group_repository.dart';
@@ -10,11 +8,11 @@ class GroupUsecases {
   final GroupRepository repository;
   GroupUsecases(this.repository);
 
-  Future<ApiResult<CreateGroupModel>> create(CreateGroupEntity entity) =>
+  Future<ApiResult<GroupModel>> create(CreateGroupEntity entity) =>
       repository.create(entity);
-  Future<ApiResult<ShowGroupModel>> show(String code, String token) =>
+  Future<ApiResult<GroupModel>> show(String code, String token) =>
       repository.show(code, token);
-  Future<ApiResult<UpdateGroupModel>> update(
+  Future<ApiResult<GroupModel>> update(
     UpdateGroupEntity entity,
     String code,
     String token,

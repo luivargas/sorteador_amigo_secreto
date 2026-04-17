@@ -6,13 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/core/network/url/base_url/web.dart';
-import 'package:sorteador_amigo_secreto/core/ui/alerts/alert.dart';
+import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/app_list_card.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_botton_sheet.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
-import 'package:sorteador_amigo_secreto/pages/group/data/model/show_group_model.dart';
+import 'package:sorteador_amigo_secreto/pages/group/data/model/group_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
@@ -43,7 +43,7 @@ class _ViewGroupBody extends State<ViewGroup> {
   late final ConfettiController _confettiController;
   bool _showRaffleSuccess = false;
   bool _didChange = false;
-  ShowGroupModel? group;
+  GroupModel? group;
 
   @override
   void initState() {
@@ -53,7 +53,7 @@ class _ViewGroupBody extends State<ViewGroup> {
     );
   }
 
-  Future<void> _onShare(ShowGroupModel? g) async {
+  Future<void> _onShare(GroupModel? g) async {
     final title = AppLocalizations.of(context)!.shareLinkTitle;
     await SharePlus.instance.share(
       ShareParams(
@@ -222,8 +222,8 @@ class _ViewGroupBody extends State<ViewGroup> {
                   _onRefresh();
                 }
                 if (state.error != null) {
-                  SecretSantaAlert.show(
-                    context: context,
+                  AppAlert.showBanner(
+                    context,
                     message: state.error!.localize(context),
                     type: AlertType.warning,
                   );
@@ -254,7 +254,12 @@ class _ViewGroupBody extends State<ViewGroup> {
                   controller: _refreshController,
                   onRefresh: _onRefresh,
                   child: ListView(
-                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 60),
+                    padding: const EdgeInsets.fromLTRB(
+                      SecretSantaSpacing.lg,
+                      SecretSantaSpacing.lg,
+                      SecretSantaSpacing.lg,
+                      SecretSantaSpacing.xxl,
+                    ),
                     children: [
                       _GroupHeroHeader(name: g.name, type: type),
                       const SizedBox(height: 16),
@@ -302,18 +307,22 @@ class _ViewGroupBody extends State<ViewGroup> {
           if (_showRaffleSuccess)
             Center(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: SecretSantaSpacing.xl,
+                ),
                 child:
                     Container(
-                          padding: const EdgeInsets.all(32),
+                          padding: const EdgeInsets.all(SecretSantaSpacing.xl),
                           decoration: BoxDecoration(
                             color: SecretSantaColors.neutral50,
-                            borderRadius: BorderRadius.circular(24),
+                            borderRadius: BorderRadius.circular(
+                              SecretSantaRadius.xxl,
+                            ),
                             boxShadow: SecretSantaShadows.large,
                           ),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
-                            spacing: 16,
+                            spacing: SecretSantaSpacing.md,
                             children: [
                               Icon(
                                 Icons.celebration,
@@ -383,7 +392,12 @@ class _GroupHeroHeader extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(24, 24, 100, 24),
+            padding: const EdgeInsets.fromLTRB(
+              SecretSantaSpacing.lg,
+              SecretSantaSpacing.lg,
+              100,
+              SecretSantaSpacing.lg,
+            ),
             decoration: BoxDecoration(
               gradient: SecretSantaColors.primaryGradient,
               borderRadius: BorderRadius.circular(24),
@@ -391,7 +405,7 @@ class _GroupHeroHeader extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 14,
+              spacing: SecretSantaSpacing.md,
               children: [
                 SecretSantaBadge(type: type),
                 Text(
@@ -427,16 +441,19 @@ class _NeedMoreParticipantsBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      padding: const EdgeInsets.symmetric(
+        horizontal: SecretSantaSpacing.md,
+        vertical: SecretSantaSpacing.md,
+      ),
       decoration: BoxDecoration(
         color: SecretSantaColors.accent.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(SecretSantaRadius.lg),
         border: Border.all(
           color: SecretSantaColors.accent.withValues(alpha: 0.4),
         ),
       ),
       child: Row(
-        spacing: 12,
+        spacing: SecretSantaSpacing.sm,
         children: [
           Icon(Icons.info_outline, color: SecretSantaColors.accent),
           Expanded(

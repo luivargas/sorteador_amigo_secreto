@@ -10,7 +10,7 @@ class GroupOptions extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+      padding: const EdgeInsets.symmetric(horizontal: SecretSantaSpacing.lg),
       child: SizedBox(
         height: 250,
         child: Column(
@@ -23,17 +23,17 @@ class GroupOptions extends StatelessWidget {
               children: [Icon(Icons.horizontal_rule, size: 45)],
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 15.0),
+              padding: const EdgeInsets.only(bottom: SecretSantaSpacing.md),
               child: Text(
                 l10n.groupOptionsTitle,
                 style: SecretSantaTextStyles.titleSmall,
               ),
             ),
             Column(
-              spacing: 10,
+              spacing: SecretSantaSpacing.sm,
               children: [
                 Column(
-                  spacing: 10,
+                  spacing: SecretSantaSpacing.sm,
                   children: [
                     MyGradientButton(
                       title: l10n.shareGroup,
@@ -43,7 +43,7 @@ class GroupOptions extends StatelessWidget {
                   ],
                 ),
                 Column(
-                  spacing: 10,
+                  spacing: SecretSantaSpacing.sm,
                   children: [
                     MyGradientButton(
                       title: l10n.archive,

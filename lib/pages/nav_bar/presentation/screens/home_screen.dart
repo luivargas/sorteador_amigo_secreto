@@ -85,11 +85,7 @@ class _HomeViewState extends State<_HomeView>
         },
         child: Column(
           children: [
-            _SearchBar(
-              searchController: _searchController,
-              l10n: l10n,
-              elevated: _searchBarElevated,
-            ),
+            _SearchBar(l10n: l10n),
 
             Expanded(
               child: SmartRefresher(
@@ -182,7 +178,7 @@ class _HomeViewState extends State<_HomeView>
                                       name: g.name,
                                     ),
                                   );
-                                  if( result == true) _onRefresh();
+                                  if (result == true) _onRefresh();
                                 },
                                 index: index,
                                 groupName: g.name,
@@ -206,30 +202,25 @@ class _HomeViewState extends State<_HomeView>
 }
 
 class _SearchBar extends StatelessWidget {
-  final TextEditingController _searchController;
   final AppLocalizations l10n;
-  final bool elevated;
 
-  const _SearchBar({
-    required TextEditingController searchController,
-    required this.l10n,
-    required this.elevated,
-  }) : _searchController = searchController;
+  const _SearchBar({required this.l10n});
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return ColoredBox(
       color: SecretSantaColors.background,
-      shadowColor: SecretSantaColors.neutral900,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+        padding: const EdgeInsets.symmetric(
+          horizontal: SecretSantaRadius.lg,
+          vertical: SecretSantaRadius.sm,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 8,
           children: [
             MySearchBar(
-              controller: _searchController,
               hintText: l10n.searchGroup,
               onChanged: (v) => context.read<GroupCubit>().onSearchChanged(v),
             ),

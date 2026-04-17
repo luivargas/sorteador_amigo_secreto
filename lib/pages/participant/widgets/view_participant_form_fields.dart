@@ -6,16 +6,15 @@ import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_email_
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_name_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/core/util/participant_validators.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/data/model/show_participant_model.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
-
-enum ParticipantRole { admin, participant, observer }
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class ViewParticipantFormFields extends StatefulWidget {
   final TextEditingController nameController;
   final TextEditingController emailController;
   final PhoneController phoneController;
-  final ShowParticipantModel? participant;
+  final ParticipantModel? participant;
   final bool readOnly;
 
   const ViewParticipantFormFields({
@@ -40,7 +39,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
     final role = widget.participant?.role;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 10,
+      spacing: SecretSantaSpacing.sm,
       children: [
         FormBody(
           child: Column(
@@ -60,7 +59,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
                 child: MyEmailFormField(
                   controller: widget.emailController,
                   textInputAction: TextInputAction.next,
-                  readOnly: widget.readOnly || role == 'admin',
+                  readOnly: widget.readOnly || role == ParticipantRole.admin.toString(),
                   validator: (_) => ParticipantValidators.emailOrPhoneValidator(
                     context: context,
                     email: widget.emailController.text,
