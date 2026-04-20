@@ -583,6 +583,12 @@ class AppLocalizationsIt extends AppLocalizations {
       'Tutto quello che devi sapere per creare il tuo amico segreto.';
 
   @override
+  String get successTitle => 'Successo';
+
+  @override
+  String get partialTitle => 'Parziale';
+
+  @override
   String get participantOptionsTitle => 'Opzioni partecipante';
 
   @override

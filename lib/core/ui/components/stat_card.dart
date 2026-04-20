@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart'
-    hide AlertType;
+import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
+
 
 class StatCard extends StatelessWidget {
   final String value;

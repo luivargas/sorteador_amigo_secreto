@@ -107,7 +107,7 @@ class _FormGroupBody extends State<CreateGroup> {
                   SecretSantaSpacing.xxl,
                 ),
                 child: Column(
-                  spacing: SecretSantaSpacing.xl,
+                  spacing: SecretSantaSpacing.md,
                   children: [
                     Column(
                       children: [

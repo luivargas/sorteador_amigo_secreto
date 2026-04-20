@@ -72,7 +72,7 @@ class GroupParticipantsCard extends StatelessWidget {
 
     return InkWell(
       onTap: () => _goToList(context),
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: SecretSantaSpacing.lg, vertical: SecretSantaSpacing.md),

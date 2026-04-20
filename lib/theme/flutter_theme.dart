@@ -284,32 +284,32 @@ class SecretSantaTheme {
           color: SecretSantaColors.accent.withValues(alpha: 0.5),
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
           borderSide: BorderSide(
             color: SecretSantaColors.accent.withValues(alpha: 0.5),
             width: 1,
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
           borderSide: BorderSide(
             color: SecretSantaColors.accent.withValues(alpha: 0.5),
             width: 1,
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
           borderSide: BorderSide(
             color: SecretSantaColors.accent.withValues(alpha: 0.5),
             width: 1,
           ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
           borderSide: BorderSide(color: SecretSantaColors.error, width: 1),
         ),
         disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
           borderSide: BorderSide(color: SecretSantaColors.neutral700, width: 1),
         ),
         contentPadding: EdgeInsets.symmetric(horizontal: SecretSantaSpacing.md, vertical: SecretSantaSpacing.md),
@@ -371,7 +371,7 @@ class SecretSantaTheme {
       cardTheme: CardThemeData(
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(SecretSantaRadius.xxl),
           side: BorderSide(color: SecretSantaColors.neutral200, width: 1),
         ),
         shadowColor: Color.fromRGBO(17, 24, 39, 0.06),
@@ -407,14 +407,14 @@ class GradientButton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         gradient: SecretSantaColors.primaryGradient,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
         boxShadow: SecretSantaShadows.button,
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           onTap: isLoading ? null : onPressed,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
           child: Container(
             padding: EdgeInsets.symmetric(
               horizontal: isLarge ? 40 : 28,
@@ -478,7 +478,7 @@ class SecondaryButton extends StatelessWidget {
           horizontal: isSmall ? 16 : 28,
           vertical: isSmall ? 8 : 14,
         ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SecretSantaRadius.xl)),
         side: BorderSide(color: SecretSantaColors.neutral200, width: 1),
         backgroundColor: SecretSantaColors.neutral50,
       ),
@@ -522,7 +522,7 @@ class SecretSantaCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(SecretSantaRadius.xxl),
         border: Border.all(
           color: SecretSantaColors.neutral200.withValues(alpha: 0.5),
           width: 1,
@@ -531,7 +531,7 @@ class SecretSantaCard extends StatelessWidget {
       ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(SecretSantaRadius.xxl),
         child: child,
       ),
     );
@@ -570,7 +570,7 @@ class SecretSantaBadge extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 14, vertical: 6),
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: BorderRadius.circular(SecretSantaRadius.full),
         border: Border.all(color: borderColor, width: 1),
       ),
       child: Text(

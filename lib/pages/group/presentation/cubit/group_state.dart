@@ -4,8 +4,6 @@ import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.
 import 'package:sorteador_amigo_secreto/pages/group/data/model/group_model.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
-
-
 class GroupState extends Equatable {
   final bool isLoading;
   final bool created;

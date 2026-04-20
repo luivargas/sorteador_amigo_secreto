@@ -17,7 +17,7 @@ class _HomeCardState extends State<HomeCard> {
   @override
   Widget build(BuildContext context) {
     if (widget.hasGroups) {
-      _CardWhithGroups();
+      return _CardWhithGroups();
     }
     return _CardEmpty();
   }
@@ -38,7 +38,7 @@ class _CardWhithGroups extends StatelessWidget {
             SecretSantaColors.accent,
           ],
         ),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
         boxShadow: SecretSantaShadows.large,
       ),
       child: Stack(
@@ -134,7 +134,7 @@ class _CardEmpty extends StatelessWidget {
             SecretSantaColors.accent,
           ],
         ),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
         boxShadow: SecretSantaShadows.large,
       ),
       child: Stack(

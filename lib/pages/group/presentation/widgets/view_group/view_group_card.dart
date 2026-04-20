@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/stat_card.dart';
-import 'package:sorteador_amigo_secreto/pages/group/core/utils/gift_utils.dart';
+import 'package:sorteador_amigo_secreto/core/util/group/gift_utils.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/group_participants_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';

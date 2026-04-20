@@ -581,6 +581,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'Everything you need to know to create your secret santa.';
 
   @override
+  String get successTitle => 'Success';
+
+  @override
+  String get partialTitle => 'Partial';
+
+  @override
   String get participantOptionsTitle => 'Participant options';
 
   @override

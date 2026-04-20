@@ -246,6 +246,9 @@
   "onboardingGuideTitle": "Guida rapida",
   "onboardingGuideSubtitle": "Tutto quello che devi sapere per creare il tuo amico segreto.",
 
+"successTitle": "Successo",                                                                                           
+  "partialTitle": "Parziale",
+
   "participantOptionsTitle": "Opzioni partecipante",                                                                    
   "participantOptionsSubtitle": "Gestisci questo partecipante",                                                       
   "resendEmail": "Reinvia email",                                                                                     

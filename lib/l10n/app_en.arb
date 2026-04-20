@@ -246,6 +246,9 @@
   "onboardingGuideTitle": "Quick guide",
   "onboardingGuideSubtitle": "Everything you need to know to create your secret santa.",
 
+  "successTitle": "Success",                                                                                            
+  "partialTitle": "Partial",
+
   "participantOptionsTitle": "Participant options",                                                                     
   "participantOptionsSubtitle": "Manage this participant",
   "resendEmail": "Resend email",                                                                                        

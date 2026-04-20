@@ -9,11 +9,10 @@ import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_form_field.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/my_search_bar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/core/util/participant_validators.dart';
+import 'package:sorteador_amigo_secreto/core/validator/participant/participant_validators.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/usecases/participant_usecase.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
@@ -438,12 +437,11 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
 
     await AppAlert.showAlertDialog(
       context,
-      title: l10n.errorTitle,
-      // failures.isEmpty
-      //     ? l10n.successTitle
-      //     : successes.isEmpty
-      //     ? l10n.errorTitle
-      //     : l10n.partialTitle,
+      title: failures.isEmpty
+          ? l10n.successTitle
+          : successes.isEmpty
+          ? l10n.errorTitle
+          : l10n.partialTitle,
       message: body.toString().trim(),
       confirmText: 'OK',
       onConfirm: () {
@@ -515,7 +513,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                 ],
               ),
             ),
-            MySearchBar(
+            SearchBar(
               controller: _searchController,
               hintText: l10n.searchParticipants,
             ),

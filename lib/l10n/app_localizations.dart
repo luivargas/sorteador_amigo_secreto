@@ -1152,6 +1152,18 @@ abstract class AppLocalizations {
   /// **'Tudo que você precisa saber para criar seu amigo secreto.'**
   String get onboardingGuideSubtitle;
 
+  /// No description provided for @successTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sucesso'**
+  String get successTitle;
+
+  /// No description provided for @partialTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Parcial'**
+  String get partialTitle;
+
   /// No description provided for @participantOptionsTitle.
   ///
   /// In pt, this message translates to:

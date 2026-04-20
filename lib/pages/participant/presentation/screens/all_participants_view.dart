@@ -98,7 +98,7 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: SecretSantaRadius.lg,
-                  vertical: SecretSantaRadius.sm,
+                  vertical: SecretSantaRadius.lg,
                 ),
                 child: MySearchBar(
                   controller: _searchController,

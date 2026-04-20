@@ -81,7 +81,7 @@ class InfoCard extends StatelessWidget {
                 height: 72,
                 decoration: BoxDecoration(
                   color: iconBackgroundColor,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
                   boxShadow: SecretSantaShadows.small
                 ),
                 child: Icon(

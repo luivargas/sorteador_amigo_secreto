@@ -6,7 +6,7 @@ import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_email_
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_name_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/core/util/participant_validators.dart';
+import 'package:sorteador_amigo_secreto/core/validator/participant/participant_validators.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class GroupFormFields extends StatefulWidget {

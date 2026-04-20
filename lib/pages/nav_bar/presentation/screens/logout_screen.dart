@@ -41,11 +41,11 @@ class _LogoutScreenState extends State<LogoutScreen> {
           SecretSantaSpacing.xl,
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
           child: Container(
             decoration: BoxDecoration(
               color: SecretSantaColors.neutral100,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
               boxShadow: SecretSantaShadows.medium,
               border: Border.all(color: SecretSantaColors.neutral200),
             ),

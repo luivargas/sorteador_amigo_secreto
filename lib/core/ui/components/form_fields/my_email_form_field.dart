@@ -33,7 +33,7 @@ class MyEmailFormField extends StatelessWidget {
       enabledBorder: readOnly
           ? OutlineInputBorder(
               borderSide: BorderSide(color: SecretSantaColors.neutral300),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(SecretSantaRadius.md),
             )
           : null,
     ),

@@ -4,7 +4,7 @@ import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/labeled_f
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_currency_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_name_form_field.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
-import 'package:sorteador_amigo_secreto/pages/group/core/utils/group_validators.dart';
+import 'package:sorteador_amigo_secreto/core/validator/group/group_validators.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class EditGroupFields extends StatefulWidget {

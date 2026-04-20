@@ -387,7 +387,7 @@ class _GroupHeroHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(24),
+      borderRadius: BorderRadius.circular(SecretSantaRadius.xxl),
       child: Stack(
         children: [
           Container(
@@ -400,7 +400,7 @@ class _GroupHeroHeader extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               gradient: SecretSantaColors.primaryGradient,
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(SecretSantaRadius.xxl),
               boxShadow: SecretSantaShadows.button,
             ),
             child: Column(

@@ -26,25 +26,21 @@ class MyBottonSheet {
               Container(
                 decoration: BoxDecoration(
                   color: SecretSantaColors.neutral600.withValues(alpha: 0.5),
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
                 ),
                 child: SizedBox(height: 7, width: 80),
               ),
-              Row(
+              Column(
+                spacing: SecretSantaSpacing.xs,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    spacing: SecretSantaSpacing.xs,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: SecretSantaTextStyles.titleMedium,
-                      ),
-                      Text(
-                        subTitle.toUpperCase(),
-                        style: SecretSantaTheme.theme.textTheme.bodySmall,
-                      ),
-                    ],
+                  Text(
+                    title,
+                    style: SecretSantaTextStyles.titleMedium,
+                  ),
+                  Text(
+                    subTitle.toUpperCase(),
+                    style: SecretSantaTheme.theme.textTheme.bodySmall,
                   ),
                 ],
               ),

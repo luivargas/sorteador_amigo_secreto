@@ -12,7 +12,7 @@ import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/domain/entities/request_token_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_state.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/core/util/participant_validators.dart';
+import 'package:sorteador_amigo_secreto/core/validator/participant/participant_validators.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class RequestTokenScreen extends StatefulWidget {

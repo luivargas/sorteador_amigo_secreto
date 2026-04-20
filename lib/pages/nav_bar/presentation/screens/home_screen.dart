@@ -97,14 +97,24 @@ class _HomeViewState extends State<_HomeView>
                   slivers: [
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+                        padding: const EdgeInsets.fromLTRB(
+                          SecretSantaSpacing.lg,
+                          SecretSantaSpacing.md,
+                          SecretSantaSpacing.lg,
+                          0,
+                        ),
                         child: HomeCard(hasGroups: _hasGroups),
                       ),
                     ),
 
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
+                        padding: const EdgeInsets.fromLTRB(
+                          SecretSantaSpacing.lg,
+                          SecretSantaSpacing.md,
+                          SecretSantaSpacing.lg,
+                          SecretSantaRadius.sm,
+                        ),
                         child: Text(
                           l10n.homeTitle,
                           style: SecretSantaTextStyles.titleSmall,
@@ -212,8 +222,8 @@ class _SearchBar extends StatelessWidget {
       color: SecretSantaColors.background,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: SecretSantaRadius.lg,
-          vertical: SecretSantaRadius.sm,
+          horizontal: SecretSantaSpacing.lg,
+          vertical: SecretSantaSpacing.lg,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -228,6 +238,7 @@ class _SearchBar extends StatelessWidget {
               buildWhen: (prev, cur) => prev.filter != cur.filter,
               builder: (context, state) {
                 return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
                   child: Row(
                     spacing: 8,
                     children: [
@@ -290,7 +301,7 @@ class _FilterChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: selected ? activeColor : SecretSantaColors.neutral50,
-          borderRadius: BorderRadius.circular(999),
+          borderRadius: BorderRadius.circular(SecretSantaRadius.full),
           border: Border.all(
             color: selected ? activeColor : SecretSantaColors.neutral200,
           ),

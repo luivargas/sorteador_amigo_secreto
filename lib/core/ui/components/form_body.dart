@@ -10,7 +10,7 @@ class FormBody extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: SecretSantaColors.accent.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
       ),
       child: Padding(
         padding: const EdgeInsets.all(SecretSantaSpacing.xl),

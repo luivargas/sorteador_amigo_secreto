@@ -584,6 +584,12 @@ class AppLocalizationsEs extends AppLocalizations {
       'Todo lo que necesitas saber para crear tu amigo secreto.';
 
   @override
+  String get successTitle => 'Éxito';
+
+  @override
+  String get partialTitle => 'Parcial';
+
+  @override
   String get participantOptionsTitle => 'Opciones del participante';
 
   @override

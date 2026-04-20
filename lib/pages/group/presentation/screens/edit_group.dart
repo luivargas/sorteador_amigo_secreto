@@ -6,8 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/loading_or_error.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
-import 'package:sorteador_amigo_secreto/pages/group/core/utils/date_time_utils.dart';
-import 'package:sorteador_amigo_secreto/pages/group/core/utils/gift_utils.dart';
+import 'package:sorteador_amigo_secreto/core/util/group/date_time_utils.dart';
+import 'package:sorteador_amigo_secreto/core/util/group/gift_utils.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/update_group_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
@@ -162,24 +162,20 @@ class _EditGroup extends State<EditGroup> {
                     SecretSantaSpacing.xxl,
                   ),
                   child: Column(
-                    spacing: SecretSantaSpacing.xl,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    spacing: SecretSantaSpacing.md,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: SecretSantaSpacing.md),
-                        child: Column(
-                          children: [
-                            Text(
-                              l10n.editGroupTitle,
-                              style: SecretSantaTextStyles.titleMedium,
-                            ),
-                            Text(
-                              l10n.editGroupSubtitle,
-                              style: TextStyle(),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
+                      Column(
+                        children: [
+                          Text(
+                            l10n.editGroupTitle,
+                            style: SecretSantaTextStyles.titleMedium,
+                          ),
+                          Text(
+                            l10n.editGroupSubtitle,
+                            style: TextStyle(),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
                       EditGroupFields(
                         groupNameController: groupNameController,

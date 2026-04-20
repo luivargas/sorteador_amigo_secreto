@@ -62,7 +62,7 @@ class _StatusBadge extends StatelessWidget {
         color: isConfirmed
             ? SecretSantaColors.successBg
             : SecretSantaColors.neutral200,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
       ),
       child: Text(
         isConfirmed

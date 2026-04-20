@@ -79,7 +79,7 @@ class AppAlert extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: colors.bg,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
         border: Border.all(color: colors.border, width: 1),
       ),
       child: Row(

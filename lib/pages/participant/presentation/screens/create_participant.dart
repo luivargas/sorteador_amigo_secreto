@@ -90,32 +90,28 @@ class _CreateParticipant extends State<CreateParticipant> {
             return Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: SecretSantaSpacing.lg,
+                vertical: SecretSantaSpacing.lg
               ),
               child: SingleChildScrollView(
                 child: Column(
-                  spacing: SecretSantaSpacing.xl,
+                  spacing: SecretSantaSpacing.md,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: SecretSantaSpacing.md,
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            l10n.addParticipantTitle,
-                            style: SecretSantaTextStyles.titleMedium,
-                          ),
-                          Text(
-                            l10n.addParticipantSubtitle,
-                            style: TextStyle(),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.addParticipantTitle,
+                          style: SecretSantaTextStyles.titleMedium,
+                        ),
+                        Text(
+                          l10n.addParticipantSubtitle,
+                          style: TextStyle(),
+                        ),
+                      ],
                     ),
 
                     InkWell(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
                       onTap: () async {
                         final result = await context.pushNamed(
                           'contacts',
@@ -132,16 +128,16 @@ class _CreateParticipant extends State<CreateParticipant> {
                         padding: const EdgeInsets.all(3),
                         decoration: BoxDecoration(
                           gradient: SecretSantaColors.primaryGradient,
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
                         ),
                         child: Container(
                           decoration: BoxDecoration(
                             color: SecretSantaColors.neutral50,
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
                             boxShadow: SecretSantaShadows.medium,
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(20.0),
+                            padding: const EdgeInsets.all(SecretSantaSpacing.lg),
                             child: Row(
                               spacing: SecretSantaSpacing.md,
                               children: [

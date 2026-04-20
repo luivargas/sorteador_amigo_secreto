@@ -152,7 +152,7 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                                                     MaterialPinShape.outlined,
                                                 spacing: SecretSantaSpacing.sm,
                                                 borderRadius:
-                                                    BorderRadius.circular(12),
+                                                    BorderRadius.circular(SecretSantaRadius.md),
                                                 borderColor:
                                                     SecretSantaColors.accent,
                                                 entryAnimation:
