@@ -59,7 +59,6 @@ class _ViewGroupBody extends State<ViewGroup> {
       ShareParams(
         uri: Uri.parse("$stgSiteBaseUrl/grupo/${g?.code}/entrar"),
         title: title,
-        subject: title,
       ),
     );
   }
@@ -273,8 +272,6 @@ class _ViewGroupBody extends State<ViewGroup> {
                         groupDescription: g.description ?? l10n.noDescription,
                         participants: g.participants.length,
                         participantsList: g.participants,
-                        groupToken: g.token,
-                        groupCode: g.code,
                       ),
                       if (g.raffledAt == null) ...[
                         const SizedBox(height: 24),

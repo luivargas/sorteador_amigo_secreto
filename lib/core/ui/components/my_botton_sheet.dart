@@ -20,24 +20,27 @@ class MyBottonSheet {
         child: Padding(
           padding: const EdgeInsets.all(SecretSantaSpacing.lg),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             spacing: SecretSantaSpacing.md,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: SecretSantaColors.neutral600.withValues(alpha: 0.5),
-                  borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
-                ),
-                child: SizedBox(height: 7, width: 80),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: SecretSantaColors.neutral600.withValues(alpha: 0.5),
+                      borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
+                    ),
+                    child: SizedBox(height: 7, width: 80),
+                  ),
+                ],
               ),
               Column(
                 spacing: SecretSantaSpacing.xs,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    title,
-                    style: SecretSantaTextStyles.titleMedium,
-                  ),
+                  Text(title, style: SecretSantaTextStyles.titleMedium),
                   Text(
                     subTitle.toUpperCase(),
                     style: SecretSantaTheme.theme.textTheme.bodySmall,

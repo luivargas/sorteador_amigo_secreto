@@ -46,51 +46,80 @@ class _ViewParticipant extends State<ViewParticipant> {
     super.dispose();
   }
 
-  Future<void> _onResendEmail(BuildContext context) async {}
+  Future<void> _onResendEmail(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+    if (context.mounted) {
+      final confirmed = await AppAlert.showAlertDialog(
+        context,
+        title: l10n.resendEmail,
+        message: l10n.resendEmailSubtitle,
+        actions: [
+          TextButton(
+            onPressed: () => context.pop(false),
+            child: Text(
+              l10n.cancel,
+              style: const TextStyle(color: SecretSantaColors.accent2),
+            ),
+          ),
+          TextButton(
+            onPressed: () => context.pop(true),
+            child: Text(
+              l10n.resendEmail,
+              style: const TextStyle(color: SecretSantaColors.accent),
+            ),
+          ),
+        ],
+      );
+
+      if (confirmed == true && context.mounted) {
+        context.read<ParticipantCubit>().resendEmail(
+          widget.userId,
+          getIt<GroupSession>().token,
+        );
+      }
+    }
+  }
 
   Future<void> _onDelete(BuildContext context) async {
     final l10n = AppLocalizations.of(context)!;
-    if (role == ParticipantRole.admin.toString()) {
-      await showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: Text(l10n.adminCannotBeDeleted),
-          actions: [
-            TextButton(
-              onPressed: () {
-                context.pop();
-              },
-              child: Text(l10n.ok),
-            ),
-          ],
-        ),
+    if (role == ParticipantRole.admin.name) {
+      await AppAlert.showAlertDialog(
+        context,
+        title: l10n.adminCannotBeDeleted,
+        message: l10n.adminCannotBeDeleted,
+        actions: [
+          TextButton(
+            onPressed: () {
+              context.pop(false);
+            },
+            child: Text(l10n.ok),
+          ),
+        ],
       );
       return;
     }
 
     if (context.mounted) {
-      final confirmed = await showDialog<bool>(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: Text(l10n.delete),
-          content: Text(l10n.confirmDeleteParticipant(_nameController.text)),
-          actions: [
-            TextButton(
-              onPressed: () => context.pop(false),
-              child: Text(
-                l10n.cancel,
-                style: const TextStyle(color: SecretSantaColors.accent2),
-              ),
+      final confirmed = await AppAlert.showAlertDialog(
+        context,
+        title: l10n.delete,
+        message: l10n.confirmDeleteParticipant(_nameController.text),
+        actions: [
+          TextButton(
+            onPressed: () => context.pop(false),
+            child: Text(
+              l10n.cancel,
+              style: const TextStyle(color: SecretSantaColors.accent2),
             ),
-            TextButton(
-              onPressed: () => context.pop(true),
-              child: Text(
-                l10n.delete,
-                style: const TextStyle(color: SecretSantaColors.accent),
-              ),
+          ),
+          TextButton(
+            onPressed: () => context.pop(true),
+            child: Text(
+              l10n.delete,
+              style: const TextStyle(color: SecretSantaColors.accent),
             ),
-          ],
-        ),
+          ),
+        ],
       );
 
       if (confirmed == true && context.mounted) {
@@ -108,7 +137,7 @@ class _ViewParticipant extends State<ViewParticipant> {
     final g = state.showParti!;
 
     _nameController.text = g.name;
-    if (g.role == ParticipantRole.admin.toString()) {
+    if (g.role == ParticipantRole.admin.name) {
       _emailController.text = getIt<AuthDB>().email ?? g.email ?? '';
     } else {
       _emailController.text = g.email ?? '';
@@ -173,7 +202,10 @@ class _ViewParticipant extends State<ViewParticipant> {
                         Icons.chevron_right,
                         color: SecretSantaColors.accent,
                       ),
-                      onTap: () => _onResendEmail(context),
+                      onTap: () {
+                        context.pop();
+                        _onResendEmail(context);
+                      },
                     ),
                   if (!getIt<GroupSession>().isRaffled)
                     AppListCard(

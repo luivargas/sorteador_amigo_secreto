@@ -34,7 +34,6 @@ class ParticipantCubit extends Cubit<ParticipantState> {
   }
 
   Future<void> show(String id, String groupToken) async {
-    if (isClosed) return;
     safeEmit(state.copyWith(isLoading: true, clearError: true, showed: false));
     try {
       final result = await participantUsecase.show(id, groupToken);
@@ -62,7 +61,6 @@ class ParticipantCubit extends Cubit<ParticipantState> {
     String id,
     String groupToken,
   ) async {
-    if (isClosed) return;
     safeEmit(state.copyWith(isLoading: true, clearError: true, updated: false));
     try {
       final result = await participantUsecase.update(entity, id, groupToken);
@@ -85,7 +83,6 @@ class ParticipantCubit extends Cubit<ParticipantState> {
   }
 
   Future<void> delete(String id, String groupToken) async {
-    if (isClosed) return;
     safeEmit(state.copyWith(isLoading: true, clearError: true, deleted: false));
     try {
       final result = await participantUsecase.delete(id, groupToken);
@@ -102,6 +99,28 @@ class ParticipantCubit extends Cubit<ParticipantState> {
           error: AppError.unknown,
           isLoading: false,
           deleted: false,
+        ),
+      );
+    }
+  }
+
+    Future<void> resendEmail(String id, String groupToken) async {
+    safeEmit(state.copyWith(isLoading: true, clearError: true, resended: false));
+    try {
+      final result = await participantUsecase.resendEmail(id, groupToken);
+      result.when(
+        success: (_) =>
+            safeEmit(state.copyWith(isLoading: false, resended: true)),
+        failure: (f) => safeEmit(
+          state.copyWith(isLoading: false, error: f.error, resended: false),
+        ),
+      );
+    } catch (e) {
+      safeEmit(
+        state.copyWith(
+          error: AppError.unknown,
+          isLoading: false,
+          resended: false,
         ),
       );
     }

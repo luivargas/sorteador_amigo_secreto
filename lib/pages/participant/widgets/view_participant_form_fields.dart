@@ -59,7 +59,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
                 child: MyEmailFormField(
                   controller: widget.emailController,
                   textInputAction: TextInputAction.next,
-                  readOnly: widget.readOnly || role == ParticipantRole.admin.toString(),
+                  readOnly: widget.readOnly || role == ParticipantRole.admin.name,
                   validator: (_) => ParticipantValidators.emailOrPhoneValidator(
                     context: context,
                     email: widget.emailController.text,

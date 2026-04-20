@@ -11,6 +11,7 @@ import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/my_search_bar.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/core/validator/participant/participant_validators.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
@@ -417,11 +418,10 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
 
     if (!context.mounted) return;
 
-    // Monta o conteúdo do dialog
     final StringBuffer body = StringBuffer();
 
     if (successes.isNotEmpty) {
-      body.writeln('✅ Adicionados (${successes.length}):');
+      body.writeln('✅ ${l10n.participantAddedSuccess('')} (${successes.length}):');
       for (final name in successes) {
         body.writeln('  • $name');
       }
@@ -429,7 +429,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
 
     if (failures.isNotEmpty) {
       if (body.isNotEmpty) body.writeln();
-      body.writeln('❌ Falhas (${failures.length}):');
+      body.writeln('❌ ${l10n.errorAddingContact('', '')} (${failures.length}):');
       for (final msg in failures) {
         body.writeln('  • $msg');
       }
@@ -443,10 +443,12 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
           ? l10n.errorTitle
           : l10n.partialTitle,
       message: body.toString().trim(),
-      confirmText: 'OK',
-      onConfirm: () {
-        if (successes.isNotEmpty) context.pop(true);
-      },
+      actions: [
+        TextButton(
+          onPressed: () => context.pop(successes.isNotEmpty),
+          child: const Text('OK'),
+        ),
+      ],
     );
   }
 
@@ -513,7 +515,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                 ],
               ),
             ),
-            SearchBar(
+            MySearchBar(
               controller: _searchController,
               hintText: l10n.searchParticipants,
             ),

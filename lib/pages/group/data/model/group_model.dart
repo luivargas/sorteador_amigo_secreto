@@ -18,7 +18,7 @@ class GroupModel {
   final bool? whatsappEnabled;
   final String? whatsappEnabledAt;
   final String? status;
-  final String token;
+  final String? token;
   final List<ParticipantModel> participants;
 
   GroupModel({

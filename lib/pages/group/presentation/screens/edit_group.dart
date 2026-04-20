@@ -3,12 +3,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
+import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/loading_or_error.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/core/util/group/date_time_utils.dart';
 import 'package:sorteador_amigo_secreto/core/util/group/gift_utils.dart';
+import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/update_group_entity.dart';
+import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/edit_group/edit_group_field.dart';
@@ -16,9 +20,7 @@ import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class EditGroup extends StatefulWidget {
-  final String code;
-  final String token;
-  const EditGroup({super.key, required this.code, required this.token});
+  const EditGroup({super.key});
 
   @override
   State<EditGroup> createState() => _EditGroup();
@@ -131,7 +133,12 @@ class _EditGroup extends State<EditGroup> {
       location: location,
       drawDate: date,
     );
-    context.read<GroupCubit>().update(entity, widget.code, widget.token);
+
+    context.read<GroupCubit>().update(
+      entity,
+      getIt<GroupSession>().code,
+      getIt<GroupSession>().token,
+    );
   }
 
   @override
@@ -144,15 +151,22 @@ class _EditGroup extends State<EditGroup> {
         appBar: MyAppBar(),
         body: BlocConsumer<GroupCubit, GroupState>(
           listener: (context, state) {
-            _prefillFromApi(state);
+            if (state.error != null && state.group != null) {
+              AppAlert.showBanner(
+                context,
+                message: state.error!.localize(context),
+                type: AlertType.warning,
+              );
+            }
             if (state.updated) {
               context.pop(true);
             }
           },
           builder: (context, state) {
+            _prefillFromApi(state);
             return LoadingOrError(
               isLoading: state.isLoading && state.group == null,
-              error: state.error,
+              error: state.group == null ? state.error : null,
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(
@@ -188,6 +202,7 @@ class _EditGroup extends State<EditGroup> {
                       ),
                       MyGradientButton(
                         onTap: _onSubmit,
+                        isLoading: state.isLoading,
                         title: AppLocalizations.of(context)!.save,
                         icon: Icons.save,
                       ),

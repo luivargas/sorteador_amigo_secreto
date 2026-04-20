@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/stat_card.dart';
 import 'package:sorteador_amigo_secreto/core/util/group/gift_utils.dart';
+import 'package:sorteador_amigo_secreto/injector/injector.dart';
+import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/group_participants_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
@@ -15,8 +17,6 @@ class ViewGroupCard extends StatelessWidget {
   final String groupDescription;
   final int participants;
   final List<ParticipantModel> participantsList;
-  final String groupToken;
-  final String groupCode;
   final BadgeType type;
 
   const ViewGroupCard({
@@ -30,8 +30,6 @@ class ViewGroupCard extends StatelessWidget {
     required this.eventTime,
     required this.groupDescription,
     required this.participantsList,
-    required this.groupToken,
-    required this.groupCode,
   });
 
   @override
@@ -172,8 +170,8 @@ class ViewGroupCard extends StatelessWidget {
         GroupParticipantsCard(
           type: type,
           participantsList: participantsList,
-          groupToken: groupToken,
-          groupCode: groupCode,
+          groupToken: getIt<GroupSession>().token,
+          groupCode: getIt<GroupSession>().code,
         ),
       ],
     );

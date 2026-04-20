@@ -28,12 +28,12 @@ List<RouteBase> participantRoutes = [
     name: 'create_part',
     path: '/create_part',
     builder: (BuildContext context, GoRouterState state) {
-      final extra = state.extra as CreateParticipantArgs;
+      final session = getIt<GroupSession>();
       return BlocProvider<ParticipantCubit>(
         create: (_) => getIt<ParticipantCubit>(),
         child: CreateParticipant(
-          groupToken: extra.groupToken,
-          groupCode: extra.groupCode,
+          groupToken: session.token,
+          groupCode: session.code,
         ),
       );
     },

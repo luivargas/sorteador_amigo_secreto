@@ -15,4 +15,5 @@ abstract class ParticipantRepository {
   );
   Future<ApiResult<ParticipantModel>> show(String id, String token);
   Future<ApiResult> delete(String id, String token);
+  Future<ApiResult> resendEmail(String id, String token);
 }

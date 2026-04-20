@@ -165,7 +165,7 @@ class GroupCubit extends Cubit<GroupState> {
     try {
       final result = await _groupUsecases.update(entity, code, token);
       result.when(
-        success: (_) => safeEmit(state.copyWith(isLoading: false, updated: true)),
+        success: (s) => safeEmit(state.copyWith(isLoading: false, updated: true)),
         failure: (f) => safeEmit(
           state.copyWith(isLoading: false, error: f.error, updated: false),
         ),

@@ -37,7 +37,7 @@ List<RouteBase> groupRoutes = [
       final extra = state.extra as ShowGroupArgs;
       return BlocProvider<GroupCubit>(
         create: (_) => getIt<GroupCubit>()..show(extra.code, extra.token),
-        child: EditGroup(code: extra.code, token: extra.token),
+        child: EditGroup(),
       );
     },
   ),

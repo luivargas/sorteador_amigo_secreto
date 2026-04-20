@@ -76,7 +76,7 @@ class _FormGroupBody extends State<CreateGroup> {
                   'view_group',
                   extra: ShowGroupArgs(
                     code: state.createdGroup!.code,
-                    token: state.createdGroup!.token,
+                    token: state.createdGroup!.token!,
                     name: state.createdGroup!.name,
                   ),
                 );

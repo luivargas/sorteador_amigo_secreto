@@ -8,6 +8,7 @@ class ParticipantState extends Equatable {
   final bool updated;
   final bool showed;
   final bool deleted;
+  final bool resended;
   final AppError? error;
   final ParticipantModel? showParti;
 
@@ -19,6 +20,7 @@ class ParticipantState extends Equatable {
     this.error,
     this.showParti,
     required this.deleted,
+    required this.resended,
   });
 
   factory ParticipantState.initial() {
@@ -28,6 +30,7 @@ class ParticipantState extends Equatable {
       updated: false,
       showed: false,
       deleted: false,
+      resended: false,
     );
   }
 
@@ -37,6 +40,7 @@ class ParticipantState extends Equatable {
     bool? updated,
     bool? showed,
     bool? deleted,
+    bool? resended,
     AppError? error,
     ParticipantModel? showParti,
     bool clearError = false,
@@ -50,6 +54,7 @@ class ParticipantState extends Equatable {
       error: clearError ? null : (error ?? this.error),
       showParti: clearShowParti ? null : (showParti ?? this.showParti),
       deleted: deleted ?? this.deleted,
+      resended: resended ?? this.resended,
     );
   }
 
@@ -62,5 +67,6 @@ class ParticipantState extends Equatable {
     error,
     showParti,
     deleted,
+    resended,
   ];
 }

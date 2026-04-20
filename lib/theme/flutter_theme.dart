@@ -102,7 +102,6 @@ class SecretSantaTextStyles {
     height: 1.6,
   );
 
-  // Labels
   static const TextStyle label = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w600,
@@ -115,7 +114,6 @@ class SecretSantaTextStyles {
     height: 1.4,
   );
 
-  // Badge
   static const TextStyle badge = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w700,
@@ -123,7 +121,6 @@ class SecretSantaTextStyles {
     height: 1.2,
   );
 
-  // Títulos da app
   static const TextStyle titleSmall = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w800,
@@ -236,10 +233,10 @@ class SecretSantaTheme {
         tertiary: SecretSantaColors.accent3,
         surface: Colors.white,
         error: SecretSantaColors.error,
-        onPrimary: Colors.white,
-        onSecondary: Colors.white,
+        onPrimary: SecretSantaColors.neutral900,
+        onSecondary: SecretSantaColors.neutral900,
         onSurface: SecretSantaColors.neutral900,
-        onError: Colors.white,
+        onError: SecretSantaColors.error,
       ),
 
       textTheme: TextTheme(

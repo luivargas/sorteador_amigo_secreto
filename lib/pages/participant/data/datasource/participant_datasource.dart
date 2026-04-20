@@ -106,4 +106,25 @@ class ParticipantDatasource extends ParticipantRepository {
       return Failure(ApiError(AppError.unknown, raw: e));
     }
   }
+
+    @override
+  Future<ApiResult> resendEmail(String id, String token) async {
+    try {
+      final resp = await dio.post(
+        '$stageParticipantApiUrl/$id/resend-email',
+        options: Options(headers: {'Access-Key': token}),
+      );
+      return Success(resp);
+    } on DioException catch (e) {
+      return Failure(
+        ApiError(
+          ApiErrorMapper.map(e),
+          statusCode: e.response?.statusCode,
+          raw: e.response?.data,
+        ),
+      );
+    } catch (e) {
+      return Failure(ApiError(AppError.unknown, raw: e));
+    }
+  }
 }

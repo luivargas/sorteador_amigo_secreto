@@ -22,7 +22,7 @@ class ParticipantListItem extends StatelessWidget {
   bool get _isConfirmed => participant.viewStatus != null;
 
   String? _subtitle(AppLocalizations l10n) {
-    if (participant.role == ParticipantRole.admin.toString()) return l10n.adminRole;
+    if (participant.role == ParticipantRole.admin.name) return l10n.adminRole;
     if (participant.email?.isNotEmpty == true) return participant.email;
     if (participant.phone?.isNotEmpty == true) return participant.phone;
     return null;

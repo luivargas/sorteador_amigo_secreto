@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 enum AlertType { success, warning, info, error }
@@ -9,6 +8,7 @@ class AppAlert extends StatelessWidget {
   final AlertType type;
   final String? title;
   final IconData? icon;
+  final List<Widget> actions;
 
   const AppAlert({
     super.key,
@@ -16,6 +16,7 @@ class AppAlert extends StatelessWidget {
     required this.type,
     this.title,
     this.icon,
+    required this.actions,
   });
 
   static void showBanner(
@@ -43,12 +44,11 @@ class AppAlert extends StatelessWidget {
     overlay.insert(entry);
   }
 
-  static Future<void> showAlertDialog(
+  static Future<bool?> showAlertDialog(
     BuildContext context, {
     required String title,
     required String message,
-    String confirmText = 'OK',
-    VoidCallback? onConfirm,
+    List<Widget>? actions,
   }) {
     return showDialog(
       context: context,
@@ -58,15 +58,7 @@ class AppAlert extends StatelessWidget {
         backgroundColor: SecretSantaColors.background,
         titleTextStyle: SecretSantaTextStyles.titleSmall,
         scrollable: true,
-        actions: [
-          TextButton(
-            onPressed: () {
-              context.pop();
-              onConfirm?.call();
-            },
-            child: Text(confirmText),
-          ),
-        ],
+        actions: actions,
       ),
     );
   }
@@ -89,6 +81,7 @@ class AppAlert extends StatelessWidget {
           Icon(icon ?? colors.defaultIcon, color: colors.text, size: 24),
           Expanded(
             child: Column(
+              spacing: SecretSantaSpacing.xs,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (title != null) ...[
@@ -99,7 +92,6 @@ class AppAlert extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  const SizedBox(height: 4),
                 ],
                 Text(
                   message,
@@ -115,7 +107,6 @@ class AppAlert extends StatelessWidget {
     );
   }
 }
-
 
 _AlertColors _colorsFor(AlertType type) {
   switch (type) {
@@ -232,6 +223,7 @@ class _AnimatedBannerState extends State<_AnimatedBanner>
             type: widget.type,
             title: widget.title,
             icon: widget.icon,
+            actions: [],
           ),
         ),
       ),
