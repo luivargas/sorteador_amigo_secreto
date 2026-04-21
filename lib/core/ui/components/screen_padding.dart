@@ -12,9 +12,9 @@ class ScreenPadding extends StatelessWidget {
         SecretSantaSpacing.lg,
         SecretSantaSpacing.lg,
         SecretSantaSpacing.lg,
-        SecretSantaSpacing.lg,
+        0
       ),
-      child: child,
+      child: SafeArea(top: false,child: child),
     );
   }
 }

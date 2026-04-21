@@ -215,8 +215,27 @@ class _ViewGroupBody extends State<ViewGroup> {
                 listenWhen: (previous, current) =>
                     (!previous.raffled && current.raffled) ||
                     (previous.error == null && current.error != null) ||
-                    (!previous.deleted && current.deleted),
-                listener: (context, state) {
+                    (!previous.deleted && current.deleted) ||
+                    (!previous.logout && current.logout),
+                listener: (context, state) async {
+                  if (state.logout) {
+                    final i18n = AppLocalizations.of(context)!;
+                    await AppAlert.showAlertDialog(
+                      context,
+                      title: i18n.errorTitle,
+                      message: i18n.errorUnauthorized,
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            context.pop();
+                            context.goNamed('request_token');
+                          },
+                          child: Text(i18n.ok),
+                        ),
+                      ],
+                    );
+                    return;
+                  }
                   if (state.raffled) {
                     setState(() => _showRaffleSuccess = true);
                     _confettiController.play();

@@ -28,13 +28,54 @@ class GroupCubit extends Cubit<GroupState> {
     this._groupSession,
   ) : super(GroupState.initial());
 
+  void _emitFailure(AppError error) {
+    safeEmit(
+      state.copyWith(
+        isLoading: false,
+        error: error,
+        logout: error == AppError.unauthorized,
+      ),
+    );
+  }
+
+    Future<bool> _validateSession() async {                                                                               
+    final email = _authDB.email;                                                                                        
+    final token = _authDB.token;
+    if (email == null || token == null) {                                                                               
+      _emitFailure(AppError.unauthorized);                                                                            
+      return false;                                                                                                     
+    }
+                                                                                                                        
+    final entity = ValidateToken(                                                                                     
+      email: email,
+      token: token,
+      device: _deviceData.toDeviceString(),
+    );
+
+    try {
+      final result = await _authUsecases.validate(entity);
+      return result.when(                                                                                               
+        success: (_) => true,
+        failure: (f) {                                                                                                  
+          _emitFailure(f.error);                                                                                      
+          return false;
+        },
+      );
+    } catch (e) {                                                                                                       
+      _emitFailure(AppError.unknown);
+      return false;                                                                                                     
+    }                                                                                                                 
+  }
+
   void loadGroups(List<AuthGroupModel> groups) {
     final filtered = _applyFilter(groups, state.search, state.filter);
-    safeEmit(state.copyWith(groups: groups, filtered: filtered, isLoading: false));
+    safeEmit(
+      state.copyWith(groups: groups, filtered: filtered, isLoading: false),
+    );
   }
 
   Future<void> refreshGroups() async {
-    safeEmit(state.copyWith(isLoading: true, clearError: true));
+    safeEmit(state.copyWith(isLoading: true, clearError: true, logout: false));
 
     final email = _authDB.email;
     final token = _authDB.token;
@@ -53,7 +94,7 @@ class GroupCubit extends Cubit<GroupState> {
       final result = await _authUsecases.validate(entity);
       result.when(
         success: (groups) => loadGroups(groups),
-        failure: (f) => emit(state.copyWith(isLoading: false, error: f.error)),
+        failure: (f) => _emitFailure(f.error)
       );
     } catch (e) {
       safeEmit(state.copyWith(isLoading: false, error: AppError.unknown));
@@ -93,17 +134,21 @@ class GroupCubit extends Cubit<GroupState> {
 
   Future<void> create(CreateGroupEntity entity) async {
     safeEmit(state.copyWith(isLoading: true, clearError: true));
+    if (!await _validateSession()) return;
     try {
       final result = await _groupUsecases.create(entity);
       result.when(
-        success: (group) { 
+        success: (group) {
           _groupSession.setGroup(group);
           safeEmit(
-          state.copyWith(isLoading: false, created: true, createdGroup: group),
-        );},
-        failure: (f) => safeEmit(
-          state.copyWith(isLoading: false, error: f.error, created: false),
-        ),
+            state.copyWith(
+              isLoading: false,
+              created: true,
+              createdGroup: group,
+            ),
+          );
+        },
+        failure: (f) => _emitFailure(f.error)
       );
     } catch (e) {
       safeEmit(state.copyWith(error: AppError.unknown, isLoading: false));
@@ -112,6 +157,7 @@ class GroupCubit extends Cubit<GroupState> {
 
   Future<void> delete(String code, String token) async {
     safeEmit(state.copyWith(isLoading: true, clearError: true, deleted: false));
+    if (!await _validateSession()) return;
     try {
       final result = await _groupUsecases.delete(code, token);
       result.when(
@@ -121,9 +167,7 @@ class GroupCubit extends Cubit<GroupState> {
             state.copyWith(isLoading: false, deleted: true, groups: updated),
           );
         },
-        failure: (f) => safeEmit(
-          state.copyWith(isLoading: false, error: f.error, deleted: false),
-        ),
+        failure: (f) => _emitFailure(f.error),
       );
     } catch (e) {
       safeEmit(
@@ -140,6 +184,7 @@ class GroupCubit extends Cubit<GroupState> {
     safeEmit(
       state.copyWith(isLoading: true, clearError: true, clearGroup: true),
     );
+    if (!await _validateSession()) return;
     try {
       final result = await _groupUsecases.show(code, token);
       result.when(
@@ -147,9 +192,7 @@ class GroupCubit extends Cubit<GroupState> {
           _groupSession.setGroup(s);
           safeEmit(state.copyWith(group: s, isLoading: false));
         },
-        failure: (f) => safeEmit(
-          state.copyWith(isLoading: false, error: f.error, clearGroup: true),
-        ),
+        failure: (f) => _emitFailure(f.error)
       );
     } catch (e) {
       safeEmit(state.copyWith(error: AppError.unknown, isLoading: false));
@@ -162,13 +205,13 @@ class GroupCubit extends Cubit<GroupState> {
     String token,
   ) async {
     safeEmit(state.copyWith(isLoading: true, clearError: true, updated: false));
+    if (!await _validateSession()) return;
     try {
       final result = await _groupUsecases.update(entity, code, token);
       result.when(
-        success: (s) => safeEmit(state.copyWith(isLoading: false, updated: true)),
-        failure: (f) => safeEmit(
-          state.copyWith(isLoading: false, error: f.error, updated: false),
-        ),
+        success: (s) =>
+            safeEmit(state.copyWith(isLoading: false, updated: true)),
+        failure: (f) => _emitFailure(f.error)
       );
     } catch (e) {
       safeEmit(state.copyWith(error: AppError.unknown, isLoading: false));
@@ -177,13 +220,13 @@ class GroupCubit extends Cubit<GroupState> {
 
   Future<void> raffle(String code, String token) async {
     safeEmit(state.copyWith(isLoading: true, clearError: true, raffled: false));
+    if (!await _validateSession()) return;
     try {
       final result = await _groupUsecases.raffle(code, token);
       result.when(
-        success: (_) => safeEmit(state.copyWith(raffled: true, isLoading: false)),
-        failure: (f) => safeEmit(
-          state.copyWith(isLoading: false, error: f.error, raffled: false),
-        ),
+        success: (_) =>
+            safeEmit(state.copyWith(raffled: true, isLoading: false)),
+        failure: (f) => _emitFailure(f.error)
       );
     } catch (e) {
       safeEmit(

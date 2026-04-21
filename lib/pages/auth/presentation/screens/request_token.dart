@@ -75,10 +75,10 @@ class _EnterGroup extends State<RequestTokenScreen> {
                 children: [
                   Column(
                     spacing: SecretSantaSpacing.sm,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(i18n.verificationTitle, style: SecretSantaTextStyles.titleLarge,),
-                      Text(i18n.verificationSubtitle),
+                      Text(i18n.verificationTitle, style: SecretSantaTextStyles.titleMedium,),
+                      Text(i18n.verificationSubtitle, textAlign: TextAlign.center,),
                     ],
                   ),
                   MyEmailFormField(

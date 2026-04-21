@@ -265,6 +265,11 @@
   "groupDeletedSuccess": "Grupo {name} excluído com sucesso!",                                                        
   "@groupDeletedSuccess": {                                                                                             
     "placeholders": { "name": { "type": "String" } }                                                                    
-  }
+  },
+  "resendEmailSuccess": "E-mail reenviado com sucesso para {name}!",                                                  
+  "@resendEmailSuccess": {                                                                                              
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "resendEmailInvalid": "Não foi possível reenviar o e-mail. O participante não possui um e-mail válido cadastrado." 
 
 }

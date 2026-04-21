@@ -65,7 +65,7 @@ class _FormGroupBody extends State<CreateGroup> {
         body: ScreenPadding(
           child: BlocConsumer<GroupCubit, GroupState>(
             listenWhen: (previous, current) =>
-                previous.isLoading && !current.isLoading && current.created,
+                previous.isLoading && !current.isLoading,
             listener: (context, state) async {
               if (state.created) {
                 AppAlert.showBanner(
@@ -93,13 +93,6 @@ class _FormGroupBody extends State<CreateGroup> {
               }
             },
             builder: (context, state) {
-              if (state.isLoading) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: SecretSantaColors.accent,
-                  ),
-                );
-              }
               return SingleChildScrollView(
                 child: Column(
                   spacing: SecretSantaSpacing.md,
@@ -123,6 +116,7 @@ class _FormGroupBody extends State<CreateGroup> {
                       onTap: _onSubmit,
                       title: i18n.createGroupButton,
                       icon: Icons.save,
+                      isLoading: state.isLoading,
                     ),
                   ],
                 ),

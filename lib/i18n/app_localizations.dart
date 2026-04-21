@@ -1223,6 +1223,18 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Grupo {name} excluído com sucesso!'**
   String groupDeletedSuccess(String name);
+
+  /// No description provided for @resendEmailSuccess.
+  ///
+  /// In pt, this message translates to:
+  /// **'E-mail reenviado com sucesso para {name}!'**
+  String resendEmailSuccess(String name);
+
+  /// No description provided for @resendEmailInvalid.
+  ///
+  /// In pt, this message translates to:
+  /// **'Não foi possível reenviar o e-mail. O participante não possui um e-mail válido cadastrado.'**
+  String get resendEmailInvalid;
 }
 
 class _AppLocalizationsDelegate

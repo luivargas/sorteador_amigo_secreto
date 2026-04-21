@@ -1,3 +1,5 @@
+
+
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,10 +36,10 @@ class _ViewParticipant extends State<ViewParticipant> {
   final TextEditingController _emailController = TextEditingController();
   final PhoneController _phoneController = PhoneController();
   final GlobalKey<FormState> _validateFormKey = GlobalKey<FormState>();
-  bool _hasEmail = false;
   bool _prefilledOnce = false;
   bool readOnly = false;
   String? role;
+  bool _hasEmail = false;
 
   @override
   void dispose() {
@@ -49,6 +51,23 @@ class _ViewParticipant extends State<ViewParticipant> {
 
   Future<void> _onResendEmail(BuildContext context) async {
     final i18n = AppLocalizations.of(context)!;
+
+    if (_hasEmail == false) {
+      await AppAlert.showAlertDialog(
+        context,
+        title: i18n.validatorInvalidEmail,
+        message: i18n.resendEmailInvalid,
+        actions: [
+          TextButton(
+            onPressed: () {
+              context.pop(false);
+            },
+            child: Text(i18n.ok),
+          ),
+        ],
+      );
+      return;
+    }
     if (context.mounted) {
       final confirmed = await AppAlert.showAlertDialog(
         context,
@@ -153,7 +172,11 @@ class _ViewParticipant extends State<ViewParticipant> {
         : const PhoneNumber(isoCode: IsoCode.BR, nsn: '');
     _prefilledOnce = true;
     role = g.role;
-    setState(() => _hasEmail = _emailController.text.isNotEmpty);
+    if (g.email != null) {
+      setState(() {
+        _hasEmail = true;
+      } );
+    }
   }
 
   Future<void> _onSubmit() async {
@@ -185,50 +208,49 @@ class _ViewParticipant extends State<ViewParticipant> {
     return Scaffold(
       appBar: MyAppBar(
         actions: [
-          if (!getIt<GroupSession>().isRaffled || _hasEmail)
-            IconButton(
-              onPressed: () => MyBottonSheet.show(
-                title: i18n.participantOptionsTitle,
-                subTitle: i18n.participantOptionsSubtitle,
-                context: context,
-                items: [
-                  if (getIt<GroupSession>().isRaffled && _hasEmail)
-                    AppListCard(
-                      title: i18n.resendEmail,
-                      subtitle: i18n.resendEmailSubtitle,
+          IconButton(
+            onPressed: () => MyBottonSheet.show(
+              title: i18n.participantOptionsTitle,
+              subTitle: i18n.participantOptionsSubtitle,
+              context: context,
+              items: [
+                if (getIt<GroupSession>().isRaffled)
+                  AppListCard(
+                    title: i18n.resendEmail,
+                    subtitle: i18n.resendEmailSubtitle,
+                    color: SecretSantaColors.accent,
+                    icon: Icons.email_rounded,
+                    name: '',
+                    trailing: Icon(
+                      Icons.chevron_right,
                       color: SecretSantaColors.accent,
-                      icon: Icons.email_rounded,
-                      name: '',
-                      trailing: Icon(
-                        Icons.chevron_right,
-                        color: SecretSantaColors.accent,
-                      ),
-                      onTap: () {
-                        context.pop();
-                        _onResendEmail(context);
-                      },
                     ),
-                  if (!getIt<GroupSession>().isRaffled)
-                    AppListCard(
-                      title: i18n.deleteParticipant,
-                      subtitle: i18n.deleteParticipantSubtitle,
+                    onTap: () {
+                      context.pop();
+                      _onResendEmail(context);
+                    },
+                  ),
+                if (!getIt<GroupSession>().isRaffled)
+                  AppListCard(
+                    title: i18n.deleteParticipant,
+                    subtitle: i18n.deleteParticipantSubtitle,
+                    color: SecretSantaColors.error,
+                    icon: Icons.delete_outline,
+                    name: '',
+                    trailing: Icon(
+                      Icons.chevron_right,
                       color: SecretSantaColors.error,
-                      icon: Icons.delete_outline,
-                      name: '',
-                      trailing: Icon(
-                        Icons.chevron_right,
-                        color: SecretSantaColors.error,
-                      ),
-                      onTap: () {
-                        context.pop();
-                        _onDelete(context);
-                      },
                     ),
-                ],
-              ),
-              icon: const Icon(Icons.more_vert, size: 24),
-              color: SecretSantaColors.accent,
+                    onTap: () {
+                      context.pop();
+                      _onDelete(context);
+                    },
+                  ),
+              ],
             ),
+            icon: const Icon(Icons.more_vert, size: 24),
+            color: SecretSantaColors.accent,
+          ),
         ],
       ),
       body: ScreenPadding(
@@ -267,6 +289,16 @@ class _ViewParticipant extends State<ViewParticipant> {
                   context.pop(true);
                 }
               }
+              if (state.resended) {
+                AppAlert.showBanner(
+                  context,
+                  message: i18n.resendEmailSuccess(_nameController.text),
+                  type: AlertType.success,
+                );
+                if (context.mounted) {
+                  context.pop(true);
+                }
+              }
             },
             buildWhen: (previous, current) =>
                 previous.isLoading != current.isLoading ||
@@ -276,10 +308,9 @@ class _ViewParticipant extends State<ViewParticipant> {
               return LoadingOrError(
                 isLoading: state.isLoading && !state.showed,
                 error: state.error,
-                onRetry: () async => await context.read<ParticipantCubit>().show(
-                  widget.userId,
-                  getIt<GroupSession>().token,
-                ),
+                onRetry: () async => await context
+                    .read<ParticipantCubit>()
+                    .show(widget.userId, getIt<GroupSession>().token),
                 child: SingleChildScrollView(
                   child: Column(
                     spacing: 20,

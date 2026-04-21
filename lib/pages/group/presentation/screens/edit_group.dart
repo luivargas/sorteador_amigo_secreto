@@ -150,74 +150,86 @@ class _EditGroup extends State<EditGroup> {
       key: _editGroupKey,
       child: Scaffold(
         appBar: MyAppBar(),
-        body: SafeArea(
-          top: false,
-          child: ScreenPadding(
-            child: BlocConsumer<GroupCubit, GroupState>(
-              listener: (context, state) {
-                if (state.error != null && state.group != null) {
-                  AppAlert.showBanner(
-                    context,
-                    message: state.error!.localize(context),
-                    type: AlertType.warning,
-                  );
-                }
-                if (state.updated) {
-                  AppAlert.showBanner(
-                    context,
-                    message: i18n.groupUpdatedSuccess(
-                      groupNameController.text.trim(),
+        body: ScreenPadding(
+          child: BlocConsumer<GroupCubit, GroupState>(
+            listener: (context, state) async {
+              if (state.logout) {
+                await AppAlert.showAlertDialog(
+                  context,
+                  title: i18n.errorTitle,
+                  message: i18n.errorUnauthorized,
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        context.pop();
+                        context.goNamed('request_token');
+                      },
+                      child: Text(i18n.ok),
                     ),
-                    type: AlertType.success,
-                  );
-                  if (context.mounted) {
-                    context.pop(true);
-                  }
-                }
-              },
-              builder: (context, state) {
-                _prefillFromApi(state);
-                return LoadingOrError(
-                  isLoading: state.isLoading && state.group == null,
-                  error: state.group == null ? state.error : null,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      spacing: SecretSantaSpacing.md,
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              i18n.editGroupTitle,
-                              style: SecretSantaTextStyles.titleMedium,
-                            ),
-                            Text(
-                              i18n.editGroupSubtitle,
-                              style: TextStyle(),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                        EditGroupFields(
-                          groupNameController: groupNameController,
-                          dateTimeController: dateTimeController,
-                          descriptionController: descriptionController,
-                          minGiftValueController: minGiftValueController,
-                          maxGiftValueController: maxGiftValueController,
-                          addressController: locationController,
-                          onTapDateTime: _pickDateTime,
-                        ),
-                        MyGradientButton(
-                          onTap: _onSubmit,
-                          isLoading: state.isLoading,
-                          title: AppLocalizations.of(context)!.save,
-                          icon: Icons.save,
-                        ),
-                      ],
-                    ),
-                  ),
+                  ],
                 );
-              },
-            ),
+                return;
+              }
+              if (state.error != null && state.group != null) {
+                AppAlert.showBanner(
+                  context,
+                  message: state.error!.localize(context),
+                  type: AlertType.warning,
+                );
+              }
+              if (state.updated) {
+                AppAlert.showBanner(
+                  context,
+                  message: i18n.groupUpdatedSuccess(groupNameController.text.trim()),
+                  type: AlertType.success,
+                );
+                if (context.mounted) {
+                  context.pop(true);
+                }
+              }
+            },
+            builder: (context, state) {
+              _prefillFromApi(state);
+              return LoadingOrError(
+                isLoading: state.isLoading && state.group == null,
+                error: state.group == null ? state.error : null,
+                child: SingleChildScrollView(
+                  child: Column(
+                    spacing: SecretSantaSpacing.md,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            i18n.editGroupTitle,
+                            style: SecretSantaTextStyles.titleMedium,
+                          ),
+                          Text(
+                            i18n.editGroupSubtitle,
+                            style: TextStyle(),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                      EditGroupFields(
+                        groupNameController: groupNameController,
+                        dateTimeController: dateTimeController,
+                        descriptionController: descriptionController,
+                        minGiftValueController: minGiftValueController,
+                        maxGiftValueController: maxGiftValueController,
+                        addressController: locationController,
+                        onTapDateTime: _pickDateTime,
+                      ),
+                      MyGradientButton(
+                        onTap: _onSubmit,
+                        isLoading: state.isLoading,
+                        title: AppLocalizations.of(context)!.save,
+                        icon: Icons.save,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           ),
         ),
       ),

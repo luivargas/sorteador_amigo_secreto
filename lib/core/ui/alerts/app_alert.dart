@@ -53,10 +53,9 @@ class AppAlert extends StatelessWidget {
     return showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text(title),
+        title: Text(title, style: SecretSantaTextStyles.titleSmall),
         content: Text(message),
         backgroundColor: SecretSantaColors.background,
-        titleTextStyle: SecretSantaTextStyles.titleSmall,
         scrollable: true,
         actions: actions,
       ),
@@ -85,20 +84,9 @@ class AppAlert extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (title != null) ...[
-                  Text(
-                    title!,
-                    style: SecretSantaTextStyles.label.copyWith(
-                      color: colors.text,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                  Text(title!),
                 ],
-                Text(
-                  message,
-                  style: SecretSantaTextStyles.bodySmall.copyWith(
-                    color: colors.text,
-                  ),
-                ),
+                Text(message, style: SecretSantaTextStyles.bodySmall),
               ],
             ),
           ),

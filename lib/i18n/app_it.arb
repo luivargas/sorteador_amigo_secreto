@@ -265,5 +265,10 @@
   "groupDeletedSuccess": "Gruppo {name} eliminato con successo!",                                                     
   "@groupDeletedSuccess": {
     "placeholders": { "name": { "type": "String" } }                                                                    
-  }
+  },
+    "resendEmailSuccess": "Email reinviata con successo a {name}!",                                                     
+  "@resendEmailSuccess": {
+    "placeholders": { "name": { "type": "String" } }                                                                    
+  },
+  "resendEmailInvalid": "Impossibile reinviare l'email. Il partecipante non ha un'email valida registrata."     
 }

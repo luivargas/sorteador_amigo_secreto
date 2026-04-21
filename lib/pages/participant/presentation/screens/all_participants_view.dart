@@ -1,11 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
+import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
+import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/card_color.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_search_bar.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/screen_padding.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
@@ -82,94 +84,155 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
                 ),
               )
             : null,
-        body: Column(
-          children: [
-            ColoredBox(
-              color: SecretSantaColors.background,
-              child: ScreenPadding(
-                child: Column(
-                  spacing: 15,
-                  children: [
-                    Text(
-                      i18n.participants,
-                      style: SecretSantaTextStyles.titleMedium,
-                    ),
-                    ColoredBox(
-                      color: SecretSantaColors.background,
-                      child: MySearchBar(
-                        controller: _searchController,
-                        hintText: i18n.searchParticipants,
-                        onChanged: (v) => setState(() => _query = v),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: ScreenPadding(
-                child: BlocListener<ParticipantCubit, ParticipantState>(
-                  listenWhen: (prev, curr) => !prev.deleted && curr.deleted,
-                  listener: (context, state) {
-                    _didCreate = true;
-                    _onRefresh();
-                  },
-                  child: BlocBuilder<GroupCubit, GroupState>(
-                    builder: (context, state) {
-                      final participants = _filtered(
-                        state.group?.participants ?? [],
-                      );
-                      return SmartRefresher(
-                        controller: _refreshController,
-                        onRefresh: _onRefresh,
-                        child: state.isLoading
-                            ? const Center(child: CircularProgressIndicator())
-                            : participants.isEmpty
-                            ? Center(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Icons.people_outline,
-                                      size: 64,
-                                      color: SecretSantaColors.neutral300,
-                                    ),
-                                    const SizedBox(height: 12),
-                                    Text(
-                                      i18n.noGroupsFound,
-                                      style: TextStyle(
-                                        color: SecretSantaColors.neutral500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : ListView.separated(
-                                padding: const EdgeInsets.only(
-                                  bottom: 100,
-                                ),
-                                itemCount: participants.length,
-                                separatorBuilder: (_, _) =>
-                                    const SizedBox(height: 12),
-                                itemBuilder: (context, index) {
-                                  final p = participants[index];
-                                  return ParticipantListItem(
-                                    participant: p,
-                                    color: CardColor.getColor(index),
-                                    onChanged: () {
-                                      _didCreate = true;
-                                      _onRefresh();
-                                    },
-                                  );
-                                },
-                              ),
-                      );
+        body: BlocListener<GroupCubit, GroupState>(
+          listenWhen: (prev, curr) =>
+              (!prev.logout && curr.logout) ||
+              (prev.error == null && curr.error != null && !curr.logout),
+          listener: (context, state) async {
+            final i18n = AppLocalizations.of(context)!;
+            if (state.logout) {
+              await AppAlert.showAlertDialog(
+                context,
+                title: i18n.errorTitle,
+                message: i18n.errorUnauthorized,
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      context.pop();
+                      context.goNamed('request_token');
                     },
+                    child: Text(i18n.ok),
+                  ),
+                ],
+              );
+              return;
+            }
+            if (state.error != null) {
+              AppAlert.showBanner(
+                context,
+                title: i18n.errorTitle,
+                message: state.error!.localize(context),
+                type: AlertType.warning,
+              );
+            }
+          },
+          child: Column(
+            children: [
+              ColoredBox(
+                color: SecretSantaColors.background,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: SecretSantaSpacing.lg,
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: SecretSantaSpacing.lg),
+                        child: Text(
+                          i18n.participants,
+                          style: SecretSantaTextStyles.titleMedium,
+                        ),
+                      ),
+                      ColoredBox(
+                        color: SecretSantaColors.background,
+                        child: MySearchBar(
+                          controller: _searchController,
+                          hintText: i18n.searchParticipants,
+                          onChanged: (v) => setState(() => _query = v),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ),
-          ],
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: SecretSantaSpacing.lg,
+                  ),
+                  child: BlocListener<ParticipantCubit, ParticipantState>(
+                    listenWhen: (prev, curr) =>
+                        (!prev.deleted && curr.deleted) ||
+                        (prev.error == null && curr.error != null),
+                    listener: (context, state) {
+                      if (state.deleted) {
+                        AppAlert.showBanner(
+                          context,
+                          message: i18n.participantDeletedSuccess(''),
+                          type: AlertType.success,
+                        );
+                        _didCreate = true;
+                        _onRefresh();
+                        return;
+                      }
+                      if (state.error != null) {
+                        final i18n = AppLocalizations.of(context)!;
+                        AppAlert.showBanner(
+                          context,
+                          title: i18n.errorTitle,
+                          message: state.error!.localize(context),
+                          type: AlertType.warning,
+                        );
+                      }
+                    },
+                    child: BlocBuilder<GroupCubit, GroupState>(
+                      builder: (context, state) {
+                        final participants = _filtered(
+                          state.group?.participants ?? [],
+                        );
+                        return SmartRefresher(
+                          controller: _refreshController,
+                          onRefresh: _onRefresh,
+                          child: state.isLoading
+                              ? const Center(child: CircularProgressIndicator())
+                              : participants.isEmpty
+                              ? Center(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.people_outline,
+                                        size: 64,
+                                        color: SecretSantaColors.neutral300,
+                                      ),
+                                      const SizedBox(height: 12),
+                                      Text(
+                                        i18n.noGroupsFound,
+                                        style: TextStyle(
+                                          color: SecretSantaColors.neutral500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : ListView.separated(
+                                  padding: const EdgeInsets.only(
+                                    top: SecretSantaSpacing.lg,
+                                    bottom: 100,
+                                  ),
+                                  itemCount: participants.length,
+                                  separatorBuilder: (_, _) =>
+                                      const SizedBox(height: 12),
+                                  itemBuilder: (context, index) {
+                                    final p = participants[index];
+                                    return ParticipantListItem(
+                                      participant: p,
+                                      color: CardColor.getColor(index),
+                                      onChanged: () {
+                                        _didCreate = true;
+                                        _onRefresh();
+                                      },
+                                    );
+                                  },
+                                ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

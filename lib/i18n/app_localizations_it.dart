@@ -622,4 +622,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String groupDeletedSuccess(String name) {
     return 'Gruppo $name eliminato con successo!';
   }
+
+  @override
+  String resendEmailSuccess(String name) {
+    return 'Email reinviata con successo a $name!';
+  }
+
+  @override
+  String get resendEmailInvalid =>
+      'Impossibile reinviare l\'email. Il partecipante non ha un\'email valida registrata.';
 }

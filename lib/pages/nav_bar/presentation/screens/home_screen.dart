@@ -1,8 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
+import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/card_color.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_search_bar.dart';
@@ -81,8 +83,39 @@ class _HomeViewState extends State<_HomeView>
       appBar: MyAppBar(),
       body: ScreenPadding(
         child: BlocListener<GroupCubit, GroupState>(
-          listenWhen: (prev, curr) => prev.groups != curr.groups,
-          listener: (context, state) {
+          listenWhen: (prev, curr) =>
+              prev.groups != curr.groups ||
+              (!prev.logout && curr.logout) ||
+              (prev.error == null && curr.error != null && !curr.logout),
+          listener: (context, state) async {
+            if (state.logout) {
+              final i18n = AppLocalizations.of(context)!;
+              await AppAlert.showAlertDialog(
+                context,
+                title: i18n.errorTitle,
+                message: i18n.errorUnauthorized,
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      context.pop();
+                      context.goNamed('request_token');
+                    },
+                    child: Text(i18n.ok),
+                  ),
+                ],
+              );
+              return;
+            }
+            if (state.error != null) {
+              final i18n = AppLocalizations.of(context)!;
+              AppAlert.showBanner(
+                context,
+                title: i18n.errorTitle,
+                message: state.error!.localize(context),
+                type: AlertType.warning,
+              );
+              return;
+            }
             setState(() => _hasGroups = state.groups.isNotEmpty);
           },
           child: Column(

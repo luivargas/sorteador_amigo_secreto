@@ -265,5 +265,10 @@
   "groupDeletedSuccess": "Group {name} deleted successfully!",                                                          
   "@groupDeletedSuccess": {                                                                                           
     "placeholders": { "name": { "type": "String" } }
-  }
+  },
+  "resendEmailSuccess": "Email successfully resent to {name}!",                                                       
+  "@resendEmailSuccess": {                                     
+    "placeholders": { "name": { "type": "String" } }                                                                    
+  },
+  "resendEmailInvalid": "Unable to resend the email. This participant does not have a valid email registered."   
 }

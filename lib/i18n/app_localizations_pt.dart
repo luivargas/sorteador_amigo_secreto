@@ -619,4 +619,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String groupDeletedSuccess(String name) {
     return 'Grupo $name excluído com sucesso!';
   }
+
+  @override
+  String resendEmailSuccess(String name) {
+    return 'E-mail reenviado com sucesso para $name!';
+  }
+
+  @override
+  String get resendEmailInvalid =>
+      'Não foi possível reenviar o e-mail. O participante não possui um e-mail válido cadastrado.';
 }

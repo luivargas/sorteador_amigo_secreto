@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
     <application
-        android:label="Amigo Secreto"
+        android:label="AmigoSecreto.org"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

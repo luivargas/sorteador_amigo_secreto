@@ -20,7 +20,6 @@ class MyBottonSheet {
         child: Padding(
           padding: const EdgeInsets.all(SecretSantaSpacing.lg),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             spacing: SecretSantaSpacing.md,
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -38,12 +37,11 @@ class MyBottonSheet {
               ),
               Column(
                 spacing: SecretSantaSpacing.xs,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: SecretSantaTextStyles.titleMedium),
+                  Text(title, style: SecretSantaTextStyles.titleSmall),
                   Text(
                     subTitle.toUpperCase(),
-                    style: SecretSantaTheme.theme.textTheme.bodySmall,
+                    style: SecretSantaTheme.theme.textTheme.bodySmall, textAlign: TextAlign.center,
                   ),
                 ],
               ),

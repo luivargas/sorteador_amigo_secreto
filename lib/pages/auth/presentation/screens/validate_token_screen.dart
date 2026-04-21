@@ -54,7 +54,8 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
         if (state.validated) {
           setState(() => _success = true);
           Future.delayed(const Duration(milliseconds: 1200), () {
-            if (context.mounted) context.goNamed('nav_bar', extra: state.groups ?? []);
+            if (context.mounted)
+              context.goNamed('nav_bar', extra: state.groups ?? []);
           });
         }
       },
@@ -96,15 +97,17 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                           textAlign: TextAlign.center,
                         ),
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             i18n.almostThereTitle,
                             style: SecretSantaTextStyles.titleLarge,
+                            textAlign: TextAlign.center,
                           ),
                           Text(
                             i18n.almostThereSubtitle,
                             style: SecretSantaTextStyles.bodySmall,
+                            textAlign: TextAlign.center,
                           ),
                         ],
                       ),
@@ -121,7 +124,9 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                             child: SecretSantaCard(
                               color: SecretSantaColors.neutral50,
                               child: Padding(
-                                padding: const EdgeInsets.only(top: SecretSantaSpacing.xl),
+                                padding: const EdgeInsets.only(
+                                  top: SecretSantaSpacing.xl,
+                                ),
                                 child: Column(
                                   spacing: SecretSantaSpacing.lg,
                                   children: [
@@ -148,7 +153,9 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                                                     MaterialPinShape.outlined,
                                                 spacing: SecretSantaSpacing.sm,
                                                 borderRadius:
-                                                    BorderRadius.circular(SecretSantaRadius.md),
+                                                    BorderRadius.circular(
+                                                      SecretSantaRadius.md,
+                                                    ),
                                                 borderColor:
                                                     SecretSantaColors.accent,
                                                 entryAnimation:
@@ -156,7 +163,9 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                                               ),
                                               errorBuilder: (errorText) =>
                                                   Container(
-                                                    padding: EdgeInsets.all(SecretSantaSpacing.xs),
+                                                    padding: EdgeInsets.all(
+                                                      SecretSantaSpacing.xs,
+                                                    ),
                                                     child: Row(
                                                       children: [
                                                         Icon(
@@ -209,6 +218,9 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                           ),
                         ],
                       ),
+                      if(state.isLoading)...[
+                        Center(child: CircularProgressIndicator(),)
+                      ]
                     ],
                   );
                 },

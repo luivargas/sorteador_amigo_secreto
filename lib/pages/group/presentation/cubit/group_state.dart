@@ -10,6 +10,7 @@ class GroupState extends Equatable {
   final bool updated;
   final bool deleted;
   final bool raffled;
+  final bool logout;
   final AppError? error;
   final GroupModel? group;
   final GroupModel? createdGroup;
@@ -31,6 +32,7 @@ class GroupState extends Equatable {
     required this.filtered,
     required this.search,
     required this.filter,
+    required this.logout,
   });
 
   factory GroupState.initial() {
@@ -44,6 +46,7 @@ class GroupState extends Equatable {
       filtered: [],
       search: '',
       filter: GroupFilter.all,
+      logout: false,
     );
   }
 
@@ -53,6 +56,7 @@ class GroupState extends Equatable {
     bool? updated,
     bool? deleted,
     bool? raffled,
+    bool? logout,
     AppError? error,
     GroupModel? group,
     bool clearError = false,
@@ -79,6 +83,7 @@ class GroupState extends Equatable {
       filtered: filtered ?? this.filtered,
       search: search ?? this.search,
       filter: filter ?? this.filter,
+      logout: logout ?? this.logout,
     );
   }
 
@@ -96,5 +101,6 @@ class GroupState extends Equatable {
     filtered,
     search,
     filter,
+    logout,
   ];
 }
