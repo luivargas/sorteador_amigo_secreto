@@ -9,15 +9,20 @@ import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/card_color.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_search_bar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/screen_padding.dart';
+import 'package:sorteador_amigo_secreto/core/util/get_initials.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/core/validator/participant/participant_validators.dart';
+import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/usecases/participant_usecase.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/contact_review_args.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io' show Platform;
 
@@ -29,13 +34,7 @@ class _ContactSelection {
 }
 
 class ContactList extends StatefulWidget {
-  final String groupToken;
-  final String groupCode;
-  const ContactList({
-    super.key,
-    required this.groupToken,
-    required this.groupCode,
-  });
+  const ContactList({super.key});
   @override
   State<ContactList> createState() => _ContactListState();
 }
@@ -44,18 +43,13 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
   final TextEditingController _searchController = TextEditingController();
 
   final Map<String, _ContactSelection> _selectedContacts = {};
+  final group = getIt<GroupSession>();
 
   List<Contact>? _contacts;
   StreamSubscription? _sub;
   late final ParticipantUsecase _usecase;
   bool _denied = false;
   bool _isCreating = false;
-
-  final List<Color> cardColors = [
-    SecretSantaColors.accent,
-    SecretSantaColors.accent2,
-  ];
-  Color getColor(int index) => cardColors[index % cardColors.length];
 
   List<Contact> get _filteredContacts {
     final q = _searchController.text.toLowerCase();
@@ -168,17 +162,12 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
       if (phone != null && isoCode == null) {
         if (!mounted) return;
         isoCode = await MyPhoneFormField.showCountrySelector(context);
-        if (isoCode == null || !mounted) return; // usuário cancelou
+        if (isoCode == null || !mounted) return;
       }
 
       setState(() {
         _selectedContacts[c.id!] = _ContactSelection(
-          phone: phone != null && isoCode != null
-              ? ParticipantValidators.normalizePhoneFromContact(
-                  phone.number,
-                  isoCode,
-                )
-              : phone?.number,
+          phone: phone?.number,
           email: c.emails.isNotEmpty ? c.emails.first.address : null,
           isoCode: isoCode,
         );
@@ -187,7 +176,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
   }
 
   void _showContactOptionsSheet(Contact c) {
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
 
     String? chosenPhone = c.phones.isNotEmpty ? c.phones.first.number : null;
     String? chosenEmail = c.emails.isNotEmpty ? c.emails.first.address : null;
@@ -256,7 +245,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                 const SizedBox(height: 20),
                 if (c.phones.length > 1) ...[
                   Text(
-                    l10n.selectPhone,
+                    i18n.selectPhone,
                     style: TextStyle(
                       color: SecretSantaColors.accent,
                       fontWeight: FontWeight.w600,
@@ -293,7 +282,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                 ],
                 if (chosenPhone != null) ...[
                   Text(
-                    l10n.countryLabel,
+                    i18n.countryLabel,
                     style: TextStyle(
                       color: SecretSantaColors.accent,
                       fontWeight: FontWeight.w600,
@@ -332,7 +321,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                 ],
                 if (c.emails.length > 1) ...[
                   Text(
-                    l10n.selectEmail,
+                    i18n.selectEmail,
                     style: TextStyle(
                       color: SecretSantaColors.accent,
                       fontWeight: FontWeight.w600,
@@ -368,13 +357,35 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                     });
                     context.pop(ctx);
                   },
-                  title: l10n.select,
+                  title: i18n.select,
                 ),
               ],
             ),
           );
         },
       ),
+    );
+  }
+
+  void _onSend() {
+    if (_selectedContacts.isEmpty || _contacts == null) return;
+
+    final entries = _contacts!
+        .where((c) => _selectedContacts.containsKey(c.id))
+        .map((c) {
+          final sel = _selectedContacts[c.id]!;
+          return ContactReviewEntry(
+            name: c.displayName ?? '',
+            phone: sel.phone ?? '',
+            email: sel.email ?? '',
+            isoCode: sel.isoCode,
+          );
+        })
+        .toList();
+
+    context.pushNamed(
+      'contact_review',
+      extra: ContactReviewArgs(entries: entries),
     );
   }
 
@@ -387,7 +398,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
         .where((c) => _selectedContacts.containsKey(c.id))
         .toList();
 
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
     final List<String> successes = [];
     final List<String> failures = [];
 
@@ -403,10 +414,10 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
             ? PhoneNumber(isoCode: selection!.isoCode!, nsn: '').countryCode
             : null,
         role: 'participant',
-        groupCode: widget.groupCode,
+        groupCode: group.code,
       );
 
-      final result = await _usecase.create(entity, widget.groupToken);
+      final result = await _usecase.create(entity, group.token);
 
       result.when(
         success: (_) => successes.add(name),
@@ -421,7 +432,9 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
     final StringBuffer body = StringBuffer();
 
     if (successes.isNotEmpty) {
-      body.writeln('✅ ${l10n.participantAddedSuccess('')} (${successes.length}):');
+      body.writeln(
+        '✅ ${i18n.participantAddedSuccess('')} (${successes.length}):',
+      );
       for (final name in successes) {
         body.writeln('  • $name');
       }
@@ -429,7 +442,9 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
 
     if (failures.isNotEmpty) {
       if (body.isNotEmpty) body.writeln();
-      body.writeln('❌ ${l10n.errorAddingContact('', '')} (${failures.length}):');
+      body.writeln(
+        '❌ ${i18n.errorAddingContact('', '')} (${failures.length}):',
+      );
       for (final msg in failures) {
         body.writeln('  • $msg');
       }
@@ -438,10 +453,10 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
     await AppAlert.showAlertDialog(
       context,
       title: failures.isEmpty
-          ? l10n.successTitle
+          ? i18n.successTitle
           : successes.isEmpty
-          ? l10n.errorTitle
-          : l10n.partialTitle,
+          ? i18n.errorTitle
+          : i18n.partialTitle,
       message: body.toString().trim(),
       actions: [
         TextButton(
@@ -450,206 +465,178 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
         ),
       ],
     );
-  }
-
-  Widget? _initials(String? name, TextStyle style) {
-    final parts = name!.trim().split(' ');
-    if (parts.length == 1) {
-      return Center(child: Text(parts[0][0].toUpperCase(), style: style));
+    if (successes.isNotEmpty && context.mounted) {
+      context.pop(true);
     }
-    return Center(
-      child: Text(
-        '${parts.first[0]}${parts.last[0]}'.toUpperCase(),
-        style: style,
-      ),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: MyAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          SecretSantaSpacing.lg,
-          SecretSantaSpacing.lg,
-          SecretSantaSpacing.lg,
-          40,
-        ),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l10n.contactList,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: SecretSantaColors.accent2,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Text(
-                          l10n.contactsTitle,
-                          style: SecretSantaTextStyles.titleMedium,
-                        ),
-                        Text(
-                          l10n.contactsSubtitle,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: SecretSantaColors.neutral500,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            MySearchBar(
-              controller: _searchController,
-              hintText: l10n.searchParticipants,
-            ),
-            if (_denied)
-              Expanded(
+      body: SafeArea(
+        child: ScreenPadding(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.contacts_outlined,
-                      size: 64,
-                      color: SecretSantaColors.neutral500,
+                    Text(
+                      i18n.contactsTitle,
+                      style: SecretSantaTextStyles.titleMedium,
                     ),
                     Text(
-                      l10n.contactPermissionDenied,
-                      textAlign: TextAlign.center,
-                    ),
-                    TextButton.icon(
-                      onPressed: () async {
-                        if (Platform.isIOS) {
-                          final uri = Uri.parse('app-settings:');
-                          if (await canLaunchUrl(uri)) await launchUrl(uri);
-                        } else {
-                          await AppSettings.openAppSettings();
-                        }
-                      },
-                      icon: Icon(Icons.settings_outlined),
-                      label: Text(l10n.openSettings),
+                      i18n.contactsSubtitle,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: SecretSantaColors.neutral500,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ],
                 ),
-              )
-            else if (_contacts == null)
-              const Center(child: CircularProgressIndicator())
-            else
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _filteredContacts.length,
-                  itemBuilder: (_, i) {
-                    final c = _filteredContacts[i];
-
-                    final hasPhone = _hasPhone(c);
-                    final hasEmail = _hasEmail(c);
-                    final isValid = _isContactValid(c);
-                    final selected = _selectedContacts.containsKey(c.id);
-
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: SecretSantaCard(
-                        onTap: () => _toggleSelection(c),
-                        color: selected
-                            ? getColor(i).withValues(alpha: 0.5)
-                            : SecretSantaColors.neutral50,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 10,
-                            horizontal: 15,
-                          ),
-                          child: Row(
-                            spacing: SecretSantaSpacing.md,
-                            children: [
-                              Container(
-                                width: 52,
-                                height: 52,
-                                decoration: BoxDecoration(
-                                  color: getColor(i).withValues(alpha: 0.2),
-                                  borderRadius: BorderRadius.circular(14),
-                                ),
-                                child: _initials(
-                                  c.displayName,
-                                  TextStyle(
-                                    color: selected
-                                        ? SecretSantaColors.neutral100
-                                        : getColor(i),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
+              ),
+              MySearchBar(
+                controller: _searchController,
+                hintText: i18n.searchParticipants,
+              ),
+              if (_denied)
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.contacts_outlined,
+                        size: 64,
+                        color: SecretSantaColors.neutral500,
+                      ),
+                      Text(
+                        i18n.contactPermissionDenied,
+                        textAlign: TextAlign.center,
+                      ),
+                      TextButton.icon(
+                        onPressed: () async {
+                          if (Platform.isIOS) {
+                            final uri = Uri.parse('app-settings:');
+                            if (await canLaunchUrl(uri)) await launchUrl(uri);
+                          } else {
+                            await AppSettings.openAppSettings();
+                          }
+                        },
+                        icon: Icon(Icons.settings_outlined),
+                        label: Text(i18n.openSettings),
+                      ),
+                    ],
+                  ),
+                )
+              else if (_contacts == null)
+                const Center(child: CircularProgressIndicator())
+              else
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: _filteredContacts.length,
+                    itemBuilder: (_, i) {
+                      final c = _filteredContacts[i];
+        
+                      final hasPhone = _hasPhone(c);
+                      final hasEmail = _hasEmail(c);
+                      final isValid = _isContactValid(c);
+                      final selected = _selectedContacts.containsKey(c.id);
+        
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: SecretSantaCard(
+                          onTap: () => _toggleSelection(c),
+                          color: selected
+                              ? CardColor.getColor(i).withValues(alpha: 0.5)
+                              : SecretSantaColors.neutral50,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 15,
+                            ),
+                            child: Row(
+                              spacing: SecretSantaSpacing.md,
+                              children: [
+                                Container(
+                                  width: 52,
+                                  height: 52,
+                                  decoration: BoxDecoration(
+                                    color: CardColor.getColor(
+                                      i,
+                                    ).withValues(alpha: 0.2),
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
+                                  child: GetInitials.initials(
+                                    c.displayName!,
+                                    style: TextStyle(
+                                      color: selected
+                                          ? SecretSantaColors.neutral100
+                                          : CardColor.getColor(i),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      c.displayName ?? '',
-                                      style: TextStyle(
-                                        color: selected
-                                            ? SecretSantaColors.neutral50
-                                            : (isValid ? null : Colors.red),
-                                        fontWeight: FontWeight.bold,
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        c.displayName ?? '',
+                                        style: TextStyle(
+                                          color: selected
+                                              ? SecretSantaColors.neutral50
+                                              : (isValid ? null : Colors.red),
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                    ),
-                                    _buildSubtitle(
-                                      l10n,
-                                      hasPhone,
-                                      hasEmail,
-                                      isValid,
-                                      c,
-                                      selected,
-                                    ),
-                                  ],
+                                      _buildSubtitle(
+                                        i18n,
+                                        hasPhone,
+                                        hasEmail,
+                                        isValid,
+                                        c,
+                                        selected,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-
-                              Icon(
-                                selected
-                                    ? Icons.check_circle
-                                    : Icons.radio_button_unchecked,
-                                color: selected
-                                    ? SecretSantaColors.neutral50
-                                    : getColor(i),
-                              ),
-                            ],
+        
+                                Icon(
+                                  selected
+                                      ? Icons.check_circle
+                                      : Icons.radio_button_unchecked,
+                                  color: selected
+                                      ? SecretSantaColors.neutral50
+                                      : CardColor.getColor(i),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
+              MyGradientButton(
+                icon: Icons.save,
+                onTap: _onSend,
+                title: i18n.confirmButton(_selectedContacts.length),
+                isLoading: _isCreating,
               ),
-            MyGradientButton(
-              icon: Icons.save,
-              onTap: _onConfirm,
-              title: l10n.confirmButton(_selectedContacts.length),
-              isLoading: _isCreating,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget _buildSubtitle(
-    AppLocalizations l10n,
+    AppLocalizations i18n,
     bool hasPhone,
     bool hasEmail,
     bool isValid,
@@ -658,7 +645,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
   ) {
     if (!isValid) {
       return Text(
-        '${[if (!hasPhone && !hasEmail) l10n.phone].join(', ')} ${l10n.fieldRequired}',
+        '${[if (!hasPhone && !hasEmail) i18n.phone].join(', ')} ${i18n.fieldRequired}',
         style: const TextStyle(color: Colors.red),
       );
     }

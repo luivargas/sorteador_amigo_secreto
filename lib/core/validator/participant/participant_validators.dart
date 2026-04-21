@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 import 'package:flutter_contacts/models/properties/phone.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/util/regex_utils.dart';
@@ -61,31 +61,6 @@ class ParticipantValidators {
     } catch (_) {
       return null;
     }
-  }
-
-  static String? normalizePhoneFromContact(String rawPhone, IsoCode isoCode){
-    String digits = rawPhone.replaceAll(RegExp(r'\D'), '');
-
-    if(digits.isEmpty) return null;
-
-    if(digits.startsWith('55') && digits.length > 11){
-      digits = digits.substring(2);
-    }
-
-    if ( digits.startsWith('0')){
-      if (digits.length == 14 || digits.length == 13) {
-        digits = digits.substring(3);
-      }else if ( digits.length == 12 ){
-        digits = digits.substring(1);
-      }
-    }
-
-    try {
-      return PhoneNumber(isoCode: isoCode, nsn: digits).international;
-    }catch(_){
-      return rawPhone;
-    }
-
   }
 
 }

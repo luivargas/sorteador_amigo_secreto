@@ -249,10 +249,22 @@
   "successTitle": "Sucesso",                                                                                            
   "partialTitle": "Parcial",   
 
+  "validatorInvalidPhone": "Número inválido. Inclua o DDD + número",                                                    
+  "phoneHelperText": "Inclua o DDD + número",
+
   "participantOptionsTitle": "Opções do participante",                                                                
   "participantOptionsSubtitle": "Gerencie este participante",                                                           
   "resendEmail": "Reenviar e-mail",                                                                                     
   "resendEmailSubtitle": "Reenviar e-mail do sorteio",                                                                  
   "deleteParticipant": "Excluir participante",                                                                        
-  "deleteParticipantSubtitle": "Remover do grupo permanentemente"
+  "deleteParticipantSubtitle": "Remover do grupo permanentemente",
+  "groupUpdatedSuccess": "Grupo {name} atualizado com sucesso!",                                                      
+  "@groupUpdatedSuccess": {                                                                                             
+    "placeholders": { "name": { "type": "String" } }                                                                    
+  },
+  "groupDeletedSuccess": "Grupo {name} excluído com sucesso!",                                                        
+  "@groupDeletedSuccess": {                                                                                             
+    "placeholders": { "name": { "type": "String" } }                                                                    
+  }
+
 }

@@ -5,8 +5,9 @@ import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/create_parti_args.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/contact_review_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/show_parti_args.dart';
+import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/contact_review.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/contacts_list.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/create_participant.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/screens/all_participants_view.dart';
@@ -17,10 +18,7 @@ List<RouteBase> participantRoutes = [
     name: 'contacts',
     path: '/contacts',
     builder: (BuildContext context, GoRouterState state) {
-      final extra = state.extra as CreateParticipantArgs;
       return ContactList(
-        groupToken: extra.groupToken,
-        groupCode: extra.groupCode,
       );
     },
   ),
@@ -28,12 +26,9 @@ List<RouteBase> participantRoutes = [
     name: 'create_part',
     path: '/create_part',
     builder: (BuildContext context, GoRouterState state) {
-      final session = getIt<GroupSession>();
       return BlocProvider<ParticipantCubit>(
         create: (_) => getIt<ParticipantCubit>(),
         child: CreateParticipant(
-          groupToken: session.token,
-          groupCode: session.code,
         ),
       );
     },
@@ -67,5 +62,13 @@ List<RouteBase> participantRoutes = [
         child: const AllParticipantsView(),
       );
     },
+  ),
+    GoRoute(                                                                                                              
+    name: 'contact_review',                                                                                             
+    path: '/contact_review',
+    builder: (context, state) {                                                                                         
+      final args = state.extra as ContactReviewArgs;                                                                  
+      return ContactReviewScreen(args: args);
+    },                                                                                                                  
   ),
 ];

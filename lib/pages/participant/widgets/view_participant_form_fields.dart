@@ -7,7 +7,7 @@ import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_name_f
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/validator/participant/participant_validators.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class ViewParticipantFormFields extends StatefulWidget {
@@ -35,7 +35,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
     final role = widget.participant?.role;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,17 +45,17 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
           child: Column(
             children: [
               LabeledField(
-                label: l10n.name,
+                label: i18n.name,
                 child: MyNameFormField(
                   controller: widget.nameController,
-                  hintText: l10n.participantNameHint,
+                  hintText: i18n.participantNameHint,
                   textInputAction: TextInputAction.next,
                   readOnly: widget.readOnly,
                   autofocus: true,
                 ),
               ),
               LabeledField(
-                label: l10n.email,
+                label: i18n.email,
                 child: MyEmailFormField(
                   controller: widget.emailController,
                   textInputAction: TextInputAction.next,
@@ -68,7 +68,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
                 ),
               ),
               LabeledField(
-                label: l10n.phoneField,
+                label: i18n.phoneField,
                 child: MyPhoneFormField(
                   controller: widget.phoneController,
                   textInputAction: TextInputAction.done,
@@ -76,9 +76,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
                   enableInteractiveSelection: widget.readOnly,
                   enabled: !widget.readOnly,
                   navigatorHeight: 400,
-                  validator: PhoneValidator.compose([
-                    PhoneValidator.valid(context),
-                  ]),
+
                 ),
               ),
             ],

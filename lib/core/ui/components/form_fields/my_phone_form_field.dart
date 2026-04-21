@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/network/url/contants.dart';
+import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class MyPhoneFormField extends StatelessWidget {
   final PhoneController controller;
-  final FormFieldValidator<PhoneNumber>? validator;
   final bool enabled;
   final bool? enableInteractiveSelection;
   final TextInputAction? textInputAction;
@@ -15,11 +15,10 @@ class MyPhoneFormField extends StatelessWidget {
   const MyPhoneFormField({
     super.key,
     required this.controller,
-    this.validator,
     this.enabled = true,
     this.enableInteractiveSelection,
     this.textInputAction,
-    this.keyboardType = const TextInputType.numberWithOptions(),
+    this.keyboardType = TextInputType.phone,
     this.navigatorHeight,
   });
 
@@ -33,15 +32,24 @@ class MyPhoneFormField extends StatelessWidget {
         favorites: favoriteIsoList,
       );
 
-  /// Abre o seletor de país de forma independente, sem PhoneFormField.
   static Future<IsoCode?> showCountrySelector(BuildContext context) =>
       _buildNavigator(context).show(context);
 
   @override
   Widget build(BuildContext context) {
     return PhoneFormField(
+      decoration: InputDecoration(
+        helperText: "DDD + ${AppLocalizations.of(context)!.phone}",
+        hintText: 'DDD + ${AppLocalizations.of(context)!.phone}',
+      ),
       controller: controller,
-      validator: validator,
+      validator: PhoneValidator.compose([
+        PhoneValidator.valid(
+          context,
+          errorText:
+              'Número inválido.\nInclua o DDD + número\nEx: (11) 99999-9999',
+        ),
+      ]),
       enabled: enabled,
       enableInteractiveSelection: enableInteractiveSelection ?? true,
       textInputAction: textInputAction,

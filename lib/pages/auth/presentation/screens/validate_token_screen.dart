@@ -6,7 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_email_form_field.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/screen_padding.dart';
+import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_state.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
@@ -44,7 +45,7 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
 
     return BlocListener<AuthCubit, AuthState>(
       listenWhen: (p, c) =>
@@ -53,7 +54,7 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
         if (state.validated) {
           setState(() => _success = true);
           Future.delayed(const Duration(milliseconds: 1200), () {
-            if (mounted) context.goNamed('nav_bar', extra: state.groups ?? []);
+            if (context.mounted) context.goNamed('nav_bar', extra: state.groups ?? []);
           });
         }
       },
@@ -61,14 +62,8 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
         key: _formKey,
         child: Scaffold(
           appBar: MyAppBar(),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(
-                SecretSantaSpacing.lg,
-                SecretSantaSpacing.lg,
-                SecretSantaSpacing.lg,
-                0,
-              ),
+          body: ScreenPadding(
+            child: SingleChildScrollView(
               child: BlocBuilder<AuthCubit, AuthState>(
                 builder: (context, state) {
                   return Column(
@@ -104,11 +99,11 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            l10n.almostThereTitle,
+                            i18n.almostThereTitle,
                             style: SecretSantaTextStyles.titleLarge,
                           ),
                           Text(
-                            l10n.almostThereSubtitle,
+                            i18n.almostThereSubtitle,
                             style: SecretSantaTextStyles.bodySmall,
                           ),
                         ],
@@ -134,6 +129,7 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                                       builder: (context) {
                                         final pinField =
                                             MaterialPinField(
+                                              pinController: _tokenController,
                                               length: 6,
                                               theme: MaterialPinTheme(
                                                 cursorColor:
@@ -204,7 +200,7 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                                         }
                                       },
                                       icon: const Icon(Icons.content_paste),
-                                      label: Text(l10n.pasteCode),
+                                      label: Text(i18n.pasteCode),
                                     ),
                                   ],
                                 ),

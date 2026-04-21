@@ -246,7 +246,7 @@
   "onboardingGuideTitle": "Guida rapida",
   "onboardingGuideSubtitle": "Tutto quello che devi sapere per creare il tuo amico segreto.",
 
-"successTitle": "Successo",                                                                                           
+  "successTitle": "Successo",                                                                                           
   "partialTitle": "Parziale",
 
   "participantOptionsTitle": "Opzioni partecipante",                                                                    
@@ -254,5 +254,16 @@
   "resendEmail": "Reinvia email",                                                                                     
   "resendEmailSubtitle": "Reinvia l'email del sorteggio",                                                               
   "deleteParticipant": "Elimina partecipante",           
-  "deleteParticipantSubtitle": "Rimuovi dal gruppo permanentemente"
+  "deleteParticipantSubtitle": "Rimuovi dal gruppo permanentemente",
+
+  "validatorInvalidPhone": "Numero non valido. Includi il prefisso + numero",                                           
+  "phoneHelperText": "Includi il prefisso + numero",
+  "groupUpdatedSuccess": "Gruppo {name} aggiornato con successo!",
+  "@groupUpdatedSuccess": {
+    "placeholders": { "name": { "type": "String" } }                                                                    
+  },
+  "groupDeletedSuccess": "Gruppo {name} eliminato con successo!",                                                     
+  "@groupDeletedSuccess": {
+    "placeholders": { "name": { "type": "String" } }                                                                    
+  }
 }

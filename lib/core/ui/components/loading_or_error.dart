@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class LoadingOrError extends StatelessWidget {
@@ -19,7 +19,7 @@ class LoadingOrError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
 
     if (isLoading) {
       return Center(
@@ -39,7 +39,7 @@ class LoadingOrError extends StatelessWidget {
             if (onRetry != null)
               TextButton(
                 onPressed: onRetry,
-                child: Text(l10n.retry),
+                child: Text(i18n.retry),
               ),
           ],
         ),

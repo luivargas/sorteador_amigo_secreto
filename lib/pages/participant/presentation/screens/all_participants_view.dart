@@ -5,6 +5,7 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/card_color.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_search_bar.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/screen_padding.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
@@ -12,10 +13,9 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_sta
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/create_parti_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/participant_list_item.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 
 class AllParticipantsView extends StatefulWidget {
   const AllParticipantsView({super.key});
@@ -29,6 +29,7 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
   final TextEditingController _searchController = TextEditingController();
   String _query = '';
   bool _didCreate = false;
+  final group = getIt<GroupSession>();
 
   @override
   void dispose() {
@@ -37,9 +38,7 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
     super.dispose();
   }
 
-  List<ParticipantModel> _filtered(
-    List<ParticipantModel> participants,
-  ) {
+  List<ParticipantModel> _filtered(List<ParticipantModel> participants) {
     if (_query.isEmpty) return participants;
     final q = _query.toLowerCase();
     return participants.where((p) {
@@ -50,14 +49,7 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
   }
 
   Future<void> _onAddParticipant() async {
-    final session = getIt<GroupSession>();
-    final result = await context.pushNamed(
-      'create_part',
-      extra: CreateParticipantArgs(
-        groupToken: session.token,
-        groupCode: session.code,
-      ),
-    );
+    final result = await context.pushNamed('create_part');
     if (result == true && context.mounted) {
       _didCreate = true;
       _onRefresh();
@@ -65,14 +57,13 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
   }
 
   Future<void> _onRefresh() async {
-    final session = getIt<GroupSession>();
-    await context.read<GroupCubit>().show(session.code, session.token);
+    await context.read<GroupCubit>().show(group.code, group.token);
     _refreshController.refreshCompleted();
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
 
     return PopScope(
       canPop: false,
@@ -95,84 +86,83 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
           children: [
             ColoredBox(
               color: SecretSantaColors.background,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: SecretSantaRadius.lg,
-                  vertical: SecretSantaRadius.lg,
-                ),
-                child: MySearchBar(
-                  controller: _searchController,
-                  hintText: l10n.searchParticipants,
-                  onChanged: (v) => setState(() => _query = v),
+              child: ScreenPadding(
+                child: Column(
+                  spacing: 15,
+                  children: [
+                    Text(
+                      i18n.participants,
+                      style: SecretSantaTextStyles.titleMedium,
+                    ),
+                    ColoredBox(
+                      color: SecretSantaColors.background,
+                      child: MySearchBar(
+                        controller: _searchController,
+                        hintText: i18n.searchParticipants,
+                        onChanged: (v) => setState(() => _query = v),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
             Expanded(
-              child: BlocListener<ParticipantCubit, ParticipantState>(
-                listenWhen: (prev, curr) => !prev.deleted && curr.deleted,
-                listener: (context, state) {
-                  _didCreate = true;
-                  _onRefresh();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: SecretSantaRadius.lg,
-                  ),
+              child: ScreenPadding(
+                child: BlocListener<ParticipantCubit, ParticipantState>(
+                  listenWhen: (prev, curr) => !prev.deleted && curr.deleted,
+                  listener: (context, state) {
+                    _didCreate = true;
+                    _onRefresh();
+                  },
                   child: BlocBuilder<GroupCubit, GroupState>(
                     builder: (context, state) {
-                      if (state.isLoading) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-
                       final participants = _filtered(
                         state.group?.participants ?? [],
                       );
-
-                      if (participants.isEmpty) {
-                        return Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.people_outline,
-                                size: 64,
-                                color: SecretSantaColors.neutral300,
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                l10n.noGroupsFound,
-                                style: TextStyle(
-                                  color: SecretSantaColors.neutral500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-
                       return SmartRefresher(
                         controller: _refreshController,
                         onRefresh: _onRefresh,
-                        child: ListView.separated(
-                          padding: const EdgeInsets.only(
-                            top: SecretSantaSpacing.lg,
-                            bottom: 100,
-                          ),
-                          itemCount: participants.length,
-                          separatorBuilder: (_, _) =>
-                              const SizedBox(height: 12),
-                          itemBuilder: (context, index) {
-                            final p = participants[index];
-                            return ParticipantListItem(
-                              participant: p,
-                              color: CardColor.getColor(index),
-                              onChanged: () {
-                                _didCreate = true;
-                                _onRefresh();
-                              },
-                            );
-                          },
-                        ),
+                        child: state.isLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : participants.isEmpty
+                            ? Center(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.people_outline,
+                                      size: 64,
+                                      color: SecretSantaColors.neutral300,
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Text(
+                                      i18n.noGroupsFound,
+                                      style: TextStyle(
+                                        color: SecretSantaColors.neutral500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : ListView.separated(
+                                padding: const EdgeInsets.only(
+                                  bottom: 100,
+                                ),
+                                itemCount: participants.length,
+                                separatorBuilder: (_, _) =>
+                                    const SizedBox(height: 12),
+                                itemBuilder: (context, index) {
+                                  final p = participants[index];
+                                  return ParticipantListItem(
+                                    participant: p,
+                                    color: CardColor.getColor(index),
+                                    onChanged: () {
+                                      _didCreate = true;
+                                      _onRefresh();
+                                    },
+                                  );
+                                },
+                              ),
                       );
                     },
                   ),

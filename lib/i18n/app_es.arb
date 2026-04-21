@@ -254,5 +254,16 @@
   "resendEmail": "Reenviar correo",                                                                                     
   "resendEmailSubtitle": "Reenviar el correo del sorteo",                                                             
   "deleteParticipant": "Eliminar participante",                                                                         
-  "deleteParticipantSubtitle": "Eliminar del grupo permanentemente"
+  "deleteParticipantSubtitle": "Eliminar del grupo permanentemente",
+
+  "validatorInvalidPhone": "Número inválido. Incluya el código de área + número",                                       
+  "phoneHelperText": "Incluya el código de área + número",
+  "groupUpdatedSuccess": "¡Grupo {name} actualizado con éxito!",                                                      
+  "@groupUpdatedSuccess": {
+    "placeholders": { "name": { "type": "String" } }                                                                    
+  },
+  "groupDeletedSuccess": "¡Grupo {name} eliminado con éxito!",                                                          
+  "@groupDeletedSuccess": {                                                                                           
+    "placeholders": { "name": { "type": "String" } }
+  } 
 }

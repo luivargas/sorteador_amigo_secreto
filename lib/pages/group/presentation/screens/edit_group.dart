@@ -8,6 +8,7 @@ import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/loading_or_error.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/screen_padding.dart';
 import 'package:sorteador_amigo_secreto/core/util/group/date_time_utils.dart';
 import 'package:sorteador_amigo_secreto/core/util/group/gift_utils.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
@@ -16,7 +17,7 @@ import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/edit_group/edit_group_field.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class EditGroup extends StatefulWidget {
@@ -143,75 +144,81 @@ class _EditGroup extends State<EditGroup> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
 
     return Form(
       key: _editGroupKey,
       child: Scaffold(
         appBar: MyAppBar(),
-        body: BlocConsumer<GroupCubit, GroupState>(
-          listener: (context, state) {
-            if (state.error != null && state.group != null) {
-              AppAlert.showBanner(
-                context,
-                message: state.error!.localize(context),
-                type: AlertType.warning,
-              );
-            }
-            if (state.updated) {
-              context.pop(true);
-            }
-          },
-          builder: (context, state) {
-            _prefillFromApi(state);
-            return LoadingOrError(
-              isLoading: state.isLoading && state.group == null,
-              error: state.group == null ? state.error : null,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    SecretSantaSpacing.lg,
-                    SecretSantaSpacing.lg,
-                    SecretSantaSpacing.lg,
-                    SecretSantaSpacing.xxl,
+        body: SafeArea(
+          top: false,
+          child: ScreenPadding(
+            child: BlocConsumer<GroupCubit, GroupState>(
+              listener: (context, state) {
+                if (state.error != null && state.group != null) {
+                  AppAlert.showBanner(
+                    context,
+                    message: state.error!.localize(context),
+                    type: AlertType.warning,
+                  );
+                }
+                if (state.updated) {
+                  AppAlert.showBanner(
+                    context,
+                    message: i18n.groupUpdatedSuccess(
+                      groupNameController.text.trim(),
+                    ),
+                    type: AlertType.success,
+                  );
+                  if (context.mounted) {
+                    context.pop(true);
+                  }
+                }
+              },
+              builder: (context, state) {
+                _prefillFromApi(state);
+                return LoadingOrError(
+                  isLoading: state.isLoading && state.group == null,
+                  error: state.group == null ? state.error : null,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      spacing: SecretSantaSpacing.md,
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              i18n.editGroupTitle,
+                              style: SecretSantaTextStyles.titleMedium,
+                            ),
+                            Text(
+                              i18n.editGroupSubtitle,
+                              style: TextStyle(),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                        EditGroupFields(
+                          groupNameController: groupNameController,
+                          dateTimeController: dateTimeController,
+                          descriptionController: descriptionController,
+                          minGiftValueController: minGiftValueController,
+                          maxGiftValueController: maxGiftValueController,
+                          addressController: locationController,
+                          onTapDateTime: _pickDateTime,
+                        ),
+                        MyGradientButton(
+                          onTap: _onSubmit,
+                          isLoading: state.isLoading,
+                          title: AppLocalizations.of(context)!.save,
+                          icon: Icons.save,
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Column(
-                    spacing: SecretSantaSpacing.md,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            l10n.editGroupTitle,
-                            style: SecretSantaTextStyles.titleMedium,
-                          ),
-                          Text(
-                            l10n.editGroupSubtitle,
-                            style: TextStyle(),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                      EditGroupFields(
-                        groupNameController: groupNameController,
-                        dateTimeController: dateTimeController,
-                        descriptionController: descriptionController,
-                        minGiftValueController: minGiftValueController,
-                        maxGiftValueController: maxGiftValueController,
-                        addressController: locationController,
-                        onTapDateTime: _pickDateTime,
-                      ),
-                      MyGradientButton(
-                        onTap: _onSubmit,
-                        isLoading: state.isLoading,
-                        title: AppLocalizations.of(context)!.save,
-                        icon: Icons.save,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
+                );
+              },
+            ),
+          ),
         ),
       ),
     );

@@ -254,5 +254,16 @@
   "resendEmail": "Resend email",                                                                                        
   "resendEmailSubtitle": "Resend the draw email",                                                                     
   "deleteParticipant": "Delete participant",                                                                          
-  "deleteParticipantSubtitle": "Permanently remove from group"
+  "deleteParticipantSubtitle": "Permanently remove from group",
+
+  "validatorInvalidPhone": "Invalid number. Include the area code + number",                  
+  "phoneHelperText": "Include area code + number",
+  "groupUpdatedSuccess": "Group {name} updated successfully!",                                                          
+  "@groupUpdatedSuccess": {                                                                                           
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "groupDeletedSuccess": "Group {name} deleted successfully!",                                                          
+  "@groupDeletedSuccess": {                                                                                           
+    "placeholders": { "name": { "type": "String" } }
+  }
 }

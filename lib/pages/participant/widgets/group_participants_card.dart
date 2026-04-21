@@ -6,8 +6,7 @@ import 'package:sorteador_amigo_secreto/core/util/get_initials.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
-
+import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 
 class GroupParticipantsCard extends StatelessWidget {
   final String groupToken;
@@ -24,9 +23,7 @@ class GroupParticipantsCard extends StatelessWidget {
   });
 
   Future<void> _goToList(BuildContext context) async {
-    final result = await context.pushNamed(
-      'participants_list',
-    );
+    final result = await context.pushNamed('participants_list');
     if (result == true && context.mounted) {
       context.read<GroupCubit>().show(groupCode, groupToken);
     }
@@ -50,10 +47,7 @@ class GroupParticipantsCard extends StatelessWidget {
           ...visibleList.asMap().entries.map((entry) {
             return Positioned(
               left: entry.key * step,
-              child: _AvatarItem(
-                initials: GetInitials.initials(entry.value.name),
-                index: entry.key,
-              ),
+              child: _AvatarItem(initials: entry.value.name, index: entry.key),
             );
           }),
           if (extra > 0)
@@ -68,14 +62,17 @@ class GroupParticipantsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
 
     return InkWell(
       onTap: () => _goToList(context),
       borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: SecretSantaSpacing.lg, vertical: SecretSantaSpacing.md),
+        padding: const EdgeInsets.symmetric(
+          horizontal: SecretSantaSpacing.lg,
+          vertical: SecretSantaSpacing.md,
+        ),
         decoration: BoxDecoration(
           color: SecretSantaColors.neutral50,
           borderRadius: BorderRadius.circular(SecretSantaRadius.md),
@@ -95,14 +92,14 @@ class GroupParticipantsCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      l10n.participants,
+                      i18n.participants,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
                     Text(
-                      l10n.participantsSubtitle(participantsList.length),
+                      i18n.participantsSubtitle(participantsList.length),
                       style: const TextStyle(fontSize: 12),
                     ),
                   ],
@@ -117,10 +114,15 @@ class GroupParticipantsCard extends StatelessWidget {
             const SizedBox(height: 12),
             if (participantsList.isEmpty)
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: SecretSantaSpacing.sm),
+                padding: const EdgeInsets.symmetric(
+                  vertical: SecretSantaSpacing.sm,
+                ),
                 child: Text(
-                  l10n.noParticipantsSelected,
-                  style: TextStyle(color: SecretSantaColors.neutral400, fontSize: 13),
+                  i18n.noParticipantsSelected,
+                  style: TextStyle(
+                    color: SecretSantaColors.neutral400,
+                    fontSize: 13,
+                  ),
                 ),
               )
             else
@@ -131,7 +133,6 @@ class GroupParticipantsCard extends StatelessWidget {
     );
   }
 }
-
 
 class _AvatarItem extends StatelessWidget {
   final int index;
@@ -150,7 +151,7 @@ class _AvatarItem extends StatelessWidget {
         border: Border.all(color: SecretSantaColors.neutral50, width: 2),
       ),
       child: Center(
-        child: Text(
+        child: GetInitials.initials(
           initials,
           style: const TextStyle(
             color: SecretSantaColors.neutral50,

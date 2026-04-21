@@ -6,7 +6,8 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/card_color.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_search_bar.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/screen_padding.dart';
+import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
@@ -74,137 +75,134 @@ class _HomeViewState extends State<_HomeView>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: MyAppBar(),
-      body: BlocListener<GroupCubit, GroupState>(
-        listenWhen: (prev, curr) => prev.groups != curr.groups,
-        listener: (context, state) {
-          setState(() => _hasGroups = state.groups.isNotEmpty);
-        },
-        child: Column(
-          children: [
-            _SearchBar(l10n: l10n),
+      body: ScreenPadding(
+        child: BlocListener<GroupCubit, GroupState>(
+          listenWhen: (prev, curr) => prev.groups != curr.groups,
+          listener: (context, state) {
+            setState(() => _hasGroups = state.groups.isNotEmpty);
+          },
+          child: Column(
+            spacing: 20,
+            children: [
+              _SearchBar(i18n: i18n),
 
-            Expanded(
-              child: SmartRefresher(
-                enablePullDown: true,
-                controller: _refreshController,
-                onRefresh: _onRefresh,
-                child: CustomScrollView(
-                  controller: _scrollController,
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(
-                          SecretSantaSpacing.lg,
-                          SecretSantaSpacing.md,
-                          SecretSantaSpacing.lg,
-                          0,
-                        ),
-                        child: HomeCard(hasGroups: _hasGroups),
-                      ),
-                    ),
-
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(
-                          SecretSantaSpacing.lg,
-                          SecretSantaSpacing.md,
-                          SecretSantaSpacing.lg,
-                          SecretSantaRadius.sm,
-                        ),
-                        child: Text(
-                          l10n.homeTitle,
-                          style: SecretSantaTextStyles.titleSmall,
-                        ),
-                      ),
-                    ),
-
-                    BlocBuilder<GroupCubit, GroupState>(
-                      builder: (context, state) {
-                        if (state.isLoading) {
-                          return SliverFillRemaining(
-                            hasScrollBody: false,
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                color: SecretSantaColors.accent,
-                              ),
-                            ),
-                          );
-                        }
-
-                        if (state.error != null) {
-                          final msg = state.error == AppError.unauthorized
-                              ? l10n.sessionExpired
-                              : state.error!.localize(context);
-                          return SliverFillRemaining(
-                            hasScrollBody: false,
-                            child: Center(child: Text(msg)),
-                          );
-                        }
-
-                        if (state.filtered.isEmpty) {
-                          final isSearching = state.search.isNotEmpty;
-                          final isFiltering = state.filter != GroupFilter.all;
-                          return SliverFillRemaining(
-                            hasScrollBody: false,
-                            child: Column(
-                              spacing: 8,
-                              children: [
-                                Icon(
-                                  isSearching || isFiltering
-                                      ? Icons.search_off
-                                      : Icons.group_outlined,
-                                  size: 48,
-                                  color: Colors.grey,
-                                ),
-                                Text(
-                                  isSearching
-                                      ? '"${state.search}" — ${l10n.noGroupsFound.toLowerCase()}'
-                                      : l10n.noGroupsFound,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                        return SliverPadding(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
-                          sliver: SliverList.separated(
-                            itemCount: state.filtered.length,
-                            separatorBuilder: (_, _) =>
-                                const SizedBox(height: 12),
-                            itemBuilder: (context, index) {
-                              final g = state.filtered[index];
-                              return GroupCard(
-                                onPress: () async {
-                                  final result = await context.pushNamed(
-                                    'view_group',
-                                    extra: ShowGroupArgs(
-                                      code: g.code,
-                                      token: g.token,
-                                      name: g.name,
-                                    ),
-                                  );
-                                  if (result == true) _onRefresh();
-                                },
-                                index: index,
-                                groupName: g.name,
-                                isRaffled: g.isRaffled,
-                                color: CardColor.getColor(index),
-                              );
-                            },
+              Expanded(
+                child: SmartRefresher(
+                  enablePullDown: true,
+                  controller: _refreshController,
+                  onRefresh: _onRefresh,
+                  child: CustomScrollView(
+                    controller: _scrollController,
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            bottom: SecretSantaSpacing.lg,
                           ),
-                        );
-                      },
-                    ),
-                  ],
+                          child: HomeCard(hasGroups: _hasGroups),
+                        ),
+                      ),
+
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            bottom: SecretSantaSpacing.sm,
+                          ),
+                          child: Text(
+                            i18n.homeTitle,
+                            style: SecretSantaTextStyles.titleSmall,
+                          ),
+                        ),
+                      ),
+
+                      BlocBuilder<GroupCubit, GroupState>(
+                        builder: (context, state) {
+                          if (state.isLoading) {
+                            return SliverFillRemaining(
+                              hasScrollBody: false,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: SecretSantaColors.accent,
+                                ),
+                              ),
+                            );
+                          }
+
+                          if (state.error != null) {
+                            final msg = state.error == AppError.unauthorized
+                                ? i18n.sessionExpired
+                                : state.error!.localize(context);
+                            return SliverFillRemaining(
+                              hasScrollBody: false,
+                              child: Center(child: Text(msg)),
+                            );
+                          }
+
+                          if (state.filtered.isEmpty) {
+                            final isSearching = state.search.isNotEmpty;
+                            final isFiltering = state.filter != GroupFilter.all;
+                            return SliverFillRemaining(
+                              hasScrollBody: false,
+                              child: Column(
+                                spacing: 8,
+                                children: [
+                                  Icon(
+                                    isSearching || isFiltering
+                                        ? Icons.search_off
+                                        : Icons.group_outlined,
+                                    size: 48,
+                                    color: Colors.grey,
+                                  ),
+                                  Text(
+                                    isSearching
+                                        ? '"${state.search}" — ${i18n.noGroupsFound.toLowerCase()}'
+                                        : i18n.noGroupsFound,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                          return SliverPadding(
+                            padding: const EdgeInsets.only(bottom: 100),
+                            sliver: SliverList.separated(
+                              itemCount: state.filtered.length,
+                              separatorBuilder: (_, _) =>
+                                  const SizedBox(height: 12),
+                              itemBuilder: (context, index) {
+                                final g = state.filtered[index];
+                                return GroupCard(
+                                  onPress: () async {
+                                    final result = await context.pushNamed(
+                                      'view_group',
+                                      extra: ShowGroupArgs(
+                                        code: g.code,
+                                        token: g.token,
+                                        name: g.name,
+                                      ),
+                                    );
+                                    if (result == true) _onRefresh();
+                                  },
+                                  index: index,
+                                  groupName: g.name,
+                                  isRaffled: g.isRaffled,
+                                  color: CardColor.getColor(index),
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -212,66 +210,60 @@ class _HomeViewState extends State<_HomeView>
 }
 
 class _SearchBar extends StatelessWidget {
-  final AppLocalizations l10n;
+  final AppLocalizations i18n;
 
-  const _SearchBar({required this.l10n});
+  const _SearchBar({required this.i18n});
 
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
       color: SecretSantaColors.background,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: SecretSantaSpacing.lg,
-          vertical: SecretSantaSpacing.lg,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 8,
-          children: [
-            MySearchBar(
-              hintText: l10n.searchGroup,
-              onChanged: (v) => context.read<GroupCubit>().onSearchChanged(v),
-            ),
-            BlocBuilder<GroupCubit, GroupState>(
-              buildWhen: (prev, cur) => prev.filter != cur.filter,
-              builder: (context, state) {
-                return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    spacing: 8,
-                    children: [
-                      _FilterChip(
-                        label: l10n.filterAll,
-                        selected: state.filter == GroupFilter.all,
-                        onSelected: () => context
-                            .read<GroupCubit>()
-                            .onFilterChanged(GroupFilter.all),
-                      ),
-                      _FilterChip(
-                        label: l10n.badgePending,
-                        selected: state.filter == GroupFilter.pending,
-                        onSelected: () => context
-                            .read<GroupCubit>()
-                            .onFilterChanged(GroupFilter.pending),
-                        color: SecretSantaColors.accent3,
-                      ),
-                      _FilterChip(
-                        label: l10n.badgeRaffled,
-                        selected: state.filter == GroupFilter.raffled,
-                        onSelected: () => context
-                            .read<GroupCubit>()
-                            .onFilterChanged(GroupFilter.raffled),
-                        color: SecretSantaColors.accent,
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 8,
+        children: [
+          MySearchBar(
+            hintText: i18n.searchGroup,
+            onChanged: (v) => context.read<GroupCubit>().onSearchChanged(v),
+          ),
+          BlocBuilder<GroupCubit, GroupState>(
+            buildWhen: (prev, cur) => prev.filter != cur.filter,
+            builder: (context, state) {
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  spacing: 8,
+                  children: [
+                    _FilterChip(
+                      label: i18n.filterAll,
+                      selected: state.filter == GroupFilter.all,
+                      onSelected: () => context
+                          .read<GroupCubit>()
+                          .onFilterChanged(GroupFilter.all),
+                    ),
+                    _FilterChip(
+                      label: i18n.badgePending,
+                      selected: state.filter == GroupFilter.pending,
+                      onSelected: () => context
+                          .read<GroupCubit>()
+                          .onFilterChanged(GroupFilter.pending),
+                      color: SecretSantaColors.accent3,
+                    ),
+                    _FilterChip(
+                      label: i18n.badgeRaffled,
+                      selected: state.filter == GroupFilter.raffled,
+                      onSelected: () => context
+                          .read<GroupCubit>()
+                          .onFilterChanged(GroupFilter.raffled),
+                      color: SecretSantaColors.accent,
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

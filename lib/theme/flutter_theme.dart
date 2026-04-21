@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 
 enum GroupFilter { all, pending, raffled }
 
@@ -208,7 +208,6 @@ class SecretSantaTheme {
   static ThemeData get theme {
     return ThemeData(
       useMaterial3: true,
-
       scaffoldBackgroundColor: SecretSantaColors.background,
       primaryColor: SecretSantaColors.background,
       canvasColor: SecretSantaColors.background,
@@ -309,7 +308,10 @@ class SecretSantaTheme {
           borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
           borderSide: BorderSide(color: SecretSantaColors.neutral700, width: 1),
         ),
-        contentPadding: EdgeInsets.symmetric(horizontal: SecretSantaSpacing.md, vertical: SecretSantaSpacing.md),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: SecretSantaSpacing.md,
+          vertical: SecretSantaSpacing.md,
+        ),
       ),
 
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -475,7 +477,9 @@ class SecondaryButton extends StatelessWidget {
           horizontal: isSmall ? 16 : 28,
           vertical: isSmall ? 8 : 14,
         ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SecretSantaRadius.xl)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
+        ),
         side: BorderSide(color: SecretSantaColors.neutral200, width: 1),
         backgroundColor: SecretSantaColors.neutral50,
       ),
@@ -547,19 +551,19 @@ class SecretSantaBadge extends StatelessWidget {
     Color borderColor;
     String text;
 
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
     switch (type) {
       case BadgeType.pending:
         bgColor = SecretSantaColors.warningBg;
         textColor = SecretSantaColors.warningText;
         borderColor = SecretSantaColors.warningBorder;
-        text = l10n.badgePending;
+        text = i18n.badgePending;
         break;
       case BadgeType.raffled:
         bgColor = SecretSantaColors.successBg;
         textColor = SecretSantaColors.successText;
         borderColor = SecretSantaColors.successBorder;
-        text = l10n.badgeRaffled;
+        text = i18n.badgeRaffled;
         break;
     }
 
@@ -577,7 +581,6 @@ class SecretSantaBadge extends StatelessWidget {
     );
   }
 }
-
 
 class SecretSantaTextField extends StatelessWidget {
   final String label;

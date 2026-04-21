@@ -7,7 +7,7 @@ Este projeto usa o sistema oficial de localização do Flutter com arquivos `.ar
 ## Estrutura dos arquivos
 
 ```
-lib/l10n/
+lib/i18n/
 ├── app_pt.arb              ← Strings em Português (arquivo template)
 ├── app_en.arb              ← Strings em Inglês
 ├── app_localizations.dart  ← Gerado automaticamente (não edite)
@@ -21,7 +21,7 @@ lib/l10n/
 
 ### 1. Crie o arquivo de tradução
 
-Crie o arquivo `lib/l10n/app_es.arb` baseado no arquivo português:
+Crie o arquivo `lib/i18n/app_es.arb` baseado no arquivo português:
 
 ```json
 {
@@ -160,10 +160,10 @@ Crie o arquivo `lib/l10n/app_es.arb` baseado no arquivo português:
 No terminal, na raiz do projeto:
 
 ```bash
-flutter gen-l10n
+flutter gen-i18n
 ```
 
-Isso vai gerar automaticamente `lib/l10n/app_localizations_es.dart`.
+Isso vai gerar automaticamente `lib/i18n/app_localizations_es.dart`.
 
 ---
 
@@ -207,16 +207,16 @@ Quando criar uma nova tela com texto fixo, siga este processo:
 "minhaNovaMensagem": "Text in English here"
 ```
 
-### 3. Rode `flutter gen-l10n`
+### 3. Rode `flutter gen-i18n`
 
 ```bash
-flutter gen-l10n
+flutter gen-i18n
 ```
 
 ### 4. Use no widget
 
 ```dart
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 
 // dentro do build(BuildContext context):
 Text(AppLocalizations.of(context)!.minhaNovaMensagem)

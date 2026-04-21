@@ -587,6 +587,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get partialTitle => 'Parcial';
 
   @override
+  String get validatorInvalidPhone => 'Número inválido. Inclua o DDD + número';
+
+  @override
+  String get phoneHelperText => 'Inclua o DDD + número';
+
+  @override
   String get participantOptionsTitle => 'Opções do participante';
 
   @override
@@ -603,4 +609,14 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get deleteParticipantSubtitle => 'Remover do grupo permanentemente';
+
+  @override
+  String groupUpdatedSuccess(String name) {
+    return 'Grupo $name atualizado com sucesso!';
+  }
+
+  @override
+  String groupDeletedSuccess(String name) {
+    return 'Grupo $name excluído com sucesso!';
+  }
 }

@@ -589,6 +589,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get partialTitle => 'Parziale';
 
   @override
+  String get validatorInvalidPhone =>
+      'Numero non valido. Includi il prefisso + numero';
+
+  @override
+  String get phoneHelperText => 'Includi il prefisso + numero';
+
+  @override
   String get participantOptionsTitle => 'Opzioni partecipante';
 
   @override
@@ -605,4 +612,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get deleteParticipantSubtitle => 'Rimuovi dal gruppo permanentemente';
+
+  @override
+  String groupUpdatedSuccess(String name) {
+    return 'Gruppo $name aggiornato con successo!';
+  }
+
+  @override
+  String groupDeletedSuccess(String name) {
+    return 'Gruppo $name eliminato con successo!';
+  }
 }

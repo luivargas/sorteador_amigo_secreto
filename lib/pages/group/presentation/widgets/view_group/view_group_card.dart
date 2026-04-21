@@ -6,7 +6,7 @@ import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/group_participants_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 
 class ViewGroupCard extends StatelessWidget {
   final String eventLocation;
@@ -34,7 +34,7 @@ class ViewGroupCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
 
     return Column(
       spacing: SecretSantaSpacing.sm,
@@ -45,7 +45,7 @@ class ViewGroupCard extends StatelessWidget {
           children: [
             Expanded(
               child: StatCard(
-                value: l10n.eventDate,
+                value: i18n.eventDate,
                 label: eventDate,
                 subLabel: eventTime,
                 icon: Icons.calendar_today_outlined,
@@ -55,7 +55,7 @@ class ViewGroupCard extends StatelessWidget {
             ),
             Expanded(
               child: StatCard(
-                value: l10n.suggestedValue,
+                value: i18n.suggestedValue,
                 label: GiftUtils.toDisplayFormat(minGiftValue),
                 subLabel: GiftUtils.toDisplayFormat(maxGiftValue),
                 icon: Icons.payments_outlined,
@@ -101,7 +101,7 @@ class ViewGroupCard extends StatelessWidget {
                   spacing: 2,
                   children: [
                     Text(
-                      l10n.location,
+                      i18n.location,
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -147,7 +147,7 @@ class ViewGroupCard extends StatelessWidget {
                     size: 16,
                   ),
                   Text(
-                    l10n.description,
+                    i18n.description,
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,

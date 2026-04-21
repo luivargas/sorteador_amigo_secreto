@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:sorteador_amigo_secreto/core/util/get_initials.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class AppListCard extends StatelessWidget {
   final String title;
   final String? subtitle;
   final Color color;
-  final String initials;
+  final String name;
   final Widget? trailing;
   final VoidCallback? onTap;
   final double borderRadius;
@@ -18,7 +19,7 @@ class AppListCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.color,
-    required this.initials,
+    required this.name,
     this.subtitle,
     this.trailing,
     this.onTap,
@@ -61,14 +62,7 @@ class AppListCard extends StatelessWidget {
                         color: SecretSantaColors.neutral50,
                         size: avatarSize * 0.5,
                       )
-                    : Text(
-                        initials,
-                        style: TextStyle(
-                          color: SecretSantaColors.neutral50,
-                          fontWeight: FontWeight.bold,
-                          fontSize: avatarSize * 0.36,
-                        ),
-                      ),
+                    : GetInitials.initials(name)
               ),
             ),
             const SizedBox(width: 14),

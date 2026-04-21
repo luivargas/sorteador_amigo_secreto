@@ -8,6 +8,7 @@ import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/app_list_card.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_botton_sheet.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/screen_padding.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/database/auth_db.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/loading_or_error.dart';
@@ -16,7 +17,7 @@ import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/update
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/view_participant_form_fields.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class ViewParticipant extends StatefulWidget {
@@ -47,24 +48,24 @@ class _ViewParticipant extends State<ViewParticipant> {
   }
 
   Future<void> _onResendEmail(BuildContext context) async {
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
     if (context.mounted) {
       final confirmed = await AppAlert.showAlertDialog(
         context,
-        title: l10n.resendEmail,
-        message: l10n.resendEmailSubtitle,
+        title: i18n.resendEmail,
+        message: i18n.resendEmailSubtitle,
         actions: [
           TextButton(
             onPressed: () => context.pop(false),
             child: Text(
-              l10n.cancel,
+              i18n.cancel,
               style: const TextStyle(color: SecretSantaColors.accent2),
             ),
           ),
           TextButton(
             onPressed: () => context.pop(true),
             child: Text(
-              l10n.resendEmail,
+              i18n.resendEmail,
               style: const TextStyle(color: SecretSantaColors.accent),
             ),
           ),
@@ -81,18 +82,18 @@ class _ViewParticipant extends State<ViewParticipant> {
   }
 
   Future<void> _onDelete(BuildContext context) async {
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
     if (role == ParticipantRole.admin.name) {
       await AppAlert.showAlertDialog(
         context,
-        title: l10n.adminCannotBeDeleted,
-        message: l10n.adminCannotBeDeleted,
+        title: i18n.adminCannotBeDeleted,
+        message: i18n.adminCannotBeDeleted,
         actions: [
           TextButton(
             onPressed: () {
               context.pop(false);
             },
-            child: Text(l10n.ok),
+            child: Text(i18n.ok),
           ),
         ],
       );
@@ -102,20 +103,20 @@ class _ViewParticipant extends State<ViewParticipant> {
     if (context.mounted) {
       final confirmed = await AppAlert.showAlertDialog(
         context,
-        title: l10n.delete,
-        message: l10n.confirmDeleteParticipant(_nameController.text),
+        title: i18n.delete,
+        message: i18n.confirmDeleteParticipant(_nameController.text),
         actions: [
           TextButton(
             onPressed: () => context.pop(false),
             child: Text(
-              l10n.cancel,
+              i18n.cancel,
               style: const TextStyle(color: SecretSantaColors.accent2),
             ),
           ),
           TextButton(
             onPressed: () => context.pop(true),
             child: Text(
-              l10n.delete,
+              i18n.delete,
               style: const TextStyle(color: SecretSantaColors.accent),
             ),
           ),
@@ -179,7 +180,7 @@ class _ViewParticipant extends State<ViewParticipant> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: MyAppBar(
@@ -187,17 +188,17 @@ class _ViewParticipant extends State<ViewParticipant> {
           if (!getIt<GroupSession>().isRaffled || _hasEmail)
             IconButton(
               onPressed: () => MyBottonSheet.show(
-                title: l10n.participantOptionsTitle,
-                subTitle: l10n.participantOptionsSubtitle,
+                title: i18n.participantOptionsTitle,
+                subTitle: i18n.participantOptionsSubtitle,
                 context: context,
                 items: [
                   if (getIt<GroupSession>().isRaffled && _hasEmail)
                     AppListCard(
-                      title: l10n.resendEmail,
-                      subtitle: l10n.resendEmailSubtitle,
+                      title: i18n.resendEmail,
+                      subtitle: i18n.resendEmailSubtitle,
                       color: SecretSantaColors.accent,
                       icon: Icons.email_rounded,
-                      initials: '',
+                      name: '',
                       trailing: Icon(
                         Icons.chevron_right,
                         color: SecretSantaColors.accent,
@@ -209,11 +210,11 @@ class _ViewParticipant extends State<ViewParticipant> {
                     ),
                   if (!getIt<GroupSession>().isRaffled)
                     AppListCard(
-                      title: l10n.deleteParticipant,
-                      subtitle: l10n.deleteParticipantSubtitle,
+                      title: i18n.deleteParticipant,
+                      subtitle: i18n.deleteParticipantSubtitle,
                       color: SecretSantaColors.error,
                       icon: Icons.delete_outline,
-                      initials: '',
+                      name: '',
                       trailing: Icon(
                         Icons.chevron_right,
                         color: SecretSantaColors.error,
@@ -230,95 +231,91 @@ class _ViewParticipant extends State<ViewParticipant> {
             ),
         ],
       ),
-      body: Form(
-        key: _validateFormKey,
-        child: BlocConsumer<ParticipantCubit, ParticipantState>(
-          listener: (context, state) {
-            _prefillFromApi(state);
-            if (state.error != null) {
-              AppAlert.showBanner(
-                context,
-                message: state.error!.localize(context),
-                type: AlertType.warning,
-              );
-              setState(() {
-                readOnly = false;
-              });
-            }
-            if (state.updated) {
-              AppAlert.showBanner(
-                context,
-                message: l10n.participantUpdatedSuccess(_nameController.text),
-                type: AlertType.success,
-              );
-              if (context.mounted) {
-                context.pop(true);
+      body: ScreenPadding(
+        child: Form(
+          key: _validateFormKey,
+          child: BlocConsumer<ParticipantCubit, ParticipantState>(
+            listener: (context, state) {
+              _prefillFromApi(state);
+              if (state.error != null) {
+                AppAlert.showBanner(
+                  context,
+                  message: state.error!.localize(context),
+                  type: AlertType.warning,
+                );
+                setState(() {
+                  readOnly = false;
+                });
               }
-            }
-            if (state.deleted) {
-              AppAlert.showBanner(
-                context,
-                message: l10n.participantDeletedSuccess(_nameController.text),
-                type: AlertType.success,
-              );
-              if (context.mounted) {
-                context.pop(true);
+              if (state.updated) {
+                AppAlert.showBanner(
+                  context,
+                  message: i18n.participantUpdatedSuccess(_nameController.text),
+                  type: AlertType.success,
+                );
+                if (context.mounted) {
+                  context.pop(true);
+                }
               }
-            }
-          },
-          buildWhen: (previous, current) =>
-              previous.isLoading != current.isLoading ||
-              previous.showed != current.showed ||
-              previous.error != current.error,
-          builder: (context, state) {
-            return LoadingOrError(
-              isLoading: state.isLoading && !state.showed,
-              error: state.error,
-              onRetry: () async => await context.read<ParticipantCubit>().show(
-                widget.userId,
-                getIt<GroupSession>().token,
-              ),
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: SecretSantaSpacing.lg),
+              if (state.deleted) {
+                AppAlert.showBanner(
+                  context,
+                  message: i18n.participantDeletedSuccess(_nameController.text),
+                  type: AlertType.success,
+                );
+                if (context.mounted) {
+                  context.pop(true);
+                }
+              }
+            },
+            buildWhen: (previous, current) =>
+                previous.isLoading != current.isLoading ||
+                previous.showed != current.showed ||
+                previous.error != current.error,
+            builder: (context, state) {
+              return LoadingOrError(
+                isLoading: state.isLoading && !state.showed,
+                error: state.error,
+                onRetry: () async => await context.read<ParticipantCubit>().show(
+                  widget.userId,
+                  getIt<GroupSession>().token,
+                ),
+                child: SingleChildScrollView(
                   child: Column(
+                    spacing: 20,
                     children: [
-                      Text(
-                        l10n.participantTitle,
-                        style: SecretSantaTextStyles.titleMedium,
-                        textAlign: TextAlign.center,
+                      Column(
+                        children: [
+                          Text(
+                            i18n.participantTitle,
+                            style: SecretSantaTextStyles.titleMedium,
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            i18n.participantSubtitle,
+                            style: TextStyle(),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
-                      Text(
-                        l10n.participantSubtitle,
-                        style: TextStyle(),
-                        textAlign: TextAlign.center,
+                      ViewParticipantFormFields(
+                        nameController: _nameController,
+                        readOnly: readOnly,
+                        phoneController: _phoneController,
+                        emailController: _emailController,
+                        participant: state.showParti,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(SecretSantaSpacing.lg),
-                        child: ViewParticipantFormFields(
-                          nameController: _nameController,
-                          readOnly: readOnly,
-                          phoneController: _phoneController,
-                          emailController: _emailController,
-                          participant: state.showParti,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: SecretSantaSpacing.lg,
-                        ),
-                        child: MyGradientButton(
-                          onTap: _onSubmit,
-                          title: l10n.save,
-                          icon: Icons.save,
-                        ),
+                      MyGradientButton(
+                        onTap: _onSubmit,
+                        title: i18n.save,
+                        icon: Icons.save,
                       ),
                     ],
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

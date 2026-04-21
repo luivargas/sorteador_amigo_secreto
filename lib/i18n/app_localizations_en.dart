@@ -587,6 +587,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get partialTitle => 'Partial';
 
   @override
+  String get validatorInvalidPhone =>
+      'Invalid number. Include the area code + number';
+
+  @override
+  String get phoneHelperText => 'Include area code + number';
+
+  @override
   String get participantOptionsTitle => 'Participant options';
 
   @override
@@ -603,4 +610,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteParticipantSubtitle => 'Permanently remove from group';
+
+  @override
+  String groupUpdatedSuccess(String name) {
+    return 'Group $name updated successfully!';
+  }
+
+  @override
+  String groupDeletedSuccess(String name) {
+    return 'Group $name deleted successfully!';
+  }
 }

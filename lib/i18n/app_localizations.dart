@@ -20,7 +20,7 @@ import 'app_localizations_pt.dart';
 /// `supportedLocales` list. For example:
 ///
 /// ```dart
-/// import 'l10n/app_localizations.dart';
+/// import 'i18n/app_localizations.dart';
 ///
 /// return MaterialApp(
 ///   localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -1164,6 +1164,18 @@ abstract class AppLocalizations {
   /// **'Parcial'**
   String get partialTitle;
 
+  /// No description provided for @validatorInvalidPhone.
+  ///
+  /// In pt, this message translates to:
+  /// **'Número inválido. Inclua o DDD + número'**
+  String get validatorInvalidPhone;
+
+  /// No description provided for @phoneHelperText.
+  ///
+  /// In pt, this message translates to:
+  /// **'Inclua o DDD + número'**
+  String get phoneHelperText;
+
   /// No description provided for @participantOptionsTitle.
   ///
   /// In pt, this message translates to:
@@ -1199,6 +1211,18 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Remover do grupo permanentemente'**
   String get deleteParticipantSubtitle;
+
+  /// No description provided for @groupUpdatedSuccess.
+  ///
+  /// In pt, this message translates to:
+  /// **'Grupo {name} atualizado com sucesso!'**
+  String groupUpdatedSuccess(String name);
+
+  /// No description provided for @groupDeletedSuccess.
+  ///
+  /// In pt, this message translates to:
+  /// **'Grupo {name} excluído com sucesso!'**
+  String groupDeletedSuccess(String name);
 }
 
 class _AppLocalizationsDelegate

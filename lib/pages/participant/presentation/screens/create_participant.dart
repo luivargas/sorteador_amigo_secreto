@@ -6,21 +6,19 @@ import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/screen_padding.dart';
+import 'package:sorteador_amigo_secreto/injector/injector.dart';
+import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/create_parti_args.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/create_participant_form_fields.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class CreateParticipant extends StatefulWidget {
-  final String groupToken;
-  final String groupCode;
   const CreateParticipant({
     super.key,
-    required this.groupToken,
-    required this.groupCode,
   });
 
   @override
@@ -35,6 +33,8 @@ class _CreateParticipant extends State<CreateParticipant> {
     initialValue: PhoneNumber(isoCode: IsoCode.BR, nsn: ''),
   );
 
+  final group = getIt<GroupSession>();
+
   Future<void> _onSubmit() async {
     final isValid = _createFormKey.currentState?.validate() ?? false;
     if (!isValid) return;
@@ -47,78 +47,72 @@ class _CreateParticipant extends State<CreateParticipant> {
       phone: phoneController.value.international,
       idd: phoneController.value.countryCode,
       role: "participant",
-      groupCode: widget.groupCode,
+      groupCode: group.code,
     );
-    await context.read<ParticipantCubit>().create(entity, widget.groupToken);
+    await context.read<ParticipantCubit>().create(entity, group.token,);
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
 
     return Form(
       key: _createFormKey,
       child: Scaffold(
         appBar: MyAppBar(),
-        body: BlocConsumer<ParticipantCubit, ParticipantState>(
-          listenWhen: (prev, curr) => prev.isLoading && !curr.isLoading,
-          listener: (context, state) async {
-            if (state.created) {
-              AppAlert.showBanner(
-                context,
-                message: l10n.participantAddedSuccess(nameController.text),
-                type: AlertType.success,
-
-              );
-              await Future.delayed(const Duration(milliseconds: 600));
-              if (context.mounted) {
-                context.pop(true);
-              }
-            }
-            if (state.error != null) {
-              if (context.mounted) {
+        body: ScreenPadding(
+          child: BlocConsumer<ParticipantCubit, ParticipantState>(
+            listenWhen: (prev, curr) => prev.isLoading && !curr.isLoading,
+            listener: (context, state) async {
+              if (state.created) {
                 AppAlert.showBanner(
                   context,
-                  title: l10n.errorTitle,
-                  message: state.error!.localize(context),
-                  type: AlertType.warning,
+                  message: i18n.participantAddedSuccess(nameController.text),
+                  type: AlertType.success,
+          
                 );
+                await Future.delayed(const Duration(milliseconds: 600));
+                if (context.mounted) {
+                  context.pop(true);
+                }
               }
-            }
-          },
-          builder: (context, state) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: SecretSantaSpacing.lg,
-                vertical: SecretSantaSpacing.lg
-              ),
-              child: SingleChildScrollView(
+              if (state.error != null) {
+                if (context.mounted) {
+                  AppAlert.showBanner(
+                    context,
+                    title: i18n.errorTitle,
+                    message: state.error!.localize(context),
+                    type: AlertType.warning,
+                  );
+                }
+              }
+            },
+            builder: (context, state) {
+              return SingleChildScrollView(
                 child: Column(
                   spacing: SecretSantaSpacing.md,
                   children: [
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          l10n.addParticipantTitle,
+                          i18n.addParticipantTitle,
                           style: SecretSantaTextStyles.titleMedium,
+                          textAlign: TextAlign.center,
                         ),
                         Text(
-                          l10n.addParticipantSubtitle,
+                          i18n.addParticipantSubtitle,
                           style: TextStyle(),
+                          textAlign: TextAlign.center,
                         ),
                       ],
                     ),
-
+                        
                     InkWell(
                       borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
                       onTap: () async {
                         final result = await context.pushNamed(
                           'contacts',
-                          extra: CreateParticipantArgs(
-                            groupToken: widget.groupToken,
-                            groupCode: widget.groupCode,
-                          ),
                         );
                         if (result == true && context.mounted) {
                           context.pop(true);
@@ -150,14 +144,14 @@ class _CreateParticipant extends State<CreateParticipant> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            l10n.quickAccess,
+                                            i18n.quickAccess,
                                             style: TextStyle(
                                               color: SecretSantaColors.accent2,
                                               fontWeight: FontWeight.w600,
                                             ),
                                           ),
                                           Text(
-                                            l10n.importContacts,
+                                            i18n.importContacts,
                                             style: const TextStyle(
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -177,7 +171,7 @@ class _CreateParticipant extends State<CreateParticipant> {
                         ),
                       ),
                     ),
-
+                        
                     Column(
                       spacing: SecretSantaSpacing.lg,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -191,7 +185,7 @@ class _CreateParticipant extends State<CreateParticipant> {
                           padding: const EdgeInsets.only(bottom: 30.0),
                           child: MyGradientButton(
                             onTap: _onSubmit,
-                            title: l10n.addParticipantButton,
+                            title: i18n.addParticipantButton,
                             icon: Icons.save,
                             isLoading: state.isLoading,
                           ),
@@ -200,9 +194,9 @@ class _CreateParticipant extends State<CreateParticipant> {
                     ),
                   ],
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

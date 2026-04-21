@@ -6,6 +6,7 @@ import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/screen_padding.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/database/auth_db.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/entities/create_group_entity.dart';
@@ -15,7 +16,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/create_form_group/group_form_field.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 
 class CreateGroup extends StatefulWidget {
   const CreateGroup({super.key});
@@ -55,72 +56,61 @@ class _FormGroupBody extends State<CreateGroup> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
 
     return Form(
       key: _formKey,
       child: Scaffold(
         appBar: MyAppBar(),
-        body: BlocConsumer<GroupCubit, GroupState>(
-          listenWhen: (previous, current) =>
-              previous.isLoading && !current.isLoading && current.created,
-          listener: (context, state) async {
-            if (state.created) {
-              AppAlert.showBanner(
-                context,
-                message: l10n.groupCreatedSuccess(groupNameController.text),
-                type: AlertType.success,
-              );
-              if (context.mounted && state.createdGroup != null) {
-                context.pushReplacementNamed(
-                  'view_group',
-                  extra: ShowGroupArgs(
-                    code: state.createdGroup!.code,
-                    token: state.createdGroup!.token!,
-                    name: state.createdGroup!.name,
+        body: ScreenPadding(
+          child: BlocConsumer<GroupCubit, GroupState>(
+            listenWhen: (previous, current) =>
+                previous.isLoading && !current.isLoading && current.created,
+            listener: (context, state) async {
+              if (state.created) {
+                AppAlert.showBanner(
+                  context,
+                  message: i18n.groupCreatedSuccess(groupNameController.text),
+                  type: AlertType.success,
+                );
+                if (context.mounted && state.createdGroup != null) {
+                  context.pushReplacementNamed(
+                    'view_group',
+                    extra: ShowGroupArgs(
+                      code: state.createdGroup!.code,
+                      token: state.createdGroup!.token!,
+                      name: state.createdGroup!.name,
+                    ),
+                  );
+                }
+              }
+              if (state.error != null) {
+                AppAlert.showBanner(
+                  context,
+                  message: state.error!.localize(context),
+                  type: AlertType.warning,
+                );
+              }
+            },
+            builder: (context, state) {
+              if (state.isLoading) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: SecretSantaColors.accent,
                   ),
                 );
               }
-            }
-            if (state.error != null) {
-              AppAlert.showBanner(
-                context,
-                message: state.error!.localize(context),
-                type: AlertType.warning,
-              );
-            }
-          },
-          builder: (context, state) {
-            if (state.isLoading) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: SecretSantaColors.accent,
-                ),
-              );
-            }
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  SecretSantaSpacing.lg,
-                  SecretSantaSpacing.lg,
-                  SecretSantaSpacing.lg,
-                  SecretSantaSpacing.xxl,
-                ),
+              return SingleChildScrollView(
                 child: Column(
                   spacing: SecretSantaSpacing.md,
                   children: [
                     Column(
                       children: [
                         Text(
-                          l10n.createGroupTitle,
+                          i18n.createGroupTitle,
                           style: SecretSantaTextStyles.titleMedium,
-                          textAlign: TextAlign.center,
                         ),
-                        Text(
-                          l10n.createGroupSubtitle,
-                          style: TextStyle(),
-                          textAlign: TextAlign.center,
-                        ),
+                        Text(i18n.createGroupSubtitle, style: TextStyle()),
                       ],
                     ),
                     GroupFormFields(
@@ -131,14 +121,14 @@ class _FormGroupBody extends State<CreateGroup> {
                     ),
                     MyGradientButton(
                       onTap: _onSubmit,
-                      title: l10n.createGroupButton,
+                      title: i18n.createGroupButton,
                       icon: Icons.save,
                     ),
                   ],
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

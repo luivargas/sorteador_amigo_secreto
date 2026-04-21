@@ -11,6 +11,7 @@ import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/app_list_card.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_botton_sheet.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
+import 'package:sorteador_amigo_secreto/core/ui/components/screen_padding.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/group_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
@@ -20,7 +21,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/view_group/view_group_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 class ViewGroup extends StatefulWidget {
@@ -95,25 +96,25 @@ class _ViewGroupBody extends State<ViewGroup> {
   }
 
   Future<void> _onDelete(BuildContext context) async {
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
     if (context.mounted) {
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (_) => AlertDialog(
-          title: Text(l10n.delete),
-          content: Text(l10n.confirmDeleteGroup(widget.name ?? '')),
+          title: Text(i18n.delete),
+          content: Text(i18n.confirmDeleteGroup(widget.name ?? '')),
           actions: [
             TextButton(
               onPressed: () => context.pop(false),
               child: Text(
-                l10n.cancel,
+                i18n.cancel,
                 style: const TextStyle(color: SecretSantaColors.accent2),
               ),
             ),
             TextButton(
               onPressed: () => context.pop(true),
               child: Text(
-                l10n.delete,
+                i18n.delete,
                 style: const TextStyle(color: SecretSantaColors.accent),
               ),
             ),
@@ -136,7 +137,7 @@ class _ViewGroupBody extends State<ViewGroup> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final i18n = AppLocalizations.of(context)!;
 
     return PopScope(
       canPop: false,
@@ -150,18 +151,18 @@ class _ViewGroupBody extends State<ViewGroup> {
               actions: [
                 IconButton(
                   onPressed: () => MyBottonSheet.show(
-                    title: l10n.groupOptionsTitle,
-                    subTitle: l10n.groupActions,
+                    title: i18n.groupOptionsTitle,
+                    subTitle: i18n.groupActions,
                     context: context,
                     group: group,
                     items: [
                       if (!getIt<GroupSession>().isRaffled) ...[
                         AppListCard(
-                          title: l10n.shareGroup,
-                          subtitle: l10n.shareGroupSubtitle,
+                          title: i18n.shareGroup,
+                          subtitle: i18n.shareGroupSubtitle,
                           color: SecretSantaColors.accent,
                           icon: Icons.share,
-                          initials: '',
+                          name: '',
                           trailing: Icon(
                             Icons.chevron_right,
                             color: SecretSantaColors.accent,
@@ -173,11 +174,11 @@ class _ViewGroupBody extends State<ViewGroup> {
                         ),
                       ],
                       AppListCard(
-                        title: l10n.edit,
-                        subtitle: l10n.editGroupSubtitle2,
+                        title: i18n.edit,
+                        subtitle: i18n.editGroupSubtitle2,
                         color: SecretSantaColors.accent2,
                         icon: Icons.edit,
-                        initials: '',
+                        name: '',
                         trailing: Icon(
                           Icons.chevron_right,
                           color: SecretSantaColors.accent2,
@@ -188,11 +189,11 @@ class _ViewGroupBody extends State<ViewGroup> {
                         },
                       ),
                       AppListCard(
-                        title: l10n.deleteGroup,
-                        subtitle: l10n.deleteGroupSubtitle,
+                        title: i18n.deleteGroup,
+                        subtitle: i18n.deleteGroupSubtitle,
                         color: SecretSantaColors.error,
                         icon: Icons.delete_outline,
-                        initials: '',
+                        name: '',
                         trailing: Icon(
                           Icons.chevron_right,
                           color: SecretSantaColors.error,
@@ -209,89 +210,85 @@ class _ViewGroupBody extends State<ViewGroup> {
                 ),
               ],
             ),
-            body: BlocConsumer<GroupCubit, GroupState>(
-              listenWhen: (previous, current) =>
-                  (!previous.raffled && current.raffled) ||
-                  (previous.error == null && current.error != null) ||
-                  (!previous.deleted && current.deleted),
-              listener: (context, state) {
-                if (state.raffled) {
-                  setState(() => _showRaffleSuccess = true);
-                  _confettiController.play();
-                  _onRefresh();
-                }
-                if (state.error != null) {
-                  AppAlert.showBanner(
-                    context,
-                    message: state.error!.localize(context),
-                    type: AlertType.warning,
-                  );
-                }
-                if (state.deleted) {
-                  context.pop(true);
-                }
-              },
-              builder: (context, state) {
-                if (state.isLoading && state.group == null) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: SecretSantaColors.accent,
-                    ),
-                  );
-                }
-                if (state.group != null) {
-                  group = state.group!;
-                }
-                if (group == null) return const SizedBox.shrink();
-
-                final g = group!;
-                final type = g.raffledAt == null
-                    ? BadgeType.pending
-                    : BadgeType.raffled;
-
-                return SmartRefresher(
-                  controller: _refreshController,
-                  onRefresh: _onRefresh,
-                  child: ListView(
-                    padding: const EdgeInsets.fromLTRB(
-                      SecretSantaSpacing.lg,
-                      SecretSantaSpacing.lg,
-                      SecretSantaSpacing.lg,
-                      SecretSantaSpacing.xxl,
-                    ),
-                    children: [
-                      _GroupHeroHeader(name: g.name, type: type),
-                      const SizedBox(height: 16),
-                      ViewGroupCard(
-                        type: type,
-                        eventLocation: g.location ?? l10n.notDefined,
-                        minGiftValue: g.minGiftValue ?? "00,00",
-                        maxGiftValue: g.maxGiftValue ?? "00,00",
-                        eventDate: _formatDate(g.drawDate),
-                        eventTime: g.drawDate?.split(' ').last ?? "--:--",
-                        groupDescription: g.description ?? l10n.noDescription,
-                        participants: g.participants.length,
-                        participantsList: g.participants,
+            body: ScreenPadding(
+              child: BlocConsumer<GroupCubit, GroupState>(
+                listenWhen: (previous, current) =>
+                    (!previous.raffled && current.raffled) ||
+                    (previous.error == null && current.error != null) ||
+                    (!previous.deleted && current.deleted),
+                listener: (context, state) {
+                  if (state.raffled) {
+                    setState(() => _showRaffleSuccess = true);
+                    _confettiController.play();
+                    _onRefresh();
+                  }
+                  if (state.error != null) {
+                    AppAlert.showBanner(
+                      context,
+                      message: state.error!.localize(context),
+                      type: AlertType.warning,
+                    );
+                  }
+                  if (state.deleted) {
+                    context.pop(true);
+                  }
+                },
+                builder: (context, state) {
+                  if (state.isLoading && state.group == null) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: SecretSantaColors.accent,
                       ),
-                      if (g.raffledAt == null) ...[
-                        const SizedBox(height: 24),
-                        if (g.participants.length >= 2)
-                          MyGradientButton(
-                            onTap: () => _onSubmit(g.code),
-                            title: l10n.drawButton,
-                            icon: Icons.draw,
-                          )
-                        else
-                          _NeedMoreParticipantsBanner(
-                            message: AppLocalizations.of(
-                              context,
-                            )!.needMoreParticipants,
-                          ),
+                    );
+                  }
+                  if (state.group != null) {
+                    group = state.group!;
+                  }
+                  if (group == null) return const SizedBox.shrink();
+              
+                  final g = group!;
+                  final type = g.raffledAt == null
+                      ? BadgeType.pending
+                      : BadgeType.raffled;
+              
+                  return SmartRefresher(
+                    controller: _refreshController,
+                    onRefresh: _onRefresh,
+                    child: ListView(
+                      children: [
+                        _GroupHeroHeader(name: g.name, type: type),
+                        const SizedBox(height: 16),
+                        ViewGroupCard(
+                          type: type,
+                          eventLocation: g.location ?? i18n.notDefined,
+                          minGiftValue: g.minGiftValue ?? "00,00",
+                          maxGiftValue: g.maxGiftValue ?? "00,00",
+                          eventDate: _formatDate(g.drawDate),
+                          eventTime: g.drawDate?.split(' ').last ?? "--:--",
+                          groupDescription: g.description ?? i18n.noDescription,
+                          participants: g.participants.length,
+                          participantsList: g.participants,
+                        ),
+                        if (g.raffledAt == null) ...[
+                          const SizedBox(height: 24),
+                          if (g.participants.length >= 2)
+                            MyGradientButton(
+                              onTap: () => _onSubmit(g.code),
+                              title: i18n.drawButton,
+                              icon: Icons.draw,
+                            )
+                          else
+                            _NeedMoreParticipantsBanner(
+                              message: AppLocalizations.of(
+                                context,
+                              )!.needMoreParticipants,
+                            ),
+                        ],
                       ],
-                    ],
-                  ),
-                );
-              },
+                    ),
+                  );
+                },
+              ),
             ),
           ),
 
@@ -331,12 +328,12 @@ class _ViewGroupBody extends State<ViewGroup> {
                                 duration: 700.ms,
                               ),
                               Text(
-                                l10n.raffleCompleted,
+                                i18n.raffleCompleted,
                                 style: SecretSantaTextStyles.titleSmall,
                                 textAlign: TextAlign.center,
                               ),
                               Text(
-                                l10n.raffleCompletedMessage,
+                                i18n.raffleCompletedMessage,
                                 style: SecretSantaTextStyles.bodySmall.copyWith(
                                   color: SecretSantaColors.neutral500,
                                 ),
