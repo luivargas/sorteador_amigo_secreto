@@ -10,7 +10,7 @@ class ScreenPadding extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         SecretSantaSpacing.lg,
-        SecretSantaSpacing.lg,
+        SecretSantaSpacing.sm,
         SecretSantaSpacing.lg,
         0
       ),

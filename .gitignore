@@ -51,3 +51,6 @@ app.*.map.json
 
 android/app/google-services.json
 lib/core/network/url
+
+android/key.properties
+*.keystore

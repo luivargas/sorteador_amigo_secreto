@@ -48,7 +48,7 @@ class _ViewGroupBody extends State<ViewGroup> {
 
   @override
   void initState() {
-    super.initState();
+    super.initState();    
     _confettiController = ConfettiController(
       duration: const Duration(seconds: 3),
     );
@@ -58,7 +58,7 @@ class _ViewGroupBody extends State<ViewGroup> {
     final title = AppLocalizations.of(context)!.shareLinkTitle;
     await SharePlus.instance.share(
       ShareParams(
-        uri: Uri.parse("$stgSiteBaseUrl/grupo/${g?.code}/entrar"),
+        uri: Uri.parse("$prodSiteBaseUrl/grupo/${g?.code}/entrar"),
         title: title,
       ),
     );
@@ -264,12 +264,12 @@ class _ViewGroupBody extends State<ViewGroup> {
                     group = state.group!;
                   }
                   if (group == null) return const SizedBox.shrink();
-              
+
                   final g = group!;
                   final type = g.raffledAt == null
                       ? BadgeType.pending
                       : BadgeType.raffled;
-              
+
                   return SmartRefresher(
                     controller: _refreshController,
                     onRefresh: _onRefresh,

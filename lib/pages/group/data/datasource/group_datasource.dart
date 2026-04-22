@@ -16,7 +16,7 @@ class GroupDatasource extends GroupRepository {
   @override
   Future<ApiResult<GroupModel>> create(CreateGroupEntity entity) async {
     try {
-      final resp = await dio.post(stageGroupApiUrl, data: entity.toJson());
+      final resp = await dio.post(prodGroupApiUrl, data: entity.toJson());
       final model = GroupModel.fromJson(resp.data);
       return Success(model);
     } on DioException catch (e) {
@@ -36,7 +36,7 @@ class GroupDatasource extends GroupRepository {
   Future<ApiResult<GroupModel>> show(String code, String token) async {
     try {
       final resp = await dio.get(
-        '$stageGroupApiUrl/$code',
+        '$prodGroupApiUrl/$code',
         options: Options(headers: {'Access-Key': token}),
       );
       final model = GroupModel.fromJson(resp.data);
@@ -62,7 +62,7 @@ class GroupDatasource extends GroupRepository {
   ) async {
     try {
       final resp = await dio.put(
-        '$stageGroupApiUrl/$code',
+        '$prodGroupApiUrl/$code',
         data: entity.toJson(),
         options: Options(headers: {'Access-Key': token}),
       );
@@ -85,7 +85,7 @@ class GroupDatasource extends GroupRepository {
   Future<ApiResult<String>> raffle(String code, String token) async {
     try {
       final resp = await dio.post(
-        '$stageGroupApiUrl/$code/raffle',
+        '$prodGroupApiUrl/$code/raffle',
         options: Options(headers: {'Access-Key': token}),
       );
       return Success(resp.statusMessage ?? 'OK');
@@ -106,7 +106,7 @@ class GroupDatasource extends GroupRepository {
   Future<ApiResult<String>> delete(String code, String token) async {
     try {
       final resp = await dio.delete(
-        '$stageGroupApiUrl/$code',
+        '$prodGroupApiUrl/$code',
         options: Options(headers: {'Access-Key': token}),
       );
       return Success(resp.statusMessage ?? 'OK');

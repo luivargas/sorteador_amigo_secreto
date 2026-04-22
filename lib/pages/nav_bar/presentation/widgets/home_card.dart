@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
-import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class HomeCard extends StatefulWidget {
@@ -68,13 +66,8 @@ class _CardWhithGroups extends StatelessWidget {
                         children: [
                           InkWell(
                             onTap: () async {
-                              final result = await context.push(
-                                "/create_group",
-                              );
+                              await context.push("/create_group");
                               if (!context.mounted) return;
-                              if (result == true) {
-                                context.read<GroupCubit>().refreshGroups();
-                              }
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -179,13 +172,8 @@ class _CardEmpty extends StatelessWidget {
                         children: [
                           InkWell(
                             onTap: () async {
-                              final result = await context.push(
-                                "/create_group",
-                              );
+                              await context.push("/create_group");
                               if (!context.mounted) return;
-                              if (result == true) {
-                                context.read<GroupCubit>().refreshGroups();
-                              }
                             },
                             child: Container(
                               decoration: BoxDecoration(

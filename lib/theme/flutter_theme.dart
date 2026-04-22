@@ -99,7 +99,7 @@ class SecretSantaTextStyles {
   static const TextStyle bodySmall = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w400,
-    height: 1.6,
+    height: 1.4,
   );
 
   static const TextStyle label = TextStyle(

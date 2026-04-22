@@ -3,7 +3,6 @@
 import 'dart:async';
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_form_field/phone_form_field.dart';
@@ -18,8 +17,6 @@ import 'package:sorteador_amigo_secreto/core/util/get_initials.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/core/validator/participant/participant_validators.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
-import 'package:sorteador_amigo_secreto/pages/participant/domain/usecases/participant_usecase.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/contact_review_args.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
@@ -47,9 +44,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
 
   List<Contact>? _contacts;
   StreamSubscription? _sub;
-  late final ParticipantUsecase _usecase;
   bool _denied = false;
-  bool _isCreating = false;
 
   List<Contact> get _filteredContacts {
     final q = _searchController.text.toLowerCase();
@@ -64,7 +59,6 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _usecase = getIt<ParticipantUsecase>();
     _searchController.addListener(() => setState(() {}));
     _loadContacts();
   }
@@ -167,12 +161,23 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
 
       setState(() {
         _selectedContacts[c.id!] = _ContactSelection(
-          phone: phone?.number,
+          phone: phone != null && isoCode != null
+              ? ParticipantValidators.stripCountryCode(phone.number, isoCode)
+              : phone?.number,
           email: c.emails.isNotEmpty ? c.emails.first.address : null,
           isoCode: isoCode,
         );
       });
     }
+  }
+
+  bool _isoCodeNeedsSelection(String? phoneNumber, List<Phone> phones) {
+    if (phoneNumber == null) return false;
+    final match = phones.firstWhere(
+      (p) => p.number == phoneNumber,
+      orElse: () => phones.first,
+    );
+    return ParticipantValidators.isoCodeFromPhone(match) == null;
   }
 
   void _showContactOptionsSheet(Contact c) {
@@ -227,7 +232,10 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                           ? MemoryImage(c.photo!.thumbnail!)
                           : null,
                       child: c.photo?.thumbnail == null
-                          ? const Icon(Icons.person)
+                          ? const Icon(
+                              Icons.person,
+                              color: SecretSantaColors.neutral50,
+                            )
                           : null,
                     ),
                     const SizedBox(width: 12),
@@ -280,7 +288,8 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                   ),
                   const SizedBox(height: 12),
                 ],
-                if (chosenPhone != null) ...[
+                if (chosenPhone != null &&
+                    _isoCodeNeedsSelection(chosenPhone, c.phones)) ...[
                   Text(
                     i18n.countryLabel,
                     style: TextStyle(
@@ -289,7 +298,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  GestureDetector(
+                  InkWell(
                     onTap: () async {
                       final selected =
                           await MyPhoneFormField.showCountrySelector(context);
@@ -350,7 +359,12 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                   onTap: () {
                     setState(() {
                       _selectedContacts[c.id!] = _ContactSelection(
-                        phone: chosenPhone,
+                        phone: chosenPhone != null
+                            ? ParticipantValidators.stripCountryCode(
+                                chosenPhone!,                                                                                                                                                                                                                                                                                                                                                                                                         
+                                chosenIsoCode,
+                              )
+                            : null,
                         email: chosenEmail,
                         isoCode: chosenPhone != null ? chosenIsoCode : null,
                       );
@@ -389,87 +403,6 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
     );
   }
 
-  Future<void> _onConfirm() async {
-    if (_selectedContacts.isEmpty || _contacts == null) return;
-
-    setState(() => _isCreating = true);
-
-    final selected = _contacts!
-        .where((c) => _selectedContacts.containsKey(c.id))
-        .toList();
-
-    final i18n = AppLocalizations.of(context)!;
-    final List<String> successes = [];
-    final List<String> failures = [];
-
-    for (final contact in selected) {
-      final selection = _selectedContacts[contact.id];
-      final name = contact.displayName ?? '';
-
-      final entity = CreateParticipantEntity(
-        name: name,
-        email: selection?.email,
-        phone: selection?.phone,
-        idd: selection?.isoCode != null
-            ? PhoneNumber(isoCode: selection!.isoCode!, nsn: '').countryCode
-            : null,
-        role: 'participant',
-        groupCode: group.code,
-      );
-
-      final result = await _usecase.create(entity, group.token);
-
-      result.when(
-        success: (_) => successes.add(name),
-        failure: (f) => failures.add('$name: ${f.error.localize(context)}'),
-      );
-    }
-
-    setState(() => _isCreating = false);
-
-    if (!context.mounted) return;
-
-    final StringBuffer body = StringBuffer();
-
-    if (successes.isNotEmpty) {
-      body.writeln(
-        '✅ ${i18n.participantAddedSuccess('')} (${successes.length}):',
-      );
-      for (final name in successes) {
-        body.writeln('  • $name');
-      }
-    }
-
-    if (failures.isNotEmpty) {
-      if (body.isNotEmpty) body.writeln();
-      body.writeln(
-        '❌ ${i18n.errorAddingContact('', '')} (${failures.length}):',
-      );
-      for (final msg in failures) {
-        body.writeln('  • $msg');
-      }
-    }
-
-    await AppAlert.showAlertDialog(
-      context,
-      title: failures.isEmpty
-          ? i18n.successTitle
-          : successes.isEmpty
-          ? i18n.errorTitle
-          : i18n.partialTitle,
-      message: body.toString().trim(),
-      actions: [
-        TextButton(
-          onPressed: () => context.pop(successes.isNotEmpty),
-          child: const Text('OK'),
-        ),
-      ],
-    );
-    if (successes.isNotEmpty && context.mounted) {
-      context.pop(true);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final i18n = AppLocalizations.of(context)!;
@@ -481,7 +414,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
+                padding: const EdgeInsets.only(bottom: SecretSantaSpacing.sm),
                 child: Column(
                   children: [
                     Text(
@@ -490,18 +423,17 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                     ),
                     Text(
                       i18n.contactsSubtitle,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: SecretSantaColors.neutral500,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: SecretSantaTextStyles.body,
                     ),
                   ],
                 ),
               ),
-              MySearchBar(
-                controller: _searchController,
-                hintText: i18n.searchParticipants,
+              Padding(
+                padding: const EdgeInsets.only(bottom: SecretSantaSpacing.lg),
+                child: MySearchBar(
+                  controller: _searchController,
+                  hintText: i18n.searchParticipants,
+                ),
               ),
               if (_denied)
                 Expanded(
@@ -540,12 +472,12 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                     itemCount: _filteredContacts.length,
                     itemBuilder: (_, i) {
                       final c = _filteredContacts[i];
-        
+
                       final hasPhone = _hasPhone(c);
                       final hasEmail = _hasEmail(c);
                       final isValid = _isContactValid(c);
                       final selected = _selectedContacts.containsKey(c.id);
-        
+
                       return Padding(
                         padding: const EdgeInsets.only(top: 10.0),
                         child: SecretSantaCard(
@@ -583,7 +515,8 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                                 ),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         c.displayName ?? '',
@@ -593,6 +526,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                                               : (isValid ? null : Colors.red),
                                           fontWeight: FontWeight.bold,
                                         ),
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                       _buildSubtitle(
                                         i18n,
@@ -605,7 +539,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                                     ],
                                   ),
                                 ),
-        
+
                                 Icon(
                                   selected
                                       ? Icons.check_circle
@@ -622,11 +556,16 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                     },
                   ),
                 ),
-              MyGradientButton(
-                icon: Icons.save,
-                onTap: _onSend,
-                title: i18n.confirmButton(_selectedContacts.length),
-                isLoading: _isCreating,
+              Padding(
+                padding: const EdgeInsets.only(
+                  bottom: SecretSantaSpacing.md,
+                  top: SecretSantaSpacing.md,
+                ),
+                child: MyGradientButton(
+                  icon: Icons.save,
+                  onTap: _onSend,
+                  title: i18n.confirmButton(_selectedContacts.length),
+                ),
               ),
             ],
           ),

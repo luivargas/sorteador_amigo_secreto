@@ -55,12 +55,20 @@ class ParticipantValidators {
   static IsoCode? isoCodeFromPhone(Phone phone) {
     final raw = phone.number.replaceAll(RegExp(r'[\s\-\(\)\.]+'), '');
     if (!raw.startsWith('+')) return null;
-
     try {
       return PhoneNumber.parse(raw).isoCode;
     } catch (_) {
       return null;
     }
   }
+    static String stripCountryCode(String phoneNumber, IsoCode isoCode) {                                                 
+    final cleaned = phoneNumber.replaceAll(RegExp(r'[\s\-\(\)\.]+'), '');
+    final countryCode = PhoneNumber(isoCode: isoCode, nsn: '').countryCode;
+   
+    if (cleaned.startsWith('+$countryCode')) {                                                                          
+      return cleaned.substring(1 + countryCode.length);                                                                 
+    }                                                                                                                               
+    return cleaned;
+  } 
 
 }

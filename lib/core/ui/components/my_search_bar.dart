@@ -15,32 +15,29 @@ class MySearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    return Material(
-      color: SecretSantaColors.background,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: SecretSantaSpacing.sm,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: SecretSantaColors.neutral50,
-              borderRadius: BorderRadius.circular(SecretSantaRadius.lg),
-            ),
-            child: TextField(
-              textCapitalization: TextCapitalization.sentences,
-              controller: controller,
-              onChanged: onChanged,
-              decoration: InputDecoration(
-                hintText: hintText,
-                prefixIcon: const Icon(Icons.search),
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: SecretSantaSpacing.md,
-                ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: SecretSantaSpacing.sm,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: SecretSantaColors.neutral50,
+            borderRadius: BorderRadius.circular(SecretSantaRadius.lg),
+          ),
+          child: TextField(
+            textCapitalization: TextCapitalization.sentences,
+            controller: controller,
+            onChanged: onChanged,
+            decoration: InputDecoration(
+              hintText: hintText,
+              prefixIcon: const Icon(Icons.search),
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: SecretSantaSpacing.md,
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

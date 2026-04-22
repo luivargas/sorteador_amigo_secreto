@@ -18,7 +18,7 @@ class AuthDatasource extends AuthRepository {
   ) async {
     Response resp;
     try {
-      resp = await dio.post(stgRequestToken, data: entity.toJson());
+      resp = await dio.post(prodRequestToken, data: entity.toJson());
       return Success(resp.statusMessage);
     } on DioException catch (e) {
       return Failure(ApiError(
@@ -35,7 +35,7 @@ class AuthDatasource extends AuthRepository {
   Future<ApiResult<List<AuthGroupModel>>> validate(ValidateToken entity) async {
     try {
       final resp = await dio.post(
-        stgValidateToken,
+        prodValidateToken,
         data: entity.toJson(),
       );
       final model = (resp.data['groups'] as List)

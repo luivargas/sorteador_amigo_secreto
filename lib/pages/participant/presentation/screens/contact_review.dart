@@ -31,7 +31,7 @@ class _ReviewItem {
     : phoneCtrl = PhoneController(
         initialValue: entry.phone.isNotEmpty
             ? _tryParse(entry.phone, entry.isoCode)
-            : PhoneNumber(isoCode: entry.isoCode!, nsn: entry.phone),
+            : PhoneNumber(isoCode: entry.isoCode ?? IsoCode.BR, nsn: entry.phone),
       ),
       emailCtrl = TextEditingController(text: entry.email) {
     initialPhone = phoneCtrl.value.nsn;
@@ -174,13 +174,27 @@ class _ContactReviewScreenState extends State<ContactReviewScreen> {
         body: SafeArea(
           child: ScreenPadding(
             child: Column(
+              spacing: SecretSantaSpacing.sm,
               children: [
+                Column(
+                  children: [
+                    Text(
+                      i18n.contactReviewTitle,
+                      style: SecretSantaTextStyles.titleMedium,
+                    ),
+                    Text(
+                      i18n.contactReviewSubtitle,
+                      style: SecretSantaTextStyles.body,
+                    ),
+                  ],
+                ),
                 Expanded(
                   child: ListView.separated(
                     itemCount: _items.length,
                     separatorBuilder: (_, _) =>
                         const SizedBox(height: SecretSantaSpacing.sm),
-                    itemBuilder: (_, i) => _EntryCard(item: _items[i], index: i),
+                    itemBuilder: (_, i) =>
+                        _EntryCard(item: _items[i], index: i),
                   ),
                 ),
                 MyGradientButton(

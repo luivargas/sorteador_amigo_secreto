@@ -8,7 +8,6 @@ import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/card_color.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_search_bar.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/screen_padding.dart';
 import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
@@ -41,35 +40,26 @@ class _HomeViewState extends State<_HomeView>
   @override
   bool get wantKeepAlive => true;
 
-  final RefreshController _refreshController = RefreshController();
+  final RefreshController _homeRefreshController = RefreshController();
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  bool _searchBarElevated = false;
   bool _hasGroups = false;
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_onScroll);
     _hasGroups = widget.groups.isNotEmpty;
-  }
-
-  void _onScroll() {
-    final elevated = _scrollController.offset > 0;
-    if (elevated != _searchBarElevated) {
-      setState(() => _searchBarElevated = elevated);
-    }
   }
 
   Future<void> _onRefresh() async {
     await context.read<GroupCubit>().refreshGroups();
-    _refreshController.refreshCompleted();
+    _homeRefreshController.refreshCompleted();
   }
 
   @override
   void dispose() {
     _searchController.dispose();
-    _refreshController.dispose();
+    _homeRefreshController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
@@ -81,52 +71,61 @@ class _HomeViewState extends State<_HomeView>
 
     return Scaffold(
       appBar: MyAppBar(),
-      body: ScreenPadding(
-        child: BlocListener<GroupCubit, GroupState>(
-          listenWhen: (prev, curr) =>
-              prev.groups != curr.groups ||
-              (!prev.logout && curr.logout) ||
-              (prev.error == null && curr.error != null && !curr.logout),
-          listener: (context, state) async {
-            if (state.logout) {
-              final i18n = AppLocalizations.of(context)!;
-              await AppAlert.showAlertDialog(
-                context,
-                title: i18n.errorTitle,
-                message: i18n.errorUnauthorized,
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      context.pop();
-                      context.goNamed('request_token');
-                    },
-                    child: Text(i18n.ok),
-                  ),
-                ],
-              );
-              return;
-            }
-            if (state.error != null) {
-              final i18n = AppLocalizations.of(context)!;
-              AppAlert.showBanner(
-                context,
-                title: i18n.errorTitle,
-                message: state.error!.localize(context),
-                type: AlertType.warning,
-              );
-              return;
-            }
-            setState(() => _hasGroups = state.groups.isNotEmpty);
-          },
-          child: Column(
-            spacing: 20,
-            children: [
-              _SearchBar(i18n: i18n),
-
-              Expanded(
+      body: BlocListener<GroupCubit, GroupState>(
+        listenWhen: (prev, curr) =>
+            prev.groups != curr.groups ||
+            (!prev.logout && curr.logout) ||
+            (prev.error == null && curr.error != null && !curr.logout),
+        listener: (context, state) async {
+          if (state.logout) {
+            final i18n = AppLocalizations.of(context)!;
+            await AppAlert.showAlertDialog(
+              context,
+              title: i18n.errorTitle,
+              message: i18n.errorUnauthorized,
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    context.pop();
+                    context.goNamed('request_token');
+                  },
+                  child: Text(i18n.ok),
+                ),
+              ],
+            );
+            return;
+          }
+          if (state.error != null) {
+            final i18n = AppLocalizations.of(context)!;
+            AppAlert.showBanner(
+              context,
+              title: i18n.errorTitle,
+              message: state.error!.localize(context),
+              type: AlertType.warning,
+            );
+            return;
+          }
+          setState(() => _hasGroups = state.groups.isNotEmpty);
+        },
+        child: Column(
+          children: [
+            ColoredBox(
+              color: SecretSantaColors.background,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  SecretSantaSpacing.lg,
+                  SecretSantaSpacing.sm,
+                  SecretSantaSpacing.lg,
+                  SecretSantaSpacing.lg,
+                ),
+                child: _SearchBar(i18n: i18n),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: SecretSantaSpacing.lg),
                 child: SmartRefresher(
-                  enablePullDown: true,
-                  controller: _refreshController,
+                  controller: _homeRefreshController,
                   onRefresh: _onRefresh,
                   child: CustomScrollView(
                     controller: _scrollController,
@@ -139,19 +138,17 @@ class _HomeViewState extends State<_HomeView>
                           child: HomeCard(hasGroups: _hasGroups),
                         ),
                       ),
-
+                  
                       SliverToBoxAdapter(
                         child: Padding(
-                          padding: const EdgeInsets.only(
-                            bottom: SecretSantaSpacing.sm,
-                          ),
+                          padding: const EdgeInsets.only(bottom: SecretSantaSpacing.sm),
                           child: Text(
                             i18n.homeTitle,
                             style: SecretSantaTextStyles.titleSmall,
                           ),
                         ),
                       ),
-
+                  
                       BlocBuilder<GroupCubit, GroupState>(
                         builder: (context, state) {
                           if (state.isLoading) {
@@ -164,7 +161,7 @@ class _HomeViewState extends State<_HomeView>
                               ),
                             );
                           }
-
+                  
                           if (state.error != null) {
                             final msg = state.error == AppError.unauthorized
                                 ? i18n.sessionExpired
@@ -174,7 +171,7 @@ class _HomeViewState extends State<_HomeView>
                               child: Center(child: Text(msg)),
                             );
                           }
-
+                  
                           if (state.filtered.isEmpty) {
                             final isSearching = state.search.isNotEmpty;
                             final isFiltering = state.filter != GroupFilter.all;
@@ -201,7 +198,7 @@ class _HomeViewState extends State<_HomeView>
                             );
                           }
                           return SliverPadding(
-                            padding: const EdgeInsets.only(bottom: 100),
+                            padding: const EdgeInsets.only(bottom: 150),
                             sliver: SliverList.separated(
                               itemCount: state.filtered.length,
                               separatorBuilder: (_, _) =>
@@ -210,7 +207,7 @@ class _HomeViewState extends State<_HomeView>
                                 final g = state.filtered[index];
                                 return GroupCard(
                                   onPress: () async {
-                                    final result = await context.pushNamed(
+                                    await context.pushNamed(
                                       'view_group',
                                       extra: ShowGroupArgs(
                                         code: g.code,
@@ -218,7 +215,7 @@ class _HomeViewState extends State<_HomeView>
                                         name: g.name,
                                       ),
                                     );
-                                    if (result == true) _onRefresh();
+                                    _onRefresh();
                                   },
                                   index: index,
                                   groupName: g.name,
@@ -234,8 +231,8 @@ class _HomeViewState extends State<_HomeView>
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -249,55 +246,52 @@ class _SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: SecretSantaColors.background,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 8,
-        children: [
-          MySearchBar(
-            hintText: i18n.searchGroup,
-            onChanged: (v) => context.read<GroupCubit>().onSearchChanged(v),
-          ),
-          BlocBuilder<GroupCubit, GroupState>(
-            buildWhen: (prev, cur) => prev.filter != cur.filter,
-            builder: (context, state) {
-              return SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  spacing: 8,
-                  children: [
-                    _FilterChip(
-                      label: i18n.filterAll,
-                      selected: state.filter == GroupFilter.all,
-                      onSelected: () => context
-                          .read<GroupCubit>()
-                          .onFilterChanged(GroupFilter.all),
-                    ),
-                    _FilterChip(
-                      label: i18n.badgePending,
-                      selected: state.filter == GroupFilter.pending,
-                      onSelected: () => context
-                          .read<GroupCubit>()
-                          .onFilterChanged(GroupFilter.pending),
-                      color: SecretSantaColors.accent3,
-                    ),
-                    _FilterChip(
-                      label: i18n.badgeRaffled,
-                      selected: state.filter == GroupFilter.raffled,
-                      onSelected: () => context
-                          .read<GroupCubit>()
-                          .onFilterChanged(GroupFilter.raffled),
-                      color: SecretSantaColors.accent,
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 8,
+      children: [
+        MySearchBar(
+          hintText: i18n.searchGroup,
+          onChanged: (v) => context.read<GroupCubit>().onSearchChanged(v),
+        ),
+        BlocBuilder<GroupCubit, GroupState>(
+          buildWhen: (prev, cur) => prev.filter != cur.filter,
+          builder: (context, state) {
+            return SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                spacing: 8,
+                children: [
+                  _FilterChip(
+                    label: i18n.filterAll,
+                    selected: state.filter == GroupFilter.all,
+                    onSelected: () => context
+                        .read<GroupCubit>()
+                        .onFilterChanged(GroupFilter.all),
+                  ),
+                  _FilterChip(
+                    label: i18n.badgePending,
+                    selected: state.filter == GroupFilter.pending,
+                    onSelected: () => context
+                        .read<GroupCubit>()
+                        .onFilterChanged(GroupFilter.pending),
+                    color: SecretSantaColors.accent3,
+                  ),
+                  _FilterChip(
+                    label: i18n.badgeRaffled,
+                    selected: state.filter == GroupFilter.raffled,
+                    onSelected: () => context
+                        .read<GroupCubit>()
+                        .onFilterChanged(GroupFilter.raffled),
+                    color: SecretSantaColors.accent,
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

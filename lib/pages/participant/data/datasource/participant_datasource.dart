@@ -18,7 +18,7 @@ class ParticipantDatasource extends ParticipantRepository {
   ) async {
     try {
       final resp = await dio.post(
-        stageParticipantApiUrl,
+        prodParticipantApiUrl,
         data: entity.toJson(),
         options: Options(headers: {'Access-Key': groupToken}),
       );
@@ -41,7 +41,7 @@ class ParticipantDatasource extends ParticipantRepository {
   Future<ApiResult<ParticipantModel>> show(String id, String token) async {
     try {
       final resp = await dio.get(
-        '$stageParticipantApiUrl/$id',
+        '$prodParticipantApiUrl/$id',
         options: Options(headers: {'Access-Key': token}),
       );
       final model = ParticipantModel.fromJson(resp.data);
@@ -67,7 +67,7 @@ class ParticipantDatasource extends ParticipantRepository {
   ) async {
     try {
       final resp = await dio.put(
-        '$stageParticipantApiUrl/$id',
+        '$prodParticipantApiUrl/$id',
         data: entity.toJson(),
         options: Options(headers: {'Access-Key': token}),
       );
@@ -90,7 +90,7 @@ class ParticipantDatasource extends ParticipantRepository {
   Future<ApiResult> delete(String id, String token) async {
     try {
       final resp = await dio.delete(
-        '$stageParticipantApiUrl/$id',
+        '$prodParticipantApiUrl/$id',
         options: Options(headers: {'Access-Key': token}),
       );
       return Success(resp);
@@ -111,7 +111,7 @@ class ParticipantDatasource extends ParticipantRepository {
   Future<ApiResult> resendEmail(String id, String token) async {
     try {
       final resp = await dio.post(
-        '$stageParticipantApiUrl/$id/resend-email',
+        '$prodParticipantApiUrl/$id/resend-email',
         options: Options(headers: {'Access-Key': token}),
       );
       return Success(resp);

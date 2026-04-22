@@ -127,18 +127,25 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: SecretSantaSpacing.lg),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: SecretSantaSpacing.sm,
+                        ),
                         child: Text(
-                          i18n.participants,
+                          i18n.allParticipantsList,
                           style: SecretSantaTextStyles.titleMedium,
                         ),
                       ),
                       ColoredBox(
                         color: SecretSantaColors.background,
-                        child: MySearchBar(
-                          controller: _searchController,
-                          hintText: i18n.searchParticipants,
-                          onChanged: (v) => setState(() => _query = v),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            bottom: SecretSantaSpacing.sm,
+                          ),
+                          child: MySearchBar(
+                            controller: _searchController,
+                            hintText: i18n.searchParticipants,
+                            onChanged: (v) => setState(() => _query = v),
+                          ),
                         ),
                       ),
                     ],
@@ -206,10 +213,7 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
                                   ),
                                 )
                               : ListView.separated(
-                                  padding: const EdgeInsets.only(
-                                    top: SecretSantaSpacing.lg,
-                                    bottom: 100,
-                                  ),
+                                  padding: const EdgeInsets.only(bottom: 100),
                                   itemCount: participants.length,
                                   separatorBuilder: (_, _) =>
                                       const SizedBox(height: 12),

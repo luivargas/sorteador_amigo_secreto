@@ -60,142 +60,141 @@ class _CreateParticipant extends State<CreateParticipant> {
       key: _createFormKey,
       child: Scaffold(
         appBar: MyAppBar(),
-        body: ScreenPadding(
-          child: BlocConsumer<ParticipantCubit, ParticipantState>(
-            listenWhen: (prev, curr) => prev.isLoading && !curr.isLoading,
-            listener: (context, state) async {
-              if (state.created) {
-                AppAlert.showBanner(
-                  context,
-                  message: i18n.participantAddedSuccess(nameController.text),
-                  type: AlertType.success,
-          
-                );
-                await Future.delayed(const Duration(milliseconds: 600));
-                if (context.mounted) {
-                  context.pop(true);
-                }
-              }
-              if (state.error != null) {
-                if (context.mounted) {
+        body: SafeArea(
+          child: ScreenPadding(
+            child: BlocConsumer<ParticipantCubit, ParticipantState>(
+              listenWhen: (prev, curr) => prev.isLoading && !curr.isLoading,
+              listener: (context, state) async {
+                if (state.created) {
                   AppAlert.showBanner(
                     context,
-                    title: i18n.errorTitle,
-                    message: state.error!.localize(context),
-                    type: AlertType.warning,
+                    message: i18n.participantAddedSuccess(nameController.text),
+                    type: AlertType.success,
+            
                   );
+                  await Future.delayed(const Duration(milliseconds: 600));
+                  if (context.mounted) {
+                    context.pop(true);
+                  }
                 }
-              }
-            },
-            builder: (context, state) {
-              return SingleChildScrollView(
-                child: Column(
-                  spacing: SecretSantaSpacing.md,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          i18n.addParticipantTitle,
-                          style: SecretSantaTextStyles.titleMedium,
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          i18n.addParticipantSubtitle,
-                          style: TextStyle(),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                        
-                    InkWell(
-                      borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
-                      onTap: () async {
-                        final result = await context.pushNamed(
-                          'contacts',
-                        );
-                        if (result == true && context.mounted) {
-                          context.pop(true);
-                        }
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(3),
-                        decoration: BoxDecoration(
-                          gradient: SecretSantaColors.primaryGradient,
-                          borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: SecretSantaColors.neutral50,
-                            borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
-                            boxShadow: SecretSantaShadows.medium,
+                if (state.error != null) {
+                  if (context.mounted) {
+                    AppAlert.showBanner(
+                      context,
+                      title: i18n.errorTitle,
+                      message: state.error!.localize(context),
+                      type: AlertType.warning,
+                    );
+                  }
+                }
+              },
+              builder: (context, state) {
+                return SingleChildScrollView(
+                  child: Column(
+                    spacing: SecretSantaSpacing.sm,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            i18n.addParticipantTitle,
+                            style: SecretSantaTextStyles.titleMedium,
+                            textAlign: TextAlign.center,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(SecretSantaSpacing.lg),
-                            child: Row(
-                              spacing: SecretSantaSpacing.md,
-                              children: [
-                                Icon(Icons.contact_page),
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            i18n.quickAccess,
-                                            style: TextStyle(
-                                              color: SecretSantaColors.accent2,
-                                              fontWeight: FontWeight.w600,
+                          Text(
+                            i18n.addParticipantSubtitle,
+                            style: SecretSantaTextStyles.body,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                          
+                      InkWell(
+                        borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
+                        onTap: () async {
+                          final result = await context.pushNamed(
+                            'contacts',
+                          );
+                          if (result == true && context.mounted) {
+                            context.pop(true);
+                          }
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(3),
+                          decoration: BoxDecoration(
+                            gradient: SecretSantaColors.primaryGradient,
+                            borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: SecretSantaColors.neutral50,
+                              borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
+                              boxShadow: SecretSantaShadows.medium,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(SecretSantaSpacing.lg),
+                              child: Row(
+                                spacing: SecretSantaSpacing.md,
+                                children: [
+                                  Icon(Icons.contact_page),
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              i18n.quickAccess,
+                                              style: TextStyle(
+                                                color: SecretSantaColors.accent2,
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            i18n.importContacts,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w600,
+                                            Text(
+                                              i18n.importContacts,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Icon(
-                                  Icons.arrow_forward_ios_rounded,
-                                  color: SecretSantaColors.accent,
-                                ),
-                              ],
+                                  Icon(
+                                    Icons.arrow_forward_ios_rounded,
+                                    color: SecretSantaColors.accent,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                        
-                    Column(
-                      spacing: SecretSantaSpacing.lg,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CreateParticipantFormFields(
-                          nameController: nameController,
-                          emailController: emailController,
-                          phoneController: phoneController,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 30.0),
-                          child: MyGradientButton(
+                          
+                      Column(
+                        spacing: SecretSantaSpacing.lg,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CreateParticipantFormFields(
+                            nameController: nameController,
+                            emailController: emailController,
+                            phoneController: phoneController,
+                          ),
+                          MyGradientButton(
                             onTap: _onSubmit,
                             title: i18n.addParticipantButton,
                             icon: Icons.save,
                             isLoading: state.isLoading,
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            },
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),

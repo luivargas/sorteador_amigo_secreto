@@ -62,6 +62,9 @@
   "maxValueHint": "Ej: $ 150,00",
   "dateHint": "dd/mm/aaaa hh:mm",
 
+  "contactReviewTitle": "Revisar contactos",                                                                            
+  "contactReviewSubtitle": "Confirma los datos antes de agregar",
+
   "eventDate": "Fecha del encuentro",
   "suggestedValue": "Valor sugerido",
   "location": "Lugar",
@@ -89,7 +92,7 @@
   "name": "Nombre",
   "addParticipantButton": "Agregar participante",
 
-  "participants": "Participantes",
+  "allParticipantsList": "Todos los Participantes",
   "participantsSubtitle": "{count} personas registradas en el grupo",
   "@participantsSubtitle": {
     "placeholders": { "count": { "type": "int" } }

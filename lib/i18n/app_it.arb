@@ -52,6 +52,9 @@
   "nameHint": "Es: Mario Rossi",
   "groupNameHint": "Es: Amico Segreto dell'Ufficio",
 
+  "contactReviewTitle": "Rivedi contatti",
+  "contactReviewSubtitle": "Conferma i dati prima di aggiungere",  
+
   "eventLocation": "Luogo dell'Evento",
   "minGiftValue": "Valore Minimo",
   "maxGiftValue": "Valore Massimo",
@@ -89,7 +92,7 @@
   "name": "Nome",
   "addParticipantButton": "Aggiungi partecipante",
 
-  "participants": "Partecipanti",
+  "allParticipantsList": "Tutti i Partecipanti",
   "participantsSubtitle": "{count} persone registrate nel gruppo",
   "@participantsSubtitle": {
     "placeholders": { "count": { "type": "int" } }

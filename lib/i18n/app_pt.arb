@@ -89,7 +89,7 @@
   "name": "Nome",
   "addParticipantButton": "Adicionar participante",
 
-  "participants": "Participantes",
+  "allParticipantsList": "Todos os Participantes",
   "participantsSubtitle": "{count} pessoas cadastradas ao grupo",
   "@participantsSubtitle": {
     "placeholders": { "count": { "type": "int" } }
@@ -270,6 +270,8 @@
   "@resendEmailSuccess": {                                                                                              
     "placeholders": { "name": { "type": "String" } }
   },
-  "resendEmailInvalid": "Não foi possível reenviar o e-mail. O participante não possui um e-mail válido cadastrado." 
+  "resendEmailInvalid": "Não foi possível reenviar o e-mail. O participante não possui um e-mail válido cadastrado." ,
+  "contactReviewTitle": "Revisar contatos",                                                                             
+  "contactReviewSubtitle": "Confirme os dados antes de adicionar"
 
 }

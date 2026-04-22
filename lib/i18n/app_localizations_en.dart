@@ -190,7 +190,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addParticipantButton => 'Add participant';
 
   @override
-  String get participants => 'Participants';
+  String get allParticipantsList => 'All Participants';
 
   @override
   String participantsSubtitle(int count) {
@@ -629,4 +629,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get resendEmailInvalid =>
       'Unable to resend the email. This participant does not have a valid email registered.';
+
+  @override
+  String get contactReviewTitle => 'Review contacts';
+
+  @override
+  String get contactReviewSubtitle => 'Confirm the details before adding';
 }

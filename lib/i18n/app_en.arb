@@ -89,7 +89,7 @@
   "name": "Name",
   "addParticipantButton": "Add participant",
 
-  "participants": "Participants",
+  "allParticipantsList": "All Participants",
   "participantsSubtitle": "{count} people registered in the group",
   "@participantsSubtitle": {
     "placeholders": { "count": { "type": "int" } }
@@ -255,6 +255,9 @@
   "resendEmailSubtitle": "Resend the draw email",                                                                     
   "deleteParticipant": "Delete participant",                                                                          
   "deleteParticipantSubtitle": "Permanently remove from group",
+
+  "contactReviewTitle": "Review contacts",                                                                              
+  "contactReviewSubtitle": "Confirm the details before adding",
 
   "validatorInvalidPhone": "Invalid number. Include the area code + number",                  
   "phoneHelperText": "Include area code + number",

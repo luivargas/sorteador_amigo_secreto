@@ -37,17 +37,19 @@ class MyPhoneFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final i18n = AppLocalizations.of(context)!;
+
     return PhoneFormField(
       decoration: InputDecoration(
-        helperText: "DDD + ${AppLocalizations.of(context)!.phone}",
-        hintText: 'DDD + ${AppLocalizations.of(context)!.phone}',
+        helperText: i18n.phoneHelperText,
+        hintText: i18n.phoneField,
       ),
       controller: controller,
       validator: PhoneValidator.compose([
         PhoneValidator.valid(
           context,
           errorText:
-              'Número inválido.\nInclua o DDD + número\nEx: (11) 99999-9999',
+              i18n.validatorInvalidPhone
         ),
       ]),
       enabled: enabled,

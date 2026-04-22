@@ -313,7 +313,7 @@ class _ViewParticipant extends State<ViewParticipant> {
                     .show(widget.userId, getIt<GroupSession>().token),
                 child: SingleChildScrollView(
                   child: Column(
-                    spacing: 20,
+                    spacing: SecretSantaSpacing.md,
                     children: [
                       Column(
                         children: [

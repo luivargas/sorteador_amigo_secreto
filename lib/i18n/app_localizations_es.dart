@@ -190,7 +190,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get addParticipantButton => 'Agregar participante';
 
   @override
-  String get participants => 'Participantes';
+  String get allParticipantsList => 'Todos los Participantes';
 
   @override
   String participantsSubtitle(int count) {
@@ -632,4 +632,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get resendEmailInvalid =>
       'No fue posible reenviar el correo. El participante no tiene un correo electrónico válido registrado.';
+
+  @override
+  String get contactReviewTitle => 'Revisar contactos';
+
+  @override
+  String get contactReviewSubtitle => 'Confirma los datos antes de agregar';
 }

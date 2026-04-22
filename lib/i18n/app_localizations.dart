@@ -438,11 +438,11 @@ abstract class AppLocalizations {
   /// **'Adicionar participante'**
   String get addParticipantButton;
 
-  /// No description provided for @participants.
+  /// No description provided for @allParticipantsList.
   ///
   /// In pt, this message translates to:
-  /// **'Participantes'**
-  String get participants;
+  /// **'Todos os Participantes'**
+  String get allParticipantsList;
 
   /// No description provided for @participantsSubtitle.
   ///
@@ -1235,6 +1235,18 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Não foi possível reenviar o e-mail. O participante não possui um e-mail válido cadastrado.'**
   String get resendEmailInvalid;
+
+  /// No description provided for @contactReviewTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Revisar contatos'**
+  String get contactReviewTitle;
+
+  /// No description provided for @contactReviewSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Confirme os dados antes de adicionar'**
+  String get contactReviewSubtitle;
 }
 
 class _AppLocalizationsDelegate

@@ -54,8 +54,9 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
         if (state.validated) {
           setState(() => _success = true);
           Future.delayed(const Duration(milliseconds: 1200), () {
-            if (context.mounted)
+            if (context.mounted) {
               context.goNamed('nav_bar', extra: state.groups ?? []);
+            }
           });
         }
       },
@@ -130,72 +131,93 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                                 child: Column(
                                   spacing: SecretSantaSpacing.lg,
                                   children: [
-                                    Builder(
-                                      builder: (context) {
-                                        final pinField =
-                                            MaterialPinField(
-                                              pinController: _tokenController,
-                                              length: 6,
-                                              theme: MaterialPinTheme(
-                                                cursorColor:
-                                                    SecretSantaColors.neutral50,
-                                                completeBorderColor:
-                                                    SecretSantaColors.accent2,
-                                                filledFillColor:
-                                                    SecretSantaColors.neutral50,
-                                                filledBorderColor:
-                                                    SecretSantaColors.accent2,
-                                                fillColor:
-                                                    SecretSantaColors.neutral50,
-                                                textStyle: SecretSantaTextStyles
-                                                    .pinField,
-                                                shape:
-                                                    MaterialPinShape.outlined,
-                                                spacing: SecretSantaSpacing.sm,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                      SecretSantaRadius.md,
-                                                    ),
-                                                borderColor:
-                                                    SecretSantaColors.accent,
-                                                entryAnimation:
-                                                    MaterialPinAnimation.scale,
-                                              ),
-                                              errorBuilder: (errorText) =>
-                                                  Container(
-                                                    padding: EdgeInsets.all(
-                                                      SecretSantaSpacing.xs,
-                                                    ),
-                                                    child: Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons.error,
-                                                          color: Colors.red,
-                                                          size: 16,
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10.0,
+                                      ),
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Builder(
+                                          builder: (context) {
+                                            final pinField =
+                                                MaterialPinField(
+                                                  pinController:
+                                                      _tokenController,
+                                                  length: 6,
+                                                  theme: MaterialPinTheme(
+                                                    cursorColor:
+                                                        SecretSantaColors
+                                                            .neutral50,
+                                                    completeBorderColor:
+                                                        SecretSantaColors
+                                                            .accent2,
+                                                    filledFillColor:
+                                                        SecretSantaColors
+                                                            .neutral50,
+                                                    filledBorderColor:
+                                                        SecretSantaColors
+                                                            .accent2,
+                                                    fillColor: SecretSantaColors
+                                                        .neutral50,
+                                                    textStyle:
+                                                        SecretSantaTextStyles
+                                                            .pinField,
+                                                    shape: MaterialPinShape
+                                                        .outlined,
+                                                    spacing:
+                                                        SecretSantaSpacing.sm,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          SecretSantaRadius.md,
                                                         ),
-                                                        SizedBox(width: 8),
-                                                        Text(errorText ?? ''),
-                                                      ],
-                                                    ),
+                                                    borderColor:
+                                                        SecretSantaColors
+                                                            .accent,
+                                                    entryAnimation:
+                                                        MaterialPinAnimation
+                                                            .scale,
                                                   ),
-                                              onCompleted: (value) async {
-                                                await _onSubmit(value);
-                                              },
-                                            ).animate().fadeIn(
-                                              delay: 150.ms,
-                                              duration: 400.ms,
-                                            );
-                                        return state.error != null
-                                            ? pinField
-                                                  .animate(
-                                                    key: ValueKey(state.error),
-                                                  )
-                                                  .shake(
-                                                    duration: 400.ms,
-                                                    hz: 4,
-                                                  )
-                                            : pinField;
-                                      },
+                                                  errorBuilder: (errorText) =>
+                                                      Container(
+                                                        padding: EdgeInsets.all(
+                                                          SecretSantaSpacing.xs,
+                                                        ),
+                                                        child: Row(
+                                                          children: [
+                                                            Icon(
+                                                              Icons.error,
+                                                              color: Colors.red,
+                                                              size: 16,
+                                                            ),
+                                                            SizedBox(width: 8),
+                                                            Text(
+                                                              errorText ?? '',
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                  onCompleted: (value) async {
+                                                    await _onSubmit(value);
+                                                  },
+                                                ).animate().fadeIn(
+                                                  delay: 150.ms,
+                                                  duration: 400.ms,
+                                                );
+                                            return state.error != null
+                                                ? pinField
+                                                      .animate(
+                                                        key: ValueKey(
+                                                          state.error,
+                                                        ),
+                                                      )
+                                                      .shake(
+                                                        duration: 400.ms,
+                                                        hz: 4,
+                                                      )
+                                                : pinField;
+                                          },
+                                        ),
+                                      ),
                                     ),
                                     TextButton.icon(
                                       onPressed: () async {
@@ -218,9 +240,9 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                           ),
                         ],
                       ),
-                      if(state.isLoading)...[
-                        Center(child: CircularProgressIndicator(),)
-                      ]
+                      if (state.isLoading) ...[
+                        Center(child: CircularProgressIndicator()),
+                      ],
                     ],
                   );
                 },

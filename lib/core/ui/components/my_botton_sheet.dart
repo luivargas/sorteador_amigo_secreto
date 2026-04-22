@@ -28,7 +28,9 @@ class MyBottonSheet {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      color: SecretSantaColors.neutral600.withValues(alpha: 0.5),
+                      color: SecretSantaColors.neutral600.withValues(
+                        alpha: 0.5,
+                      ),
                       borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
                     ),
                     child: SizedBox(height: 7, width: 80),
@@ -41,7 +43,8 @@ class MyBottonSheet {
                   Text(title, style: SecretSantaTextStyles.titleSmall),
                   Text(
                     subTitle.toUpperCase(),
-                    style: SecretSantaTheme.theme.textTheme.bodySmall, textAlign: TextAlign.center,
+                    style: SecretSantaTheme.theme.textTheme.bodySmall,
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),

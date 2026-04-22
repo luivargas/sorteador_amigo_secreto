@@ -48,7 +48,7 @@ class _LogoutScreenState extends State<LogoutScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: SecretSantaSpacing.xl,
-                  vertical: SecretSantaSpacing.xxl,
+                  vertical: SecretSantaSpacing.xl,
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

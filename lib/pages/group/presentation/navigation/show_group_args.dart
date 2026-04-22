@@ -3,5 +3,9 @@ class ShowGroupArgs {
   final String token;
   final String? name;
 
-  const ShowGroupArgs({required this.code, required this.token, this.name});
+  const ShowGroupArgs({
+    required this.code,
+    required this.token,
+    this.name,
+  });
 }

@@ -92,7 +92,7 @@ class GroupParticipantsCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      i18n.participants,
+                      i18n.allParticipantsList,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
