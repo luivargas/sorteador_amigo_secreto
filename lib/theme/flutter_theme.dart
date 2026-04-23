@@ -50,6 +50,8 @@ class SecretSantaColors {
   static const Color grey = Color(0xFF333333);
   static const Color green = Color(0xFF22c55e);
   static const Color red = Color(0xFFE11D48);
+  static const Color whatsApp = Color(0xFF00C950);
+  static const Color whatsAppDark = Color(0xFF008236);
 
   // Gradientes
   static const LinearGradient primaryGradient = LinearGradient(
@@ -60,6 +62,12 @@ class SecretSantaColors {
 
   static const LinearGradient successGradient = LinearGradient(
     colors: [accent2, green],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  );
+
+  static const LinearGradient whatsAppGradient = LinearGradient(
+    colors: [whatsApp, whatsAppDark],
     begin: Alignment.centerLeft,
     end: Alignment.centerRight,
   );

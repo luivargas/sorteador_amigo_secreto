@@ -259,7 +259,7 @@
   "deleteParticipant": "Elimina partecipante",           
   "deleteParticipantSubtitle": "Rimuovi dal gruppo permanentemente",
 
-  "validatorInvalidPhone": "Numero non valido. Includi il prefisso + numero",                                           
+  "validatorInvalidPhone": "Includi il prefisso + numero",                                           
   "phoneHelperText": "Includi il prefisso + numero",
   "groupUpdatedSuccess": "Gruppo {name} aggiornato con successo!",
   "@groupUpdatedSuccess": {
@@ -273,5 +273,23 @@
   "@resendEmailSuccess": {
     "placeholders": { "name": { "type": "String" } }                                                                    
   },
-  "resendEmailInvalid": "Impossibile reinviare l'email. Il partecipante non ha un'email valida registrata."     
+  "resendEmailInvalid": "Impossibile reinviare l'email. Il partecipante non ha un'email valida registrata.",
+
+  "whatsappPremiumTitle": "WhatsApp Premium",
+  "whatsappPremiumSubtitle": "Potenzia il tuo sorteggio!",
+  "whatsappPremiumPriceLabel": "per gruppo",
+  "whatsappPremiumDescription": "I tuoi partecipanti consultano il risultato tramite WhatsApp automaticamente.",
+  "whatsappPremiumCheck1": "I partecipanti consultano il risultato via WhatsApp",
+  "whatsappPremiumCheck2": "Sistema automatico 24h al giorno",
+  "whatsappPremiumCheck3": "Puoi registrare i numeri di telefono in seguito",
+  "whatsappPremiumHowToActivate": "COME ATTIVARE",
+  "whatsappPremiumStep1": "Clicca su \"Attiva WhatsApp\" ed effettua il pagamento.",
+  "whatsappPremiumStep2": "Compila i dati fiscali al checkout.",
+  "whatsappPremiumStep3": "Torna qui e clicca su \"Aggiorna Pannello\" per attivare.",
+  "whatsappPremiumImportantLabel": "Importante: ",
+  "whatsappPremiumImportantBody": "Dopo il pagamento, compila i dati fiscali. WhatsApp verrà abilitato solo dopo il completamento del checkout. Poi torna qui e clicca su ",
+  "whatsappPremiumUpdatePanel": "Aggiorna Pannello",
+  "whatsappPremiumContractButton": "Attiva WhatsApp – R$ 5,99",
+  "whatsappPremiumAlreadyPaidButton": "Ho già pagato – Aggiorna Pannello",
+  "whatsappPremiumCardSubtitle": "Risultato via WhatsApp"
 }

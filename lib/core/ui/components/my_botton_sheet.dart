@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/app_list_card.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/group_model.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
@@ -9,7 +8,7 @@ class MyBottonSheet {
     required String subTitle,
     required BuildContext context,
     GroupModel? group,
-    required List<AppListCard> items,
+    required List<Widget> items,
   }) {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -56,4 +55,3 @@ class MyBottonSheet {
     );
   }
 }
-// 

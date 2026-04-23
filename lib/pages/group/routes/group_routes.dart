@@ -7,6 +7,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show
 import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/create_group.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/edit_group.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/view_group.dart';
+import 'package:sorteador_amigo_secreto/pages/group/presentation/screens/whats_app_premium.dart';
 
 List<RouteBase> groupRoutes = [
   GoRoute(
@@ -43,6 +44,13 @@ List<RouteBase> groupRoutes = [
         create: (_) => getIt<GroupCubit>()..show(extra.code, extra.token),
         child: EditGroup(),
       );
+    },
+  ),
+    GoRoute(
+    name: 'whatsapp_premium',
+    path: '/whatsapp_premium',
+    builder: (BuildContext context, GoRouterState state) {
+      return  WhatsappPremiumView();
     },
   ),
 ];

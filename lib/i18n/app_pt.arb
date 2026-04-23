@@ -249,7 +249,7 @@
   "successTitle": "Sucesso",                                                                                            
   "partialTitle": "Parcial",   
 
-  "validatorInvalidPhone": "Número inválido. Inclua o DDD + número",                                                    
+  "validatorInvalidPhone": "Inclua o DDD + número",                                                    
   "phoneHelperText": "Inclua o DDD + número",
 
   "participantOptionsTitle": "Opções do participante",                                                                
@@ -271,7 +271,25 @@
     "placeholders": { "name": { "type": "String" } }
   },
   "resendEmailInvalid": "Não foi possível reenviar o e-mail. O participante não possui um e-mail válido cadastrado." ,
-  "contactReviewTitle": "Revisar contatos",                                                                             
-  "contactReviewSubtitle": "Confirme os dados antes de adicionar"
+  "contactReviewTitle": "Revisar contatos",
+  "contactReviewSubtitle": "Confirme os dados antes de adicionar",
+
+  "whatsappPremiumTitle": "WhatsApp Premium",
+  "whatsappPremiumSubtitle": "Turbine seu sorteio!",
+  "whatsappPremiumPriceLabel": "por grupo",
+  "whatsappPremiumDescription": "Seus participantes consultam o resultado pelo WhatsApp automaticamente.",
+  "whatsappPremiumCheck1": "Participantes consultam resultado por WhatsApp",
+  "whatsappPremiumCheck2": "Sistema automático 24h por dia",
+  "whatsappPremiumCheck3": "Você pode cadastrar telefones depois",
+  "whatsappPremiumHowToActivate": "COMO ATIVAR",
+  "whatsappPremiumStep1": "Clique em \"Contratar WhatsApp\" e realize o pagamento.",
+  "whatsappPremiumStep2": "Preencha os dados da nota fiscal no checkout.",
+  "whatsappPremiumStep3": "Volte aqui e clique em \"Atualizar Painel\" para ativar.",
+  "whatsappPremiumImportantLabel": "Importante: ",
+  "whatsappPremiumImportantBody": "Após o pagamento, preencha os dados da nota fiscal. O WhatsApp só será habilitado após o preenchimento completo. Em seguida, volte aqui e clique em ",
+  "whatsappPremiumUpdatePanel": "Atualizar Painel",
+  "whatsappPremiumContractButton": "Contratar WhatsApp – R$ 5,99",
+  "whatsappPremiumAlreadyPaidButton": "Já paguei – Atualizar Painel",
+  "whatsappPremiumCardSubtitle": "Resultado por WhatsApp"
 
 }

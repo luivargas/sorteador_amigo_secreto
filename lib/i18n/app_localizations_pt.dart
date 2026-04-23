@@ -587,7 +587,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get partialTitle => 'Parcial';
 
   @override
-  String get validatorInvalidPhone => 'Número inválido. Inclua o DDD + número';
+  String get validatorInvalidPhone => 'Inclua o DDD + número';
 
   @override
   String get phoneHelperText => 'Inclua o DDD + número';
@@ -634,4 +634,61 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get contactReviewSubtitle => 'Confirme os dados antes de adicionar';
+
+  @override
+  String get whatsappPremiumTitle => 'WhatsApp Premium';
+
+  @override
+  String get whatsappPremiumSubtitle => 'Turbine seu sorteio!';
+
+  @override
+  String get whatsappPremiumPriceLabel => 'por grupo';
+
+  @override
+  String get whatsappPremiumDescription =>
+      'Seus participantes consultam o resultado pelo WhatsApp automaticamente.';
+
+  @override
+  String get whatsappPremiumCheck1 =>
+      'Participantes consultam resultado por WhatsApp';
+
+  @override
+  String get whatsappPremiumCheck2 => 'Sistema automático 24h por dia';
+
+  @override
+  String get whatsappPremiumCheck3 => 'Você pode cadastrar telefones depois';
+
+  @override
+  String get whatsappPremiumHowToActivate => 'COMO ATIVAR';
+
+  @override
+  String get whatsappPremiumStep1 =>
+      'Clique em \"Contratar WhatsApp\" e realize o pagamento.';
+
+  @override
+  String get whatsappPremiumStep2 =>
+      'Preencha os dados da nota fiscal no checkout.';
+
+  @override
+  String get whatsappPremiumStep3 =>
+      'Volte aqui e clique em \"Atualizar Painel\" para ativar.';
+
+  @override
+  String get whatsappPremiumImportantLabel => 'Importante: ';
+
+  @override
+  String get whatsappPremiumImportantBody =>
+      'Após o pagamento, preencha os dados da nota fiscal. O WhatsApp só será habilitado após o preenchimento completo. Em seguida, volte aqui e clique em ';
+
+  @override
+  String get whatsappPremiumUpdatePanel => 'Atualizar Painel';
+
+  @override
+  String get whatsappPremiumContractButton => 'Contratar WhatsApp – R\$ 5,99';
+
+  @override
+  String get whatsappPremiumAlreadyPaidButton => 'Já paguei – Atualizar Painel';
+
+  @override
+  String get whatsappPremiumCardSubtitle => 'Resultado por WhatsApp';
 }

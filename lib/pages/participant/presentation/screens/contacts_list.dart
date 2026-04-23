@@ -9,7 +9,7 @@ import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/card_color.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/form_fields/my_phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_search_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/screen_padding.dart';

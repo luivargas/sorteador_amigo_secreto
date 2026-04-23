@@ -29,7 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
-    sdk: flutter
+    sdk: flutter     
   flutter_launcher_icons: ^0.14.1  
   cupertino_icons: ^1.0.8
   flutter_slidable: ^4.0.1
@@ -59,7 +59,8 @@ dependencies:
   flutter_native_splash: ^2.4.7
   confetti: ^0.8.0
   app_settings: ^6.1.1  
-  url_launcher: ^6.3.2
+  url_launcher: ^6.3.2  
+  font_awesome_flutter: ^11.0.0
 
 dev_dependencies:
   flutter_test:
@@ -85,10 +86,6 @@ flutter_icons:
 flutter:
 
   generate: true
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:

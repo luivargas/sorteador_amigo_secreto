@@ -259,7 +259,7 @@
   "contactReviewTitle": "Review contacts",                                                                              
   "contactReviewSubtitle": "Confirm the details before adding",
 
-  "validatorInvalidPhone": "Invalid number. Include the area code + number",                  
+  "validatorInvalidPhone": "Include the area code + number",                  
   "phoneHelperText": "Include area code + number",
   "groupUpdatedSuccess": "Group {name} updated successfully!",                                                          
   "@groupUpdatedSuccess": {                                                                                           
@@ -273,5 +273,23 @@
   "@resendEmailSuccess": {                                     
     "placeholders": { "name": { "type": "String" } }                                                                    
   },
-  "resendEmailInvalid": "Unable to resend the email. This participant does not have a valid email registered."   
+  "resendEmailInvalid": "Unable to resend the email. This participant does not have a valid email registered.",
+
+  "whatsappPremiumTitle": "WhatsApp Premium",
+  "whatsappPremiumSubtitle": "Boost your raffle!",
+  "whatsappPremiumPriceLabel": "per group",
+  "whatsappPremiumDescription": "Your participants check their results via WhatsApp automatically.",
+  "whatsappPremiumCheck1": "Participants check results via WhatsApp",
+  "whatsappPremiumCheck2": "Automatic system 24h a day",
+  "whatsappPremiumCheck3": "You can register phone numbers later",
+  "whatsappPremiumHowToActivate": "HOW TO ACTIVATE",
+  "whatsappPremiumStep1": "Click \"Subscribe WhatsApp\" and complete the payment.",
+  "whatsappPremiumStep2": "Fill in your tax details at checkout.",
+  "whatsappPremiumStep3": "Come back here and click \"Update Panel\" to activate.",
+  "whatsappPremiumImportantLabel": "Important: ",
+  "whatsappPremiumImportantBody": "After payment, fill in your tax details. WhatsApp will only be enabled after the checkout is complete. Then, come back here and click ",
+  "whatsappPremiumUpdatePanel": "Update Panel",
+  "whatsappPremiumContractButton": "Subscribe WhatsApp – R$ 5,99",
+  "whatsappPremiumAlreadyPaidButton": "Already paid – Update Panel",
+  "whatsappPremiumCardSubtitle": "Results via WhatsApp"
 }

@@ -589,8 +589,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get partialTitle => 'Parziale';
 
   @override
-  String get validatorInvalidPhone =>
-      'Numero non valido. Includi il prefisso + numero';
+  String get validatorInvalidPhone => 'Includi il prefisso + numero';
 
   @override
   String get phoneHelperText => 'Includi il prefisso + numero';
@@ -637,4 +636,62 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get contactReviewSubtitle => 'Conferma i dati prima di aggiungere';
+
+  @override
+  String get whatsappPremiumTitle => 'WhatsApp Premium';
+
+  @override
+  String get whatsappPremiumSubtitle => 'Potenzia il tuo sorteggio!';
+
+  @override
+  String get whatsappPremiumPriceLabel => 'per gruppo';
+
+  @override
+  String get whatsappPremiumDescription =>
+      'I tuoi partecipanti consultano il risultato tramite WhatsApp automaticamente.';
+
+  @override
+  String get whatsappPremiumCheck1 =>
+      'I partecipanti consultano il risultato via WhatsApp';
+
+  @override
+  String get whatsappPremiumCheck2 => 'Sistema automatico 24h al giorno';
+
+  @override
+  String get whatsappPremiumCheck3 =>
+      'Puoi registrare i numeri di telefono in seguito';
+
+  @override
+  String get whatsappPremiumHowToActivate => 'COME ATTIVARE';
+
+  @override
+  String get whatsappPremiumStep1 =>
+      'Clicca su \"Attiva WhatsApp\" ed effettua il pagamento.';
+
+  @override
+  String get whatsappPremiumStep2 => 'Compila i dati fiscali al checkout.';
+
+  @override
+  String get whatsappPremiumStep3 =>
+      'Torna qui e clicca su \"Aggiorna Pannello\" per attivare.';
+
+  @override
+  String get whatsappPremiumImportantLabel => 'Importante: ';
+
+  @override
+  String get whatsappPremiumImportantBody =>
+      'Dopo il pagamento, compila i dati fiscali. WhatsApp verrà abilitato solo dopo il completamento del checkout. Poi torna qui e clicca su ';
+
+  @override
+  String get whatsappPremiumUpdatePanel => 'Aggiorna Pannello';
+
+  @override
+  String get whatsappPremiumContractButton => 'Attiva WhatsApp – R\$ 5,99';
+
+  @override
+  String get whatsappPremiumAlreadyPaidButton =>
+      'Ho già pagato – Aggiorna Pannello';
+
+  @override
+  String get whatsappPremiumCardSubtitle => 'Risultato via WhatsApp';
 }

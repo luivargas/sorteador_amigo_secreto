@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/form_body.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/labeled_field.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_email_form_field.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_name_form_field.dart';
-import 'package:sorteador_amigo_secreto/core/ui/components/form_fields/my_phone_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/form_fields/labeled_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/form_fields/my_email_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/form_fields/my_name_form_field.dart';
+import 'package:sorteador_amigo_secreto/core/ui/form_fields/my_phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/validator/participant/participant_validators.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
 import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';

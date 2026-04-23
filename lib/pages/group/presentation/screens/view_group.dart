@@ -1,5 +1,6 @@
 import 'package:confetti/confetti.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,7 +49,7 @@ class _ViewGroupBody extends State<ViewGroup> {
 
   @override
   void initState() {
-    super.initState();    
+    super.initState();
     _confettiController = ConfettiController(
       duration: const Duration(seconds: 3),
     );
@@ -277,6 +278,12 @@ class _ViewGroupBody extends State<ViewGroup> {
                       children: [
                         _GroupHeroHeader(name: g.name, type: type),
                         const SizedBox(height: 16),
+                        _WhatsAppCard(
+                          code: g.code,
+                          whatsAppPremium: g.whatsappEnabled,
+                          onRefresh: _onRefresh,
+                        ),
+                        const SizedBox(height: 16),
                         ViewGroupCard(
                           type: type,
                           eventLocation: g.location ?? i18n.notDefined,
@@ -479,6 +486,130 @@ class _NeedMoreParticipantsBanner extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _WhatsAppCard extends StatelessWidget {
+  final String code;
+  final bool whatsAppPremium;
+  final Function() onRefresh;
+  const _WhatsAppCard({
+    required this.code,
+    required this.whatsAppPremium,
+    required this.onRefresh,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Future<void> onShare() async {
+      final title = AppLocalizations.of(context)!.shareLinkTitle;
+      await SharePlus.instance.share(
+        ShareParams(
+          uri: Uri.parse("https://wa.me/553131813133?text=quem%20tirei"),
+          title: title,
+        ),
+      );
+    }
+
+    final i18n = AppLocalizations.of(context)!;
+
+    return InkWell(
+      splashColor: SecretSantaColors.whatsApp.withValues(alpha: 0.2),
+      highlightColor: SecretSantaColors.whatsApp.withValues(alpha: 0.1),
+      onTap: () async {
+        if (whatsAppPremium) {
+          if (context.mounted) {
+            AppAlert.showAlertDialog(
+              context,
+              title: 'Whatsapp Ativo',
+              message:
+                  "Compartilhe com o seu grupo o link direto no WhatsApp para receber o resultado",
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    context.pop();
+                  },
+                  child: Text("Cancelar"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    onShare();
+                  },
+                  child: Text("Enviar"),
+                ),
+              ],
+            );
+          }
+        }
+        if (!whatsAppPremium) {
+          final result = await context.pushNamed('whatsapp_premium');
+          if (result == true) {
+            if (context.mounted) {
+              onRefresh();
+            }
+          }
+        }
+      },
+      borderRadius: BorderRadius.circular(SecretSantaRadius.lg),
+      child: Ink(
+        padding: const EdgeInsets.all(SecretSantaSpacing.md),
+        decoration: BoxDecoration(
+          gradient: SecretSantaColors.whatsAppGradient,
+          borderRadius: BorderRadius.circular(SecretSantaRadius.lg),
+          boxShadow: SecretSantaShadows.small,
+        ),
+        child: Row(
+          children: [
+            Container(
+              height: 52,
+              width: 52,
+              decoration: BoxDecoration(
+                color: SecretSantaColors.neutral50,
+                borderRadius: BorderRadius.circular(SecretSantaRadius.md),
+              ),
+              child: Center(
+                child: FaIcon(
+                  FontAwesomeIcons.whatsapp,
+                  color: Color(0xFF25D366), // verde do WhatsApp
+                  size: 35,
+                ),
+              ),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    i18n.whatsappPremiumTitle,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: SecretSantaColors.neutral50,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    !whatsAppPremium
+                        ? i18n.whatsappPremiumCardSubtitle
+                        : "Plano ativado",
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: SecretSantaColors.neutral50,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              !whatsAppPremium ? Icons.chevron_right : Icons.verified,
+              color: SecretSantaColors.neutral50,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -259,7 +259,7 @@
   "deleteParticipant": "Eliminar participante",                                                                         
   "deleteParticipantSubtitle": "Eliminar del grupo permanentemente",
 
-  "validatorInvalidPhone": "Número inválido. Incluya el código de área + número",                                       
+  "validatorInvalidPhone": "Incluya el código de área + número",                                       
   "phoneHelperText": "Incluya el código de área + número",
   "groupUpdatedSuccess": "¡Grupo {name} actualizado con éxito!",                                                      
   "@groupUpdatedSuccess": {
@@ -273,5 +273,23 @@
   "@resendEmailSuccess": {                                      
     "placeholders": { "name": { "type": "String" } }                                                                    
   },
-  "resendEmailInvalid": "No fue posible reenviar el correo. El participante no tiene un correo electrónico válido registrado."    
+  "resendEmailInvalid": "No fue posible reenviar el correo. El participante no tiene un correo electrónico válido registrado.",
+
+  "whatsappPremiumTitle": "WhatsApp Premium",
+  "whatsappPremiumSubtitle": "¡Potencia tu sorteo!",
+  "whatsappPremiumPriceLabel": "por grupo",
+  "whatsappPremiumDescription": "Tus participantes consultan el resultado por WhatsApp automáticamente.",
+  "whatsappPremiumCheck1": "Participantes consultan resultado por WhatsApp",
+  "whatsappPremiumCheck2": "Sistema automático 24h al día",
+  "whatsappPremiumCheck3": "Puedes registrar teléfonos después",
+  "whatsappPremiumHowToActivate": "CÓMO ACTIVAR",
+  "whatsappPremiumStep1": "Haz clic en \"Contratar WhatsApp\" y realiza el pago.",
+  "whatsappPremiumStep2": "Completa los datos fiscales en el checkout.",
+  "whatsappPremiumStep3": "Vuelve aquí y haz clic en \"Actualizar Panel\" para activar.",
+  "whatsappPremiumImportantLabel": "Importante: ",
+  "whatsappPremiumImportantBody": "Tras el pago, completa los datos fiscales. WhatsApp solo se habilitará después de completar el checkout. Luego, vuelve aquí y haz clic en ",
+  "whatsappPremiumUpdatePanel": "Actualizar Panel",
+  "whatsappPremiumContractButton": "Contratar WhatsApp – R$ 5,99",
+  "whatsappPremiumAlreadyPaidButton": "Ya pagué – Actualizar Panel",
+  "whatsappPremiumCardSubtitle": "Resultado por WhatsApp"
 }

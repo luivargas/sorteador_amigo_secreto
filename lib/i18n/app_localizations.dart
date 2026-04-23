@@ -1167,7 +1167,7 @@ abstract class AppLocalizations {
   /// No description provided for @validatorInvalidPhone.
   ///
   /// In pt, this message translates to:
-  /// **'Número inválido. Inclua o DDD + número'**
+  /// **'Inclua o DDD + número'**
   String get validatorInvalidPhone;
 
   /// No description provided for @phoneHelperText.
@@ -1247,6 +1247,108 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Confirme os dados antes de adicionar'**
   String get contactReviewSubtitle;
+
+  /// No description provided for @whatsappPremiumTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'WhatsApp Premium'**
+  String get whatsappPremiumTitle;
+
+  /// No description provided for @whatsappPremiumSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Turbine seu sorteio!'**
+  String get whatsappPremiumSubtitle;
+
+  /// No description provided for @whatsappPremiumPriceLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'por grupo'**
+  String get whatsappPremiumPriceLabel;
+
+  /// No description provided for @whatsappPremiumDescription.
+  ///
+  /// In pt, this message translates to:
+  /// **'Seus participantes consultam o resultado pelo WhatsApp automaticamente.'**
+  String get whatsappPremiumDescription;
+
+  /// No description provided for @whatsappPremiumCheck1.
+  ///
+  /// In pt, this message translates to:
+  /// **'Participantes consultam resultado por WhatsApp'**
+  String get whatsappPremiumCheck1;
+
+  /// No description provided for @whatsappPremiumCheck2.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sistema automático 24h por dia'**
+  String get whatsappPremiumCheck2;
+
+  /// No description provided for @whatsappPremiumCheck3.
+  ///
+  /// In pt, this message translates to:
+  /// **'Você pode cadastrar telefones depois'**
+  String get whatsappPremiumCheck3;
+
+  /// No description provided for @whatsappPremiumHowToActivate.
+  ///
+  /// In pt, this message translates to:
+  /// **'COMO ATIVAR'**
+  String get whatsappPremiumHowToActivate;
+
+  /// No description provided for @whatsappPremiumStep1.
+  ///
+  /// In pt, this message translates to:
+  /// **'Clique em \"Contratar WhatsApp\" e realize o pagamento.'**
+  String get whatsappPremiumStep1;
+
+  /// No description provided for @whatsappPremiumStep2.
+  ///
+  /// In pt, this message translates to:
+  /// **'Preencha os dados da nota fiscal no checkout.'**
+  String get whatsappPremiumStep2;
+
+  /// No description provided for @whatsappPremiumStep3.
+  ///
+  /// In pt, this message translates to:
+  /// **'Volte aqui e clique em \"Atualizar Painel\" para ativar.'**
+  String get whatsappPremiumStep3;
+
+  /// No description provided for @whatsappPremiumImportantLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Importante: '**
+  String get whatsappPremiumImportantLabel;
+
+  /// No description provided for @whatsappPremiumImportantBody.
+  ///
+  /// In pt, this message translates to:
+  /// **'Após o pagamento, preencha os dados da nota fiscal. O WhatsApp só será habilitado após o preenchimento completo. Em seguida, volte aqui e clique em '**
+  String get whatsappPremiumImportantBody;
+
+  /// No description provided for @whatsappPremiumUpdatePanel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Atualizar Painel'**
+  String get whatsappPremiumUpdatePanel;
+
+  /// No description provided for @whatsappPremiumContractButton.
+  ///
+  /// In pt, this message translates to:
+  /// **'Contratar WhatsApp – R\$ 5,99'**
+  String get whatsappPremiumContractButton;
+
+  /// No description provided for @whatsappPremiumAlreadyPaidButton.
+  ///
+  /// In pt, this message translates to:
+  /// **'Já paguei – Atualizar Painel'**
+  String get whatsappPremiumAlreadyPaidButton;
+
+  /// No description provided for @whatsappPremiumCardSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Resultado por WhatsApp'**
+  String get whatsappPremiumCardSubtitle;
 }
 
 class _AppLocalizationsDelegate

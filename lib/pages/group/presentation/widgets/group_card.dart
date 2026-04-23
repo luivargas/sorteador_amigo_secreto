@@ -29,7 +29,7 @@ class GroupCard extends StatelessWidget {
       subtitle: isRaffled ? i18n.badgeRaffled : i18n.badgePending,
       color: color,
       name: groupName,
-      borderRadius: 16,
+      borderRadius: SecretSantaRadius.lg,
       backgroundColor: SecretSantaColors.neutral50,
       border: Border.all(color: SecretSantaColors.neutral200.withAlpha(150)),
       avatarSize: 52,

@@ -15,7 +15,7 @@ class GroupModel {
   final bool? isGiftListPublic;
   final String? description;
   final String? raffledAt;
-  final bool? whatsappEnabled;
+  final bool whatsappEnabled;
   final String? whatsappEnabledAt;
   final String? status;
   final String? token;
@@ -37,7 +37,7 @@ class GroupModel {
     required this.code,
     required this.shortCode,
     required this.name,
-    this.whatsappEnabled,
+    required this.whatsappEnabled,
     required this.token,
     required this.participants,
   });
