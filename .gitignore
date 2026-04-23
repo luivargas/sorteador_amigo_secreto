@@ -54,3 +54,6 @@ lib/core/network/url
 
 android/key.properties
 *.keystore
+
+/assets/adi-registration.properties
+upload_cert.pem
