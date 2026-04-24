@@ -17,7 +17,7 @@ import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/par
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/participant_list_item.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class AllParticipantsView extends StatefulWidget {
   const AllParticipantsView({super.key});
@@ -65,7 +65,7 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     return PopScope(
       canPop: false,
@@ -89,19 +89,19 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
               (!prev.logout && curr.logout) ||
               (prev.error == null && curr.error != null && !curr.logout),
           listener: (context, state) async {
-            final i18n = AppLocalizations.of(context)!;
+            final l10n = AppLocalizations.of(context)!;
             if (state.logout) {
               await AppAlert.showAlertDialog(
                 context,
-                title: i18n.errorTitle,
-                message: i18n.errorUnauthorized,
+                title: l10n.errorTitle,
+                message: l10n.errorUnauthorized,
                 actions: [
                   TextButton(
                     onPressed: () {
                       context.pop();
                       context.goNamed('request_token');
                     },
-                    child: Text(i18n.ok),
+                    child: Text(l10n.ok),
                   ),
                 ],
               );
@@ -110,7 +110,7 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
             if (state.error != null) {
               AppAlert.showBanner(
                 context,
-                title: i18n.errorTitle,
+                title: l10n.errorTitle,
                 message: state.error!.localize(context),
                 type: AlertType.warning,
               );
@@ -131,7 +131,7 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
                           vertical: SecretSantaSpacing.sm,
                         ),
                         child: Text(
-                          i18n.allParticipantsList,
+                          l10n.allParticipantsList,
                           style: SecretSantaTextStyles.titleMedium,
                         ),
                       ),
@@ -143,7 +143,7 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
                           ),
                           child: MySearchBar(
                             controller: _searchController,
-                            hintText: i18n.searchParticipants,
+                            hintText: l10n.searchParticipants,
                             onChanged: (v) => setState(() => _query = v),
                           ),
                         ),
@@ -165,7 +165,7 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
                       if (state.deleted) {
                         AppAlert.showBanner(
                           context,
-                          message: i18n.participantDeletedSuccess(''),
+                          message: l10n.participantDeletedSuccess(''),
                           type: AlertType.success,
                         );
                         _didCreate = true;
@@ -173,10 +173,10 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
                         return;
                       }
                       if (state.error != null) {
-                        final i18n = AppLocalizations.of(context)!;
+                        final l10n = AppLocalizations.of(context)!;
                         AppAlert.showBanner(
                           context,
-                          title: i18n.errorTitle,
+                          title: l10n.errorTitle,
                           message: state.error!.localize(context),
                           type: AlertType.warning,
                         );
@@ -204,7 +204,7 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
                                       ),
                                       const SizedBox(height: 12),
                                       Text(
-                                        i18n.noGroupsFound,
+                                        l10n.noGroupsFound,
                                         style: TextStyle(
                                           color: SecretSantaColors.neutral500,
                                         ),

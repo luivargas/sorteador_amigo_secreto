@@ -20,7 +20,7 @@ import 'app_localizations_pt.dart';
 /// `supportedLocales` list. For example:
 ///
 /// ```dart
-/// import 'i18n/app_localizations.dart';
+/// import 'l10n/app_localizations.dart';
 ///
 /// return MaterialApp(
 ///   localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -96,10 +96,10 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
+    Locale('pt'),
     Locale('en'),
     Locale('es'),
     Locale('it'),
-    Locale('pt'),
   ];
 
   /// No description provided for @refreshCompleted.
@@ -1349,6 +1349,24 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Resultado por WhatsApp'**
   String get whatsappPremiumCardSubtitle;
+
+  /// No description provided for @whatsappActivatedTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'WhatsApp ativado neste grupo.'**
+  String get whatsappActivatedTitle;
+
+  /// No description provided for @whatsappActivatedAlertMessage.
+  ///
+  /// In pt, this message translates to:
+  /// **'Compartilhe este link do WhatsApp com os participantes. Cada pessoa deve enviar uma mensagem usando o número que cadastrou para receber o nome do seu amigo secreto.'**
+  String get whatsappActivatedAlertMessage;
+
+  /// No description provided for @sendButton.
+  ///
+  /// In pt, this message translates to:
+  /// **'Enviar'**
+  String get sendButton;
 }
 
 class _AppLocalizationsDelegate

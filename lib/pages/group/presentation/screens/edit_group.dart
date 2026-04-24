@@ -17,7 +17,7 @@ import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/edit_group/edit_group_field.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class EditGroup extends StatefulWidget {
@@ -144,7 +144,7 @@ class _EditGroup extends State<EditGroup> {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     return Form(
       key: _editGroupKey,
@@ -156,15 +156,15 @@ class _EditGroup extends State<EditGroup> {
               if (state.logout) {
                 await AppAlert.showAlertDialog(
                   context,
-                  title: i18n.errorTitle,
-                  message: i18n.errorUnauthorized,
+                  title: l10n.errorTitle,
+                  message: l10n.errorUnauthorized,
                   actions: [
                     TextButton(
                       onPressed: () {
                         context.pop();
                         context.goNamed('request_token');
                       },
-                      child: Text(i18n.ok),
+                      child: Text(l10n.ok),
                     ),
                   ],
                 );
@@ -180,7 +180,7 @@ class _EditGroup extends State<EditGroup> {
               if (state.updated) {
                 AppAlert.showBanner(
                   context,
-                  message: i18n.groupUpdatedSuccess(groupNameController.text.trim()),
+                  message: l10n.groupUpdatedSuccess(groupNameController.text.trim()),
                   type: AlertType.success,
                 );
                 if (context.mounted) {
@@ -200,11 +200,11 @@ class _EditGroup extends State<EditGroup> {
                       Column(
                         children: [
                           Text(
-                            i18n.editGroupTitle,
+                            l10n.editGroupTitle,
                             style: SecretSantaTextStyles.titleMedium,
                           ),
                           Text(
-                            i18n.editGroupSubtitle,
+                            l10n.editGroupSubtitle,
                             style: TextStyle(),
                             textAlign: TextAlign.center,
                           ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/network/url/contants.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class MyPhoneFormField extends StatelessWidget {
@@ -37,19 +37,19 @@ class MyPhoneFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     return PhoneFormField(
       decoration: InputDecoration(
-        helperText: i18n.phoneHelperText,
-        hintText: i18n.phoneField,
+        helperText: l10n.phoneHelperText,
+        hintText: l10n.phoneField,
       ),
       controller: controller,
       validator: PhoneValidator.compose([
         PhoneValidator.valid(
           context,
           errorText:
-              i18n.validatorInvalidPhone
+              l10n.validatorInvalidPhone
         ),
       ]),
       enabled: enabled,

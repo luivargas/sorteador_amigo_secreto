@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 enum GroupFilter { all, pending, raffled }
 
@@ -559,19 +559,19 @@ class SecretSantaBadge extends StatelessWidget {
     Color borderColor;
     String text;
 
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
     switch (type) {
       case BadgeType.pending:
         bgColor = SecretSantaColors.warningBg;
         textColor = SecretSantaColors.warningText;
         borderColor = SecretSantaColors.warningBorder;
-        text = i18n.badgePending;
+        text = l10n.badgePending;
         break;
       case BadgeType.raffled:
         bgColor = SecretSantaColors.successBg;
         textColor = SecretSantaColors.successText;
         borderColor = SecretSantaColors.successBorder;
-        text = i18n.badgeRaffled;
+        text = l10n.badgeRaffled;
         break;
     }
 

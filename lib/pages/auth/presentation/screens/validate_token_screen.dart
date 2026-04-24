@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/form_fields/my_email_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/screen_padding.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_state.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
@@ -45,7 +45,7 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     return BlocListener<AuthCubit, AuthState>(
       listenWhen: (p, c) =>
@@ -101,12 +101,12 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            i18n.almostThereTitle,
+                            l10n.almostThereTitle,
                             style: SecretSantaTextStyles.titleLarge,
                             textAlign: TextAlign.center,
                           ),
                           Text(
-                            i18n.almostThereSubtitle,
+                            l10n.almostThereSubtitle,
                             style: SecretSantaTextStyles.bodySmall,
                             textAlign: TextAlign.center,
                           ),
@@ -231,7 +231,7 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
                                         }
                                       },
                                       icon: const Icon(Icons.content_paste),
-                                      label: Text(i18n.pasteCode),
+                                      label: Text(l10n.pasteCode),
                                     ),
                                   ],
                                 ),

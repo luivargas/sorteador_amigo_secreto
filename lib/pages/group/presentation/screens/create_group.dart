@@ -16,7 +16,7 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/create_form_group/group_form_field.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create_participant_entity.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class CreateGroup extends StatefulWidget {
   const CreateGroup({super.key});
@@ -56,7 +56,7 @@ class _FormGroupBody extends State<CreateGroup> {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     return Form(
       key: _formKey,
@@ -70,7 +70,7 @@ class _FormGroupBody extends State<CreateGroup> {
               if (state.created) {
                 AppAlert.showBanner(
                   context,
-                  message: i18n.groupCreatedSuccess(groupNameController.text),
+                  message: l10n.groupCreatedSuccess(groupNameController.text),
                   type: AlertType.success,
                 );
                 if (context.mounted && state.createdGroup != null) {
@@ -100,10 +100,10 @@ class _FormGroupBody extends State<CreateGroup> {
                     Column(
                       children: [
                         Text(
-                          i18n.createGroupTitle,
+                          l10n.createGroupTitle,
                           style: SecretSantaTextStyles.titleMedium,
                         ),
-                        Text(i18n.createGroupSubtitle, style: TextStyle()),
+                        Text(l10n.createGroupSubtitle, style: TextStyle()),
                       ],
                     ),
                     GroupFormFields(
@@ -114,7 +114,7 @@ class _FormGroupBody extends State<CreateGroup> {
                     ),
                     MyGradientButton(
                       onTap: _onSubmit,
-                      title: i18n.createGroupButton,
+                      title: l10n.createGroupButton,
                       icon: Icons.save,
                       isLoading: state.isLoading,
                     ),

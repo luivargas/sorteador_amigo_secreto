@@ -5,7 +5,7 @@ import 'package:sorteador_amigo_secreto/core/ui/form_fields/labeled_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/form_fields/my_email_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/form_fields/my_name_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/form_fields/my_phone_form_field.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/core/validator/participant/participant_validators.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
@@ -30,38 +30,38 @@ class GroupFormFields extends StatefulWidget {
 class _GroupFormFields extends State<GroupFormFields> {
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
     return FormBody(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: SecretSantaSpacing.sm,
         children: [
           LabeledField(
-            label: i18n.groupName,
+            label: l10n.groupName,
             child: MyNameFormField(
               controller: widget.groupNameController,
-              hintText: i18n.groupNameHint,
+              hintText: l10n.groupNameHint,
               icon: Icons.group,
               textInputAction: TextInputAction.next,
             ),
           ),
           LabeledField(
-            label: i18n.yourName,
+            label: l10n.yourName,
             child: MyNameFormField(
               controller: widget.nameController,
-              hintText: i18n.nameHint,
+              hintText: l10n.nameHint,
               textInputAction: TextInputAction.next,
             ),
           ),
           LabeledField(
-            label: i18n.phoneField,
+            label: l10n.phoneField,
             child: MyPhoneFormField(
               controller: widget.phoneController,
               textInputAction: TextInputAction.done,
             ),
           ),
           LabeledField(
-            label: i18n.email,
+            label: l10n.email,
             child: MyEmailFormField(
               controller: widget.emailController,
               validator: (_) =>

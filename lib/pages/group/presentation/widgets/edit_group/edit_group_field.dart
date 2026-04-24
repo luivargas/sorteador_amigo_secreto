@@ -3,7 +3,7 @@ import 'package:sorteador_amigo_secreto/core/ui/components/form_body.dart';
 import 'package:sorteador_amigo_secreto/core/ui/form_fields/labeled_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/form_fields/my_currency_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/ui/form_fields/my_name_form_field.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/core/validator/group/group_validators.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
@@ -34,26 +34,26 @@ class EditGroupFields extends StatefulWidget {
 class _EditGroupFields extends State<EditGroupFields> {
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
     return FormBody(
       child: Column(
         spacing: SecretSantaSpacing.sm,
         children: [
           LabeledField(
-            label: i18n.groupName,
+            label: l10n.groupName,
             child: MyNameFormField(
               controller: widget.groupNameController,
-              hintText: i18n.groupNameHint,
+              hintText: l10n.groupNameHint,
               icon: Icons.group,
               textInputAction: TextInputAction.next,
             ),
           ),
           LabeledField(
-            label: i18n.eventLocation,
+            label: l10n.eventLocation,
             child: TextFormField(
               controller: widget.addressController,
               decoration: InputDecoration(
-                hintText: i18n.locationHint,
+                hintText: l10n.locationHint,
                 prefixIcon: const Icon(Icons.place),
               ),
               textInputAction: TextInputAction.next,
@@ -64,20 +64,20 @@ class _EditGroupFields extends State<EditGroupFields> {
             children: [
               Expanded(
                 child: LabeledField(
-                  label: i18n.minGiftValue,
+                  label: l10n.minGiftValue,
                   child: MyCurrencyFormField(
                     controller: widget.minGiftValueController,
-                    hintText: i18n.minValueHint,
+                    hintText: l10n.minValueHint,
                     textInputAction: TextInputAction.next,
                   ),
                 ),
               ),
               Expanded(
                 child: LabeledField(
-                  label: i18n.maxGiftValue,
+                  label: l10n.maxGiftValue,
                   child: MyCurrencyFormField(
                     controller: widget.maxGiftValueController,
-                    hintText: i18n.maxValueHint,
+                    hintText: l10n.maxValueHint,
                     validator: (_) => GroupValidators.giftValue(
                       context: context,
                       min: widget.minGiftValueController.text,
@@ -90,19 +90,19 @@ class _EditGroupFields extends State<EditGroupFields> {
             ],
           ),
           LabeledField(
-            label: i18n.dateAndTime,
+            label: l10n.dateAndTime,
             child: TextFormField(
               controller: widget.dateTimeController,
               readOnly: true,
               decoration: InputDecoration(
-                hintText: i18n.dateHint,
+                hintText: l10n.dateHint,
                 prefixIcon: const Icon(Icons.event),
               ),
               onTap: widget.onTapDateTime,
             ),
           ),
           LabeledField(
-            label: i18n.groupDescription,
+            label: l10n.groupDescription,
             child: TextFormField(
               keyboardType: TextInputType.text,
               maxLines: 4,

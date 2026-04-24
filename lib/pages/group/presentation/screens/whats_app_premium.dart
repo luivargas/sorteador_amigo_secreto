@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/network/url/contants.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
@@ -22,7 +22,7 @@ class WhatsappPremiumView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: MyAppBar(),
@@ -58,13 +58,13 @@ class WhatsappPremiumView extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      i18n.whatsappPremiumTitle,
+                      l10n.whatsappPremiumTitle,
                       style: SecretSantaTextStyles.titleSmall.copyWith(
                         color: Colors.white,
                       ),
                     ),
                     Text(
-                      i18n.whatsappPremiumSubtitle,
+                      l10n.whatsappPremiumSubtitle,
                       style: SecretSantaTextStyles.bodySmall.copyWith(
                         color: Colors.white.withValues(alpha: 0.85),
                       ),
@@ -91,7 +91,7 @@ class WhatsappPremiumView extends StatelessWidget {
                               ),
                             ),
                             TextSpan(
-                              text: ' ${i18n.whatsappPremiumPriceLabel}',
+                              text: ' ${l10n.whatsappPremiumPriceLabel}',
                               style: SecretSantaTextStyles.body.copyWith(
                                 color: SecretSantaColors.neutral500,
                               ),
@@ -103,7 +103,7 @@ class WhatsappPremiumView extends StatelessWidget {
 
                     Center(
                       child: Text(
-                        i18n.whatsappPremiumDescription,
+                        l10n.whatsappPremiumDescription,
                         style: SecretSantaTextStyles.bodySmall.copyWith(
                           color: SecretSantaColors.neutral500,
                         ),
@@ -126,22 +126,22 @@ class WhatsappPremiumView extends StatelessWidget {
                       child: Column(
                         spacing: SecretSantaSpacing.sm,
                         children: [
-                          _CheckItem(text: i18n.whatsappPremiumCheck1),
-                          _CheckItem(text: i18n.whatsappPremiumCheck2),
-                          _CheckItem(text: i18n.whatsappPremiumCheck3),
+                          _CheckItem(text: l10n.whatsappPremiumCheck1),
+                          _CheckItem(text: l10n.whatsappPremiumCheck2),
+                          _CheckItem(text: l10n.whatsappPremiumCheck3),
                         ],
                       ),
                     ),
                     Text(
-                      i18n.whatsappPremiumHowToActivate,
+                      l10n.whatsappPremiumHowToActivate,
                       style: SecretSantaTextStyles.labelSmall.copyWith(
                         color: SecretSantaColors.neutral500,
                         letterSpacing: 1,
                       ),
                     ),
-                    _StepItem(number: '1', text: i18n.whatsappPremiumStep1),
-                    _StepItem(number: '2', text: i18n.whatsappPremiumStep2),
-                    _StepItem(number: '3', text: i18n.whatsappPremiumStep3),
+                    _StepItem(number: '1', text: l10n.whatsappPremiumStep1),
+                    _StepItem(number: '2', text: l10n.whatsappPremiumStep2),
+                    _StepItem(number: '3', text: l10n.whatsappPremiumStep3),
 
                     Container(
                       padding: const EdgeInsets.all(SecretSantaSpacing.md),
@@ -171,16 +171,16 @@ class WhatsappPremiumView extends StatelessWidget {
                                 ),
                                 children: [
                                   TextSpan(
-                                    text: i18n.whatsappPremiumImportantLabel,
+                                    text: l10n.whatsappPremiumImportantLabel,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
                                   TextSpan(
-                                    text: i18n.whatsappPremiumImportantBody,
+                                    text: l10n.whatsappPremiumImportantBody,
                                   ),
                                   TextSpan(
-                                    text: i18n.whatsappPremiumUpdatePanel,
+                                    text: l10n.whatsappPremiumUpdatePanel,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -215,7 +215,7 @@ class WhatsappPremiumView extends StatelessWidget {
                               size: 18,
                             ),
                             Text(
-                              i18n.whatsappPremiumContractButton,
+                              l10n.whatsappPremiumContractButton,
                               style: SecretSantaTextStyles.button.copyWith(
                                 color: Colors.white,
                               ),
@@ -250,7 +250,7 @@ class WhatsappPremiumView extends StatelessWidget {
                               size: 18,
                             ),
                             Text(
-                              i18n.whatsappPremiumAlreadyPaidButton,
+                              l10n.whatsappPremiumAlreadyPaidButton,
                               style: SecretSantaTextStyles.button.copyWith(
                                 color: SecretSantaColors.neutral600,
                               ),

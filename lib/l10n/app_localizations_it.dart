@@ -694,4 +694,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get whatsappPremiumCardSubtitle => 'Risultato via WhatsApp';
+
+  @override
+  String get whatsappActivatedTitle => 'WhatsApp attivato in questo gruppo.';
+
+  @override
+  String get whatsappActivatedAlertMessage =>
+      'Condividi questo link WhatsApp con i partecipanti. Ogni persona deve inviare un messaggio usando il numero che ha registrato per ricevere il nome del proprio amico segreto.';
+
+  @override
+  String get sendButton => 'Invia';
 }

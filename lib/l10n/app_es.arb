@@ -291,5 +291,8 @@
   "whatsappPremiumUpdatePanel": "Actualizar Panel",
   "whatsappPremiumContractButton": "Contratar WhatsApp – R$ 5,99",
   "whatsappPremiumAlreadyPaidButton": "Ya pagué – Actualizar Panel",
-  "whatsappPremiumCardSubtitle": "Resultado por WhatsApp"
+  "whatsappPremiumCardSubtitle": "Resultado por WhatsApp",
+  "whatsappActivatedTitle": "WhatsApp activado en este grupo.",
+  "whatsappActivatedAlertMessage": "Comparte este enlace de WhatsApp con los participantes. Cada persona debe enviar un mensaje usando el número que registró para recibir el nombre de su amigo secreto.",
+  "sendButton": "Enviar"
 }

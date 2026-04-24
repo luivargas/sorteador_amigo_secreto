@@ -6,7 +6,7 @@ import 'package:sorteador_amigo_secreto/core/util/get_initials.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class GroupParticipantsCard extends StatelessWidget {
   final String groupToken;
@@ -62,7 +62,7 @@ class GroupParticipantsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     return InkWell(
       onTap: () => _goToList(context),
@@ -92,14 +92,14 @@ class GroupParticipantsCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      i18n.allParticipantsList,
+                      l10n.allParticipantsList,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
                     Text(
-                      i18n.participantsSubtitle(participantsList.length),
+                      l10n.participantsSubtitle(participantsList.length),
                       style: const TextStyle(fontSize: 12),
                     ),
                   ],
@@ -118,7 +118,7 @@ class GroupParticipantsCard extends StatelessWidget {
                   vertical: SecretSantaSpacing.sm,
                 ),
                 child: Text(
-                  i18n.noParticipantsSelected,
+                  l10n.noParticipantsSelected,
                   style: TextStyle(
                     color: SecretSantaColors.neutral400,
                     fontSize: 13,

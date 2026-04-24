@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 enum AppError {
   badRequest,
@@ -17,19 +17,19 @@ enum AppError {
 
 extension AppErrorLocalize on AppError {
   String localize(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
     switch (this) {
-      case AppError.badRequest:      return i18n.errorBadRequest;
-      case AppError.unauthorized:    return i18n.errorUnauthorized;
-      case AppError.forbidden:       return i18n.errorForbidden;
-      case AppError.notFound:        return i18n.errorNotFound;
-      case AppError.conflict:        return i18n.errorConflict;
-      case AppError.unprocessable:   return i18n.errorUnprocessable;
-      case AppError.tooManyRequests: return i18n.errorTooManyRequests;
-      case AppError.serverError:     return i18n.errorServer;
-      case AppError.timeout:         return i18n.errorTimeout;
-      case AppError.noConnection:    return i18n.errorNoConnection;
-      case AppError.unknown:          return i18n.errorUnknow;
+      case AppError.badRequest:      return l10n.errorBadRequest;
+      case AppError.unauthorized:    return l10n.errorUnauthorized;
+      case AppError.forbidden:       return l10n.errorForbidden;
+      case AppError.notFound:        return l10n.errorNotFound;
+      case AppError.conflict:        return l10n.errorConflict;
+      case AppError.unprocessable:   return l10n.errorUnprocessable;
+      case AppError.tooManyRequests: return l10n.errorTooManyRequests;
+      case AppError.serverError:     return l10n.errorServer;
+      case AppError.timeout:         return l10n.errorTimeout;
+      case AppError.noConnection:    return l10n.errorNoConnection;
+      case AppError.unknown:          return l10n.errorUnknow;
     }
   }
 }

@@ -13,7 +13,7 @@ import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/create_participant_form_fields.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class CreateParticipant extends StatefulWidget {
@@ -54,7 +54,7 @@ class _CreateParticipant extends State<CreateParticipant> {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     return Form(
       key: _createFormKey,
@@ -68,7 +68,7 @@ class _CreateParticipant extends State<CreateParticipant> {
                 if (state.created) {
                   AppAlert.showBanner(
                     context,
-                    message: i18n.participantAddedSuccess(nameController.text),
+                    message: l10n.participantAddedSuccess(nameController.text),
                     type: AlertType.success,
             
                   );
@@ -81,7 +81,7 @@ class _CreateParticipant extends State<CreateParticipant> {
                   if (context.mounted) {
                     AppAlert.showBanner(
                       context,
-                      title: i18n.errorTitle,
+                      title: l10n.errorTitle,
                       message: state.error!.localize(context),
                       type: AlertType.warning,
                     );
@@ -97,12 +97,12 @@ class _CreateParticipant extends State<CreateParticipant> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            i18n.addParticipantTitle,
+                            l10n.addParticipantTitle,
                             style: SecretSantaTextStyles.titleMedium,
                             textAlign: TextAlign.center,
                           ),
                           Text(
-                            i18n.addParticipantSubtitle,
+                            l10n.addParticipantSubtitle,
                             style: SecretSantaTextStyles.body,
                             textAlign: TextAlign.center,
                           ),
@@ -145,14 +145,14 @@ class _CreateParticipant extends State<CreateParticipant> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              i18n.quickAccess,
+                                              l10n.quickAccess,
                                               style: TextStyle(
                                                 color: SecretSantaColors.accent2,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                             ),
                                             Text(
-                                              i18n.importContacts,
+                                              l10n.importContacts,
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -184,7 +184,7 @@ class _CreateParticipant extends State<CreateParticipant> {
                           ),
                           MyGradientButton(
                             onTap: _onSubmit,
-                            title: i18n.addParticipantButton,
+                            title: l10n.addParticipantButton,
                             icon: Icons.save,
                             isLoading: state.isLoading,
                           ),

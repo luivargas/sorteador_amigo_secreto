@@ -8,7 +8,7 @@ import 'package:sorteador_amigo_secreto/core/ui/alerts/app_alert.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/card_color.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_search_bar.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/model/auth_groups_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/group/presentation/cubit/group_state.dart';
@@ -67,7 +67,7 @@ class _HomeViewState extends State<_HomeView>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: MyAppBar(),
@@ -78,28 +78,28 @@ class _HomeViewState extends State<_HomeView>
             (prev.error == null && curr.error != null && !curr.logout),
         listener: (context, state) async {
           if (state.logout) {
-            final i18n = AppLocalizations.of(context)!;
+            final l10n = AppLocalizations.of(context)!;
             await AppAlert.showAlertDialog(
               context,
-              title: i18n.errorTitle,
-              message: i18n.errorUnauthorized,
+              title: l10n.errorTitle,
+              message: l10n.errorUnauthorized,
               actions: [
                 TextButton(
                   onPressed: () {
                     context.pop();
                     context.goNamed('request_token');
                   },
-                  child: Text(i18n.ok),
+                  child: Text(l10n.ok),
                 ),
               ],
             );
             return;
           }
           if (state.error != null) {
-            final i18n = AppLocalizations.of(context)!;
+            final l10n = AppLocalizations.of(context)!;
             AppAlert.showBanner(
               context,
-              title: i18n.errorTitle,
+              title: l10n.errorTitle,
               message: state.error!.localize(context),
               type: AlertType.warning,
             );
@@ -118,7 +118,7 @@ class _HomeViewState extends State<_HomeView>
                   SecretSantaSpacing.lg,
                   SecretSantaSpacing.lg,
                 ),
-                child: _SearchBar(i18n: i18n),
+                child: _SearchBar(l10n: l10n),
               ),
             ),
             Expanded(
@@ -143,7 +143,7 @@ class _HomeViewState extends State<_HomeView>
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: SecretSantaSpacing.sm),
                           child: Text(
-                            i18n.homeTitle,
+                            l10n.homeTitle,
                             style: SecretSantaTextStyles.titleSmall,
                           ),
                         ),
@@ -164,7 +164,7 @@ class _HomeViewState extends State<_HomeView>
                   
                           if (state.error != null) {
                             final msg = state.error == AppError.unauthorized
-                                ? i18n.sessionExpired
+                                ? l10n.sessionExpired
                                 : state.error!.localize(context);
                             return SliverFillRemaining(
                               hasScrollBody: false,
@@ -189,8 +189,8 @@ class _HomeViewState extends State<_HomeView>
                                   ),
                                   Text(
                                     isSearching
-                                        ? '"${state.search}" — ${i18n.noGroupsFound.toLowerCase()}'
-                                        : i18n.noGroupsFound,
+                                        ? '"${state.search}" — ${l10n.noGroupsFound.toLowerCase()}'
+                                        : l10n.noGroupsFound,
                                     textAlign: TextAlign.center,
                                   ),
                                 ],
@@ -240,9 +240,9 @@ class _HomeViewState extends State<_HomeView>
 }
 
 class _SearchBar extends StatelessWidget {
-  final AppLocalizations i18n;
+  final AppLocalizations l10n;
 
-  const _SearchBar({required this.i18n});
+  const _SearchBar({required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -252,7 +252,7 @@ class _SearchBar extends StatelessWidget {
       spacing: 8,
       children: [
         MySearchBar(
-          hintText: i18n.searchGroup,
+          hintText: l10n.searchGroup,
           onChanged: (v) => context.read<GroupCubit>().onSearchChanged(v),
         ),
         BlocBuilder<GroupCubit, GroupState>(
@@ -264,14 +264,14 @@ class _SearchBar extends StatelessWidget {
                 spacing: 8,
                 children: [
                   _FilterChip(
-                    label: i18n.filterAll,
+                    label: l10n.filterAll,
                     selected: state.filter == GroupFilter.all,
                     onSelected: () => context
                         .read<GroupCubit>()
                         .onFilterChanged(GroupFilter.all),
                   ),
                   _FilterChip(
-                    label: i18n.badgePending,
+                    label: l10n.badgePending,
                     selected: state.filter == GroupFilter.pending,
                     onSelected: () => context
                         .read<GroupCubit>()
@@ -279,7 +279,7 @@ class _SearchBar extends StatelessWidget {
                     color: SecretSantaColors.accent3,
                   ),
                   _FilterChip(
-                    label: i18n.badgeRaffled,
+                    label: l10n.badgeRaffled,
                     selected: state.filter == GroupFilter.raffled,
                     onSelected: () => context
                         .read<GroupCubit>()

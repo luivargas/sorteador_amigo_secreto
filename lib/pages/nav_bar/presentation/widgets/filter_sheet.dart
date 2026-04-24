@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class FilterSheet extends StatefulWidget {
@@ -17,31 +17,31 @@ class _FilterSheetState extends State<FilterSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.all(SecretSantaSpacing.lg),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            i18n.filterTitle,
+            l10n.filterTitle,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SwitchListTile(
             activeThumbColor: activeColor,
-            title: Text(i18n.filterRaffled),
+            title: Text(l10n.filterRaffled),
             value: showRaffled,
             onChanged: (val) => setState(() => showRaffled = val),
           ),
           SwitchListTile(
             activeThumbColor: activeColor,
-            title: Text(i18n.filterParticipating),
+            title: Text(l10n.filterParticipating),
             value: participant,
             onChanged: (val) => setState(() => participant = val),
           ),
           SwitchListTile(
             activeThumbColor: activeColor,
-            title: Text(i18n.filterManaging),
+            title: Text(l10n.filterManaging),
             value: admin,
             onChanged: (val) => setState(() => admin = val),
           ),
@@ -57,7 +57,7 @@ class _FilterSheetState extends State<FilterSheet> {
                     admin = true;
                   });
                 },
-                child: Text(i18n.filterClear),
+                child: Text(l10n.filterClear),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -67,7 +67,7 @@ class _FilterSheetState extends State<FilterSheet> {
                     "adminOnly": admin,
                   });
                 },
-                child: Text(i18n.filterApply),
+                child: Text(l10n.filterApply),
               ),
             ],
           ),

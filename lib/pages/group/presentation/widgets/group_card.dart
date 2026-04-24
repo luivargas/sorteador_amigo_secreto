@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/app_list_card.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class GroupCard extends StatelessWidget {
@@ -21,12 +21,12 @@ class GroupCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     return AppListCard(
       onTap: onPress,
       title: groupName,
-      subtitle: isRaffled ? i18n.badgeRaffled : i18n.badgePending,
+      subtitle: isRaffled ? l10n.badgeRaffled : l10n.badgePending,
       color: color,
       name: groupName,
       borderRadius: SecretSantaRadius.lg,

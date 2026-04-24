@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class HomeCard extends StatefulWidget {
@@ -24,7 +24,7 @@ class _HomeCardState extends State<HomeCard> {
 class _CardWhithGroups extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -83,7 +83,7 @@ class _CardWhithGroups extends StatelessWidget {
                                   spacing: SecretSantaSpacing.sm,
                                   children: [
                                     Text(
-                                      i18n.createGroupButton,
+                                      l10n.createGroupButton,
                                       style: TextStyle(
                                         color: SecretSantaColors.accent2,
                                         fontWeight: FontWeight.w600,
@@ -115,7 +115,7 @@ class _CardWhithGroups extends StatelessWidget {
 class _CardEmpty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -151,7 +151,7 @@ class _CardEmpty extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  i18n.homeCardTitle,
+                  l10n.homeCardTitle,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -159,7 +159,7 @@ class _CardEmpty extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  i18n.homeCardDesc,
+                  l10n.homeCardDesc,
                   style: TextStyle(
                     color: SecretSantaColors.neutral50.withValues(alpha: 0.70),
                     fontWeight: FontWeight.bold,
@@ -189,7 +189,7 @@ class _CardEmpty extends StatelessWidget {
                                   spacing: SecretSantaSpacing.sm,
                                   children: [
                                     Text(
-                                      i18n.getStarted,
+                                      l10n.getStarted,
                                       style: TextStyle(
                                         color: SecretSantaColors.accent2,
                                         fontWeight: FontWeight.w600,

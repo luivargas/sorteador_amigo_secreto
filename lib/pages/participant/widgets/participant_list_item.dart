@@ -4,7 +4,7 @@ import 'package:sorteador_amigo_secreto/core/ui/components/app_list_card.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/show_parti_args.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class ParticipantListItem extends StatelessWidget {
   final ParticipantModel participant;
@@ -20,8 +20,8 @@ class ParticipantListItem extends StatelessWidget {
 
   bool get _isConfirmed => participant.viewStatus != null;
 
-  String? _subtitle(AppLocalizations i18n) {
-    if (participant.role == ParticipantRole.admin.name) return i18n.adminRole;
+  String? _subtitle(AppLocalizations l10n) {
+    if (participant.role == ParticipantRole.admin.name) return l10n.adminRole;
     if (participant.email?.isNotEmpty == true) return participant.email;
     if (participant.phone?.isNotEmpty == true) return participant.phone;
     return null;
@@ -29,10 +29,10 @@ class ParticipantListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
     return AppListCard(
       title: participant.name,
-      subtitle: _subtitle(i18n),
+      subtitle: _subtitle(l10n),
       color: color,
       name: participant.name,
       trailing: _StatusBadge(isConfirmed: _isConfirmed),

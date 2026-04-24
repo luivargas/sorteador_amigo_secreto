@@ -7,7 +7,7 @@ import 'package:sorteador_amigo_secreto/core/ui/form_fields/my_name_form_field.d
 import 'package:sorteador_amigo_secreto/core/ui/form_fields/my_phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/validator/participant/participant_validators.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/data/model/participant_model.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class ViewParticipantFormFields extends StatefulWidget {
@@ -35,7 +35,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
     final role = widget.participant?.role;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,17 +45,17 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
           child: Column(
             children: [
               LabeledField(
-                label: i18n.name,
+                label: l10n.name,
                 child: MyNameFormField(
                   controller: widget.nameController,
-                  hintText: i18n.participantNameHint,
+                  hintText: l10n.participantNameHint,
                   textInputAction: TextInputAction.next,
                   readOnly: widget.readOnly,
                   autofocus: true,
                 ),
               ),
               LabeledField(
-                label: i18n.email,
+                label: l10n.email,
                 child: MyEmailFormField(
                   controller: widget.emailController,
                   textInputAction: TextInputAction.next,
@@ -68,7 +68,7 @@ class _ViewParticipantFormFields extends State<ViewParticipantFormFields> {
                 ),
               ),
               LabeledField(
-                label: i18n.phoneField,
+                label: l10n.phoneField,
                 child: MyPhoneFormField(
                   controller: widget.phoneController,
                   textInputAction: TextInputAction.done,

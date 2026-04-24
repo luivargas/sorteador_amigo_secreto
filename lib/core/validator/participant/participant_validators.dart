@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:flutter_contacts/models/properties/phone.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:sorteador_amigo_secreto/core/util/regex_utils.dart';

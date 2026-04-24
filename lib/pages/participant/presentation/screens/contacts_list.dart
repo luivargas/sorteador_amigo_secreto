@@ -19,7 +19,7 @@ import 'package:sorteador_amigo_secreto/core/validator/participant/participant_v
 import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/contact_review_args.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io' show Platform;
 
@@ -181,7 +181,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
   }
 
   void _showContactOptionsSheet(Contact c) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     String? chosenPhone = c.phones.isNotEmpty ? c.phones.first.number : null;
     String? chosenEmail = c.emails.isNotEmpty ? c.emails.first.address : null;
@@ -253,7 +253,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                 const SizedBox(height: 20),
                 if (c.phones.length > 1) ...[
                   Text(
-                    i18n.selectPhone,
+                    l10n.selectPhone,
                     style: TextStyle(
                       color: SecretSantaColors.accent,
                       fontWeight: FontWeight.w600,
@@ -291,7 +291,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                 if (chosenPhone != null &&
                     _isoCodeNeedsSelection(chosenPhone, c.phones)) ...[
                   Text(
-                    i18n.countryLabel,
+                    l10n.countryLabel,
                     style: TextStyle(
                       color: SecretSantaColors.accent,
                       fontWeight: FontWeight.w600,
@@ -330,7 +330,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                 ],
                 if (c.emails.length > 1) ...[
                   Text(
-                    i18n.selectEmail,
+                    l10n.selectEmail,
                     style: TextStyle(
                       color: SecretSantaColors.accent,
                       fontWeight: FontWeight.w600,
@@ -371,7 +371,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                     });
                     context.pop(ctx);
                   },
-                  title: i18n.select,
+                  title: l10n.select,
                 ),
               ],
             ),
@@ -405,7 +405,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: MyAppBar(),
@@ -418,11 +418,11 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                 child: Column(
                   children: [
                     Text(
-                      i18n.contactsTitle,
+                      l10n.contactsTitle,
                       style: SecretSantaTextStyles.titleMedium,
                     ),
                     Text(
-                      i18n.contactsSubtitle,
+                      l10n.contactsSubtitle,
                       style: SecretSantaTextStyles.body,
                     ),
                   ],
@@ -432,7 +432,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                 padding: const EdgeInsets.only(bottom: SecretSantaSpacing.lg),
                 child: MySearchBar(
                   controller: _searchController,
-                  hintText: i18n.searchParticipants,
+                  hintText: l10n.searchParticipants,
                 ),
               ),
               if (_denied)
@@ -446,7 +446,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                         color: SecretSantaColors.neutral500,
                       ),
                       Text(
-                        i18n.contactPermissionDenied,
+                        l10n.contactPermissionDenied,
                         textAlign: TextAlign.center,
                       ),
                       TextButton.icon(
@@ -459,7 +459,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                           }
                         },
                         icon: Icon(Icons.settings_outlined),
-                        label: Text(i18n.openSettings),
+                        label: Text(l10n.openSettings),
                       ),
                     ],
                   ),
@@ -529,7 +529,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       _buildSubtitle(
-                                        i18n,
+                                        l10n,
                                         hasPhone,
                                         hasEmail,
                                         isValid,
@@ -564,7 +564,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                 child: MyGradientButton(
                   icon: Icons.save,
                   onTap: _onSend,
-                  title: i18n.confirmButton(_selectedContacts.length),
+                  title: l10n.confirmButton(_selectedContacts.length),
                 ),
               ),
             ],
@@ -575,7 +575,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
   }
 
   Widget _buildSubtitle(
-    AppLocalizations i18n,
+    AppLocalizations l10n,
     bool hasPhone,
     bool hasEmail,
     bool isValid,
@@ -584,7 +584,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
   ) {
     if (!isValid) {
       return Text(
-        '${[if (!hasPhone && !hasEmail) i18n.phone].join(', ')} ${i18n.fieldRequired}',
+        '${[if (!hasPhone && !hasEmail) l10n.phone].join(', ')} ${l10n.fieldRequired}',
         style: const TextStyle(color: Colors.red),
       );
     }

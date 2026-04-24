@@ -291,5 +291,8 @@
   "whatsappPremiumUpdatePanel": "Aggiorna Pannello",
   "whatsappPremiumContractButton": "Attiva WhatsApp – R$ 5,99",
   "whatsappPremiumAlreadyPaidButton": "Ho già pagato – Aggiorna Pannello",
-  "whatsappPremiumCardSubtitle": "Risultato via WhatsApp"
+  "whatsappPremiumCardSubtitle": "Risultato via WhatsApp",
+  "whatsappActivatedTitle": "WhatsApp attivato in questo gruppo.",
+  "whatsappActivatedAlertMessage": "Condividi questo link WhatsApp con i partecipanti. Ogni persona deve inviare un messaggio usando il numero che ha registrato per ricevere il nome del proprio amico segreto.",
+  "sendButton": "Invia"
 }

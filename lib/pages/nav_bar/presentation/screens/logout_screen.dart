@@ -5,7 +5,7 @@ import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.da
 import 'package:sorteador_amigo_secreto/core/ui/components/screen_padding.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/top_icon.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/data/database/auth_db.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
@@ -31,7 +31,7 @@ class _LogoutScreenState extends State<LogoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: MyAppBar(),
       body: ScreenPadding(
@@ -56,7 +56,7 @@ class _LogoutScreenState extends State<LogoutScreen> {
                     TopIcon(icon: Icons.logout),
                     const SizedBox(height: 32),
                     Text(
-                      i18n.logoutLabel,
+                      l10n.logoutLabel,
                       style: SecretSantaTextStyles.labelSmall.copyWith(
                         color: SecretSantaColors.accent,
                         letterSpacing: 2,
@@ -66,7 +66,7 @@ class _LogoutScreenState extends State<LogoutScreen> {
         
                     // Título
                     Text(
-                      i18n.logoutTitle,
+                      l10n.logoutTitle,
                       style: SecretSantaTextStyles.titleMedium.copyWith(
                         color: SecretSantaColors.grey,
                       ),
@@ -76,7 +76,7 @@ class _LogoutScreenState extends State<LogoutScreen> {
         
                     // Subtítulo
                     Text(
-                      i18n.logoutSubtitle,
+                      l10n.logoutSubtitle,
                       style: SecretSantaTextStyles.body.copyWith(
                         color: SecretSantaColors.neutral500,
                       ),
@@ -87,7 +87,7 @@ class _LogoutScreenState extends State<LogoutScreen> {
                     // Botão principal
                     MyGradientButton(
                       onTap: _onLogout,
-                      title: i18n.logoutButton,
+                      title: l10n.logoutButton,
                       icon: Icons.logout_rounded,
                       isLoading: _isLoading,
                     ),

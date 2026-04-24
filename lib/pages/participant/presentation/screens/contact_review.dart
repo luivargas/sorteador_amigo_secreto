@@ -19,7 +19,7 @@ import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/create
 import 'package:sorteador_amigo_secreto/pages/participant/domain/usecases/participant_usecase.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/navigation/contact_review_args.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 
 class _ReviewItem {
   final ContactReviewEntry entry;
@@ -97,7 +97,7 @@ class _ContactReviewScreenState extends State<ContactReviewScreen> {
   Future<void> _onConfirm() async {
     final isValid = _formKey.currentState?.validate() ?? false;
     if (!isValid) return;
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
     setState(() => _isCreating = true);
 
     final List<String> successes = [];
@@ -147,10 +147,10 @@ class _ContactReviewScreenState extends State<ContactReviewScreen> {
     await AppAlert.showAlertDialog(
       context,
       title: failures.isEmpty
-          ? i18n.successTitle
+          ? l10n.successTitle
           : successes.isEmpty
-          ? i18n.errorTitle
-          : i18n.partialTitle,
+          ? l10n.errorTitle
+          : l10n.partialTitle,
       message: body.toString().trim(),
       actions: [
         TextButton(onPressed: () => context.pop(), child: const Text('OK')),
@@ -165,7 +165,7 @@ class _ContactReviewScreenState extends State<ContactReviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     return Form(
       key: _formKey,
@@ -179,11 +179,11 @@ class _ContactReviewScreenState extends State<ContactReviewScreen> {
                 Column(
                   children: [
                     Text(
-                      i18n.contactReviewTitle,
+                      l10n.contactReviewTitle,
                       style: SecretSantaTextStyles.titleMedium,
                     ),
                     Text(
-                      i18n.contactReviewSubtitle,
+                      l10n.contactReviewSubtitle,
                       style: SecretSantaTextStyles.body,
                     ),
                   ],
@@ -201,7 +201,7 @@ class _ContactReviewScreenState extends State<ContactReviewScreen> {
                   onTap: _onConfirm,
                   isLoading: _isCreating,
                   icon: Icons.check,
-                  title: i18n.confirmButton(_items.length),
+                  title: l10n.confirmButton(_items.length),
                 ),
               ],
             ),

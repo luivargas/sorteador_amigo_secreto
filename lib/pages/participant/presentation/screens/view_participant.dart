@@ -19,7 +19,7 @@ import 'package:sorteador_amigo_secreto/pages/participant/domain/entities/update
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/presentation/cubit/participant_state.dart';
 import 'package:sorteador_amigo_secreto/pages/participant/widgets/view_participant_form_fields.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 
 class ViewParticipant extends StatefulWidget {
@@ -50,19 +50,19 @@ class _ViewParticipant extends State<ViewParticipant> {
   }
 
   Future<void> _onResendEmail(BuildContext context) async {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     if (_hasEmail == false) {
       await AppAlert.showAlertDialog(
         context,
-        title: i18n.validatorInvalidEmail,
-        message: i18n.resendEmailInvalid,
+        title: l10n.validatorInvalidEmail,
+        message: l10n.resendEmailInvalid,
         actions: [
           TextButton(
             onPressed: () {
               context.pop(false);
             },
-            child: Text(i18n.ok),
+            child: Text(l10n.ok),
           ),
         ],
       );
@@ -71,20 +71,20 @@ class _ViewParticipant extends State<ViewParticipant> {
     if (context.mounted) {
       final confirmed = await AppAlert.showAlertDialog(
         context,
-        title: i18n.resendEmail,
-        message: i18n.resendEmailSubtitle,
+        title: l10n.resendEmail,
+        message: l10n.resendEmailSubtitle,
         actions: [
           TextButton(
             onPressed: () => context.pop(false),
             child: Text(
-              i18n.cancel,
+              l10n.cancel,
               style: const TextStyle(color: SecretSantaColors.accent2),
             ),
           ),
           TextButton(
             onPressed: () => context.pop(true),
             child: Text(
-              i18n.resendEmail,
+              l10n.resendEmail,
               style: const TextStyle(color: SecretSantaColors.accent),
             ),
           ),
@@ -101,18 +101,18 @@ class _ViewParticipant extends State<ViewParticipant> {
   }
 
   Future<void> _onDelete(BuildContext context) async {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
     if (role == ParticipantRole.admin.name) {
       await AppAlert.showAlertDialog(
         context,
-        title: i18n.adminCannotBeDeleted,
-        message: i18n.adminCannotBeDeleted,
+        title: l10n.adminCannotBeDeleted,
+        message: l10n.adminCannotBeDeleted,
         actions: [
           TextButton(
             onPressed: () {
               context.pop(false);
             },
-            child: Text(i18n.ok),
+            child: Text(l10n.ok),
           ),
         ],
       );
@@ -122,20 +122,20 @@ class _ViewParticipant extends State<ViewParticipant> {
     if (context.mounted) {
       final confirmed = await AppAlert.showAlertDialog(
         context,
-        title: i18n.delete,
-        message: i18n.confirmDeleteParticipant(_nameController.text),
+        title: l10n.delete,
+        message: l10n.confirmDeleteParticipant(_nameController.text),
         actions: [
           TextButton(
             onPressed: () => context.pop(false),
             child: Text(
-              i18n.cancel,
+              l10n.cancel,
               style: const TextStyle(color: SecretSantaColors.accent2),
             ),
           ),
           TextButton(
             onPressed: () => context.pop(true),
             child: Text(
-              i18n.delete,
+              l10n.delete,
               style: const TextStyle(color: SecretSantaColors.accent),
             ),
           ),
@@ -203,21 +203,21 @@ class _ViewParticipant extends State<ViewParticipant> {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: MyAppBar(
         actions: [
           IconButton(
             onPressed: () => MyBottonSheet.show(
-              title: i18n.participantOptionsTitle,
-              subTitle: i18n.participantOptionsSubtitle,
+              title: l10n.participantOptionsTitle,
+              subTitle: l10n.participantOptionsSubtitle,
               context: context,
               items: [
                 if (getIt<GroupSession>().isRaffled)
                   AppListCard(
-                    title: i18n.resendEmail,
-                    subtitle: i18n.resendEmailSubtitle,
+                    title: l10n.resendEmail,
+                    subtitle: l10n.resendEmailSubtitle,
                     color: SecretSantaColors.accent,
                     icon: Icons.email_rounded,
                     name: '',
@@ -232,8 +232,8 @@ class _ViewParticipant extends State<ViewParticipant> {
                   ),
                 if (!getIt<GroupSession>().isRaffled)
                   AppListCard(
-                    title: i18n.deleteParticipant,
-                    subtitle: i18n.deleteParticipantSubtitle,
+                    title: l10n.deleteParticipant,
+                    subtitle: l10n.deleteParticipantSubtitle,
                     color: SecretSantaColors.error,
                     icon: Icons.delete_outline,
                     name: '',
@@ -272,7 +272,7 @@ class _ViewParticipant extends State<ViewParticipant> {
               if (state.updated) {
                 AppAlert.showBanner(
                   context,
-                  message: i18n.participantUpdatedSuccess(_nameController.text),
+                  message: l10n.participantUpdatedSuccess(_nameController.text),
                   type: AlertType.success,
                 );
                 if (context.mounted) {
@@ -282,7 +282,7 @@ class _ViewParticipant extends State<ViewParticipant> {
               if (state.deleted) {
                 AppAlert.showBanner(
                   context,
-                  message: i18n.participantDeletedSuccess(_nameController.text),
+                  message: l10n.participantDeletedSuccess(_nameController.text),
                   type: AlertType.success,
                 );
                 if (context.mounted) {
@@ -292,7 +292,7 @@ class _ViewParticipant extends State<ViewParticipant> {
               if (state.resended) {
                 AppAlert.showBanner(
                   context,
-                  message: i18n.resendEmailSuccess(_nameController.text),
+                  message: l10n.resendEmailSuccess(_nameController.text),
                   type: AlertType.success,
                 );
                 if (context.mounted) {
@@ -318,12 +318,12 @@ class _ViewParticipant extends State<ViewParticipant> {
                       Column(
                         children: [
                           Text(
-                            i18n.participantTitle,
+                            l10n.participantTitle,
                             style: SecretSantaTextStyles.titleMedium,
                             textAlign: TextAlign.center,
                           ),
                           Text(
-                            i18n.participantSubtitle,
+                            l10n.participantSubtitle,
                             style: TextStyle(),
                             textAlign: TextAlign.center,
                           ),
@@ -338,7 +338,7 @@ class _ViewParticipant extends State<ViewParticipant> {
                       ),
                       MyGradientButton(
                         onTap: _onSubmit,
-                        title: i18n.save,
+                        title: l10n.save,
                         icon: Icons.save,
                       ),
                     ],

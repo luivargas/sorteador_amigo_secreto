@@ -13,6 +13,7 @@ import 'package:sorteador_amigo_secreto/core/ui/components/app_list_card.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_botton_sheet.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/my_gradient_button.dart';
 import 'package:sorteador_amigo_secreto/core/ui/components/screen_padding.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/injector/injector.dart';
 import 'package:sorteador_amigo_secreto/pages/group/data/model/group_model.dart';
 import 'package:sorteador_amigo_secreto/pages/group/domain/session/group_session.dart';
@@ -22,7 +23,6 @@ import 'package:sorteador_amigo_secreto/pages/group/presentation/navigation/show
 import 'package:sorteador_amigo_secreto/pages/group/presentation/widgets/view_group/view_group_card.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:sorteador_amigo_secreto/i18n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 class ViewGroup extends StatefulWidget {
@@ -97,25 +97,25 @@ class _ViewGroupBody extends State<ViewGroup> {
   }
 
   Future<void> _onDelete(BuildContext context) async {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
     if (context.mounted) {
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (_) => AlertDialog(
-          title: Text(i18n.delete),
-          content: Text(i18n.confirmDeleteGroup(widget.name ?? '')),
+          title: Text(l10n.delete),
+          content: Text(l10n.confirmDeleteGroup(widget.name ?? '')),
           actions: [
             TextButton(
               onPressed: () => context.pop(false),
               child: Text(
-                i18n.cancel,
+                l10n.cancel,
                 style: const TextStyle(color: SecretSantaColors.accent2),
               ),
             ),
             TextButton(
               onPressed: () => context.pop(true),
               child: Text(
-                i18n.delete,
+                l10n.delete,
                 style: const TextStyle(color: SecretSantaColors.accent),
               ),
             ),
@@ -138,7 +138,7 @@ class _ViewGroupBody extends State<ViewGroup> {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     return PopScope(
       canPop: false,
@@ -152,15 +152,15 @@ class _ViewGroupBody extends State<ViewGroup> {
               actions: [
                 IconButton(
                   onPressed: () => MyBottonSheet.show(
-                    title: i18n.groupOptionsTitle,
-                    subTitle: i18n.groupActions,
+                    title: l10n.groupOptionsTitle,
+                    subTitle: l10n.groupActions,
                     context: context,
                     group: group,
                     items: [
                       if (!getIt<GroupSession>().isRaffled) ...[
                         AppListCard(
-                          title: i18n.shareGroup,
-                          subtitle: i18n.shareGroupSubtitle,
+                          title: l10n.shareGroup,
+                          subtitle: l10n.shareGroupSubtitle,
                           color: SecretSantaColors.accent,
                           icon: Icons.share,
                           name: '',
@@ -175,8 +175,8 @@ class _ViewGroupBody extends State<ViewGroup> {
                         ),
                       ],
                       AppListCard(
-                        title: i18n.edit,
-                        subtitle: i18n.editGroupSubtitle2,
+                        title: l10n.edit,
+                        subtitle: l10n.editGroupSubtitle2,
                         color: SecretSantaColors.accent2,
                         icon: Icons.edit,
                         name: '',
@@ -190,8 +190,8 @@ class _ViewGroupBody extends State<ViewGroup> {
                         },
                       ),
                       AppListCard(
-                        title: i18n.deleteGroup,
-                        subtitle: i18n.deleteGroupSubtitle,
+                        title: l10n.deleteGroup,
+                        subtitle: l10n.deleteGroupSubtitle,
                         color: SecretSantaColors.error,
                         icon: Icons.delete_outline,
                         name: '',
@@ -220,18 +220,18 @@ class _ViewGroupBody extends State<ViewGroup> {
                     (!previous.logout && current.logout),
                 listener: (context, state) async {
                   if (state.logout) {
-                    final i18n = AppLocalizations.of(context)!;
+                    final l10n = AppLocalizations.of(context)!;
                     await AppAlert.showAlertDialog(
                       context,
-                      title: i18n.errorTitle,
-                      message: i18n.errorUnauthorized,
+                      title: l10n.errorTitle,
+                      message: l10n.errorUnauthorized,
                       actions: [
                         TextButton(
                           onPressed: () {
                             context.pop();
                             context.goNamed('request_token');
                           },
-                          child: Text(i18n.ok),
+                          child: Text(l10n.ok),
                         ),
                       ],
                     );
@@ -286,12 +286,12 @@ class _ViewGroupBody extends State<ViewGroup> {
                         const SizedBox(height: 16),
                         ViewGroupCard(
                           type: type,
-                          eventLocation: g.location ?? i18n.notDefined,
+                          eventLocation: g.location ?? l10n.notDefined,
                           minGiftValue: g.minGiftValue ?? "00,00",
                           maxGiftValue: g.maxGiftValue ?? "00,00",
                           eventDate: _formatDate(g.drawDate),
                           eventTime: g.drawDate?.split(' ').last ?? "--:--",
-                          groupDescription: g.description ?? i18n.noDescription,
+                          groupDescription: g.description ?? l10n.noDescription,
                           participants: g.participants.length,
                           participantsList: g.participants,
                         ),
@@ -300,7 +300,7 @@ class _ViewGroupBody extends State<ViewGroup> {
                           if (g.participants.length >= 2)
                             MyGradientButton(
                               onTap: () => _onSubmit(g.code),
-                              title: i18n.drawButton,
+                              title: l10n.drawButton,
                               icon: Icons.draw,
                             )
                           else
@@ -354,12 +354,12 @@ class _ViewGroupBody extends State<ViewGroup> {
                                 duration: 700.ms,
                               ),
                               Text(
-                                i18n.raffleCompleted,
+                                l10n.raffleCompleted,
                                 style: SecretSantaTextStyles.titleSmall,
                                 textAlign: TextAlign.center,
                               ),
                               Text(
-                                i18n.raffleCompletedMessage,
+                                l10n.raffleCompletedMessage,
                                 style: SecretSantaTextStyles.bodySmall.copyWith(
                                   color: SecretSantaColors.neutral500,
                                 ),
@@ -513,7 +513,7 @@ class _WhatsAppCard extends StatelessWidget {
       );
     }
 
-    final i18n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     return InkWell(
       splashColor: SecretSantaColors.whatsApp.withValues(alpha: 0.2),
@@ -523,21 +523,20 @@ class _WhatsAppCard extends StatelessWidget {
           if (context.mounted) {
             AppAlert.showAlertDialog(
               context,
-              title: 'Whatsapp Ativo',
-              message:
-                  "Compartilhe com o seu grupo o link direto no WhatsApp para receber o resultado",
+              title: l10n.whatsappActivatedTitle,
+              message: l10n.whatsappActivatedAlertMessage,
               actions: [
                 TextButton(
                   onPressed: () {
                     context.pop();
                   },
-                  child: Text("Cancelar"),
+                  child: Text(l10n.cancel),
                 ),
                 TextButton(
                   onPressed: () {
                     onShare();
                   },
-                  child: Text("Enviar"),
+                  child: Text(l10n.sendButton),
                 ),
               ],
             );
@@ -583,7 +582,7 @@ class _WhatsAppCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    i18n.whatsappPremiumTitle,
+                    l10n.whatsappPremiumTitle,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -593,8 +592,8 @@ class _WhatsAppCard extends StatelessWidget {
                   ),
                   Text(
                     !whatsAppPremium
-                        ? i18n.whatsappPremiumCardSubtitle
-                        : "Plano ativado",
+                        ? l10n.whatsappPremiumCardSubtitle
+                        : l10n.whatsappActivatedTitle,
                     style: TextStyle(
                       fontSize: 13,
                       color: SecretSantaColors.neutral50,
