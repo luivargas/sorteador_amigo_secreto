@@ -102,6 +102,7 @@ class _FormGroupBody extends State<CreateGroup> {
                         Text(
                           l10n.createGroupTitle,
                           style: SecretSantaTextStyles.titleMedium,
+                            textAlign: TextAlign.center,
                         ),
                         Text(l10n.createGroupSubtitle, style: TextStyle()),
                       ],

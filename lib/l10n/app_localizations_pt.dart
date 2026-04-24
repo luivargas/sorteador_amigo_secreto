@@ -701,4 +701,8 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get sendButton => 'Enviar';
+
+  @override
+  String get copyright =>
+      '© 2009–2026 Todos os direitos reservados.\nSorteador.com.br';
 }

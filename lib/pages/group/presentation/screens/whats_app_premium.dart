@@ -43,19 +43,10 @@ class WhatsappPremiumView extends StatelessWidget {
                 child: Column(
                   spacing: SecretSantaSpacing.sm,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(SecretSantaSpacing.sm),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(
-                          SecretSantaRadius.md,
-                        ),
-                      ),
-                      child: const FaIcon(
-                        FontAwesomeIcons.whatsapp,
-                        color: Colors.white,
-                        size: 28,
-                      ),
+                    const FaIcon(
+                      FontAwesomeIcons.whatsapp,
+                      color: Colors.white,
+                      size: 35,
                     ),
                     Text(
                       l10n.whatsappPremiumTitle,

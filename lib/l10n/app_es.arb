@@ -294,5 +294,7 @@
   "whatsappPremiumCardSubtitle": "Resultado por WhatsApp",
   "whatsappActivatedTitle": "WhatsApp activado en este grupo.",
   "whatsappActivatedAlertMessage": "Comparte este enlace de WhatsApp con los participantes. Cada persona debe enviar un mensaje usando el número que registró para recibir el nombre de su amigo secreto.",
-  "sendButton": "Enviar"
+  "sendButton": "Enviar",
+
+  "copyright": "© 2009–2026 Todos los derechos reservados.\nSorteador.com.br"
 }

@@ -420,6 +420,7 @@ class _ContactListState extends State<ContactList> with WidgetsBindingObserver {
                     Text(
                       l10n.contactsTitle,
                       style: SecretSantaTextStyles.titleMedium,
+                            textAlign: TextAlign.center,
                     ),
                     Text(
                       l10n.contactsSubtitle,

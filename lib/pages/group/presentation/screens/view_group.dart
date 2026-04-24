@@ -561,19 +561,11 @@ class _WhatsAppCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Container(
-              height: 52,
-              width: 52,
-              decoration: BoxDecoration(
-                color: SecretSantaColors.neutral50,
-                borderRadius: BorderRadius.circular(SecretSantaRadius.md),
-              ),
-              child: Center(
-                child: FaIcon(
-                  FontAwesomeIcons.whatsapp,
-                  color: Color(0xFF25D366), // verde do WhatsApp
-                  size: 35,
-                ),
+            Center(
+              child: FaIcon(
+                FontAwesomeIcons.whatsapp,
+                color: SecretSantaColors.neutral50, // verde do WhatsApp
+                size: 35,
               ),
             ),
             const SizedBox(width: 14),

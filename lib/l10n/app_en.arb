@@ -294,5 +294,7 @@
   "whatsappPremiumCardSubtitle": "Results via WhatsApp",
   "whatsappActivatedTitle": "WhatsApp activated in this group.",
   "whatsappActivatedAlertMessage": "Share this WhatsApp link with the participants. Each person must send a message using the phone number they registered to receive their secret friend's name.",
-  "sendButton": "Send"
+  "sendButton": "Send",
+
+  "copyright": "© 2009–2026 All rights reserved.\nSorteador.com.br"
 }

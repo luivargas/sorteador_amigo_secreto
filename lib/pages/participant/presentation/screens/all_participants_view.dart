@@ -133,6 +133,7 @@ class _AllParticipantsViewState extends State<AllParticipantsView> {
                         child: Text(
                           l10n.allParticipantsList,
                           style: SecretSantaTextStyles.titleMedium,
+                            textAlign: TextAlign.center,
                         ),
                       ),
                       ColoredBox(

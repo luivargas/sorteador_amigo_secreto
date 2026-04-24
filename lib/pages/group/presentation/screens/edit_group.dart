@@ -202,6 +202,7 @@ class _EditGroup extends State<EditGroup> {
                           Text(
                             l10n.editGroupTitle,
                             style: SecretSantaTextStyles.titleMedium,
+                            textAlign: TextAlign.center,
                           ),
                           Text(
                             l10n.editGroupSubtitle,

@@ -181,6 +181,7 @@ class _ContactReviewScreenState extends State<ContactReviewScreen> {
                     Text(
                       l10n.contactReviewTitle,
                       style: SecretSantaTextStyles.titleMedium,
+                            textAlign: TextAlign.center,
                     ),
                     Text(
                       l10n.contactReviewSubtitle,

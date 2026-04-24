@@ -63,190 +63,219 @@ class _ValidateTokenScreenState extends State<ValidateTokenScreen> {
       child: Form(
         key: _formKey,
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: MyAppBar(),
           body: ScreenPadding(
-            child: SingleChildScrollView(
-              child: BlocBuilder<AuthCubit, AuthState>(
-                builder: (context, state) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    spacing: SecretSantaSpacing.lg,
-                    children: [
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 400),
-                        child: _success
-                            ? Icon(
-                                Icons.check_circle,
-                                size: 100,
-                                color: SecretSantaColors.success,
-                                key: const ValueKey('check'),
-                              ).animate().scale(
-                                begin: const Offset(0.5, 0.5),
-                                curve: Curves.elasticOut,
-                                duration: 600.ms,
-                              )
-                            : const Icon(
-                                Icons.email,
-                                size: 100,
-                                key: ValueKey('email'),
-                              ),
-                      ),
-                      if (state.error != null)
-                        Text(
-                          state.error!.localize(context),
-                          style: TextStyle(color: SecretSantaColors.error),
-                          textAlign: TextAlign.center,
-                        ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            l10n.almostThereTitle,
-                            style: SecretSantaTextStyles.titleLarge,
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            l10n.almostThereSubtitle,
-                            style: SecretSantaTextStyles.bodySmall,
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                      MyEmailFormField(
-                            controller: _emailController,
-                            readOnly: true,
-                          )
-                          .animate()
-                          .fadeIn(duration: 400.ms)
-                          .slideX(begin: 0.2, curve: Curves.easeOut),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: SecretSantaCard(
-                              color: SecretSantaColors.neutral50,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  top: SecretSantaSpacing.xl,
-                                ),
-                                child: Column(
-                                  spacing: SecretSantaSpacing.lg,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 10.0,
-                                      ),
-                                      child: SingleChildScrollView(
-                                        scrollDirection: Axis.horizontal,
-                                        child: Builder(
-                                          builder: (context) {
-                                            final pinField =
-                                                MaterialPinField(
-                                                  pinController:
-                                                      _tokenController,
-                                                  length: 6,
-                                                  theme: MaterialPinTheme(
-                                                    cursorColor:
-                                                        SecretSantaColors
-                                                            .neutral50,
-                                                    completeBorderColor:
-                                                        SecretSantaColors
-                                                            .accent2,
-                                                    filledFillColor:
-                                                        SecretSantaColors
-                                                            .neutral50,
-                                                    filledBorderColor:
-                                                        SecretSantaColors
-                                                            .accent2,
-                                                    fillColor: SecretSantaColors
-                                                        .neutral50,
-                                                    textStyle:
-                                                        SecretSantaTextStyles
-                                                            .pinField,
-                                                    shape: MaterialPinShape
-                                                        .outlined,
-                                                    spacing:
-                                                        SecretSantaSpacing.sm,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          SecretSantaRadius.md,
-                                                        ),
-                                                    borderColor:
-                                                        SecretSantaColors
-                                                            .accent,
-                                                    entryAnimation:
-                                                        MaterialPinAnimation
-                                                            .scale,
-                                                  ),
-                                                  errorBuilder: (errorText) =>
-                                                      Container(
-                                                        padding: EdgeInsets.all(
-                                                          SecretSantaSpacing.xs,
-                                                        ),
-                                                        child: Row(
-                                                          children: [
-                                                            Icon(
-                                                              Icons.error,
-                                                              color: Colors.red,
-                                                              size: 16,
-                                                            ),
-                                                            SizedBox(width: 8),
-                                                            Text(
-                                                              errorText ?? '',
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                  onCompleted: (value) async {
-                                                    await _onSubmit(value);
-                                                  },
-                                                ).animate().fadeIn(
-                                                  delay: 150.ms,
-                                                  duration: 400.ms,
-                                                );
-                                            return state.error != null
-                                                ? pinField
-                                                      .animate(
-                                                        key: ValueKey(
-                                                          state.error,
-                                                        ),
-                                                      )
-                                                      .shake(
-                                                        duration: 400.ms,
-                                                        hz: 4,
-                                                      )
-                                                : pinField;
-                                          },
-                                        ),
-                                      ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: BlocBuilder<AuthCubit, AuthState>(
+                      builder: (context, state) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          spacing: SecretSantaSpacing.lg,
+                          children: [
+                            AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 400),
+                              child: _success
+                                  ? Icon(
+                                      Icons.check_circle,
+                                      size: 100,
+                                      color: SecretSantaColors.success,
+                                      key: const ValueKey('check'),
+                                    ).animate().scale(
+                                      begin: const Offset(0.5, 0.5),
+                                      curve: Curves.elasticOut,
+                                      duration: 600.ms,
+                                    )
+                                  : const Icon(
+                                      Icons.email,
+                                      size: 100,
+                                      key: ValueKey('email'),
                                     ),
-                                    TextButton.icon(
-                                      onPressed: () async {
-                                        final data = await Clipboard.getData(
-                                          Clipboard.kTextPlain,
-                                        );
-                                        final text = data?.text?.trim() ?? '';
-                                        if (text.length == 6) {
-                                          _tokenController.text = text;
-                                          await _onSubmit(text);
-                                        }
-                                      },
-                                      icon: const Icon(Icons.content_paste),
-                                      label: Text(l10n.pasteCode),
-                                    ),
-                                  ],
-                                ),
-                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      if (state.isLoading) ...[
-                        Center(child: CircularProgressIndicator()),
-                      ],
-                    ],
-                  );
-                },
-              ),
+                            if (state.error != null)
+                              Text(
+                                state.error!.localize(context),
+                                style: TextStyle(
+                                  color: SecretSantaColors.error,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  l10n.almostThereTitle,
+                                  style: SecretSantaTextStyles.titleLarge,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  l10n.almostThereSubtitle,
+                                  style: SecretSantaTextStyles.bodySmall,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                            MyEmailFormField(
+                                  controller: _emailController,
+                                  readOnly: true,
+                                )
+                                .animate()
+                                .fadeIn(duration: 400.ms)
+                                .slideX(begin: 0.2, curve: Curves.easeOut),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: SecretSantaCard(
+                                    color: SecretSantaColors.neutral50,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: SecretSantaSpacing.xl,
+                                      ),
+                                      child: Column(
+                                        spacing: SecretSantaSpacing.lg,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 10.0,
+                                            ),
+                                            child: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: Builder(
+                                                builder: (context) {
+                                                  final pinField =
+                                                      MaterialPinField(
+                                                        pinController:
+                                                            _tokenController,
+                                                        length: 6,
+                                                        theme: MaterialPinTheme(
+                                                          cursorColor:
+                                                              SecretSantaColors
+                                                                  .neutral50,
+                                                          completeBorderColor:
+                                                              SecretSantaColors
+                                                                  .accent2,
+                                                          filledFillColor:
+                                                              SecretSantaColors
+                                                                  .neutral50,
+                                                          filledBorderColor:
+                                                              SecretSantaColors
+                                                                  .accent2,
+                                                          fillColor:
+                                                              SecretSantaColors
+                                                                  .neutral50,
+                                                          textStyle:
+                                                              SecretSantaTextStyles
+                                                                  .pinField,
+                                                          shape:
+                                                              MaterialPinShape
+                                                                  .outlined,
+                                                          spacing:
+                                                              SecretSantaSpacing
+                                                                  .sm,
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                SecretSantaRadius
+                                                                    .md,
+                                                              ),
+                                                          borderColor:
+                                                              SecretSantaColors
+                                                                  .accent,
+                                                          entryAnimation:
+                                                              MaterialPinAnimation
+                                                                  .scale,
+                                                        ),
+                                                        errorBuilder:
+                                                            (
+                                                              errorText,
+                                                            ) => Container(
+                                                              padding:
+                                                                  EdgeInsets.all(
+                                                                    SecretSantaSpacing
+                                                                        .xs,
+                                                                  ),
+                                                              child: Row(
+                                                                children: [
+                                                                  Icon(
+                                                                    Icons.error,
+                                                                    color: Colors
+                                                                        .red,
+                                                                    size: 16,
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 8,
+                                                                  ),
+                                                                  Text(
+                                                                    errorText ??
+                                                                        '',
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                        onCompleted:
+                                                            (value) async {
+                                                              await _onSubmit(
+                                                                value,
+                                                              );
+                                                            },
+                                                      ).animate().fadeIn(
+                                                        delay: 150.ms,
+                                                        duration: 400.ms,
+                                                      );
+                                                  return state.error != null
+                                                      ? pinField
+                                                            .animate(
+                                                              key: ValueKey(
+                                                                state.error,
+                                                              ),
+                                                            )
+                                                            .shake(
+                                                              duration: 400.ms,
+                                                              hz: 4,
+                                                            )
+                                                      : pinField;
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          TextButton.icon(
+                                            onPressed: () async {
+                                              final data =
+                                                  await Clipboard.getData(
+                                                    Clipboard.kTextPlain,
+                                                  );
+                                              final text =
+                                                  data?.text?.trim() ?? '';
+                                              if (text.length == 6) {
+                                                _tokenController.text = text;
+                                                await _onSubmit(text);
+                                              }
+                                            },
+                                            icon: const Icon(
+                                              Icons.content_paste,
+                                            ),
+                                            label: Text(l10n.pasteCode),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            if (state.isLoading) ...[
+                              Center(child: CircularProgressIndicator()),
+                            ],
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                Text(AppLocalizations.of(context)!.copyright, style: TextStyle(fontSize: 13),textAlign: TextAlign.center,),
+              ],
             ),
           ),
         ),

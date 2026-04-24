@@ -1367,6 +1367,12 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Enviar'**
   String get sendButton;
+
+  /// No description provided for @copyright.
+  ///
+  /// In pt, this message translates to:
+  /// **'© 2009–2026 Todos os direitos reservados.\nSorteador.com.br'**
+  String get copyright;
 }
 
 class _AppLocalizationsDelegate

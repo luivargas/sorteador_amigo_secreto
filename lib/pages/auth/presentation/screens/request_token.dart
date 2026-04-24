@@ -1,4 +1,3 @@
-
 import 'package:sorteador_amigo_secreto/core/network/app_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -66,45 +65,61 @@ class _EnterGroup extends State<RequestTokenScreen> {
       child: Form(
         key: _formKey,
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: MyAppBar(),
           body: ScreenPadding(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: SecretSantaSpacing.lg,
-                children: [
-                  Column(
-                    spacing: SecretSantaSpacing.sm,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(l10n.verificationTitle, style: SecretSantaTextStyles.titleMedium,),
-                      Text(l10n.verificationSubtitle, textAlign: TextAlign.center,),
-                    ],
-                  ),
-                  MyEmailFormField(
-                        controller: _emailController,
-                        validator: (_) => ParticipantValidators.isRequiredEmailValidator(
-                          context: context,
-                          v: _emailController.text.toLowerCase(),
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: SecretSantaSpacing.lg,
+                      children: [
+                        Column(
+                          spacing: SecretSantaSpacing.sm,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              l10n.verificationTitle,
+                              style: SecretSantaTextStyles.titleMedium,
+                            textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              l10n.verificationSubtitle,
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
-                      )
-                      .animate()
-                      .fadeIn(duration: 400.ms)
-                      .slideX(begin: 0.2, curve: Curves.easeOut),
-                  BlocBuilder<AuthCubit, AuthState>(
-                        builder: (BuildContext context, AuthState state) {
-                          return MyGradientButton(
-                            onTap: _onSubmit,
-                            title: AppLocalizations.of(context)!.sendCodeButton,
-                            isLoading: state.isLoading,
-                          );
-                        },
-                      )
-                      .animate()
-                      .fadeIn(delay: 150.ms, duration: 400.ms)
-                      .slideX(begin: 0.2, curve: Curves.easeOut),
-                ],
-              ),
+                        MyEmailFormField(
+                              controller: _emailController,
+                              validator: (_) =>
+                                  ParticipantValidators.isRequiredEmailValidator(
+                                    context: context,
+                                    v: _emailController.text.toLowerCase(),
+                                  ),
+                            )
+                            .animate()
+                            .fadeIn(duration: 400.ms)
+                            .slideX(begin: 0.2, curve: Curves.easeOut),
+                        BlocBuilder<AuthCubit, AuthState>(
+                              builder: (BuildContext context, AuthState state) {
+                                return MyGradientButton(
+                                  onTap: _onSubmit,
+                                  title: AppLocalizations.of(context)!.sendCodeButton,
+                                  isLoading: state.isLoading,
+                                );
+                              },
+                            )
+                            .animate()
+                            .fadeIn(delay: 150.ms, duration: 400.ms)
+                            .slideX(begin: 0.2, curve: Curves.easeOut),
+                      ],
+                    ),
+                  ),
+                ),
+                Text(AppLocalizations.of(context)!.copyright, style: TextStyle(fontSize: 13),textAlign: TextAlign.center,),
+              ],
             ),
           ),
         ),

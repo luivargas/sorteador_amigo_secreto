@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sorteador_amigo_secreto/core/network/url/contants.dart';
 import 'package:sorteador_amigo_secreto/core/ui/app_bar/my_app_bar.dart';
+import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_cubit.dart';
 import 'package:sorteador_amigo_secreto/pages/auth/presentation/cubit/auth_state.dart';
 import 'package:sorteador_amigo_secreto/theme/flutter_theme.dart';
@@ -50,22 +51,32 @@ class _SplashScreenState extends State<SplashScreen> {
       },
       child: Scaffold(
         appBar: MyAppBar(),
-        body: BlocBuilder<AuthCubit, AuthState>(
-          builder: (context, state) {
-            return Column(
-              spacing: SecretSantaSpacing.lg,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(child: Image.asset(iconLogo, scale: 15))
-                    .animate()
-                    .fadeIn(duration: 600.ms)
-                    .slideY(begin: -0.3, curve: Curves.easeOut),
-                CircularProgressIndicator(color: SecretSantaColors.accent)
-                    .animate()
-                    .fadeIn(delay: 400.ms, duration: 400.ms),
-              ],
-            );
-          },
+        body: SafeArea(
+          child: BlocBuilder<AuthCubit, AuthState>(
+            builder: (context, state) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: SecretSantaSpacing.lg,
+                      children: [
+                        Center(child: Image.asset(iconLogo, scale: 15))
+                            .animate()
+                            .fadeIn(duration: 600.ms)
+                            .slideY(begin: -0.3, curve: Curves.easeOut),
+                        CircularProgressIndicator(color: SecretSantaColors.accent)
+                            .animate()
+                            .fadeIn(delay: 400.ms, duration: 400.ms),
+                      ],
+                    ),
+                  ),
+                  Text(AppLocalizations.of(context)!.copyright, style: TextStyle(fontSize: 13),textAlign: TextAlign.center,),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
