@@ -29,7 +29,7 @@ extension AppErrorLocalize on AppError {
       case AppError.serverError:     return l10n.errorServer;
       case AppError.timeout:         return l10n.errorTimeout;
       case AppError.noConnection:    return l10n.errorNoConnection;
-      case AppError.unknown:          return l10n.errorUnknow;
+      case AppError.unknown:          return l10n.errorUnknown;
     }
   }
 }

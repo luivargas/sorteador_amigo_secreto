@@ -395,7 +395,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get errorNoConnection => 'Sem conexão com a internet.';
 
   @override
-  String get errorUnknow => 'Ocorreu um erro inesperado. Tente novamente.';
+  String get errorUnknown => 'Ocorreu um erro inesperado. Tente novamente.';
 
   @override
   String get statusConfirmed => 'Confirmado';
@@ -552,7 +552,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get shareGroupSubtitle => 'CONVIDE NOVOS PARTICIPANTES';
 
   @override
-  String get editGroupSubtitle2 => 'ATUALISE AS INFORMAÇÕES';
+  String get editGroupSubtitle2 => 'ATUALIZE AS INFORMAÇÕES';
 
   @override
   String get deleteGroup => 'Excluir grupo';
@@ -701,6 +701,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get sendButton => 'Enviar';
+
+  @override
+  String get viewResult => 'Ver resultado';
+
+  @override
+  String get viewResultSubtitle => 'VER RESULTADO DO SORTEIO';
 
   @override
   String get copyright =>

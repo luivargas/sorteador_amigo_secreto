@@ -157,6 +157,21 @@ class _ViewGroupBody extends State<ViewGroup> {
                     context: context,
                     group: group,
                     items: [
+                      if (getIt<GroupSession>().isRaffled)
+                        AppListCard(
+                          title: l10n.viewResult,
+                          subtitle: l10n.viewResultSubtitle,
+                          color: SecretSantaColors.accent3,
+                          icon: Icons.visibility,
+                          name: '',
+                          trailing: Icon(
+                            Icons.chevron_right,
+                            color: SecretSantaColors.accent3,
+                          ),
+                          onTap: () {
+                            context.pop();
+                          },
+                        ),
                       if (!getIt<GroupSession>().isRaffled) ...[
                         AppListCard(
                           title: l10n.shareGroup,

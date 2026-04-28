@@ -397,7 +397,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get errorNoConnection => 'Sin conexión a internet.';
 
   @override
-  String get errorUnknow => 'Ocurrió un error inesperado. Intenta nuevamente.';
+  String get errorUnknown => 'Ocurrió un error inesperado. Intenta nuevamente.';
 
   @override
   String get statusConfirmed => 'Confirmado';
@@ -704,6 +704,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sendButton => 'Enviar';
+
+  @override
+  String get viewResult => 'Ver resultado';
+
+  @override
+  String get viewResultSubtitle => 'VER RESULTADO DEL SORTEO';
 
   @override
   String get copyright =>

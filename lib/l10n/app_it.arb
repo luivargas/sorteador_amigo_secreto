@@ -180,7 +180,7 @@
   "errorServer": "Errore del server. Riprova più tardi.",
   "errorTimeout": "Tempo scaduto. Controlla la connessione e riprova.",
   "errorNoConnection": "Nessuna connessione a internet.",
-  "errorUnknow": "Si è verificato un errore imprevisto. Riprova.",
+  "errorUnknown": "Si è verificato un errore imprevisto. Riprova.",
   "statusConfirmed": "Confermato",
   "statusPending": "In attesa",
   "filterAll": "Tutti",
@@ -295,6 +295,8 @@
   "whatsappActivatedTitle": "WhatsApp attivato in questo gruppo.",
   "whatsappActivatedAlertMessage": "Condividi questo link WhatsApp con i partecipanti. Ogni persona deve inviare un messaggio usando il numero che ha registrato per ricevere il nome del proprio amico segreto.",
   "sendButton": "Invia",
+  "viewResult": "Vedi risultato",
+  "viewResultSubtitle": "VISUALIZZA IL RISULTATO DELL'ESTRAZIONE",
 
   "copyright": "© 2009–2026 Tutti i diritti riservati.\nSorteador.com.br"
 }

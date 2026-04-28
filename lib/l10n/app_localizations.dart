@@ -816,11 +816,11 @@ abstract class AppLocalizations {
   /// **'Sem conexão com a internet.'**
   String get errorNoConnection;
 
-  /// No description provided for @errorUnknow.
+  /// No description provided for @errorUnknown.
   ///
   /// In pt, this message translates to:
   /// **'Ocorreu um erro inesperado. Tente novamente.'**
-  String get errorUnknow;
+  String get errorUnknown;
 
   /// No description provided for @statusConfirmed.
   ///
@@ -1101,7 +1101,7 @@ abstract class AppLocalizations {
   /// No description provided for @editGroupSubtitle2.
   ///
   /// In pt, this message translates to:
-  /// **'ATUALISE AS INFORMAÇÕES'**
+  /// **'ATUALIZE AS INFORMAÇÕES'**
   String get editGroupSubtitle2;
 
   /// No description provided for @deleteGroup.
@@ -1367,6 +1367,18 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Enviar'**
   String get sendButton;
+
+  /// No description provided for @viewResult.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ver resultado'**
+  String get viewResult;
+
+  /// No description provided for @viewResultSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'VER RESULTADO DO SORTEIO'**
+  String get viewResultSubtitle;
 
   /// No description provided for @copyright.
   ///

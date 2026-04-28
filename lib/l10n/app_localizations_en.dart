@@ -395,7 +395,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorNoConnection => 'No internet connection.';
 
   @override
-  String get errorUnknow => 'An unexpected error occurred. Please try again.';
+  String get errorUnknown => 'An unexpected error occurred. Please try again.';
 
   @override
   String get statusConfirmed => 'Confirmed';
@@ -699,6 +699,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sendButton => 'Send';
+
+  @override
+  String get viewResult => 'View result';
+
+  @override
+  String get viewResultSubtitle => 'VIEW RAFFLE RESULT';
 
   @override
   String get copyright => '© 2009–2026 All rights reserved.\nSorteador.com.br';

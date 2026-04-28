@@ -397,7 +397,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get errorNoConnection => 'Nessuna connessione a internet.';
 
   @override
-  String get errorUnknow => 'Si è verificato un errore imprevisto. Riprova.';
+  String get errorUnknown => 'Si è verificato un errore imprevisto. Riprova.';
 
   @override
   String get statusConfirmed => 'Confermato';
@@ -704,6 +704,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get sendButton => 'Invia';
+
+  @override
+  String get viewResult => 'Vedi risultato';
+
+  @override
+  String get viewResultSubtitle => 'VISUALIZZA IL RISULTATO DELL\'ESTRAZIONE';
 
   @override
   String get copyright =>

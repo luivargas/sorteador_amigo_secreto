@@ -177,7 +177,7 @@
   "errorServer": "Erro no servidor. Tente novamente mais tarde.",
   "errorTimeout": "Tempo limite excedido. Verifique sua internet e tente novamente.",
   "errorNoConnection": "Sem conexão com a internet.",
-  "errorUnknow": "Ocorreu um erro inesperado. Tente novamente.",
+  "errorUnknown": "Ocorreu um erro inesperado. Tente novamente.",
   "statusConfirmed": "Confirmado",
   "statusPending": "Pendente",
   "filterAll": "Todos",
@@ -236,7 +236,7 @@
   "adminCannotBeDeleted": "O administrador do grupo não pode ser excluído.",
   "groupActions": "Gerencie este grupo e suas configurações",
   "shareGroupSubtitle": "CONVIDE NOVOS PARTICIPANTES",
-  "editGroupSubtitle2": "ATUALISE AS INFORMAÇÕES",
+  "editGroupSubtitle2": "ATUALIZE AS INFORMAÇÕES",
   "deleteGroup": "Excluir grupo",
   "deleteGroupSubtitle": "EXCLUIR GRUPO PERMANENTEMENTE",
   "raffleCompleted": "Sorteio realizado!",
@@ -294,6 +294,8 @@
   "whatsappActivatedTitle": "WhatsApp ativado neste grupo.",
   "whatsappActivatedAlertMessage": "Compartilhe este link do WhatsApp com os participantes. Cada pessoa deve enviar uma mensagem usando o número que cadastrou para receber o nome do seu amigo secreto.",
   "sendButton": "Enviar",
+  "viewResult": "Ver resultado",
+  "viewResultSubtitle": "VER RESULTADO DO SORTEIO",
 
   "copyright": "© 2009–2026 Todos os direitos reservados.\nSorteador.com.br"
 }

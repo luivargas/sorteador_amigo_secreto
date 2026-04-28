@@ -177,7 +177,7 @@
   "errorServer": "Server error. Please try again later.",
   "errorTimeout": "Request timed out. Check your internet connection and try again.",
   "errorNoConnection": "No internet connection.",
-  "errorUnknow": "An unexpected error occurred. Please try again.",
+  "errorUnknown": "An unexpected error occurred. Please try again.",
   "statusConfirmed": "Confirmed",
   "statusPending": "Pending",
   "filterAll": "All",
@@ -295,6 +295,8 @@
   "whatsappActivatedTitle": "WhatsApp activated in this group.",
   "whatsappActivatedAlertMessage": "Share this WhatsApp link with the participants. Each person must send a message using the phone number they registered to receive their secret friend's name.",
   "sendButton": "Send",
+  "viewResult": "View result",                                                                                          
+  "viewResultSubtitle": "VIEW RAFFLE RESULT",
 
   "copyright": "© 2009–2026 All rights reserved.\nSorteador.com.br"
 }
