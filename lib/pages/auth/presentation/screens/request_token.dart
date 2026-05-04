@@ -96,7 +96,7 @@ class _EnterGroup extends State<RequestTokenScreen> {
                               validator: (_) =>
                                   ParticipantValidators.isRequiredEmailValidator(
                                     context: context,
-                                    v: _emailController.text.toLowerCase(),
+                                    v: _emailController.text.toLowerCase().trim(),
                                   ),
                             )
                             .animate()

@@ -63,7 +63,7 @@ class _LogoutScreenState extends State<LogoutScreen> {
                       ),
                     ),
                     const SizedBox(height: 12),
-        
+                    
                     // Título
                     Text(
                       l10n.logoutTitle,
@@ -73,7 +73,7 @@ class _LogoutScreenState extends State<LogoutScreen> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 12),
-        
+                    
                     // Subtítulo
                     Text(
                       l10n.logoutSubtitle,
@@ -83,7 +83,7 @@ class _LogoutScreenState extends State<LogoutScreen> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 32),
-        
+                    
                     // Botão principal
                     MyGradientButton(
                       onTap: _onLogout,
@@ -92,7 +92,7 @@ class _LogoutScreenState extends State<LogoutScreen> {
                       isLoading: _isLoading,
                     ),
                     const SizedBox(height: 8),
-        
+                    
                     // Divisor com cadeado
                     Row(
                       children: [

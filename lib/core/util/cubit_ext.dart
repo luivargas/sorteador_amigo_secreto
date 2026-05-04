@@ -8,3 +8,4 @@ extension CubitExt<T> on Cubit<T> {
     }
   }
 }
+

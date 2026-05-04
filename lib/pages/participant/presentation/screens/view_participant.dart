@@ -105,7 +105,7 @@ class _ViewParticipant extends State<ViewParticipant> {
     if (role == ParticipantRole.admin.name) {
       await AppAlert.showAlertDialog(
         context,
-        title: l10n.adminCannotBeDeleted,
+        title: l10n.delete,
         message: l10n.adminCannotBeDeleted,
         actions: [
           TextButton(

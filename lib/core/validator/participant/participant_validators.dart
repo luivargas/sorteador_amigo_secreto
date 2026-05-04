@@ -37,7 +37,7 @@ class ParticipantValidators {
     }
 
     if ( !emailEmpty) { 
-      return isValidEmail(context: context, v: email);
+      return isValidEmail(context: context, v: email.trim());
     }
     return null;
   }
@@ -49,7 +49,7 @@ class ParticipantValidators {
     if (v == null || v.trim().isEmpty) {
       return AppLocalizations.of(context)!.validatorEnterEmail;
     }
-    return isValidEmail(context: context, v: v);
+    return isValidEmail(context: context, v: v.trim());
   }
 
   static IsoCode? isoCodeFromPhone(Phone phone) {
