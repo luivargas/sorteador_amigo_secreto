@@ -13,27 +13,25 @@ class AuthDB {
 
   String? get email => prefs.getString(_keyEmail);
 
-  Future<void> saveEmail(String value) async => await prefs.setString(_keyEmail.toLowerCase(), value);
+  Future<void> saveEmail(String value) async =>
+      await prefs.setString(_keyEmail.toLowerCase(), value);
 
   String? get token => prefs.getString(_keyToken);
 
-  Future<void> saveToken(String value) async => await prefs.setString(_keyToken, value);
+  Future<void> saveToken(String value) async =>
+      await prefs.setString(_keyToken, value);
 
   DeviceData? get device {
     final name = prefs.getString(_keyDeviceName);
     final model = prefs.getString(_keyDeviceModel);
     if (name == null || model == null) return null;
-    return DeviceData(
-      name: name,
-      model: model,
-    );
+    return DeviceData(name: name, model: model);
   }
 
   Future<void> saveDevice(DeviceData data) async {
     await prefs.setString(_keyDeviceName, data.name);
     await prefs.setString(_keyDeviceModel, data.model);
   }
-
 
   bool get isAuthenticated => email != null && token != null;
 

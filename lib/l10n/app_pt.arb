@@ -90,7 +90,7 @@
   "addParticipantButton": "Adicionar participante",
 
   "allParticipantsList": "Todos os Participantes",
-  "participantsSubtitle": "{count} pessoas cadastradas ao grupo",
+  "participantsSubtitle": "Pessoas cadastradas no grupo: {count}",
   "@participantsSubtitle": {
     "placeholders": { "count": { "type": "int" } }
   },
@@ -290,7 +290,9 @@
   "whatsappPremiumUpdatePanel": "Atualizar Painel",
   "whatsappPremiumContractButton": "Contratar WhatsApp – R$ 5,99",
   "whatsappPremiumAlreadyPaidButton": "Já paguei – Atualizar Painel",
-  "whatsappPremiumCardSubtitle": "Resultado por WhatsApp",
+  "whatsappPremiumCardSubtitle": "Resultado no WhatsApp",
+  "whatsappPremiumAlertStart": "O recebimento do resultado via WhatsApp é exclusivo para Grupos Premium",
+  "whatsappPremiumAlertEnd": "Para receber o resultado do amigo secreto no WhatsApp, é necessário que o grupo tenha o plano Premium ativo e que os participantes enviem uma mensagem para o nosso robô após o sorteio.",
   "whatsappActivatedTitle": "WhatsApp ativado neste grupo.",
   "whatsappActivatedAlertMessage": "Compartilhe este link do WhatsApp com os participantes. Cada pessoa deve enviar uma mensagem usando o número que cadastrou para receber o nome do seu amigo secreto.",
   "sendButton": "Enviar",

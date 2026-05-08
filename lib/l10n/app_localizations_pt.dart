@@ -194,7 +194,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String participantsSubtitle(int count) {
-    return '$count pessoas cadastradas ao grupo';
+    return 'Pessoas cadastradas no grupo: $count';
   }
 
   @override
@@ -690,7 +690,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get whatsappPremiumAlreadyPaidButton => 'Já paguei – Atualizar Painel';
 
   @override
-  String get whatsappPremiumCardSubtitle => 'Resultado por WhatsApp';
+  String get whatsappPremiumCardSubtitle => 'Resultado no WhatsApp';
+
+  @override
+  String get whatsappPremiumAlertStart =>
+      'O recebimento do resultado via WhatsApp é exclusivo para Grupos Premium';
+
+  @override
+  String get whatsappPremiumAlertEnd =>
+      'Para receber o resultado do amigo secreto no WhatsApp, é necessário que o grupo tenha o plano Premium ativo e que os participantes enviem uma mensagem para o nosso robô após o sorteio.';
 
   @override
   String get whatsappActivatedTitle => 'WhatsApp ativado neste grupo.';

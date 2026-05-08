@@ -18,18 +18,23 @@ List<RouteBase> participantRoutes = [
     name: 'contacts',
     path: '/contacts',
     builder: (BuildContext context, GoRouterState state) {
-      return ContactList(
-      );
+      return ContactList();
     },
   ),
   GoRoute(
     name: 'create_part',
     path: '/create_part',
     builder: (BuildContext context, GoRouterState state) {
-      return BlocProvider<ParticipantCubit>(
-        create: (_) => getIt<ParticipantCubit>(),
-        child: CreateParticipant(
-        ),
+      final session = getIt<GroupSession>();
+      return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) =>
+                getIt<GroupCubit>()..show(session.code, session.token),
+          ),
+          BlocProvider(create: (_) => getIt<ParticipantCubit>()),
+        ],
+        child: CreateParticipant(),
       );
     },
   ),
@@ -63,12 +68,12 @@ List<RouteBase> participantRoutes = [
       );
     },
   ),
-    GoRoute(                                                                                                              
-    name: 'contact_review',                                                                                             
+  GoRoute(
+    name: 'contact_review',
     path: '/contact_review',
-    builder: (context, state) {                                                                                         
-      final args = state.extra as ContactReviewArgs;                                                                  
+    builder: (context, state) {
+      final args = state.extra as ContactReviewArgs;
       return ContactReviewScreen(args: args);
-    },                                                                                                                  
+    },
   ),
 ];

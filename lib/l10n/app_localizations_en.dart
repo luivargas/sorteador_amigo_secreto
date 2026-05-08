@@ -194,7 +194,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String participantsSubtitle(int count) {
-    return '$count people registered in the group';
+    return 'People registered in the group: $count';
   }
 
   @override
@@ -688,7 +688,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get whatsappPremiumAlreadyPaidButton => 'Already paid – Update Panel';
 
   @override
-  String get whatsappPremiumCardSubtitle => 'Results via WhatsApp';
+  String get whatsappPremiumCardSubtitle => 'Result on WhatsApp';
+
+  @override
+  String get whatsappPremiumAlertStart =>
+      'Receiving results via WhatsApp is exclusive to Premium Groups';
+
+  @override
+  String get whatsappPremiumAlertEnd =>
+      'To receive the secret santa result on WhatsApp, the group must have an active Premium plan and participants must send a message to our bot after the draw.';
 
   @override
   String get whatsappActivatedTitle => 'WhatsApp activated in this group.';

@@ -424,6 +424,7 @@ class _GroupHeroHeader extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(SecretSantaRadius.xxl),
       child: Stack(
+        alignment: AlignmentGeometry.center,
         children: [
           Container(
             width: double.infinity,
@@ -449,7 +450,6 @@ class _GroupHeroHeader extends StatelessWidget {
                     color: SecretSantaColors.neutral50,
                   ),
                   overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
                 ),
               ],
             ),
@@ -579,7 +579,7 @@ class _WhatsAppCard extends StatelessWidget {
             Center(
               child: FaIcon(
                 FontAwesomeIcons.whatsapp,
-                color: SecretSantaColors.neutral50, // verde do WhatsApp
+                color: SecretSantaColors.neutral50,
                 size: 35,
               ),
             ),

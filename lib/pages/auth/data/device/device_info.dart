@@ -18,7 +18,6 @@ class DeviceData {
         'model': model,
       };
 
-  /// Formato enviado para a API no campo "device"
   String toDeviceString() =>
       '$model | $name${deviceId != null ? ' | $deviceId' : ''}';
 }

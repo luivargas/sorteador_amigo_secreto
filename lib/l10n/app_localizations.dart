@@ -447,7 +447,7 @@ abstract class AppLocalizations {
   /// No description provided for @participantsSubtitle.
   ///
   /// In pt, this message translates to:
-  /// **'{count} pessoas cadastradas ao grupo'**
+  /// **'Pessoas cadastradas no grupo: {count}'**
   String participantsSubtitle(int count);
 
   /// No description provided for @viewAll.
@@ -1347,8 +1347,20 @@ abstract class AppLocalizations {
   /// No description provided for @whatsappPremiumCardSubtitle.
   ///
   /// In pt, this message translates to:
-  /// **'Resultado por WhatsApp'**
+  /// **'Resultado no WhatsApp'**
   String get whatsappPremiumCardSubtitle;
+
+  /// No description provided for @whatsappPremiumAlertStart.
+  ///
+  /// In pt, this message translates to:
+  /// **'O recebimento do resultado via WhatsApp é exclusivo para Grupos Premium'**
+  String get whatsappPremiumAlertStart;
+
+  /// No description provided for @whatsappPremiumAlertEnd.
+  ///
+  /// In pt, this message translates to:
+  /// **'Para receber o resultado do amigo secreto no WhatsApp, é necessário que o grupo tenha o plano Premium ativo e que os participantes enviem uma mensagem para o nosso robô após o sorteio.'**
+  String get whatsappPremiumAlertEnd;
 
   /// No description provided for @whatsappActivatedTitle.
   ///

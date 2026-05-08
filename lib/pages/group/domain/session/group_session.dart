@@ -18,6 +18,7 @@ class GroupSession {
   String get token => _currentGroup?.token ?? '';
   String get code => _currentGroup?.code ?? '';
   String get name => _currentGroup?.name ?? '';
+  bool get whatsappEnabled => _currentGroup?.whatsappEnabled ?? false;
   List<ParticipantModel> get participants =>
       _currentGroup?.participants ?? [];
 }

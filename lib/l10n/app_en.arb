@@ -90,7 +90,7 @@
   "addParticipantButton": "Add participant",
 
   "allParticipantsList": "All Participants",
-  "participantsSubtitle": "{count} people registered in the group",
+  "participantsSubtitle": "People registered in the group: {count}",
   "@participantsSubtitle": {
     "placeholders": { "count": { "type": "int" } }
   },
@@ -291,7 +291,9 @@
   "whatsappPremiumUpdatePanel": "Update Panel",
   "whatsappPremiumContractButton": "Subscribe WhatsApp – R$ 5,99",
   "whatsappPremiumAlreadyPaidButton": "Already paid – Update Panel",
-  "whatsappPremiumCardSubtitle": "Results via WhatsApp",
+  "whatsappPremiumCardSubtitle": "Result on WhatsApp",
+  "whatsappPremiumAlertStart": "Receiving results via WhatsApp is exclusive to Premium Groups",
+  "whatsappPremiumAlertEnd": "To receive the secret santa result on WhatsApp, the group must have an active Premium plan and participants must send a message to our bot after the draw.",
   "whatsappActivatedTitle": "WhatsApp activated in this group.",
   "whatsappActivatedAlertMessage": "Share this WhatsApp link with the participants. Each person must send a message using the phone number they registered to receive their secret friend's name.",
   "sendButton": "Send",

@@ -51,7 +51,7 @@ class _EnterGroup extends State<RequestTokenScreen> {
         if (state.requested) {
           context.pushNamed(
             'validate_token',
-            extra: _emailController.text.trim(),
+            extra: _emailController.text.trim().toLowerCase(),
           );
         }
         if (state.error != null) {
@@ -83,7 +83,7 @@ class _EnterGroup extends State<RequestTokenScreen> {
                             Text(
                               l10n.verificationTitle,
                               style: SecretSantaTextStyles.titleMedium,
-                            textAlign: TextAlign.center,
+                              textAlign: TextAlign.center,
                             ),
                             Text(
                               l10n.verificationSubtitle,
@@ -96,7 +96,9 @@ class _EnterGroup extends State<RequestTokenScreen> {
                               validator: (_) =>
                                   ParticipantValidators.isRequiredEmailValidator(
                                     context: context,
-                                    v: _emailController.text.toLowerCase().trim(),
+                                    v: _emailController.text
+                                        .toLowerCase()
+                                        .trim(),
                                   ),
                             )
                             .animate()
@@ -106,7 +108,9 @@ class _EnterGroup extends State<RequestTokenScreen> {
                               builder: (BuildContext context, AuthState state) {
                                 return MyGradientButton(
                                   onTap: _onSubmit,
-                                  title: AppLocalizations.of(context)!.sendCodeButton,
+                                  title: AppLocalizations.of(
+                                    context,
+                                  )!.sendCodeButton,
                                   isLoading: state.isLoading,
                                 );
                               },
@@ -118,7 +122,11 @@ class _EnterGroup extends State<RequestTokenScreen> {
                     ),
                   ),
                 ),
-                Text(AppLocalizations.of(context)!.copyright, style: TextStyle(fontSize: 13),textAlign: TextAlign.center,),
+                Text(
+                  AppLocalizations.of(context)!.copyright,
+                  style: TextStyle(fontSize: 13),
+                  textAlign: TextAlign.center,
+                ),
               ],
             ),
           ),
