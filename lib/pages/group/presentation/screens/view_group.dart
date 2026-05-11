@@ -44,7 +44,6 @@ class _ViewGroupBody extends State<ViewGroup> {
   final RefreshController _refreshController = RefreshController();
   late final ConfettiController _confettiController;
   bool _showRaffleSuccess = false;
-  bool _didChange = false;
   GroupModel? group;
 
   @override
@@ -66,12 +65,11 @@ class _ViewGroupBody extends State<ViewGroup> {
   }
 
   Future<void> _onEdit() async {
-    final result = await context.pushNamed(
+    await context.pushNamed(
       'edit_group',
       extra: ShowGroupArgs(code: widget.code, token: widget.token),
     );
-    if (context.mounted && result == true) {
-      _didChange = true;
+    if (context.mounted) {
       _onRefresh();
     }
   }
@@ -140,275 +138,267 @@ class _ViewGroupBody extends State<ViewGroup> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, _) {
-        if (!didPop) context.pop(_didChange);
-      },
-      child: Stack(
-        children: [
-          Scaffold(
-            appBar: MyAppBar(
-              actions: [
-                IconButton(
-                  onPressed: () => MyBottonSheet.show(
-                    title: l10n.groupOptionsTitle,
-                    subTitle: l10n.groupActions,
-                    context: context,
-                    group: group,
-                    items: [
-                      if (getIt<GroupSession>().isRaffled)
-                        AppListCard(
-                          title: l10n.viewResult,
-                          subtitle: l10n.viewResultSubtitle,
-                          color: SecretSantaColors.accent3,
-                          icon: Icons.visibility,
-                          name: '',
-                          trailing: Icon(
-                            Icons.chevron_right,
-                            color: SecretSantaColors.accent3,
-                          ),
-                          onTap: () {
-                            context.pop();
-                          },
-                        ),
-                      if (!getIt<GroupSession>().isRaffled) ...[
-                        AppListCard(
-                          title: l10n.shareGroup,
-                          subtitle: l10n.shareGroupSubtitle,
-                          color: SecretSantaColors.accent,
-                          icon: Icons.share,
-                          name: '',
-                          trailing: Icon(
-                            Icons.chevron_right,
-                            color: SecretSantaColors.accent,
-                          ),
-                          onTap: () {
-                            context.pop();
-                            _onShare(group);
-                          },
-                        ),
-                      ],
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: MyAppBar(
+            actions: [
+              IconButton(
+                onPressed: () => MyBottonSheet.show(
+                  title: l10n.groupOptionsTitle,
+                  subTitle: l10n.groupActions,
+                  context: context,
+                  group: group,
+                  items: [
+                    if (getIt<GroupSession>().isRaffled)
                       AppListCard(
-                        title: l10n.edit,
-                        subtitle: l10n.editGroupSubtitle2,
-                        color: SecretSantaColors.accent2,
-                        icon: Icons.edit,
+                        title: l10n.viewResult,
+                        subtitle: l10n.viewResultSubtitle,
+                        color: SecretSantaColors.accent3,
+                        icon: Icons.visibility,
                         name: '',
                         trailing: Icon(
                           Icons.chevron_right,
-                          color: SecretSantaColors.accent2,
+                          color: SecretSantaColors.accent3,
                         ),
                         onTap: () {
                           context.pop();
-                          _onEdit();
                         },
                       ),
+                    if (!getIt<GroupSession>().isRaffled) ...[
                       AppListCard(
-                        title: l10n.deleteGroup,
-                        subtitle: l10n.deleteGroupSubtitle,
-                        color: SecretSantaColors.error,
-                        icon: Icons.delete_outline,
+                        title: l10n.shareGroup,
+                        subtitle: l10n.shareGroupSubtitle,
+                        color: SecretSantaColors.accent,
+                        icon: Icons.share,
                         name: '',
                         trailing: Icon(
                           Icons.chevron_right,
-                          color: SecretSantaColors.error,
+                          color: SecretSantaColors.accent,
                         ),
                         onTap: () {
                           context.pop();
-                          _onDelete(context);
+                          _onShare(group);
                         },
                       ),
                     ],
-                  ),
-                  icon: const Icon(Icons.more_vert, size: 24),
-                  color: SecretSantaColors.accent,
-                ),
-              ],
-            ),
-            body: ScreenPadding(
-              child: BlocConsumer<GroupCubit, GroupState>(
-                listenWhen: (previous, current) =>
-                    (!previous.raffled && current.raffled) ||
-                    (previous.error == null && current.error != null) ||
-                    (!previous.deleted && current.deleted) ||
-                    (!previous.logout && current.logout),
-                listener: (context, state) async {
-                  if (state.logout) {
-                    final l10n = AppLocalizations.of(context)!;
-                    await AppAlert.showAlertDialog(
-                      context,
-                      title: l10n.errorTitle,
-                      message: l10n.errorUnauthorized,
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            context.pop();
-                            context.goNamed('request_token');
-                          },
-                          child: Text(l10n.ok),
-                        ),
-                      ],
-                    );
-                    return;
-                  }
-                  if (state.raffled) {
-                    setState(() => _showRaffleSuccess = true);
-                    _confettiController.play();
-                    _onRefresh();
-                  }
-                  if (state.error != null) {
-                    AppAlert.showBanner(
-                      context,
-                      message: state.error!.localize(context),
-                      type: AlertType.warning,
-                    );
-                  }
-                  if (state.deleted) {
-                    context.pop(true);
-                  }
-                },
-                builder: (context, state) {
-                  if (state.isLoading && state.group == null) {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        color: SecretSantaColors.accent,
+                    AppListCard(
+                      title: l10n.edit,
+                      subtitle: l10n.editGroupSubtitle2,
+                      color: SecretSantaColors.accent2,
+                      icon: Icons.edit,
+                      name: '',
+                      trailing: Icon(
+                        Icons.chevron_right,
+                        color: SecretSantaColors.accent2,
                       ),
-                    );
-                  }
-                  if (state.group != null) {
-                    group = state.group!;
-                  }
-                  if (group == null) return const SizedBox.shrink();
-
-                  final g = group!;
-                  final type = g.raffledAt == null
-                      ? BadgeType.pending
-                      : BadgeType.raffled;
-
-                  return SmartRefresher(
-                    controller: _refreshController,
-                    onRefresh: _onRefresh,
-                    child: ListView(
-                      children: [
-                        _GroupHeroHeader(name: g.name, type: type),
-                        const SizedBox(height: 16),
-                        _WhatsAppCard(
-                          code: g.code,
-                          whatsAppPremium: g.whatsappEnabled,
-                          onRefresh: _onRefresh,
-                        ),
-                        const SizedBox(height: 16),
-                        ViewGroupCard(
-                          type: type,
-                          eventLocation: g.location ?? l10n.notDefined,
-                          minGiftValue: g.minGiftValue ?? "00,00",
-                          maxGiftValue: g.maxGiftValue ?? "00,00",
-                          eventDate: _formatDate(g.drawDate),
-                          eventTime: g.drawDate?.split(' ').last ?? "--:--",
-                          groupDescription: g.description ?? l10n.noDescription,
-                          participants: g.participants.length,
-                          participantsList: g.participants,
-                        ),
-                        if (g.raffledAt == null) ...[
-                          const SizedBox(height: 24),
-                          if (g.participants.length >= 2)
-                            MyGradientButton(
-                              onTap: () => _onSubmit(g.code),
-                              title: l10n.drawButton,
-                              icon: Icons.draw,
-                            )
-                          else
-                            _NeedMoreParticipantsBanner(
-                              message: AppLocalizations.of(
-                                context,
-                              )!.needMoreParticipants,
-                            ),
-                        ],
-                      ],
+                      onTap: () {
+                        context.pop();
+                        _onEdit();
+                      },
+                    ),
+                    AppListCard(
+                      title: l10n.deleteGroup,
+                      subtitle: l10n.deleteGroupSubtitle,
+                      color: SecretSantaColors.error,
+                      icon: Icons.delete_outline,
+                      name: '',
+                      trailing: Icon(
+                        Icons.chevron_right,
+                        color: SecretSantaColors.error,
+                      ),
+                      onTap: () {
+                        context.pop();
+                        _onDelete(context);
+                      },
+                    ),
+                  ],
+                ),
+                icon: const Icon(Icons.more_vert, size: 24),
+                color: SecretSantaColors.accent,
+              ),
+            ],
+          ),
+          body: ScreenPadding(
+            child: BlocConsumer<GroupCubit, GroupState>(
+              listenWhen: (previous, current) =>
+                  (!previous.raffled && current.raffled) ||
+                  (previous.error == null && current.error != null) ||
+                  (!previous.deleted && current.deleted) ||
+                  (!previous.logout && current.logout),
+              listener: (context, state) async {
+                if (state.logout) {
+                  final l10n = AppLocalizations.of(context)!;
+                  await AppAlert.showAlertDialog(
+                    context,
+                    title: l10n.errorTitle,
+                    message: l10n.errorUnauthorized,
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          context.pop();
+                          context.goNamed('request_token');
+                        },
+                        child: Text(l10n.ok),
+                      ),
+                    ],
+                  );
+                  return;
+                }
+                if (state.raffled) {
+                  setState(() => _showRaffleSuccess = true);
+                  _confettiController.play();
+                  _onRefresh();
+                }
+                if (state.error != null) {
+                  AppAlert.showBanner(
+                    context,
+                    message: state.error!.localize(context),
+                    type: AlertType.warning,
+                  );
+                }
+                if (state.deleted) {
+                  context.pop();
+                }
+              },
+              builder: (context, state) {
+                if (state.isLoading && state.group == null) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: SecretSantaColors.accent,
                     ),
                   );
-                },
-              ),
+                }
+                if (state.group != null) {
+                  group = state.group!;
+                }
+                if (group == null) return const SizedBox.shrink();
+
+                final g = group!;
+                final type = g.raffledAt == null
+                    ? BadgeType.pending
+                    : BadgeType.raffled;
+
+                return SmartRefresher(
+                  controller: _refreshController,
+                  onRefresh: _onRefresh,
+                  child: ListView(
+                    children: [
+                      _GroupHeroHeader(name: g.name, type: type),
+                      const SizedBox(height: 16),
+                      _WhatsAppCard(
+                        code: g.code,
+                        whatsAppPremium: g.whatsappEnabled,
+                        onRefresh: _onRefresh,
+                      ),
+                      const SizedBox(height: 16),
+                      ViewGroupCard(
+                        type: type,
+                        eventLocation: g.location ?? l10n.notDefined,
+                        minGiftValue: g.minGiftValue ?? "00,00",
+                        maxGiftValue: g.maxGiftValue ?? "00,00",
+                        eventDate: _formatDate(g.drawDate),
+                        eventTime: g.drawDate?.split(' ').last ?? "--:--",
+                        groupDescription: g.description ?? l10n.noDescription,
+                        participants: g.participants.length,
+                        participantsList: g.participants,
+                      ),
+                      if (g.raffledAt == null) ...[
+                        const SizedBox(height: 24),
+                        if (g.participants.length >= 2)
+                          MyGradientButton(
+                            onTap: () => _onSubmit(g.code),
+                            title: l10n.drawButton,
+                            icon: Icons.draw,
+                          )
+                        else
+                          _NeedMoreParticipantsBanner(
+                            message: l10n.needMoreParticipants,
+                          ),
+                      ],
+                    ],
+                  ),
+                );
+              },
             ),
           ),
+        ),
 
-          if (_showRaffleSuccess)
-            GestureDetector(
-              onTap: () => setState(() => _showRaffleSuccess = false),
-              child: Container(color: Colors.black.withValues(alpha: 0.6)),
-            ).animate().fadeIn(duration: 300.ms),
+        if (_showRaffleSuccess)
+          GestureDetector(
+            onTap: () => setState(() => _showRaffleSuccess = false),
+            child: Container(color: Colors.black.withValues(alpha: 0.6)),
+          ).animate().fadeIn(duration: 300.ms),
 
-          if (_showRaffleSuccess)
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: SecretSantaSpacing.xl,
-                ),
-                child:
-                    Container(
-                          padding: const EdgeInsets.all(SecretSantaSpacing.xl),
-                          decoration: BoxDecoration(
-                            color: SecretSantaColors.neutral50,
-                            borderRadius: BorderRadius.circular(
-                              SecretSantaRadius.xxl,
+        if (_showRaffleSuccess)
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: SecretSantaSpacing.xl,
+              ),
+              child:
+                  Container(
+                        padding: const EdgeInsets.all(SecretSantaSpacing.xl),
+                        decoration: BoxDecoration(
+                          color: SecretSantaColors.neutral50,
+                          borderRadius: BorderRadius.circular(
+                            SecretSantaRadius.xxl,
+                          ),
+                          boxShadow: SecretSantaShadows.large,
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          spacing: SecretSantaSpacing.md,
+                          children: [
+                            Icon(
+                              Icons.celebration,
+                              size: 72,
+                              color: SecretSantaColors.accent2,
+                            ).animate().scale(
+                              begin: const Offset(0.5, 0.5),
+                              curve: Curves.elasticOut,
+                              duration: 700.ms,
                             ),
-                            boxShadow: SecretSantaShadows.large,
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            spacing: SecretSantaSpacing.md,
-                            children: [
-                              Icon(
-                                Icons.celebration,
-                                size: 72,
-                                color: SecretSantaColors.accent2,
-                              ).animate().scale(
-                                begin: const Offset(0.5, 0.5),
-                                curve: Curves.elasticOut,
-                                duration: 700.ms,
+                            Text(
+                              l10n.raffleCompleted,
+                              style: SecretSantaTextStyles.titleSmall,
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              l10n.raffleCompletedMessage,
+                              style: SecretSantaTextStyles.bodySmall.copyWith(
+                                color: SecretSantaColors.neutral500,
                               ),
-                              Text(
-                                l10n.raffleCompleted,
-                                style: SecretSantaTextStyles.titleSmall,
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                l10n.raffleCompletedMessage,
-                                style: SecretSantaTextStyles.bodySmall.copyWith(
-                                  color: SecretSantaColors.neutral500,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        )
-                        .animate()
-                        .scale(
-                          begin: const Offset(0.8, 0.8),
-                          curve: Curves.easeOutBack,
-                          duration: 400.ms,
-                        )
-                        .fadeIn(duration: 300.ms),
-              ),
-            ),
-
-          Align(
-            alignment: Alignment.topCenter,
-            child: ConfettiWidget(
-              confettiController: _confettiController,
-              blastDirectionality: BlastDirectionality.explosive,
-              numberOfParticles: 30,
-              colors: const [
-                SecretSantaColors.accent,
-                SecretSantaColors.accent2,
-                SecretSantaColors.accent3,
-                SecretSantaColors.success,
-              ],
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      )
+                      .animate()
+                      .scale(
+                        begin: const Offset(0.8, 0.8),
+                        curve: Curves.easeOutBack,
+                        duration: 400.ms,
+                      )
+                      .fadeIn(duration: 300.ms),
             ),
           ),
-        ],
-      ),
+
+        Align(
+          alignment: Alignment.topCenter,
+          child: ConfettiWidget(
+            confettiController: _confettiController,
+            blastDirectionality: BlastDirectionality.explosive,
+            numberOfParticles: 30,
+            colors: const [
+              SecretSantaColors.accent,
+              SecretSantaColors.accent2,
+              SecretSantaColors.accent3,
+              SecretSantaColors.success,
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

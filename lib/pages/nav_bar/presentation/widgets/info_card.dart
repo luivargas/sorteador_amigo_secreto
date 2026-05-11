@@ -34,20 +34,8 @@ class InfoCard extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       child: Stack(
         children: [
-          Positioned(
-            right: -32,
-            bottom: -32,
-            child: Container(
-              width: 128,
-              height: 128,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.black12,
-              ),
-            ),
-          ),
-
           Row(
+            spacing: SecretSantaSpacing.md,
             children: [
               Expanded(
                 child: Column(
@@ -73,22 +61,15 @@ class InfoCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 16),
-
-              // ícone
               Container(
                 width: 72,
                 height: 72,
                 decoration: BoxDecoration(
                   color: iconBackgroundColor,
                   borderRadius: BorderRadius.circular(SecretSantaRadius.xl),
-                  boxShadow: SecretSantaShadows.small
+                  boxShadow: SecretSantaShadows.small,
                 ),
-                child: Icon(
-                  icon,
-                  color: textColor,
-                  size: 36,
-                ),
+                child: Icon(icon, color: textColor, size: 36),
               ),
             ],
           ),

@@ -23,8 +23,8 @@ class GroupParticipantsCard extends StatelessWidget {
   });
 
   Future<void> _goToList(BuildContext context) async {
-    final result = await context.pushNamed('participants_list');
-    if (result == true && context.mounted) {
+    await context.pushNamed('participants_list');
+    if (context.mounted) {
       context.read<GroupCubit>().show(groupCode, groupToken);
     }
   }

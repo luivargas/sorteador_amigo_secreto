@@ -8,6 +8,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sorteador_amigo_secreto/l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
+import 'package:upgrader/upgrader.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,27 +41,32 @@ class MyApp extends StatelessWidget {
           theme: SecretSantaTheme.theme,
           routerConfig: routes,
           builder: (context, child) {
-            return RefreshConfiguration(
-              headerBuilder: () => WaterDropHeader(
-                complete: Text(AppLocalizations.of(context)!.refreshCompleted),
-                refresh: Text(AppLocalizations.of(context)!.refreshing),
-                waterDropColor: SecretSantaColors.accent,
-                completeDuration: const Duration(milliseconds: 800),
+            return UpgradeAlert(
+              barrierDismissible: false,
+              upgrader: Upgrader(
               ),
-              footerBuilder: () => const ClassicFooter(),
-              headerTriggerDistance: 80.0,
-              springDescription: const SpringDescription(
-                stiffness: 170,
-                damping: 16,
-                mass: 1.9,
+              child: RefreshConfiguration(
+                headerBuilder: () => WaterDropHeader(
+                  complete: Text(AppLocalizations.of(context)!.refreshCompleted),
+                  refresh: Text(AppLocalizations.of(context)!.refreshing),
+                  waterDropColor: SecretSantaColors.accent,
+                  completeDuration: const Duration(milliseconds: 800),
+                ),
+                footerBuilder: () => const ClassicFooter(),
+                headerTriggerDistance: 80.0,
+                springDescription: const SpringDescription(
+                  stiffness: 170,
+                  damping: 16,
+                  mass: 1.9,
+                ),
+                maxOverScrollExtent: 100,
+                maxUnderScrollExtent: 0,
+                enableScrollWhenRefreshCompleted: true,
+                enableLoadingWhenFailed: true,
+                hideFooterWhenNotFull: false,
+                enableBallisticLoad: true,
+                child: child!,
               ),
-              maxOverScrollExtent: 100,
-              maxUnderScrollExtent: 0,
-              enableScrollWhenRefreshCompleted: true,
-              enableLoadingWhenFailed: true,
-              hideFooterWhenNotFull: false,
-              enableBallisticLoad: true,
-              child: child!,
             );
           },
         );
